@@ -1,0 +1,9 @@
+<svg width="345" height="465" viewBox="0 0 345 465" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_3001_360" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="345" height="465">
+<path d="M345 424.524H344.988C343.925 446.922 267.107 465 172.5 465C77.8929 465 1.07472 446.922 0.0117188 424.524H0V0H345V424.524Z" fill="#97BFEC"/>
+</mask>
+<g mask="url(#mask0_3001_360)">
+<ellipse cx="172.5" cy="421.5" rx="172.5" ry="43.5" fill="#002147"/>
+</g>
+</svg>
+

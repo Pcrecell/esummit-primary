@@ -1,0 +1,129 @@
+"use client"
+
+import React, { useState, useEffect } from "react";
+// import DashBoardCard from "./DashBoardCard";
+import MapComponent from "./MapComponent";
+// import { authAPI } from "../../services/api";
+import DashBoardCard from "../../../../public/images/esummit/dashboard/Dashboard Card.svg";
+import QuestionMark from "../../../../public/images/esummit/dashboard/Question-Mark.svg";
+import Particles from './Particles';
+import Image from "next/image";
+
+const EsummitDashBoard = () => {
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [paymentDone, setPaymentDone] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const qrCode = "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
+
+
+
+  // useEffect(() => {
+  //   let mounted = true;
+  //   (async () => {
+  //     try {
+  //       const userResponse = await authAPI.verifyToken();
+  //       if (mounted && userResponse && userResponse.user) {
+  //         setUserData(userResponse.user);
+  //       }
+  //     } catch (err) {
+  //       // handle error
+  //     } finally {
+  //       if (mounted) setLoading(false);
+  //     }
+  //   })();
+  //   return () => { mounted = false; };
+  // }, []);
+
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+  //       Loading...
+  //     </div>
+  //   );
+  // }
+
+  return (
+    <div>
+      <div className="relative">
+        <div className="absolute inset-0 z-10 " style={{ width: '100%', height: '100%' }}>
+          <Particles
+            particleColors={['#b3d11c', '#b3d11c']}
+            particleCount={2000}
+            particleSpread={10}
+            speed={0.2}
+            particleBaseSize={100}
+            moveParticlesOnHover={false}
+            alphaParticles={false}
+            disableRotation={true}
+          />
+        </div>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed top-0 left-0 w-full h-full object-cover z-[-1] bg-[#010b04]"
+        >
+          <source
+            src="https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113?updatedAt=1754555000937"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+
+        <div
+          className="relative min-h-screen font-sans text-white hero-container"
+        />   
+        <div className="absolute top-[120vh] sm:top-[130vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-80">
+          <div className="relative">
+            <div className="relative">
+              <Image src={DashBoardCard} alt="card" className="w-full"  />
+              {!paymentDone && (
+                <div className="absolute inset-0 bg-black/50 rounded-lg" 
+                style={{
+                  top: '21%',
+                  left: '0',
+                  right: '0',
+                  bottom: '0'
+                }}
+                ></div>
+              )}
+            </div>
+            
+            <div className="absolute bottom-[10vh]">
+              {paymentDone ?                 
+              <Image src={qrCode} alt="qr-code" className="scale-75"  width={400} height={400}
+                style={{
+                  transition: "all",
+                  animationDuration: "500ms"
+                }}
+              /> : 
+              <Image src={QuestionMark} alt="Question Mark" className="scale-100" 
+                style={{
+                  transition: "all",
+                  animationDuration: "500ms",
+                }}
+              />
+              }
+            </div>
+          </div>
+          <div className="flex items-center justify-center w-full mt-8">
+            <button 
+              onClick={() => setPaymentDone(true)} 
+              className="py-4 px-8 bg-gradient-to-br font-poppins from-black to-green-600 text-white shadow-lg shadow-[#abd65d] border-b-2 border-white text-2xl rounded-2xl hover:shadow-[#abd65d] hover:shadow-2xl transition-all duration-[1000ms]"
+            >
+              Pay Now
+            </button>
+          </div>
+        </div>
+
+        <div className="relative min-h-[80vh] sm:min-h-[90vh] font-sans text-white background-container">   
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EsummitDashBoard;

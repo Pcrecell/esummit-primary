@@ -1,0 +1,649 @@
+@import "tailwindcss";
+
+/* @import url('https://fonts.googleapis.com/css2?family=Tourney:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300..700;1,300..700&display=swap'); */
+
+* { 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: #010b04;
+}
+
+.hide-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+}
+
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-input {
+  background: linear-gradient(to right, #000000, #4F4F4F);
+  border: 1px solid rgba(255, 255, 255, 0.47);
+  box-shadow: inset 2px 1px 10px rgba(255, 255, 255, 0.14);
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .bg-circle-animation {
+    animation: none !important;
+  }
+
+  .content-circles-mobile {
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content-circle-mobile {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}
+
+/* Drag handling */
+.dragging,
+.dragging * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Spotlight effect */
+@media (max-width: 1023px) {
+  .revealed-area {
+    animation: none !important;
+    background: none !important;
+  }
+}
+
+.revealed-area {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.9) 30%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animations */
+@keyframes backgroundCircles {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bgFloat {
+  0% { background-position: 50% 50%; }
+  50% { background-position: 51% 49%; }
+  100% { background-position: 50% 50%; }
+}
+
+/* CSS Variables for shadcn/ui compatibility */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+}
+
+.text-rotate {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: pre-wrap;
+  position: relative;
+}
+
+.text-rotate-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-rotate-word {
+  display: inline-flex;
+}
+
+.text-rotate-lines {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.text-rotate-element {
+  display: inline-block;
+}
+
+.text-rotate-space {
+  white-space: pre;
+}
+
+
+.text-rotate-word {
+  display: inline-flex;
+}
+
+.text-rotate-lines {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.text-rotate-element {
+  display: inline-block;
+}
+
+.text-rotate-space {
+  white-space: pre;
+}
+
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background-color: #f8f9fa !important;
+  color: #212529 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15) !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+.custom-popup .leaflet-popup-content {
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  font-size: 12px !important;
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: #f8f9fa !important;
+}
+
+.custom-popup .leaflet-popup-close-button {
+  color: #6c757d !important;
+  padding: 4px 4px 0 0 !important;
+  font-size: 16px !important;
+}
+
+.custom-popup .leaflet-popup-close-button:hover {
+  color: #212529 !important;
+}
+
+/* Responsive popup styling */
+@media (min-width: 768px) {
+  .custom-popup .leaflet-popup-content {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+  
+  .custom-popup .leaflet-popup-close-button {
+    font-size: 18px !important;
+  }
+}
+
+/* Mobile-specific map adjustments */
+@media (max-width: 767px) {
+  .leaflet-container {
+    font-size: 12px !important;
+    touch-action: pan-x pan-y !important;
+  }
+  
+  .leaflet-control-container {
+    display: none !important;
+  }
+  
+  .custom-popup .leaflet-popup-content-wrapper {
+    max-width: 250px !important;
+  }
+}
+
+/* Disable map interactions for background use */
+.leaflet-container {
+  touch-action: pan-x pan-y !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  cursor: grab !important;
+}
+
+/* Prevent unwanted drag behavior */
+.leaflet-container {
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+}
+
+/* Ensure dragging stops on release */
+.leaflet-container.leaflet-drag-target {
+  cursor: grabbing !important;
+}
+
+/* Fix for better drag control */
+.leaflet-dragging {
+  cursor: grabbing !important;
+}
+
+/* Keep popup interactive */
+.leaflet-popup-pane {
+  pointer-events: auto !important;
+}
+
+.leaflet-popup-pane * {
+  pointer-events: auto !important;
+  cursor: auto !important;
+}
+
+/* Allow marker and popup interactions */
+.leaflet-marker-pane {
+  pointer-events: auto !important;
+}
+
+.leaflet-marker-icon {
+  pointer-events: auto !important;
+}
+
+.leaflet-marker-shadow {
+  pointer-events: none !important;
+}
+
+.leaflet-container .leaflet-control-zoom {
+  display: none !important;
+}
+
+.leaflet-container .leaflet-control-attribution {
+  display: none !important;
+}
+
+/* Prevent map dragging issues */
+.leaflet-container.leaflet-touch .leaflet-bar {
+  border: none !important;
+}
+
+.leaflet-container.leaflet-touch .leaflet-control-layers {
+  border: none !important;
+}
+
+/* Fix dragging behavior */
+.leaflet-grab {
+  cursor: grab !important;
+}
+
+.leaflet-grabbing {
+  cursor: grabbing !important;
+}
+
+/* Ensure proper cursor states */
+.leaflet-container.leaflet-grab {
+  cursor: grab !important;
+}
+
+.leaflet-container.leaflet-grabbing {
+  cursor: grabbing !important;
+}
+
+/* Prevent selection while dragging */
+.leaflet-container * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Prevent text selection during drag */
+.leaflet-container.leaflet-dragging * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Allow text selection in popups */
+.leaflet-popup-content * {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* When dragging is disabled */
+.leaflet-container.dragging-disabled {
+  cursor: default !important;
+}
+
+.leaflet-container.dragging-disabled * {
+  cursor: default !important;
+}
+
+/* Visual feedback for disabled state */
+.leaflet-container.dragging-disabled .leaflet-tile-pane {
+  opacity: 1;
+  /* transition: opacity 0.4s ease; */
+}
+
+.leaflet-container:not(.dragging-disabled) .leaflet-tile-pane {
+  opacity: 1;
+  /* transition: opacity 0.4s ease; */
+}
+
+.sponser img {
+  margin-top: 100vh;
+  width: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* Carousel container */
+.carousel-container {
+  position: relative; /* Ensures children with absolute positioning are bound */
+  width: 35%; /* Full width */
+  height: 50vh; /* Adjust height as needed */
+  overflow: hidden; /* Prevent content overflow */
+  margin-top: 5vh;
+}
+
+/* Individual slide */
+.carousel-slide {
+  position: absolute; /* Absolutely positioned within the carousel container */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image styles */
+.carousel-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Ensures the image scales while maintaining aspect ratio */
+}
+
+/* Row container */
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Ensure spacing between components */
+  align-items: center;
+  gap: 20px; /* Adds spacing between items */
+  padding: 0 10px; /* Adds padding on the sides */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .carousel-container {
+    height: 45vh; /* Reduce height for smaller screens */
+    margin-top: 12vh;
+    width: 35%;
+  }
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column; /* Stack components vertically */
+    justify-content: center;
+    align-items: center; /* Center items */
+  }
+
+  .carousel-container {
+    height: 40vh; /* Reduce height further */
+    margin-top: 10vh;
+    width: 35%;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    height: 35vh; /* Smaller height for mobile */
+    margin-top: 8vh;
+    width: 35%;
+  }
+
+  .row {
+    gap: 10px; /* Reduce spacing for smaller screens */
+  }
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* E-Cell Custom Popup Styling */
+.ecell-custom-popup .leaflet-popup-content-wrapper {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+  color: #212529 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 0 0 1px rgba(34, 197, 94, 0.1) !important;
+  border: 2px solid #10b981 !important;
+  padding: 0 !important;
+}
+
+.ecell-custom-popup .leaflet-popup-content {
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+.ecell-custom-popup .leaflet-popup-tip {
+  background: #ffffff !important;
+  border: 2px solid #10b981 !important;
+  border-top: none !important;
+  border-right: none !important;
+}
+
+.ecell-custom-popup .leaflet-popup-close-button {
+  color: #10b981 !important;
+  padding: 6px 8px 0 0 !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.ecell-custom-popup .leaflet-popup-close-button:hover {
+  color: #059669 !important;
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border-radius: 4px !important;
+}
+
+/* Responsive popup styling for E-Cell */
+@media (min-width: 768px) {
+  .ecell-custom-popup .leaflet-popup-content {
+    padding: 16px 20px !important;
+    font-size: 14px !important;
+  }
+  
+  .ecell-custom-popup .leaflet-popup-close-button {
+    font-size: 20px !important;
+  }
+}
+
+/* Mobile-specific E-Cell popup adjustments */
+@media (max-width: 767px) {
+  .ecell-custom-popup .leaflet-popup-content {
+    padding: 10px 12px !important;
+    font-size: 12px !important;
+  }
+}
+
+.background-container {
+  position: relative;
+  isolation: isolate; 
+}
+
+.background-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; 
+
+  /*background-image: url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%201000002385%20(2).webp");*/
+  background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
+  background-position: calc(50% + 30px) top;
+  background-size: cover;
+
+  transform: rotate(180deg);
+  filter: blur(1px);
+}
+
+.particles-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-container{
+background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
+  background-position: calc(50% + 100px) center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
