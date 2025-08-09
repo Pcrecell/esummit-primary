@@ -11,7 +11,6 @@ export default function Register() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [phone, setPhone] = useState("");
-  const [college, setCollege] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hostelType, setHostelType] = useState(null);
@@ -26,25 +25,11 @@ export default function Register() {
   const nameRegex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/;
   const collegeNameRegex = /^[a-zA-Z\s]*$/;
 
-  // Determine if college is KIIT (case insensitive)
-  const isKiitCollege =
-    college.trim().toLowerCase() === "kiit" ||
-    college.trim().toLowerCase() === "kalinga institute of industrial technology" ||
-    college.trim().toLowerCase() === "kiit university";
-
   // Restrict phone input to digits and max 10 chars
   const handlePhoneChange = (e) => {
     let input = e.target.value.replace(/\D/g, "");
     if (input.length > 10) input = input.slice(0, 10);
     setPhone(input);
-  };
-
-  // Restrict college input to alphabets and spaces
-  const handleCollegeChange = (e) => {
-    const value = e.target.value;
-    if (collegeNameRegex.test(value)) {
-      setCollege(value);
-    }
   };
 
   // Restrict firstname and lastname input to alphabets and spaces
@@ -76,22 +61,18 @@ export default function Register() {
       return false;
     }
 
-    if (isKiitCollege && !email.endsWith(".ac.in")) {
-      setError("KIIT students must use their KIIT email ID (e.g., example@kiit.ac.in).");
+    if (!email.endsWith(".ac.in")) {
+      setError("Students must use their KIIT email ID (e.g., example@kiit.ac.in).");
       return false;
     }
 
-    if (!isKiitCollege && !gmailRegex.test(email)) {
-      setError("Only Gmail addresses (@gmail.com or @googlemail.com) are allowed.");
-      return false;
-    }
 
-    if (isKiitCollege && hostelType === null) {
+    if (hostelType === null) {
       setError("Please select whether you are a Hostelite or Dayboarder.");
       return false;
     }
 
-    if (isKiitCollege && hostelType === true) {
+    if (hostelType === true) {
       if (hostelEmail.trim() === "") {
         setError("Please enter your hostel email ID.");
         return false;
@@ -123,8 +104,6 @@ export default function Register() {
         firstname,
         lastname,
         phone,
-        isKiitCollege,
-        college,
         email,
         password,
         hostelType,
@@ -179,9 +158,7 @@ export default function Register() {
   };
 
   // ----------- DYNAMIC EMAIL PLACEHOLDER ----------- //
-  const emailPlaceholder = isKiitCollege
-    ? "Enter your KIIT mail ID (e.g : @kiit.ac.in)"
-    : "Enter your Gmail ID";
+  const emailPlaceholder = "Enter your KIIT mail ID (e.g : @kiit.ac.in)";
 
   return (
     <AuthLayout>
@@ -230,17 +207,6 @@ export default function Register() {
           />
         </div>
         <div>
-          <label className="block text-gray-300 mb-0.5 text-xs pl-1">College Name</label>
-          <input
-            type="text"
-            placeholder="Enter your college name"
-            className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
-            value={college}
-            onChange={handleCollegeChange}
-            required
-          />
-        </div>
-        <div>
           <label className="block text-gray-300 mb-0.5 text-xs pl-1">Email Address</label>
           <input
             type="email"
@@ -250,13 +216,10 @@ export default function Register() {
             onChange={handleEmailChange}
             required
           />
-          {isKiitCollege && (
-            <p className="text-xs text-yellow-400 mt-1">KIIT students must use their KIIT Email ID.</p>
-          )}
         </div>
 
         {/* ----------- Conditional hostelType field ----------- */}
-        {isKiitCollege && (
+        
           <div>
             <label className="block text-gray-300 mb-0.5 text-xs pl-1">
               Are you a Hostelite or Dayboarder?
@@ -285,10 +248,9 @@ export default function Register() {
               </label>
             </div>
           </div>
-        )}
 
         {/* ----------- Conditional hostelEmail field ----------- */}
-        {isKiitCollege && hostelType === true && (
+        {hostelType === true && (
           <div>
             <label className="block text-gray-300 mb-0.5 text-xs pl-1">Hostel Email ID</label>
             <input
