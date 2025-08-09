@@ -11,10 +11,11 @@ function Hero() {
             style={{
                 backgroundImage: `url("${esummit_hero.esummit_hero_bg.link}")`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center 10%',
+                backgroundPosition: 'center 0%',
                 backgroundRepeat: 'no-repeat'
             }}
         >
+            <div className="absolute inset-0 bg-black opacity-60 z-0"></div>
             <div className="relative z-10 flex flex-col items-center text-white text-center px-4 py-6 w-full pt-14">
                 <img
                     src={esummit_hero.esummit_logo.link}
