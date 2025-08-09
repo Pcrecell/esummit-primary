@@ -39,7 +39,7 @@ const ThemeHeroSection = () => {
             objectPosition: "calc(50% + 10px) center"
           }}
         >
-          <source src="https://ik.imagekit.io/admr8uj75/KIITESummit_Theme.webm/ik-video.mp4?updatedAt=1754569881061" type="video/mp4" />
+          <source src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit(1).mp4?updatedAt=1754759095540" type="video/mp4" />
         </video>
 
         {/* Top Gradient Overlay */}
