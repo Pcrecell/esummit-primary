@@ -9,16 +9,6 @@ import EventsCalendar from './EventsCalendar';
 import EventsMap from './EventsMap';
 import HeroSection from './HeroSection';
 import MobileTabs from './MobileTabs';
-// import EventDecorative from '../../assets/Images/svg/EventDecorativeLeaves.svg'
-// import Oracle_Frame_Right from '../../assets/Images/png/Oracle_Frame_Right.png'
-import Oracle_Frame_Left from '../../../../public/images/esummit/events/Oracle_Frame_Left.png'
-import Pandora_Frame_Right from '../../../../public/images/esummit/events/Pandora_Frame_Right.png'
-import Pandora_Frame_Left from '../../../../public/images/esummit/events/Pandora_Frame_Left.png'
-import AIF_Frame_Right from '../../../../public/images/esummit/events/AIF_Frame_Right.png'
-import Image_Background_Desktop from '../../../../public/images/esummit/events/Events_Image_Background_Desktop.png'
-import Image_Background_Mobile from '../../../../public/images/esummit/events/Events_Image_Background_Mobile.png'
-// import AIF_Frame_Left from '../../assets/Images/png/AIF_Frame_Left.png'
-import Image from 'next/image';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -27,18 +17,20 @@ const EventsPage = () => {
     const desktopLayoutRef = useRef(null);
     const leftSectionRef = useRef(null);
     const cardRefs = useRef([]);
-    const footerRef = useRef(null);
+    const mobileScrollRef = useRef(null);
 
-    const [selectedDate, setSelectedDate] = useState(15);
+    const [selectedDate, setSelectedDate] = useState(21);
+    const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
     const tabs = [
-        { date: 15, label: "15th Friday" },
-        { date: 16, label: "16th Saturday" },
-        { date: 17, label: "17th Sunday" }
+        { date: 21, label: "21st Thursday" },
+        { date: 22, label: "22nd Friday" },
+        { date: 23, label: "23rd Saturday" },
+        { date: 24, label: "24th Sunday" },
     ];
 
     const eventsByDate = {
-        15: [
+        21: [
             {
                 title: "PANDORA'S PARADOX",
                 time: "2:00PM - 8:00PM", 
@@ -68,7 +60,7 @@ const EventsPage = () => {
                 image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
             },
         ],
-        16: [
+        22: [
             {
                 title: "ALICE IN FOUNDERLAND",
                 time: "9:00AM - 5:00PM",
@@ -98,7 +90,7 @@ const EventsPage = () => {
                 image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
             },
         ],
-        17: [
+        23: [
             {
                 title: "PANDORA'S PARADOX",
                 time: "10:00AM - 4:00PM",
@@ -132,9 +124,32 @@ const EventsPage = () => {
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
+        setCurrentCardIndex(0); // Reset to first card when date changes
     };
 
-    const currentEvents = eventsByDate[selectedDate] || eventsByDate[15];
+    const currentEvents = eventsByDate[selectedDate] || eventsByDate[21];
+
+    useEffect(() => {
+        const scrollContainer = mobileScrollRef.current;
+        if (!scrollContainer) return;
+
+        const handleScroll = () => {
+            const scrollLeft = scrollContainer.scrollLeft;
+            const cardWidth = scrollContainer.offsetWidth;
+            const currentIndex = Math.round(scrollLeft / cardWidth);
+            setCurrentCardIndex(currentIndex);
+        };
+
+        scrollContainer.addEventListener('scroll', handleScroll);
+        return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }, [currentEvents]);
+
+    useEffect(() => {
+        setCurrentCardIndex(0);
+        if (mobileScrollRef.current) {
+            mobileScrollRef.current.scrollLeft = 0;
+        }
+    }, [selectedDate]);
 
     useGSAP(() => {
     const mm = gsap.matchMedia();
@@ -318,14 +333,20 @@ const EventsPage = () => {
                                     left={index % 2 === 0} 
                                     eventData={eventData}
                                 />
+
+                                <div className='w-full flex justify-center mt-9 rounded-full'>
+                                    <button className='py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full'>
+                                        Know More
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
                 
                 {/* Right Static Section */}
-                <div className="w-2/5 p-8 bg-none h-[60vh] my-auto scale-75 flex flex-col justify-center">
-                    <div>
+                <div className="w-2/5 p-8 bg-none h-[60vh] my-auto scale-75 flex flex-col justify-center translate-y-3">
+                    <div className='translate-y-3'>
                         <h1 className='text-3xl font-cormorant-infant text-center text-[#f8d6a4] font-semibold'>Events Calendar</h1>
                         <EventsCalendar 
                             selectedDate={selectedDate}
@@ -335,8 +356,8 @@ const EventsPage = () => {
                             August {selectedDate}, 2025 - {currentEvents.length} event{currentEvents.length !== 1 ? 's' : ''}
                         </p>
                     </div>
-                    <div className="mt-3">
-                        <h1 className='text-3xl font-cormorant-infant text-center text-[#f8d6a4] font-semibold'>Map Of The Emerald Empire</h1>
+                    <div className="mt-3 flex flex-col">
+                        <h1 className='text-3xl font-cormorant-infant text-center translate-y-5 text-[#f8d6a4] font-semibold'>Map Of The Emerald Empire</h1>
                         <EventsMap/>
                     </div>
                 </div>
@@ -384,7 +405,8 @@ const EventsPage = () => {
                     {/* Horizontal Scroll Container */}
                     <div className="relative z-10 px-4">
                         <div 
-                            className="flex gap-6 overflow-x-auto scrollbar-hide pb-"
+                            ref={mobileScrollRef}
+                            className="flex overflow-x-auto scrollbar-hide"
                             style={{
                                 scrollSnapType: 'x mandatory',
                                 WebkitOverflowScrolling: 'touch',
@@ -395,13 +417,18 @@ const EventsPage = () => {
                             {currentEvents.map((eventData, index) => (
                                 <div 
                                     key={`mobile-${selectedDate}-${index}`} 
-                                    className="flex-shrink-0 w-[85vw] sm:w-[70vw]"
-                                    style={{ scrollSnapAlign: 'start' }}
+                                    className="flex-shrink-0 flex items-center justify-center"
+                                    style={{ 
+                                        width: `calc(100vw - 2rem)`,
+                                        scrollSnapAlign: 'center'
+                                    }}
                                 >
-                                    <EventCard 
-                                        left={index % 2 === 0} 
-                                        eventData={eventData}
-                                    />
+                                    <div className="w-full max-w-sm mx-auto">
+                                        <EventCard 
+                                            left={index % 2 === 0} 
+                                            eventData={eventData}
+                                        />
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -412,7 +439,11 @@ const EventsPage = () => {
                                 {currentEvents.map((_, index) => (
                                     <div 
                                         key={index}
-                                        className="w-2 h-2 rounded-full bg-[#edbd90] opacity-30"
+                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                            index === currentCardIndex 
+                                                ? 'bg-[#f8d6a4] opacity-100 scale-125' 
+                                                : 'bg-[#edbd90] opacity-30'
+                                        }`}
                                     />
                                 ))}
                             </div>

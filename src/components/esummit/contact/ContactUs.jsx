@@ -1,8 +1,18 @@
 "use client"
 
 import { useState } from "react";
-import Map from "./ContactMap";
-// import './ContactUs.css'; 
+import dynamic from 'next/dynamic';
+
+
+const Map = dynamic(() => import('./ContactMap'), {
+  ssr: false, 
+  loading: () => (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-lg">Loading map...</div>
+    </div>
+  )
+});
+
 
 function App() {
   const [formData, setFormData] = useState({
