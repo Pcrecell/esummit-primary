@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { past_sponsors } from "../../../../public/images/image-links";
 import { Skeleton } from '@mui/material';
+import Image from "next/image";
 
 
 const images = [past_sponsors.sponsor_1.link, past_sponsors.sponsor_2.link, past_sponsors.sponsor_3.link, past_sponsors.sponsor_1.link, past_sponsors.sponsor_2.link, past_sponsors.sponsor_3.link];
@@ -45,11 +46,13 @@ const Carousel = () => {
                   sx={{ position: 'absolute', width: '100%', height: '100%' }}
                 />
               )}
-              <img
+              <Image
                 src={image}
                 alt={`carousel-${index}`}
                 loading="lazy"
                 fetchPriority="low"
+                width={400}
+                height={400}
                 className={`h-16 w-auto md:h-20 object-contain transition-opacity duration-700 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'} ${erroredImages[index] ? 'hidden' : ''}`}
                 onLoad={() => setLoadedImages(prev => { const arr = [...prev]; arr[index] = true; return arr; })}
                 onError={() => setErroredImages(prev => { const arr = [...prev]; arr[index] = true; return arr; })}

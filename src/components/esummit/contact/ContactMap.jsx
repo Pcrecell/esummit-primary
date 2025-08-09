@@ -111,8 +111,8 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
   const [screenSize, setScreenSize] = useState('desktop');
 
   const markerPosition = useRef([20.353438244625394, 85.81957657593314]).current;
-
   const [mapCenter, setMapCenter] = useState(markerPosition);
+
   const handleResize = useCallback(() => {
     const width = window.innerWidth;
     if (width < 768) {
@@ -165,39 +165,39 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
         attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>'
       />
       <Marker position={markerPosition} ref={markerRef}>
-      <Popup
-        className="custom-popup responsive-popup"
-        autoClose={false}
-        closeOnClick={false}
-        closeButton={true}
-        maxWidth={screenSize === 'mobile' ? 240 : 280}
-        minWidth={screenSize === 'mobile' ? 180 : 200}
-      >
-        <div className="font-sans text-sm md:text-base">
-          <div className="font-bold mb-1">
-            <a
-              href="https://maps.app.goo.gl/rdAHuPNZTztHkeY17"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 text-sm md:text-base"
-            >
-              KIIT University, Bhubaneswar
-            </a>
+        <Popup
+          className="custom-popup responsive-popup"
+          autoClose={false}
+          closeOnClick={false}
+          closeButton={true}
+          maxWidth={screenSize === 'mobile' ? 240 : 280}
+          minWidth={screenSize === 'mobile' ? 180 : 200}
+        >
+          <div className="font-sans text-sm md:text-base">
+            <div className="font-bold mb-1">
+              <a
+                href="https://maps.app.goo.gl/rdAHuPNZTztHkeY17"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 text-sm md:text-base"
+              >
+                KIIT University, Bhubaneswar
+              </a>
+            </div>
+            <div className="text-xs md:text-sm text-gray-600 mb-2">
+              KIIT Road, Patia, Odisha 751024, India
+            </div>
+            <div>
+              <a
+                href="mailto:pcr.ecell@kiit.ac.in"
+                className="text-blue-500 hover:text-blue-700 text-xs md:text-sm"
+              >
+                pcr.ecell@kiit.ac.in
+              </a>
+            </div>
           </div>
-          <div className="text-xs md:text-sm text-gray-600 mb-2">
-            KIIT Road, Patia, Odisha 751024, India
-          </div>
-          <div>
-            <a
-              href="mailto:pcr.ecell@kiit.ac.in"
-              className="text-blue-500 hover:text-blue-700 text-xs md:text-sm"
-            >
-              pcr.ecell@kiit.ac.in
-            </a>
-          </div>
-        </div>
-      </Popup>
-    </Marker>
+        </Popup>
+      </Marker>
       <PopupOpener markerRef={markerRef} />
       <FixMapInteractions disableDragging={disableDragging} />
     </MapContainer>

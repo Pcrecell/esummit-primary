@@ -3,7 +3,7 @@ import Background from "../../../../public/images/esummit/events/EventsCalendarB
 
 const EventsCalendar = ({ selectedDate, onDateSelect }) => {
     const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    const eventDates = [15, 16, 17]; // Dates with events
+    const eventDates = [21, 22, 23, 24]; // Dates with events
     
     const calendarDays = [
         ...Array(5).fill(''),
@@ -26,9 +26,9 @@ const EventsCalendar = ({ selectedDate, onDateSelect }) => {
     const getDateStyles = (day) => {
         if (!day || !eventDates.includes(day)) return "text-center min-w-[20px]";
         
-        const baseStyles = "text-center min-w-[20px] cursor-pointer transition-all duration-200 hover:scale-110";
-        const eventStyles = "text-[#2eb24c] font-bold";
-        const selectedStyles = selectedDate === day ? "bg-white text-black rounded-full" : "";
+        const baseStyles = "text-center min-w-[23px] cursor-pointer transition-all duration-200 hover:scale-120 hover:opacity-50";
+        const eventStyles = "text-[#2eb24c] font-extrabold";
+        const selectedStyles = selectedDate === day ? "bg-white text-black font-bold w-[20px]  rounded-full" : "";
         
         return `${baseStyles} ${eventStyles} ${selectedStyles}`;
     };
@@ -54,10 +54,10 @@ const EventsCalendar = ({ selectedDate, onDateSelect }) => {
                 minHeight: '300px',
                 height: 'auto'
             }}
-            className="relative flex items-center justify-center p-8"
+            className="relative flex items-center justify-center p-8 rounded"
         >
             {/* Desktop Calendar */}
-            <div className='hidden lg:block p-7 font-cormorant-infant text-[#edbd90]'>
+            <div className='hidden lg:block p-10 font-cormorant-infant text-[#edbd90]'>
                 <div className='grid grid-cols-7 gap-5 mb-3'>
                     {daysOfWeek.map((day, index) => (
                         <p key={index} className="text-center font-semibold">{day}</p>

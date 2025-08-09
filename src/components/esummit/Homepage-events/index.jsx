@@ -62,83 +62,88 @@ export const Event = () => {
   };
 
   return (
-    <div
-      className="w-full bg-cover bg-center flex items-center justify-center"
-      style={{
-        backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
-        minHeight: "130vh",
-      }}
-    >
-      <div className="relative w-full max-w-6xl px-4">
-        <button
-    onClick={prev}
-    className="absolute left-4 md:-left-8 md:top-1/2 top-[30%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
-  >
-    <ChevronLeft size={32} />
-  </button>
+    <div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/30 to-black z-1" />  
+        <div
+          className="w-full flex items-center justify-center"
+          style={{
+            backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
+            minHeight: "130vh",
+            backgroundSize: "cover",
+            backgroundPosition: "calc(50% + 30px) center"
+          }}
+        >
+          <div className="relative w-full max-w-6xl px-4">
+            <button
+              onClick={prev}
+              className="absolute left-4 md:-left-8 md:top-1/2 top-[30%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
+            >
+              <ChevronLeft size={32} />
+            </button>
 
-  {/* Fixed Right Arrow */}
-  <button
-    onClick={next}
-    className="absolute right-4 md:-right-8 md:top-1/2 top-[30%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
-  >
-    <ChevronRight size={32} />
-  </button>
-       <AnimatePresence mode="wait">
-  <motion.div
-    key={events[current].id}
-    className="relative w-full flex flex-col md:flex-row items-center justify-between gap-8 -mt-32"
-    initial={{ opacity: 0, x: 100 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -100 }}
-    drag="x"
-    dragConstraints={{ left: 0, right: 0 }}
-    onDragEnd={handleDragEnd}
-  >
-    {/* Left Text */}
-    <div className="text-white w-full md:w-1/3 flex flex-col items-center justify-center md:-mt-48">
-      <h2
-        className="text-4xl md:text-5xl font-bold font-texturina mb-2 text-center"
-        style={{
-          background: 'linear-gradient(180deg, #00FF3B 50%, #FFFFFF 50%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
-      >
-        {events[current].title}
-      </h2>
-      <p className="text-lg opacity-80 font-texturina text-center">
-        {events[current].date}
-      </p>
-    </div>
+          {/* Fixed Right Arrow */}
+          <button
+            onClick={next}
+            className="absolute right-4 md:-right-8 md:top-1/2 top-[30%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
+          >
+            <ChevronRight size={32} />
+          </button>
 
-    {/* Centered Image */}
-    <div className="w-full md:w-1/3 flex items-center justify-center h-[400px] md:h-[500px] relative">
-      <img
-        src={events[current].image}
-        alt={events[current].title}
-        className="max-h-full max-w-full object-contain"
-      />
-    </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={events[current].id}
+              className="relative w-full flex flex-col md:flex-row items-center justify-between gap-8 -mt-32"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              onDragEnd={handleDragEnd}
+            >
+              {/* Left Text */}
+              <div className="text-white w-full md:w-1/3 flex flex-col items-center justify-center md:-mt-48">
+                <h2
+                  className="text-4xl md:text-5xl font-bold font-texturina mb-2 text-center"
+                  style={{
+                    background: 'linear-gradient(180deg, #00FF3B 50%, #FFFFFF 50%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  {events[current].title}
+                </h2>
+                <p className="text-lg opacity-80 font-texturina text-center">
+                  {events[current].date}
+                </p>
+              </div>
 
-    {/* Right Description */}
-    <div className="text-white w-full md:w-1/3 flex flex-col items-center ">
-      <h2
-        className="text-3xl md:text-4xl font-bold mb-2"
-        style={{ fontFamily: 'Teko, sans-serif' }}
-      >
-        About Event
-      </h2>
-      <p
-        className="text-lg opacity-90 text-center "
-        style={{ fontFamily: 'Teko, sans-serif' }}
-      >
-        {events[current].desc}
-      </p>
-    </div>
-  </motion.div>
-</AnimatePresence>
+              {/* Centered Image */}
+              <div className="w-full md:w-1/3 flex items-center justify-center h-[400px] md:h-[500px] relative">
+                <img
+                  src={events[current].image}
+                  alt={events[current].title}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
 
+              {/* Right Description */}
+              <div className="text-white w-full md:w-1/3 flex flex-col items-center ">
+                <h2
+                  className="text-3xl md:text-4xl font-bold mb-2"
+                  style={{ fontFamily: 'Teko, sans-serif' }}
+                >
+                  About Event
+                </h2>
+                <p
+                  className="text-lg opacity-90 text-center "
+                  style={{ fontFamily: 'Teko, sans-serif' }}
+                >
+                  {events[current].desc}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
