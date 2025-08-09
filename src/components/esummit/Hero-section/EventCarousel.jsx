@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState, useEffect } from "react";
@@ -88,7 +87,7 @@ const EventCarousel = () => {
         <div
           className={`
             ${isMdOrLarger
-              ? 'relative w-full md:max-w-xl lg:max-w-3xl mx-auto md:min-h-24'
+              ? 'relative w-full md:max-w-xl lg:max-w-4xl mx-auto md:min-h-24'
               : 'w-[80vw] max-w-md mx-auto'
             }
           `}
