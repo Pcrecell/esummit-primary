@@ -172,12 +172,12 @@ const WhyEsummit = () => {
               <img
                 src={card.image}
                 alt={card.label}
-                className="card-image max-w-[400px] h-full object-contain absolute inset-0 z-0"
+                className="card-image max-w-[160px] sm:max-w-[300px] h-full object-contain absolute inset-0 z-0"
               />
 
               {/* Text Layer */}
-              <div className="absolute inset-3 left-16 flex flex-col items-center justify-center text-black px-2 text-center z-10">
-                <div className="text-3xl sm:text-5xl font-extrabold leading-none">
+              <div className="absolute inset-3 lef-0 sm:left-16 flex flex-col items-center justify-center text-black px-2 text-center z-10">
+                <div className="text-3xl sm:text-6xl font-extrabold leading-none">
                   {card.number}
                 </div>
                 <div className="text-sm sm:text-xl font-medium mt-2 whitespace-pre-line leading-tight">
@@ -190,22 +190,22 @@ const WhyEsummit = () => {
                 <img
                   src={cornerOutline}
                   alt="corner"
-                  className="corner-outline absolute top-[10px] left-[-8px] w-5 sm:w-9 rotate-[270deg] opacity-0"
+                  className="corner-outline absolute top-[26px] left-[-8px] sm:top-[10px] sm:left-[-8px] w-5 sm:w-9 rotate-[270deg] opacity-0"
                 />
                 <img
                   src={cornerOutline}
                   alt="corner"
-                  className="corner-outline absolute top-[-10px] right-[-40px] w-5 sm:w-9 rotate-[-5deg] opacity-0"
+                  className="corner-outline absolute top-[13px] right-[3px] sm:top-[-10px] sm:right-[-40px] w-5 sm:w-9 rotate-[-5deg] opacity-0"
                 />
                 <img
                   src={cornerOutline}
                   alt="corner"
-                  className="corner-outline absolute bottom-[-10px] left-[10px] w-5 sm:w-9 rotate-180 opacity-0"
+                  className="corner-outline absolute bottom-[10px] left-[5px] sm:bottom-[-10px] sm:left-[10px] w-5 sm:w-9 rotate-180 opacity-0"
                 />
                 <img
                   src={cornerOutline}
                   alt="corner"
-                  className="corner-outline absolute bottom-[10px] right-[-70px] w-5 sm:w-9 rotate-90 opacity-0"
+                  className="corner-outline absolute bottom-[25px] right-[-10px] sm:bottom-[10px] sm:right-[-70px] w-5 sm:w-9 rotate-90 opacity-0"
                 />
               </div>
             </div>
