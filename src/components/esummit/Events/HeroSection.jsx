@@ -37,70 +37,21 @@ const HeroSection = () => {
                                 opacity: 0,
                                 y: 60,
                                 scale: 0.9,
-                                rotate: 0,
                                 textShadow: "0 0 0 rgba(16, 189, 27, 0)" // Initial glow state
                             }}
                             animate={{
                                 opacity: 1,
                                 y: 0,
                                 scale: 1,
-                                rotate: 0,
                                 textShadow: "0 0 10px rgba(16, 189, 27, 0.8)", // Default glow
+                                // transition: {
+                                //     delay: index * 0.2,
+                                //     duration: 1,
+                                //     ease: "easeOut"
+                                // }
                                 transition: {
-                                    delay: index * 0.2,
-                                    duration: 1,
+                                    duration: 1.5,
                                     ease: "easeOut"
-                                }
-                            }}
-                            whileHover={{
-                                textShadow: isFirstOrLast
-                                    ? [
-                                        "0 0 15px rgba(16, 189, 27, 0.9)",
-                                        "0 0 25px rgba(16, 170, 26, 0.9)",
-                                        "0 0 35px rgba(172, 15, 15, 0.9)"
-                                    ]
-                                    : "0 0 10px rgba(16, 189, 27, 0.8)",
-                                transition: {
-                                    duration: 0.5,
-                                    repeat: Infinity,
-                                    repeatType: "reverse"
-                                }
-                            }}
-                            onHoverStart={(e) => {
-                                if (!isFirstOrLast) return;
-
-                                const letters = e.target.parentElement.children;
-                                const direction = index === 0 ? 1 : -1;
-
-                                for (let i = 0; i < letters.length; i++) {
-                                    const position = direction === 1 ? i : letters.length - 1 - i;
-                                    const delay = position * 150;
-                                    const height = -30 + (position * 3);
-
-                                    setTimeout(() => {
-                                        // Animate both position and glow
-                                        letters[position].animate([
-                                            {
-                                                transform: 'translateY(0)',
-                                                textShadow: '0 0 10px rgba(16, 189, 27, 0.8)'
-                                            },
-                                            {
-                                                transform: `translateY(${height}px)`,
-                                                textShadow: '0 0 25px rgba(16, 170, 26, 0.9)'
-                                            },
-                                            {
-                                                transform: 'translateY(-10px)',
-                                                textShadow: '0 0 15px rgba(15, 172, 41, 0.8)'
-                                            },
-                                            {
-                                                transform: 'translateY(0)',
-                                                textShadow: '0 0 10px rgba(16, 189, 27, 0.8)'
-                                            }
-                                        ], {
-                                            duration: 2500,
-                                            easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
-                                        });
-                                    }, delay);
                                 }
                             }}
                         >
