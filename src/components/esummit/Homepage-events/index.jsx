@@ -11,14 +11,14 @@ const events = [
     title: "ORACLE",
     date: "AUG 15",
     desc: "ORACLE is an electrifying ideation and pitch event that challenges participants to think beyond borders. In this unique experience, participants are presented with real-world problem statements concerning various countries and global issues. Their task? To brainstorm innovative solutions, back them up with data, and pitch their ideas in front of a live audience and expert panel.Whether it's tackling environmental challenges in Southeast Asia, improving digital infrastructure in African nations, or reimagining education systems in South America — ORACLE is your gateway to becoming a global change-maker.",
-    image: "https://i.postimg.cc/zfGVjDCX/Property-1-Frame-303.png",
+    image: "https://i.postimg.cc/63NtY1mf/Group-1000002414.png",
   },
   {
     id: "2",
     title: "ALICE IN FOUNDERLAND",
     date: "AUG 15",
     desc: "Welcome to Alice in Founderland, a thrilling entrepreneurial adventure inspired by the hit series Alice in Borderland. In this high-stakes event, participants must navigate through a challenging game, where each level unravels a complex real-world problem demanding smart, scalable solutions.Participants are not just solving problems — they’re playing to win. Every challenge is designed to test your creativity, critical thinking, and entrepreneurial instincts. The deeper you go, the tougher it gets. But only those who crack the code and present the most impactful ideas will emerge victorious.",
-    image: "https://i.postimg.cc/jj3CkVc6/Property-1-Frame-301.png",
+    image: "https://i.postimg.cc/jd9VMFWn/Group-1000002412.png",
   },
   {
     id: "3",
@@ -31,14 +31,14 @@ const events = [
     title: "PANDORAS PARADOX",
     date: "AUG 15",
     desc: "Inspired by the mythical tale of Pandora’s Box, Pandora’s Paradox is a gripping ideation challenge where each problem statement is a ‘bad soul’ unleashed into the world — from climate crises and misinformation to ethical dilemmas in tech.But just like the myth, hope remains. It’s up to the participants to transform chaos into solutions — the ‘good souls’. With every round, teams confront darker and more complex challenges, pushing them to think critically, ethically, and creatively.",
-    image: "https://i.postimg.cc/kG0JPqR8/Property-1-Frame-300.png",
+    image: "https://i.postimg.cc/7Zs5tD3M/Group-1000002415.png",
   },
   {
     id: "5",
     title: "EXPO",
     date: "AUG 15",
     desc: "EXPO is a dynamic showcase of ideas, innovations, and initiatives — a platform where creators, problem solvers, and visionaries come together to exhibit their work and inspire change.From startups and tech demos to social innovations and research models, EXPO brings a diverse range of projects under one roof. It’s not just about displaying; it’s about connecting, collaborating, and sparking conversations that matter.",
-    image: "https://i.postimg.cc/bvqm7L2N/Expo-1.png",
+    image: "https://i.postimg.cc/T3z634fv/Group-1000002413.png",
   },
 ];
 
@@ -72,7 +72,7 @@ export const Event = () => {
       <div className="relative w-full max-w-6xl px-4">
         <button
     onClick={prev}
-    className="absolute left-4 md:-left-8 md:top-1/2 top-[30%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
+    className="absolute left-4 md:-left-8 md:top-1/2 top-[35%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
   >
     <ChevronLeft size={32} />
   </button>
@@ -80,14 +80,14 @@ export const Event = () => {
   {/* Fixed Right Arrow */}
   <button
     onClick={next}
-    className="absolute right-4 md:-right-8 md:top-1/2 top-[30%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
+    className="absolute right-4 md:-right-8 md:top-1/2 top-[35%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
   >
     <ChevronRight size={32} />
   </button>
        <AnimatePresence mode="wait">
   <motion.div
     key={events[current].id}
-    className="relative w-full flex flex-col md:flex-row items-center justify-between gap-8 -mt-32"
+    className="relative w-full flex flex-col md:flex-row items-center justify-between gap-8 md:-mt-40"
     initial={{ opacity: 0, x: 100 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: -100 }}
@@ -96,9 +96,9 @@ export const Event = () => {
     onDragEnd={handleDragEnd}
   >
     {/* Left Text */}
-    <div className="text-white w-full md:w-1/3 flex flex-col items-center justify-center md:-mt-48">
+    <div className="text-white w-full md:w-1/3 flex flex-col items-center justify-center ">
       <h2
-        className="text-4xl md:text-5xl font-bold font-texturina mb-2 text-center"
+        className="text-4xl md:text-5xl font-bold font-texturina mb-2 text-center md:-mt-48"
         style={{
           background: 'linear-gradient(180deg, #00FF3B 50%, #FFFFFF 50%)',
           WebkitBackgroundClip: 'text',
@@ -113,18 +113,18 @@ export const Event = () => {
     </div>
 
     {/* Centered Image */}
-    <div className="w-full md:w-1/3 flex items-center justify-center h-[400px] md:h-[500px] relative">
+    <div className="w-full md:w-1/3 flex  justify-center h-[500px] md:h-[600px] relative ">
       <img
         src={events[current].image}
         alt={events[current].title}
-        className="max-h-full max-w-full object-contain"
+        className="max-h-full max-w-full object-contain md:-ml-12"
       />
     </div>
 
     {/* Right Description */}
     <div className="text-white w-full md:w-1/3 flex flex-col items-center ">
       <h2
-        className="text-3xl md:text-4xl font-bold mb-2"
+        className="text-3xl md:text-4xl font-bold mb-2 text-base"
         style={{ fontFamily: 'Teko, sans-serif' }}
       >
         About Event
