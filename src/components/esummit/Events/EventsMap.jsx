@@ -224,11 +224,11 @@ const EventsMap = () => {
                 />
                 
                 {/* Loading indicator */}
-                {!mapLoaded && (
+                {/* {!mapLoaded && (
                     <div className="absolute left-1/2 top-1/2 w-[80%] h-[40%] lg:w-[75%] lg:h-[55%] -translate-x-1/2 lg:-translate-y-[65%] -translate-y-[110%] rounded-[18px] bg-gradient-to-br from-amber-900/20 to-amber-700/20 flex items-center justify-center z-0">
                         <div className="text-amber-200 text-sm animate-pulse">Loading map...</div>
                     </div>
-                )}
+                )} */}
                 
                 <div
                     ref={mapRef}
