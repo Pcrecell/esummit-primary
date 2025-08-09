@@ -139,6 +139,24 @@ export const Event = () => {
   </motion.div>
 </AnimatePresence>
 
+              {/* Right Description */}
+              <div className="text-white w-full md:w-1/3 flex flex-col items-center ">
+                <h2
+                  className="text-3xl md:text-4xl font-bold mb-2"
+                  style={{ fontFamily: 'Teko, sans-serif' }}
+                >
+                  About Event
+                </h2>
+                <p
+                  className="text-lg opacity-90 text-center "
+                  style={{ fontFamily: 'Teko, sans-serif' }}
+                >
+                  {events[current].desc}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

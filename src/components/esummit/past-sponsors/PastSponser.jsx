@@ -3,6 +3,7 @@
 import { past_sponsors } from '../../../../public/images/image-links';
 import { Skeleton } from '@mui/material';
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 function PastSponser() {
   const [loaded, setLoaded] = useState(false);
@@ -18,10 +19,12 @@ function PastSponser() {
           sx={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '0.75rem' }}
         />
       )}
-      <img
+      <Image
         src={past_sponsors.past_sponsors_text.link}
         alt={past_sponsors.past_sponsors_text.alt}
-        className={`object-contain w-full h-full shadow-lg rounded-xl p-2 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'} ${errored ? 'hidden' : ''}`}
+        width={1200}
+        height={1200}
+        className={`object-contain max-w-[300px] sm:max-w-[400px] mb-32 sm:mb-0 h-full shadow-lg rounded-xl p-2 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'} ${errored ? 'hidden' : ''}`}
         onLoad={() => setLoaded(true)}
         onError={() => setErrored(true)}
         style={{ position: 'relative', zIndex: 1 }}

@@ -2,7 +2,7 @@
 const MobileTabs = ({ selectedDate, onDateSelect, tabs }) => {
     return (
         <div className="flex justify-center mb-6">
-            <div className="bg-black/30 backdrop-blur-sm rounded-lg p-1 border border-[#edbd90]/20">
+            <div className="bg-black/30 backdrop-blur-sm flex flex-row max-w-[32rem] justify-between rounded-lg p-1 mt-2 border border-[#edbd90]/20">
                 {tabs.map((tab) => (
                     <button
                         key={tab.date}

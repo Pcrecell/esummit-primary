@@ -30,7 +30,7 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
-  background-color: #010b04;
+  background-color: #000000;
 }
 
 .hide-scroll {
