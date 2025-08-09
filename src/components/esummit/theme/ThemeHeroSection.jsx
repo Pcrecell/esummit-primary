@@ -48,8 +48,8 @@ const ThemeHeroSection = () => {
         }} />
 
         {/* Bottom Gradient Overlay */}
-        <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
-          background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
+        <div className="absolute bottom-0 left-0 w-full h-102 z-5" style={{
+          background: "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8), transparent)"
         }} />
       
         {/* Content Container */}
