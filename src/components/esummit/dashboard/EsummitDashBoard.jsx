@@ -67,7 +67,7 @@ const EsummitDashBoard = () => {
           className="fixed top-0 left-0 w-full h-full object-cover z-[-1] bg-[#010b04]"
         >
           <source
-            src="https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113?updatedAt=1754555000937"
+            src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit.mp4?updatedAt=1754759044375"
             type="video/mp4"
           />
           Your browser does not support the video tag.
