@@ -365,7 +365,9 @@ const EventsPage = () => {
                         <p className="text-[#edbd90] text-base font-cormorant-infant text-center">
                             August {selectedDate}, 2025 - {currentEvents.length} event{currentEvents.length !== 1 ? 's' : ''}
                         </p>
+                        
                     </div>
+                    
                 </div>
 
                 <div className="relative py-8">
@@ -439,7 +441,7 @@ const EventsPage = () => {
 
                 {/* Map Section - Right below the cards */}
                 <div className="bg-none p-6">
-                    <h1 className='text-2xl font-cormorant-infant text-center text-[#f8d6a4] font-semibold'>MAP OF EMERALD EMPIRE</h1>
+                    <h1 className='text-2xl md:pb-0 pb-10 font-cormorant-infant text-center text-[#f8d6a4] font-semibold'>MAP OF EMERALD EMPIRE</h1>
                     <EventsMap/>
                 </div>
             </div>
