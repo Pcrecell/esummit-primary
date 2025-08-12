@@ -73,9 +73,9 @@ export const Event = () => {
       className="w-full bg-cover bg-center flex items-center justify-center relative translate-y-40"
       style={{
         backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
-        minHeight: "130vh",
+        minHeight: "110vh",
         backgroundSize: "cover",
-        backgroundPosition: "calc(50% + 30px) center"
+        backgroundPosition: "calc(50%) center"
       }}
     >
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/80 to-transparent z-5"></div>

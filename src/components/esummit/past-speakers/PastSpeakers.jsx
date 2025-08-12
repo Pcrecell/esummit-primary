@@ -141,8 +141,7 @@ const rightColumn = speakers.filter((_, i) => i % 2 !== 0);
     width: isMobile ? "100%" : "auto",
   }}
 >
-  {/* Black overlay at top */}
-  
+  {/* <div className="absolute inset-0 bg-black/60 z-0"></div> */}
 
   {isMobile ? (
     // Mobile View - Single Row Scrolling Horizontally
@@ -165,7 +164,7 @@ const rightColumn = speakers.filter((_, i) => i % 2 !== 0);
       {/* Left Column - Scroll Up */}
       <div className="flex flex-col scroll-up">
         {[...leftColumn, ...leftColumn].map((speaker, idx) => (
-          <div key={`left-${idx}`} className="mb-6">
+          <div key={`left-${idx}`} className="mb-6 z-50">
             <Image
               src={speaker.image}
               alt={speaker.alt}
