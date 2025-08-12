@@ -24,6 +24,7 @@ export default function Login() {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log("Login response:", response);
+  
       if (response.error) {
         setError(response.error);
         setLoading(false);
@@ -107,7 +108,7 @@ export default function Login() {
 
         <div className="text-right mb-1">
           <a
-            href="/esummit/forgot-password"
+            href="/forgot-password"
             className="text-sm text-white hover:text-green-400 hover:underline"
           >
             Forgot your password?
