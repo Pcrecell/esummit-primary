@@ -65,6 +65,9 @@ const EsummitDashBoard = () => {
           muted
           playsInline
           className="fixed top-0 left-0 w-full h-full object-cover z-[-1] bg-[#010b04]"
+          style={{
+            objectPosition: "calc(50% + 23px) center"
+          }}
         >
           <source
             src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit.mp4?updatedAt=1754759044375"
@@ -110,18 +113,59 @@ const EsummitDashBoard = () => {
             </div>
           </div>
           <div className="flex items-center justify-center w-full mt-8">
-            <button 
+            {/* <button 
               onClick={() => setPaymentDone(true)} 
               className="py-4 px-8 bg-gradient-to-br font-poppins from-black to-green-600 text-white shadow-lg shadow-[#abd65d] border-b-2 border-white text-2xl rounded-2xl hover:shadow-[#abd65d] hover:shadow-2xl transition-all duration-[1000ms]"
             >
               Pay Now
-            </button>
+            </button> */}
           </div>
         </div>
 
         <div className="relative min-h-[80vh] sm:min-h-[90vh] font-sans text-white background-container">   
         </div>
       </div>
+      {/* {console.log("Current registeredEventId:", registeredEventId)}
+      {registeredEventId ? (
+        <div>
+          <PaymentEnd eventId={registeredEventId} />
+        </div>
+      ) : (
+        <div>
+          <PaymentStart 
+            onEventSelect={handleEventClick} 
+            paymentEnabled={paymentDone}
+            onPayNow={handlePaymentFromPopup}
+          />
+        </div>
+      )} */}
+
+      {/* Confirmation Popup */}
+           {/* Confirmation Popup */}
+      {showConfirmationPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md mx-4">
+            <h3 className="text-xl font-bold text-black mb-4">Confirm Registration</h3>
+            <p className="text-gray-700 mb-6">
+              Are you sure you want to register for this event?
+            </p>
+            <div className="flex gap-4 justify-end">
+              <button 
+                onClick={handleCancelRegistration}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleConfirmRegistration}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
