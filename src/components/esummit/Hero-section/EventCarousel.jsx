@@ -47,8 +47,8 @@ const EventCarousel = () => {
       id: 2,
       time: "11:00 AM",
       date: "August 22",
-      title: "Expo",
-      subtitle: "Join EXPO: Showcase Your Ideas, Inspire the Future!",
+      title: "Founder's Arena",
+      subtitle: "Join Founder's Arena: Showcase Your Ideas, Inspire the Future!",
     },
     {
       id: 3,

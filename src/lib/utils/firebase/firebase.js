@@ -14,6 +14,7 @@ const mainFirebaseConfig = {
 
 const mainApp = initializeApp(mainFirebaseConfig);
 
+// Export services from both apps
 export const auth = getAuth(mainApp);
 export const db = getFirestore(mainApp);
 
