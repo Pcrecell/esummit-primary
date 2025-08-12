@@ -8,7 +8,6 @@ const PaymentChoice = () => {
   const searchParams = useSearchParams();
   const modalRef = useRef(null);
 
-  // Extract params from URL
   const name = searchParams.get("name") || "";
   const email = searchParams.get("email") || "";
   const phone = searchParams.get("phone") || "";
@@ -16,7 +15,6 @@ const PaymentChoice = () => {
 
   const userData = { name, email, phone, uid };
 
-  // Close modal on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -64,38 +62,34 @@ const PaymentChoice = () => {
             </p>
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Price: Rs.249
-            </p>
-
-            {/* PAY NOW Button */}
-          <div
-  className="relative w-40 cursor-pointer transition duration-300 hover:brightness-50"
+            </p>            
+       <div
+  className="group relative w-40 cursor-pointer"
   onClick={handlePayment}
 >
   <img
     src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
     alt="Pay Now"
-    className="w-full"
+    className="w-full transition duration-300 group-hover:brightness-50 z-0"
   />
-  <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm font-poppins">
+  <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
     PAY NOW
   </span>
 </div>
+          <div
+  className="group relative w-40 cursor-pointer transition duration-300"
+  onClick={handlePaymentLater}
+>
+  <img
+    src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
+    alt="Walk Away"
+    className="w-full transition duration-300 group-hover:brightness-50 z-0"
+  />
+  <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
+    WALK AWAY
+  </span>
+</div>
 
-
-            {/* PAY LATER Button */}
-           <div
-              className="relative w-40 cursor-pointer transition duration-300 hover:brightness-50"
-              onClick={handlePaymentLater}
-            >
-              <img
-                src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
-                alt="Walk Away"
-                className="w-full"
-              />
-              <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm font-poppins">
-                WALK AWAY
-              </span>
-            </div>
           </div>
         </div>
       </div>
