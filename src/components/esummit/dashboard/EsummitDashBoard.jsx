@@ -104,10 +104,24 @@ const EsummitDashBoard = () => {
           />
           Your browser does not support the video tag.
         </video>
-
+        <div className="relative z-20 w-full pointer-events-none">
+          <div className="flex flex-col font-bold w-full justify-center pt-24 sm:pt-[35vh] ml-4 pointer-events-auto">
+            <h1 className="font-tourney text-5xl sm:text-5xl text-start" style={{ 
+              color: '#FFFFFF', 
+              WebkitTextStroke: '1px #FFFFFF',
+              paintOrder: 'stroke fill'
+            }}>Hey!</h1>
+            <h1 className="font-tourney text-8xl sm:text-8xl text-start" style={{ 
+              color: '#FFFFFF', 
+              WebkitTextStroke: '2px #FFFFFF',
+              paintOrder: 'stroke fill'
+            }}>User</h1>
+          </div>
+        </div>
         <div
-          className="relative min-h-screen font-sans text-white hero-container"
+          className="relative min-h-[80vh] font-sans text-white hero-container"
         />   
+
         <div className="absolute top-[120vh] sm:top-[130vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-80">
           <div className="relative">
             <div className="relative">
@@ -151,7 +165,7 @@ const EsummitDashBoard = () => {
           </div>
         </div>
 
-        <div className="relative min-h-[80vh] sm:min-h-[90vh] font-sans text-white background-container">   
+        <div className="relative min-h-[80vh] sm:min-h-[50vh] font-sans text-white background-container">   
         </div>
       </div>
       {/* {console.log("Current registeredEventId:", registeredEventId)}
