@@ -11,12 +11,11 @@ import {
 } from "../../ui/esummit-navbar/Esummit-resized";
 import { useState, useEffect } from "react";
 import { authAPI } from "../../../lib/services/api.js";
-import { useRouter } from "next/navigation";
 
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
     // Check session on mount
@@ -25,7 +24,7 @@ export default function EsummitNavbar() {
         const res = await authAPI.verifyToken();
         setIsAuthenticated(res.success);
       } catch {
-        setIsAuthenticated(false);
+        setIsAuthenticated(true);
       }
     })();
   }, []);
@@ -79,10 +78,10 @@ export default function EsummitNavbar() {
                         className="w-10 h-10 rounded-full object-cover hover:opacity-80 transition-opacity"
                       />
                     </div>
-                    <div className="absolute right-0 mt-2 w-32 bg-white rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div className="absolute backdrop-blur-3xl bg-black/40 rounded-xl right-0 mt-3 w-32 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                       <a
                         href="/dashboard"
-                        className="block px-4 py-2 text-black hover:bg-gray-100 rounded"
+                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] hover:text-white rounded"
                       >
                         Dashboard
                       </a>
@@ -109,7 +108,7 @@ export default function EsummitNavbar() {
             </div>
 
             {/* Mobile Navigation */}
-            <div className="flex md:hidden w-full">
+            <div className="flex lg:hidden w-full">
               <MobileNav visible={visible}>
                 <MobileNavHeader>
                   <NavbarLogo />
