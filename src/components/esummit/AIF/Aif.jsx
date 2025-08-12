@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
 import FlippableRounds from "./Rounds";
-
+import TimeVenue from "./TimeVenue";
+import WhatsIt from "./WhatsIt";
+import Rules from "./Rules";
 export default function Aif() {
   return (
     <div>
@@ -102,8 +104,10 @@ export default function Aif() {
           </div>
         </div>
       </div>
-      <FlippableRounds />;
+      <TimeVenue />
+      <FlippableRounds />
+      <WhatsIt />
+      <Rules />
     </div>
   );
-   
 }
