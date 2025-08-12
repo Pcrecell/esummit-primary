@@ -1,6 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import {} from 'next/font/google'
+
+const Alumini = Alumni_Sans_Inline_One({
+  subsets: ['latin'],
+  weight: "400"
+})
 
 export default function ComingSoon() {
   const videoRef = useRef(null);
@@ -52,7 +59,23 @@ export default function ComingSoon() {
           />
           Your browser does not support HTML5 video.
         </video>
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
+      </div>
+
+      <div className='absolute inset-0 flex flex-col gap-12 justify-center items-center z-10'>
+        <div className=''>
+          <Image
+            src={"https://i.postimg.cc/C1s2B7Ds/image.png"}
+            width={600}
+            height={600}
+          />
+        </div>
+        <div className='flex flex-col gap-6'>
+          <p className='text-9xl text-[#2eb24c] tracking-wider font-[Alumni_Sans_Inline_One]'>We Are Cooking.</p>
+          <p className='text-2xl text-white text-center font-bold'>We’re going to launch our event specific website very soon</p>
+        </div>
       </div>
     </div>
   );
