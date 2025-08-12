@@ -24,7 +24,7 @@ export default function EsummitNavbar() {
         const res = await authAPI.verifyToken();
         setIsAuthenticated(res.success);
       } catch {
-        setIsAuthenticated(true);
+        setIsAuthenticated(false);
       }
     })();
   }, []);
