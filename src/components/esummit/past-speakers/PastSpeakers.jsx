@@ -110,7 +110,7 @@ const rightColumn = speakers.filter((_, i) => i % 2 !== 0);
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('https://i.postimg.cc/Jz0pdv9V/download-13-2.png')",
+          backgroundImage: "url('https://i.postimg.cc/TwjnpCk3/download-13-3-1-1.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
