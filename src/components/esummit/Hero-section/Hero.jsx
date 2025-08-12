@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Carousel from "./EventCarousel";
 import { esummit_hero } from "../../../../public/images/image-links";

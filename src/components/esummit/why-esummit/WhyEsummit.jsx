@@ -276,23 +276,27 @@ const WhyEsummit = () => {
           backgroundRepeat: "repeat-y",
         }}
       >
-        Why Join E-Summit?
-      </h2>
-     <div
+        <div className="absolute inset-0 bg-black/60 z-0"></div>
+        
+        {/* Content with higher z-index */}
+        <div className="relative z-10">
+          <h2
+            className="text-[40px] sm:text-[50px] font-serif font-bold mb-36"
+            style={{ fontFamily: "Texturina, serif" }}
+          >
+            Why Join <span style={{ color: "#2EB24C" }}>E-Summit ?</span>
+          </h2>
+    
+        <div
   ref={cardsContainerRef}
   className="grid grid-cols-2 gap-6 md:gap-8 lg:flex lg:flex-wrap lg:justify-between lg:gap-28 max-w-6xl mx-4"
 >
-        {cards.map((card, index) => (
-          <div
-            ref={cardsContainerRef}
-            className="flex flex-wrap justify-between gap-6 md:gap-28 max-w-6xl mx-auto mr-8"
-          >
-            {cards.map((card, index) => (
-              <div
-                key={index}
-                ref={(el) => (cardRefs.current[index] = el)}
-                className="group relative w-[156px] h-[204px] sm:w-[200px] sm:h-[260px] cursor-pointer"
-              >
+  {cards.map((card, index) => (
+    <div
+      key={index}
+      ref={(el) => (cardRefs.current[index] = el)}
+      className="group relative w-[156px] h-[204px] sm:w-[200px] sm:h-[260px] cursor-pointer"
+    >
                 <div className="absolute inset-0">
                   <img
                     src={card.image}
