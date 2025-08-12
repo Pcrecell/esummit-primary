@@ -94,7 +94,7 @@ export default function EsummitNavbar() {
             </div>
 
             {/* Mobile Navigation */}
-            <div className="flex md:hidden w-full">
+            <div className="flex lg:hidden w-full">
               <MobileNav visible={visible}>
                 <MobileNavHeader>
                   <NavbarLogo />

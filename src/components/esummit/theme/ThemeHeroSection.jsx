@@ -349,7 +349,7 @@ const ThemeHeroSection = () => {
           background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
         }} />
         {isMobile && <div className="w-full h-80"></div>}
-        <div className="w-full h-[90vh]">
+        <div className="w-full h-[50vh] md:h-[90vh]">
           <ScrollOne isMobile={isMobile} />
         </div>
 
