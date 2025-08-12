@@ -178,7 +178,7 @@ export default function EsummitNavbar() {
                       </>
                     ) : (
                       <>
-                        <a href="/esummit/login" onClick={() => setIsMobileMenuOpen(false)}>
+                        <a href="/login" onClick={() => setIsMobileMenuOpen(false)}>
                           <NavbarButton variant="primary" className="w-full">Login</NavbarButton>
                         </a>
                         <a href="/esummit/register" onClick={() => setIsMobileMenuOpen(false)}>

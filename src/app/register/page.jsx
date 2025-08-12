@@ -114,7 +114,7 @@ export default function Register() {
 
       console.log("Registration data");
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -138,7 +138,7 @@ export default function Register() {
       }
     
     // Set session cookie in backend
-    await fetch(`${process.env.REACT_APP_API_URL}/auth/sessionLogin`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
       method: 'POST',
       credentials: 'include',
       headers: {
