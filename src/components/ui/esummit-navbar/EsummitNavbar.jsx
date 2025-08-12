@@ -167,7 +167,7 @@ export default function EsummitNavbar() {
                               if(response.success){
                                 isAuthenticated = false;
                                 // Redirect to home or login page
-                                window.location.href = "/esummit"; 
+                                window.location.href = "/"; 
                               } 
                             setIsMobileMenuOpen(false)
                           }}
