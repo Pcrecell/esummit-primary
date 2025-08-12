@@ -9,7 +9,7 @@ function PastSponser() {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mt-4 md:mt-0">
       {(!loaded && !errored) && (
         <Skeleton
           variant="rectangular"
@@ -24,7 +24,7 @@ function PastSponser() {
         alt={past_sponsors.past_sponsors_text.alt}
         width={1200}
         height={1200}
-        className={`object-contain max-w-[300px] sm:max-w-[400px] mb-32 sm:mb-0 h-full shadow-lg rounded-xl p-2 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'} ${errored ? 'hidden' : ''}`}
+        className={`object-contain max-w-[300px] sm:max-w-[400px] my-auto sm:mt-0 sm:mb-0 h-full shadow-lg rounded-xl p-2 transition-opacity duration-700 ${loaded ? 'opacity-100' : 'opacity-0'} ${errored ? 'hidden' : ''}`}
         onLoad={() => setLoaded(true)}
         onError={() => setErrored(true)}
         style={{ position: 'relative', zIndex: 1 }}

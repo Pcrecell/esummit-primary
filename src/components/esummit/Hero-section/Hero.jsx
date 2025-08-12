@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Carousel from "./EventCarousel";
 import { esummit_hero } from "../../../../public/images/image-links";
@@ -5,7 +6,7 @@ import { esummit_hero } from "../../../../public/images/image-links";
 function Hero() {
     return (
         <div
-            className="relative flex flex-col items-center justify-center h-screen w-screen bg-center lg:pt-32"
+            className="relative flex flex-col items-center justify-center h-screen w-screen bg-center lg:pb-10"
             style={{
                 backgroundImage: `url("${esummit_hero.esummit_hero_bg.link}")`,
                 backgroundSize: 'cover',
@@ -22,15 +23,23 @@ function Hero() {
                     className="w-[90vw] mb-6 md:w-[60vw] lg:max-w-[40vw]"
                 />
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto justify-center items-center">
-                    <button className="bg-black text-white py-2 px-4 rounded-[20px] border border-white hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out">
-                        Know More ↗
-                    </button>
-                    <button className="bg-white text-black py-2 px-4 rounded-[20px] border border-none hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out">
-                        Get your ticket ↗
-                    </button>
+                    <button
+  onClick={() => window.location.href = "/theme"}
+  className="bg-black text-white py-2 px-4 rounded-[20px] border border-white hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
+>
+  Know More ↗
+</button>
+
+                    <button
+  onClick={() => window.location.href = "/register"}
+  className="bg-white text-black py-2 px-4 rounded-[20px] border border-none hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
+>
+  Get your ticket ↗
+</button>
+
                 </div>
                  <div className="w-full max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw] xl-max-w-[50vw] 2xl:max-w-[55vw] mt-16">
-                    <Carousel />
+                    {/* <Carousel /> */}
                 </div>
                 <div className="h-20 md:h-30 lg:h-20"></div>
             </div>
