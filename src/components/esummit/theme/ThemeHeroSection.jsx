@@ -251,17 +251,17 @@ const ThemeHeroSection = () => {
         }}
       >
         {/* Top Gradient Overlay */}
-        <div className="absolute top-0 left-0 w-full h-32 z-5" style={{
+        {/* <div className="absolute top-0 left-0 w-full h-32 z-5" style={{
           background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
-        }} />
+        }} /> */}
         {isMobile && <div className="w-full h-80"></div>}
         <div className="w-full h-[80vh]">
           <ScrollOne isMobile={isMobile} />
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
+        {/* <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
           background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
-        }} />
+        }} /> */}
 
       </section>
     </>
