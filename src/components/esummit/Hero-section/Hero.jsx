@@ -14,7 +14,6 @@ function Hero() {
             }}
         >
             <div className="h-45"></div>
-            <div className="absolute inset-0 bg-black opacity-60 z-0"></div>
             <div className="relative z-10 flex flex-col items-center text-white text-center px-4 py-6 w-full pt-14">
                 <img
                     src={esummit_hero.esummit_logo.link}
