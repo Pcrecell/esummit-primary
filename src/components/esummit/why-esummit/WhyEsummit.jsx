@@ -162,7 +162,6 @@ const WhyEsummit = () => {
 
   // Parallax scroll animations
   useGSAP(() => {
-    // Check if screen width is below 1024px and disable animations
     if (window.innerWidth < 1024) {
       return;
     }
@@ -369,8 +368,9 @@ const WhyEsummit = () => {
           </div>
         </div>
       </div> 
-      <div ref={eventRef} className="bottom-[20rem] z-10 relative translate-y-10">
+      <div ref={eventRef} className="bottom-[15rem] lg:bottom-[20rem] z-10 relative translate-y-10">
         <Event />
+        <div className="h-[10vh] bg-black"></div>
       </div>
     </div>
   );
