@@ -123,7 +123,7 @@ const ScrollOne = () => {
                 style={{ position: "relative", height: imgMaxHeight, minHeight: imgMaxHeight, alignItems: 'center', justifyContent: 'center', display: 'flex' }}
             >
                 <div
-                    className="bg-white/5 rounded-xl flex flex-col items-center justify-center"
+                    className="rounded-xl flex flex-col items-center justify-center"
                     style={{ width: '90vw', maxWidth: '1200px', minWidth: '400px', height: imgMaxHeight, alignItems: 'center', justifyContent: 'center', display: 'flex', padding: '32px' }}
                 >
                     <img

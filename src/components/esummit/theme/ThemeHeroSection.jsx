@@ -8,11 +8,8 @@ const ThemeHeroSection = () => {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      // Tailwind's sm breakpoint is 640px
       setIsMobile(window.innerWidth < 640);
     };
-
-    // Check on initial load
     checkScreenSize();
 
     // Add event listener for window resize
@@ -251,17 +248,13 @@ const ThemeHeroSection = () => {
         }}
       >
         {/* Top Gradient Overlay */}
-        {/* <div className="absolute top-0 left-0 w-full h-32 z-5" style={{
+        <div className="absolute top-0 left-0 w-full h-32 z-5" style={{
           background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
-        }} /> */}
+        }} />
         {isMobile && <div className="w-full h-80"></div>}
-        <div className="w-full h-[80vh]">
+        <div className="w-full h-[90vh]">
           <ScrollOne isMobile={isMobile} />
         </div>
-
-        {/* <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
-          background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
-        }} /> */}
 
       </section>
     </>
