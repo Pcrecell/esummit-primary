@@ -177,7 +177,7 @@ const WhyEsummit = () => {
       
       // Transition 1 - Move upward
       gsap.to(transition1.current, {
-        yPercent: -65,
+        yPercent: -50,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -196,7 +196,7 @@ const WhyEsummit = () => {
           y: 0
         },
         {      
-          yPercent: -20,
+          // yPercent: -20,
           scale: 1,
           ease: "none",
           scrollTrigger: {
@@ -268,15 +268,14 @@ const WhyEsummit = () => {
   return (
     <div>
       <section
-        className="min-h-screen py-100 px-4 text-white text-center flex flex-col justify-center relative"
+        className="min-h-screen py-16 px-4 text-white text-center flex flex-col justify-center relative"
         style={{
           backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center top",
-          backgroundRepeat: "repeat-y",
+          backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Black overlay */}
         <div className="absolute inset-0 bg-black/60 z-0"></div>
         
         {/* Content with higher z-index */}
@@ -287,16 +286,17 @@ const WhyEsummit = () => {
           >
             Why Join <span style={{ color: "#2EB24C" }}>E-Summit ?</span>
           </h2>
-          <div
-            ref={cardsContainerRef}
-            className="flex flex-wrap justify-between gap-6 md:gap-28 max-w-6xl mx-auto mr-8"
-          >
-            {cards.map((card, index) => (
-              <div
-                key={index}
-                ref={(el) => (cardRefs.current[index] = el)}
-                className="group relative w-[156px] h-[204px] sm:w-[200px] sm:h-[260px] cursor-pointer"
-              >
+    
+        <div
+  ref={cardsContainerRef}
+  className="grid grid-cols-2 gap-6 md:gap-8 lg:flex lg:flex-wrap lg:justify-between lg:gap-28 max-w-6xl mx-4"
+>
+  {cards.map((card, index) => (
+    <div
+      key={index}
+      ref={(el) => (cardRefs.current[index] = el)}
+      className="group relative w-[156px] h-[204px] sm:w-[200px] sm:h-[260px] cursor-pointer"
+    >
                 <div className="absolute inset-0">
                   <img
                     src={card.image}
@@ -345,6 +345,7 @@ const WhyEsummit = () => {
             ))}
           </div>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/0 to-transparent z-0"></div>
       </section>
 
       {/* Parallax section with proper structure */}

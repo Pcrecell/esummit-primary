@@ -9,7 +9,7 @@ function PastSponser() {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mt-4 md:mt-0">
       {(!loaded && !errored) && (
         <Skeleton
           variant="rectangular"
