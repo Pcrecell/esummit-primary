@@ -3,7 +3,7 @@ import Background from "../../../../public/images/esummit/events/EventsCalendarB
 
 const EventsCalendar = ({ selectedDate, onDateSelect }) => {
     const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    const eventDates = [21, 22, 23, 24]; // Dates with events
+    const eventDates = [ 22, 23, 24]; // Dates with events
     
     const calendarDays = [
         ...Array(5).fill(''),
