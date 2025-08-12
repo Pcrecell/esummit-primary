@@ -29,68 +29,77 @@ const EventsPage = () => {
     ];
 
     const eventsByDate = {
-        22: [
-            {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 4:30PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584353078",
-            },
-            {
-                title: "EXPO",
-                time: "11:00AM - 4:30PM",
-                venue: "CAMPUS-06",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
-            },
-        ],
-        23: [
-            {
-                title: "ORACLE",
-                time: "9:00AM - 3:00PM",
-                venue: "CAMPUS-17",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Right.png",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 4:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584352905",
-            },
-            {
-                title: "ALICE IN FOUNDERLAND",
-                time: "9:00AM - 3:PM",
-                venue: "CAMPUS-05",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
-            },
-            {
-                title: "EXPO",
-                time: "11:00AM - 4:30PM",
-                venue: "CAMPUS-06",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
-            },
-        ],
-        24: [
-            {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 3:00PM", 
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "CASEX",
-                time: "9:00AM - 3:00PM",
-                venue: "CAMPUS-07",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            },
-        ]
+      22: [
+        {
+          title: "PANDORA'S PARADOX",
+          time: "9:00AM - 4:30PM",
+          venue: "CAMPUS-25",
+          description:
+            "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
+          image: "https://i.ibb.co/7xWdGYwv/hack-r.png",
+        },
+        {
+          title: "EXPO",
+          time: "11:00AM - 4:30PM",
+          venue: "CAMPUS-06",
+          description:
+            "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
+          image: "https://i.ibb.co/QFJHRt47/expo-l.png",
+        },
+      ],
+      23: [
+        {
+          title: "ORACLE",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-17",
+          description:
+            "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
+          image: "https://i.ibb.co/gZQgcF5j/oracle-r.png",
+        },
+        {
+          title: "ALICE IN FOUNDERLAND",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-05",
+          description:
+            "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
+          image: "https://i.ibb.co/YFnnwgGP/aif-l.png",
+        },
+
+        {
+          title: "EXPO",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-06",
+          description:
+            "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
+          image: "https://i.ibb.co/4Rky463J/expo-r.png",
+        },
+        {
+          title: "PANDORA'S PARADOX",
+          time: "9:00AM - 4:00PM",
+          venue: "CAMPUS-25",
+          description:
+            "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
+          image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        },
+      ],
+      24: [
+        {
+          title: "CASEX",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-07",
+          description:
+            "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
+          image: "https://i.ibb.co/jPCnVcs0/casex-r.png",
+        },
+        {
+          title: "PANDORA'S PARADOX",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-25",
+          description:
+            "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
+          image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        },
+      ],
     };
 
     const handleDateSelect = (date) => {
@@ -296,7 +305,7 @@ const EventsPage = () => {
                                 className="absolute w-full z-10"
                                 style={{ 
                                     top: '20%',
-                                    left: '50%',
+                                    left: '55%',
                                     transform: 'translate(-50%, -50%)'
                                 }}
                             >

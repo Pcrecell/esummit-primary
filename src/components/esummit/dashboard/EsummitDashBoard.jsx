@@ -6,6 +6,8 @@ import MapComponent from "./MapComponent";
 // import { authAPI } from "../../services/api";
 import DashBoardCard from "../../../../public/images/esummit/dashboard/Dashboard Card.svg";
 import QuestionMark from "../../../../public/images/esummit/dashboard/Question-Mark.svg";
+import PaymentStart from "./paymentStart";
+import PaymentEnd from "./paymentEnd";
 import Particles from './Particles';
 import Image from "next/image";
 
@@ -14,10 +16,37 @@ const EsummitDashBoard = () => {
   const [loading, setLoading] = useState(true);
   const [paymentDone, setPaymentDone] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [registeredEventId, setRegisteredEventId] = useState(null);
   const qrCode = "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
 
+    const handleEventClick = (eventId) => {
+    if (paymentDone) {
+      setSelectedEventId(eventId);
+      setShowConfirmationPopup(true);
+    }
+  };
 
+  // Handle payment action from PaymentStart popup
+  const handlePaymentFromPopup = () => {
+    setPaymentDone(true);
+  };
+
+  // Handle registration confirmation
+  const handleConfirmRegistration = () => {
+    console.log("Confirming registration for event:", selectedEventId);
+    setRegisteredEventId(selectedEventId);
+    setShowConfirmationPopup(false);
+    console.log("Registration completed, should show PaymentEnd now");
+    console.log("registeredEventId state:", selectedEventId);
+  };
+
+  // Handle popup cancellation
+  const handleCancelRegistration = () => {
+    setSelectedEventId(null);
+    setShowConfirmationPopup(false);
+  };
 
   // useEffect(() => {
   //   let mounted = true;
@@ -122,6 +151,47 @@ const EsummitDashBoard = () => {
         <div className="relative min-h-[80vh] sm:min-h-[90vh] font-sans text-white background-container">   
         </div>
       </div>
+      {console.log("Current registeredEventId:", registeredEventId)}
+      {registeredEventId ? (
+        <div>
+          <PaymentEnd eventId={registeredEventId} />
+        </div>
+      ) : (
+        <div>
+          <PaymentStart 
+            onEventSelect={handleEventClick} 
+            paymentEnabled={paymentDone}
+            onPayNow={handlePaymentFromPopup}
+          />
+        </div>
+      )}
+
+      {/* Confirmation Popup */}
+           {/* Confirmation Popup */}
+      {showConfirmationPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md mx-4">
+            <h3 className="text-xl font-bold text-black mb-4">Confirm Registration</h3>
+            <p className="text-gray-700 mb-6">
+              Are you sure you want to register for this event?
+            </p>
+            <div className="flex gap-4 justify-end">
+              <button 
+                onClick={handleCancelRegistration}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleConfirmRegistration}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

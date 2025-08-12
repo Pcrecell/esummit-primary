@@ -48,7 +48,7 @@ export default function EsummitNavbar() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50">
+    <div className="fixed top-0 left-0 w-full z-[100]">
       <Navbar>
         {(visible) => (
           <>
@@ -67,7 +67,7 @@ export default function EsummitNavbar() {
                         </button>
                         <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg hidden group-hover:block z-50">
                           <a
-                            href="/esummit/dashboard"
+                            href="/dashboard"
                             className="block px-4 py-2 text-black hover:bg-gray-100"
                           >
                             Dashboard
@@ -78,7 +78,7 @@ export default function EsummitNavbar() {
                               if(response.success){
                                 setIsAuthenticated(false);
                                 // Redirect to home or login page
-                                window.location.href = "/esummit"; 
+                                window.location.href = "/"; 
                               } 
                             }}
                             className="block w-full text-left px-4 py-2 text-black hover:bg-gray-100"
@@ -155,7 +155,7 @@ export default function EsummitNavbar() {
                   {isAuthenticated ? (
                       <>
                         <a
-                          href="/esummit/dashboard"
+                          href="/dashboard"
                           onClick={() => setIsMobileMenuOpen(false)}
                           className="text-neutral-200 dark:text-neutral-300"
                         >
@@ -165,9 +165,9 @@ export default function EsummitNavbar() {
                           onClick={async () => {
                             const response = await authAPI.logout();
                               if(response.success){
-                                isAuthenticated = false;
+                                setIsAuthenticated(false);
                                 // Redirect to home or login page
-                                window.location.href = "/esummit"; 
+                                window.location.href = "/"; 
                               } 
                             setIsMobileMenuOpen(false)
                           }}
@@ -178,10 +178,10 @@ export default function EsummitNavbar() {
                       </>
                     ) : (
                       <>
-                        <a href="/esummit/login" onClick={() => setIsMobileMenuOpen(false)}>
+                        <a href="/login" onClick={() => setIsMobileMenuOpen(false)}>
                           <NavbarButton variant="primary" className="w-full">Login</NavbarButton>
                         </a>
-                        <a href="/esummit/register" onClick={() => setIsMobileMenuOpen(false)}>
+                        <a href="/register" onClick={() => setIsMobileMenuOpen(false)}>
                           <NavbarButton variant="secondary" className="w-full">Register</NavbarButton>
                         </a>
                       </>

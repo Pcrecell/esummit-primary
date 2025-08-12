@@ -9,34 +9,35 @@ const events = [
   {
     id: "1",
     title: "ORACLE",
-    date: "AUG 15",
+    date: "AUG 23",
     desc: "ORACLE is an electrifying ideation and pitch event that challenges participants to think beyond borders. In this unique experience, participants are presented with real-world problem statements concerning various countries and global issues. Their task? To brainstorm innovative solutions, back them up with data, and pitch their ideas in front of a live audience and expert panel.Whether it's tackling environmental challenges in Southeast Asia, improving digital infrastructure in African nations, or reimagining education systems in South America — ORACLE is your gateway to becoming a global change-maker.",
     image: "https://i.postimg.cc/63NtY1mf/Group-1000002414.png",
   },
   {
     id: "2",
     title: "ALICE IN FOUNDERLAND",
-    date: "AUG 15",
+    date: "AUG 23",
     desc: "Welcome to Alice in Founderland, a thrilling entrepreneurial adventure inspired by the hit series Alice in Borderland. In this high-stakes event, participants must navigate through a challenging game, where each level unravels a complex real-world problem demanding smart, scalable solutions.Participants are not just solving problems — they're playing to win. Every challenge is designed to test your creativity, critical thinking, and entrepreneurial instincts. The deeper you go, the tougher it gets. But only those who crack the code and present the most impactful ideas will emerge victorious.",
     image: "https://i.postimg.cc/jd9VMFWn/Group-1000002412.png",
   },
   {
     id: "3",
     title: "CASE BATTLE",
-    date: "AUG 15",
+    date: "AUG 24",
     desc: "Case Battle is the ultimate battleground for problem solvers, strategists, and future leaders. In this intense event, participants are presented with real-world case studies across diverse domains — from business and tech to social impact and governance.Teams must analyze the case, devise practical solutions, and battle it out through presentations that are judged on innovation, feasibility, and clarity. It's not just about having an idea — it's about proving it can withstand the heat of competition.",
+    image: "https://i.ibb.co/wNHKkgvS/Group-1000002419.png",
   },
   {
     id: "4",
     title: "PANDORAS PARADOX",
-    date: "AUG 15",
+    date: "AUG 22",
     desc: "Inspired by the mythical tale of Pandora's Box, Pandora's Paradox is a gripping ideation challenge where each problem statement is a 'bad soul' unleashed into the world — from climate crises and misinformation to ethical dilemmas in tech.But just like the myth, hope remains. It's up to the participants to transform chaos into solutions — the 'good souls'. With every round, teams confront darker and more complex challenges, pushing them to think critically, ethically, and creatively.",
     image: "https://i.postimg.cc/7Zs5tD3M/Group-1000002415.png",
   },
   {
     id: "5",
     title: "EXPO",
-    date: "AUG 15",
+    date: "AUG 23",
     desc: "EXPO is a dynamic showcase of ideas, innovations, and initiatives — a platform where creators, problem solvers, and visionaries come together to exhibit their work and inspire change.From startups and tech demos to social innovations and research models, EXPO brings a diverse range of projects under one roof. It's not just about displaying; it's about connecting, collaborating, and sparking conversations that matter.",
     image: "https://i.postimg.cc/T3z634fv/Group-1000002413.png",
   },
@@ -63,10 +64,12 @@ export const Event = () => {
 
   return (
     <div
-      className="w-full bg-cover bg-center flex items-center justify-center relative"
+      className="w-full bg-cover bg-center flex items-center justify-center relative translate-y-40"
       style={{
         backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
         minHeight: "130vh",
+        backgroundSize: "cover",
+        backgroundPosition: "calc(50% + 30px) center"
       }}
     >
       <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/80 to-transparent z-5"></div>
@@ -134,7 +137,7 @@ export const Event = () => {
         About Event
       </h2>
       <p
-        className="text-lg opacity-90 text-center "
+        className="text-lg opacity-90 text-center tracking-widest"
         style={{ fontFamily: 'Teko, sans-serif' }}
       >
         {events[current].desc}
