@@ -31,7 +31,7 @@ export default function Login() {
       }
 
       const idToken = await response.user.getIdToken();
-      await fetch(`${process.env.REACT_APP_API_URL}/auth/sessionLogin`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -40,9 +40,9 @@ export default function Login() {
       
       // Navigate based on user role
       if (response.user.role === "admin") {
-        navigate("/esummit/admin-dashboard");
+        navigate.push("/esummit/admin-dashboard");
       } else {
-        navigate("/esummit");
+        navigate.push("/");
       }
 
     } catch (err) {

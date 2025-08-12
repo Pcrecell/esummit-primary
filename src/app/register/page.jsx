@@ -97,7 +97,7 @@ export default function Register() {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      const idToken = await user.getIdToken();
+      const idToken = await user.getIdToken(); 
       
       console.log("User registered successfully:", user);
       const userData = {
@@ -114,7 +114,7 @@ export default function Register() {
 
       console.log("Registration data");
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -127,7 +127,7 @@ export default function Register() {
       console.log("Registration response:", response);
       if (response.error) {
         setError(response.error);
-        setLoading(false); // Loading OFF on error
+        setLoading(false); 
         return;
       } 
       const Data = {
@@ -138,7 +138,7 @@ export default function Register() {
       }
     
     // Set session cookie in backend
-    await fetch(`${process.env.REACT_APP_API_URL}/auth/sessionLogin`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
       method: 'POST',
       credentials: 'include',
       headers: {

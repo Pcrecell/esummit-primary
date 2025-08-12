@@ -54,7 +54,7 @@ const WhyEsummit = () => {
           // Set initial opacity to 54%
           const cardImage = card.querySelector(".card-image");
           if (cardImage) {
-            gsap.set(cardImage, { opacity: 0.54 });
+            gsap.set(cardImage, { opacity: 1 });
           }
         }
       });
@@ -74,7 +74,7 @@ const WhyEsummit = () => {
                   });
                   if (cardImage) {
                     gsap.to(cardImage, {
-                      opacity: 0.97,
+                      opacity: 1,
                       duration: 0.3,
                       ease: "power2.out",
                     });
@@ -95,7 +95,7 @@ const WhyEsummit = () => {
                   });
                   if (cardImage) {
                     gsap.to(cardImage, {
-                      opacity: 0.54,
+                      opacity: 0.7,
                       duration: 0.3,
                       ease: "power2.out",
                     });
@@ -118,7 +118,7 @@ const WhyEsummit = () => {
                 // Reset to default opacity (54%)
                 if (cardImage) {
                   gsap.to(cardImage, {
-                    opacity: 0.54,
+                    opacity: 0.7,
                     duration: 0.3,
                     ease: "power2.out",
                   });
@@ -156,11 +156,13 @@ const WhyEsummit = () => {
       className="min-h-screen py-16 px-4 text-white text-center flex flex-col justify-center"
       style={{
         backgroundImage: "url(https://i.ibb.co/QFW0KL1c/Group-1000002404.png)",
-        backgroundSize: "70%",
-        backgroundPosition: "center",
+        backgroundSize: "90%",
+        backgroundPosition: "center top",
         backgroundRepeat: "no-repeat",
+        backgroundColor: "black"
       }}
     >
+    {/* <div className="absolute inset-0 bottom-0 left-0 bg-black opacity-100 z-0"></div> */}
       <h2
         className="text-[40px] sm:text-[50px] font-serif font-bold mb-36 mt-[-220px]"
         style={{ fontFamily: "Texturina, serif" }}
@@ -182,7 +184,7 @@ const WhyEsummit = () => {
               <img
                 src={card.image}
                 alt={card.label}
-                className="card-image w-full h-full object-contain absolute inset-0 z-0"
+                className="card-image w-full h-full opacity-100 object-contain absolute inset-0 z-0"
               />
 
               {/* Text Layer */}

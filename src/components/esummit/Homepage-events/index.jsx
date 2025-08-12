@@ -134,7 +134,7 @@ export const Event = () => {
         About Event
       </h2>
       <p
-        className="text-lg opacity-90 text-center "
+        className="text-lg opacity-90 text-center tracking-widest"
         style={{ fontFamily: 'Teko, sans-serif' }}
       >
         {events[current].desc}
