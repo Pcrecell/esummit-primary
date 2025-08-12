@@ -39,7 +39,7 @@ const ThemeHeroSection = () => {
             objectPosition: "calc(50% + 10px) center"
           }}
         >
-          <source src="https://ik.imagekit.io/admr8uj75/KIITESummit_Theme.webm/ik-video.mp4?updatedAt=1754569881061" type="video/mp4" />
+          <source src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit(1).mp4?updatedAt=1754759095540" type="video/mp4" />
         </video>
 
         {/* Top Gradient Overlay */}
@@ -48,8 +48,8 @@ const ThemeHeroSection = () => {
         }} />
 
         {/* Bottom Gradient Overlay */}
-        <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
-          background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
+        <div className="absolute bottom-0 left-0 w-full h-102 z-5" style={{
+          background: "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8), transparent)"
         }} />
       
         {/* Content Container */}
