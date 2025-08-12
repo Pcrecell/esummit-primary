@@ -33,6 +33,47 @@ body {
   background-color: #000000;
 }
 
+/* globals.css */
+.scroll-up {
+  animation: scrollUp 30s linear infinite;
+}
+
+.scroll-down {
+  animation: scrollDown 30s linear infinite;
+}
+
+@keyframes scrollUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes scrollDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.scroll-left {
+  display: flex;
+  animation: scrollLeft 10s linear infinite;
+}
+.fade-mask {
+  mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, black);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, black);
+}
+.fade-bottom {
+  mask-image: linear-gradient(to top, transparent, black 20%, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to top, transparent, black 10%, black 90%, transparent);
+}
+
+
+/* Fading edges */
+
+
+
 .hide-scroll {
   overflow-x: hidden;
   overflow-y: scroll;
