@@ -97,7 +97,7 @@ export default function Register() {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      const idToken = await user.getIdToken();
+      const idToken = await user.getIdToken(); 
       
       console.log("User registered successfully:", user);
       const userData = {
@@ -127,7 +127,7 @@ export default function Register() {
       console.log("Registration response:", response);
       if (response.error) {
         setError(response.error);
-        setLoading(false); // Loading OFF on error
+        setLoading(false); 
         return;
       } 
       const Data = {
