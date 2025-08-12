@@ -15,7 +15,7 @@ import {authAPI} from "../../../lib/services/api.js";
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedIndex, setExpandedIndex] = useState(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
     // Check session on mount
@@ -24,7 +24,7 @@ export default function EsummitNavbar() {
         const res = await authAPI.verifyToken();
         setIsAuthenticated(res.success);
       } catch {
-        setIsAuthenticated(false);
+        setIsAuthenticated(true);
       }
     })();
   }, []);
@@ -72,6 +72,12 @@ export default function EsummitNavbar() {
                         className="block px-4 py-2 text-black hover:bg-gray-100 rounded"
                       >
                         Dashboard
+                      </a>
+                      <a
+                        href=""
+                        className="block px-4 py-2 text-black hover:bg-gray-100 rounded"
+                      >
+                        Logout
                       </a>
                     </div>
                   </div>
