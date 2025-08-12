@@ -6,7 +6,7 @@ import { esummit_hero } from "../../../../public/images/image-links";
 function Hero() {
     return (
         <div
-            className="relative flex flex-col items-center justify-center h-screen w-screen bg-center lg:pt-32"
+            className="relative flex flex-col items-center justify-center h-screen w-screen bg-center lg:pb-10"
             style={{
                 backgroundImage: `url("${esummit_hero.esummit_hero_bg.link}")`,
                 backgroundSize: 'cover',
@@ -39,7 +39,7 @@ function Hero() {
 
                 </div>
                  <div className="w-full max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw] xl-max-w-[50vw] 2xl:max-w-[55vw] mt-16">
-                    <Carousel />
+                    {/* <Carousel /> */}
                 </div>
                 <div className="h-20 md:h-30 lg:h-20"></div>
             </div>
