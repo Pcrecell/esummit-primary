@@ -365,7 +365,9 @@ const EventsPage = () => {
                         <p className="text-[#edbd90] text-base font-cormorant-infant text-center">
                             August {selectedDate}, 2025 - {currentEvents.length} event{currentEvents.length !== 1 ? 's' : ''}
                         </p>
+                        
                     </div>
+                    
                 </div>
 
                 <div className="relative py-8">
