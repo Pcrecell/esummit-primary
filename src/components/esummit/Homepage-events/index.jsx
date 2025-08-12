@@ -68,7 +68,7 @@ export const Event = () => {
 
   return (
     <div
-      className="w-full bg-cover bg-center flex items-center justify-center relative translate-y-40"
+      className="w-full bg-cover bg-center flex items-center justify-center relative lg:translate-y-40"
       style={{
         backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
         minHeight: "110vh",
