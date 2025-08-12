@@ -104,7 +104,7 @@ const rightColumn = speakers.filter((_, i) => i % 2 !== 0);
 
   return (
     <div 
-      className="min-h-screen bg-black flex flex-col items-center justify-start py-4 px-0 overflow-x-hidden overflow-y-hidden relative md:mb-40"
+      className="min-h-screen bg-black flex flex-col items-center justify-start py-4 px-0 overflow-x-hidden overflow-y-hidden relative md:mb-40 "
     >
       {/* Background Image */}
       <div 
