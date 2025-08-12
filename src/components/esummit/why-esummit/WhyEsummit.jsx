@@ -54,7 +54,7 @@ const WhyEsummit = () => {
           // Set initial opacity to 54%
           const cardImage = card.querySelector(".card-image");
           if (cardImage) {
-            gsap.set(cardImage, { opacity: 0.7 });
+            gsap.set(cardImage, { opacity: 1 });
           }
         }
       });
@@ -162,7 +162,7 @@ const WhyEsummit = () => {
         backgroundColor: "black"
       }}
     >
-    <div className="absolute inset-0 bottom-0 left-0 bg-black opacity-60 z-0"></div>
+    {/* <div className="absolute inset-0 bottom-0 left-0 bg-black opacity-100 z-0"></div> */}
       <h2
         className="text-[40px] sm:text-[50px] font-serif font-bold mb-36 mt-[-220px]"
         style={{ fontFamily: "Texturina, serif" }}
@@ -184,7 +184,7 @@ const WhyEsummit = () => {
               <img
                 src={card.image}
                 alt={card.label}
-                className="card-image w-full h-full object-contain absolute inset-0 z-0"
+                className="card-image w-full h-full opacity-100 object-contain absolute inset-0 z-0"
               />
 
               {/* Text Layer */}
