@@ -9,10 +9,9 @@ const events = [
   {
     id: "1",
     title: "ORACLE",
-
     date: "23.08.25",
     time:"9.00AM-3.00PM",
-    desc: " the signature blind pitching event of KIIT E-Cell that embodies adaptability and creativity.Challenges are revealed seconds before you pitch your idea, heaping a good dose of wit and confidence onto the task.Oracle is all about quick thinking and the art of persuasion, all under the pressure of collaborative performance.Everyone has a chance to win, from gutsy newbies to seasoned professionals.",
+    desc: " The signature blind pitching event of KIIT E-Cell that embodies adaptability and creativity.Challenges are revealed seconds before you pitch your idea, heaping a good dose of wit and confidence onto the task.Oracle is all about quick thinking and the art of persuasion, all under the pressure of collaborative performance.Everyone has a chance to win, from gutsy newbies to seasoned professionals.",
     image: "https://i.postimg.cc/63NtY1mf/Group-1000002414.png",
   },
   {
@@ -20,7 +19,7 @@ const events = [
     title: "ALICE IN FOUNDERLAND",
     date: "23.08.25",
     time:"9.00AM-3.00PM",
-    desc: " the elite entrepreneurial survival game with combative and inventive tasks.Players face startup challenges with limited time, limited resources, and fierce competition. Every decision counts - from securing investment, outsmarting your competitors and taking a pivot when faced with uncertainty. Only the fastest thinkers will walk away as an entrepreneur.",
+    desc: " The elite entrepreneurial survival game with combative and inventive tasks.Players face startup challenges with limited time, limited resources, and fierce competition. Every decision counts - from securing investment, outsmarting your competitors and taking a pivot when faced with uncertainty. Only the fastest thinkers will walk away as an entrepreneur.",
     image: "https://i.postimg.cc/jd9VMFWn/Group-1000002412.png",
   },
   {
@@ -28,9 +27,8 @@ const events = [
     title: "CASE BATTLE",
     date: "24.08.25",
     time:"9.00AM-3.00PM",
-    desc: "the ultimate battleground created by KIIT E-Cell for future strategists and problem solvers.You’ll wrestle with actual business challenges using critical thinking and unique strategies.In a team format, you will illustrate your teamwork, business insight, and consulting vibe in a competitive environment.Each pitch is your breakthrough in the boardroom.",
+    desc: "The ultimate battleground created by KIIT E-Cell for future strategists and problem solvers.You’ll wrestle with actual business challenges using critical thinking and unique strategies.In a team format, you will illustrate your teamwork, business insight, and consulting vibe in a competitive environment.Each pitch is your breakthrough in the boardroom.",
     date: "AUG 24",
-    desc: "Case Battle is the ultimate battleground for problem solvers, strategists, and future leaders. In this intense event, participants are presented with real-world case studies across diverse domains — from business and tech to social impact and governance.Teams must analyze the case, devise practical solutions, and battle it out through presentations that are judged on innovation, feasibility, and clarity. It's not just about having an idea — it's about proving it can withstand the heat of competition.",
     image: "https://i.ibb.co/wNHKkgvS/Group-1000002419.png",
   },
   {
