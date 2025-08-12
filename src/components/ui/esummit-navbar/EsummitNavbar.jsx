@@ -15,7 +15,7 @@ import {authAPI} from "../../../lib/services/api.js";
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [expandedIndex, setExpandedIndex] = useState(null)
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     // Check session on mount
