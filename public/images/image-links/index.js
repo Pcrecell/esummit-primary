@@ -22,13 +22,13 @@ export const highlights = {
 //E-Summit Past Speakers
 
 export const esummit_pastspeakers = {
-    pastspeaker_1: {link: "https://i.postimg.cc/KcDkh6Lj/Shashi-Tahoor.avif", alt: "Shashi Tahoor"},
-    pastspeaker_2: {link: "https://i.postimg.cc/TwrywS4k/Akshay-Gurnani.avif", alt: "Akshay Gurnani"},
-    pastspeaker_3: {link: "https://i.postimg.cc/QChFWmLj/Prabhu-Chawla.avif", alt: "Prabhu Chawla"},
-    pastspeaker_4: {link: "https://i.postimg.cc/RhdN1t9K/Anil-Gupta.avif", alt: "Anil Gupta"},
-    pastspeaker_5: {link: "https://i.postimg.cc/9M3RcVJR/Dan-Ram.avif", alt: "Dan Ram"},
-    pastspeaker_6: {link: "https://i.postimg.cc/d0ZZMDmc/A-Murganantham.avif", alt: "A Murganantham"},
-    pastspeaker_7: {link: "https://i.postimg.cc/sDfBjT9c/Trishneet-Arora.avif", alt: "Trishneet Arora"},
+    pastspeaker_1: {link: "https://i.postimg.cc/rFrRp4mb/Shashi-Tahoor.webp", alt: "Shashi Tahoor"},
+    pastspeaker_2: {link: "https://i.postimg.cc/MTBXG2ZB/Akshay-Gurnani.webp", alt: "Akshay Gurnani"},
+    pastspeaker_3: {link: "https://i.postimg.cc/Bnd0n8jh/Prabhu-Chawla.webp", alt: "Prabhu Chawla"},
+    pastspeaker_4: {link: "https://i.postimg.cc/gcNb6twL/Anil-Gupta.webp", alt: "Anil Gupta"},
+    pastspeaker_5: {link: "https://i.postimg.cc/DZ7zWtPM/Dan-Ram.webp", alt: "Dan Ram"},
+    pastspeaker_6: {link: "https://i.postimg.cc/Vk1sZx3L/A-Murganantham.webp", alt: "A Murganantham"},
+    pastspeaker_7: {link: "https://i.postimg.cc/0jYRpQ5G/Trishneet-Arora.webp", alt: "Trishneet Arora"},
 };
 
 //E-Cell Events Page

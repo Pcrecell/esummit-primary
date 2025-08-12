@@ -14,6 +14,8 @@ export const authAPI = {
       },
       body: JSON.stringify({ email, password }),
     });
+      
+
     return response.json();
   },
 

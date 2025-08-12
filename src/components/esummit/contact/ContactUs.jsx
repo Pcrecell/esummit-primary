@@ -78,7 +78,7 @@ function App() {
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px]">
+              <form onSubmit={handleSubmit} className="w-full max-w-[320px] sm:max-w-[320px] md:max-w-[320px]">
                 {/* Name Field */}
                 <div className="mb-2 sm:mb-3 md:mb-4">
                   <label 
@@ -92,7 +92,7 @@ function App() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Your Name"
-                    className="w-full bg-transparent text-white placeholder-gray-400 tracking-wide focus:outline-none transition-colors text-[10px] sm:text-xs md:text-sm px-2 sm:px-3 py-1.5 sm:py-2 md:py-2.5 border border-transparent"
+                    className="w-full bg-transparent text-white placeholder-gray-400 tracking-wide focus:outline-none transition-colors text-[10px] sm:text-xs md:text-sm px-2 sm:px-3 py-1.5 sm:py-2 md:py-2 border border-transparent"
                     style={{
                       borderImage: 'linear-gradient(180deg, #F5E34C 0%, #DDAB3C 22.84%, #8A5F1C 100%) 1'
                     }}
