@@ -36,8 +36,7 @@ const EventsPage = () => {
           venue: "CAMPUS-25",
           description:
             "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-          image:
-            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
+          image: "https://i.ibb.co/7xWdGYwv/hack-r.png",
         },
         {
           title: "EXPO",
@@ -45,7 +44,7 @@ const EventsPage = () => {
           venue: "CAMPUS-06",
           description:
             "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-          image: "https://i.ibb.co/nNmS1sG1/expo-1.png",
+          image: "https://i.ibb.co/QFJHRt47/expo-l.png",
         },
       ],
       23: [
@@ -55,7 +54,7 @@ const EventsPage = () => {
           venue: "CAMPUS-17",
           description:
             "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
-          image: "https://i.ibb.co/kVqHhsfC/o.png",
+          image: "https://i.ibb.co/gZQgcF5j/oracle-r.png",
         },
         {
           title: "ALICE IN FOUNDERLAND",
@@ -63,7 +62,7 @@ const EventsPage = () => {
           venue: "CAMPUS-05",
           description:
             "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
-          image: "https://i.ibb.co/21vwNVG1/aif-left.png",
+          image: "https://i.ibb.co/YFnnwgGP/aif-l.png",
         },
 
         {
@@ -72,7 +71,7 @@ const EventsPage = () => {
           venue: "CAMPUS-06",
           description:
             "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-          image: "https://i.ibb.co/60Fck7gf/expo-2.png",
+          image: "https://i.ibb.co/4Rky463J/expo-r.png",
         },
         {
           title: "PANDORA'S PARADOX",
@@ -80,8 +79,7 @@ const EventsPage = () => {
           venue: "CAMPUS-25",
           description:
             "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-          image:
-            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
+          image: "https://i.ibb.co/twjYHtFw/hack-l.png",
         },
       ],
       24: [
@@ -91,8 +89,7 @@ const EventsPage = () => {
           venue: "CAMPUS-07",
           description:
             "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
-          image:
-            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
+          image: "https://i.ibb.co/jPCnVcs0/casex-r.png",
         },
         {
           title: "PANDORA'S PARADOX",
@@ -100,10 +97,9 @@ const EventsPage = () => {
           venue: "CAMPUS-25",
           description:
             "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-          image:
-            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
-        }
-      ]
+          image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        },
+      ],
     };
 
     const handleDateSelect = (date) => {
