@@ -12,7 +12,7 @@ export default function HomePage() {
       <Hero />
       <WhyEsummit/>
       {/* <Support /> */}
-      <Event />
+      {/* <Event /> */}
       <PastSpeakers/>
       <PastSponser/>
     </main>
