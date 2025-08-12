@@ -9,6 +9,7 @@ const events = [
   {
     id: "1",
     title: "ORACLE",
+
     date: "23.08.25",
     time:"9.00AM-3.00PM",
     desc: " the signature blind pitching event of KIIT E-Cell that embodies adaptability and creativity.Challenges are revealed seconds before you pitch your idea, heaping a good dose of wit and confidence onto the task.Oracle is all about quick thinking and the art of persuasion, all under the pressure of collaborative performance.Everyone has a chance to win, from gutsy newbies to seasoned professionals.",
@@ -28,6 +29,9 @@ const events = [
     date: "24.08.25",
     time:"9.00AM-3.00PM",
     desc: "the ultimate battleground created by KIIT E-Cell for future strategists and problem solvers.You’ll wrestle with actual business challenges using critical thinking and unique strategies.In a team format, you will illustrate your teamwork, business insight, and consulting vibe in a competitive environment.Each pitch is your breakthrough in the boardroom.",
+    date: "AUG 24",
+    desc: "Case Battle is the ultimate battleground for problem solvers, strategists, and future leaders. In this intense event, participants are presented with real-world case studies across diverse domains — from business and tech to social impact and governance.Teams must analyze the case, devise practical solutions, and battle it out through presentations that are judged on innovation, feasibility, and clarity. It's not just about having an idea — it's about proving it can withstand the heat of competition.",
+    image: "https://i.ibb.co/wNHKkgvS/Group-1000002419.png",
   },
   {
     id: "4",
@@ -68,12 +72,18 @@ export const Event = () => {
 
   return (
     <div
-      className="w-full bg-cover bg-center flex items-center justify-center"
+      className="w-full bg-cover bg-center flex items-center justify-center relative translate-y-40"
       style={{
         backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
         minHeight: "130vh",
+        backgroundSize: "cover",
+        backgroundPosition: "calc(50% + 30px) center"
       }}
     >
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/80 to-transparent z-5"></div>
+      
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-5"></div>
+
       <div className="relative w-full max-w-6xl px-4">
         <button
     onClick={prev}
@@ -92,7 +102,7 @@ export const Event = () => {
        <AnimatePresence mode="wait">
   <motion.div
     key={events[current].id}
-    className="relative w-full flex flex-col md:flex-row items-center justify-between gap-8 md:-mt-40"
+    className="relative w-full flex flex-col md:flex-row items-center justify-between gap-8 md:-mt-40 z-10"
     initial={{ opacity: 0, x: 100 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: -100 }}
@@ -128,13 +138,13 @@ export const Event = () => {
     {/* Right Description */}
     <div className="text-white w-full md:w-1/3 flex flex-col items-center ">
       <h2
-        className="text-3xl md:text-4xl font-bold mb-2 text-base"
+        className="text-3xl md:text-4xl font-bold mb-2"
         style={{ fontFamily: 'Teko, sans-serif' }}
       >
         About Event
       </h2>
       <p
-        className="text-lg opacity-90 text-center "
+        className="text-lg opacity-90 text-center tracking-widest"
         style={{ fontFamily: 'Teko, sans-serif' }}
       >
         {events[current].desc}

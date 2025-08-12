@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react";
 import Carousel from "./EventCarousel";
 import { esummit_hero } from "../../../../public/images/image-links";
@@ -11,10 +9,12 @@ function Hero() {
             style={{
                 backgroundImage: `url("${esummit_hero.esummit_hero_bg.link}")`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center 10%',
+                backgroundPosition: 'center 20%',
                 backgroundRepeat: 'no-repeat'
             }}
         >
+            <div className="h-45"></div>
+            <div className="absolute inset-0 bg-black opacity-60 z-0"></div>
             <div className="relative z-10 flex flex-col items-center text-white text-center px-4 py-6 w-full pt-14">
                 <img
                     src={esummit_hero.esummit_logo.link}
@@ -42,7 +42,7 @@ function Hero() {
                 </div>
                 <div className="h-20 md:h-30 lg:h-20"></div>
             </div>
-            {/* <div
+            <div
                 className="absolute bottom-0 left-0 w-full"
                 style={{
                     height: '100px',
@@ -50,7 +50,7 @@ function Hero() {
                     pointerEvents: 'none',
                     zIndex: 15,
                 }}
-            /> */}
+            />
 
         </div>
     );

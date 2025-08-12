@@ -39,7 +39,7 @@ const ThemeHeroSection = () => {
             objectPosition: "calc(50% + 10px) center"
           }}
         >
-          <source src="https://ik.imagekit.io/admr8uj75/KIITESummit_Theme.webm/ik-video.mp4?updatedAt=1754569881061" type="video/mp4" />
+          <source src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit(1).mp4?updatedAt=1754759095540" type="video/mp4" />
         </video>
 
         {/* Top Gradient Overlay */}
@@ -48,8 +48,8 @@ const ThemeHeroSection = () => {
         }} />
 
         {/* Bottom Gradient Overlay */}
-        <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
-          background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
+        <div className="absolute bottom-0 left-0 w-full h-102 z-5" style={{
+          background: "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8), transparent)"
         }} />
       
         {/* Content Container */}
@@ -125,9 +125,9 @@ const ThemeHeroSection = () => {
         <div className="relative w-full flex flex-col items-center justify-center z-10 h-full">
           {/* History Image */}
           <img
-            src="https://ik.imagekit.io/admr8uj75/transparent%20(1)%201.png?updatedAt=1753890656393"
+            src="https://ik.imagekit.io/ilgcom35w/waves-transparent.png?updatedAt=1754763356561"
             alt="History"
-            className="w-screen max-w-none h-auto object-cover z-10 mb-8"
+            className="w-screen opacity-50 md:opacity-100 max-w-none h-auto object-cover z-10 mb-8"
             style={{
               position: "relative",
               left: "50%",
@@ -150,26 +150,27 @@ const ThemeHeroSection = () => {
               style={{ 
                 position: 'relative', 
                 top: isMobile ? '80px' : '-80px', 
-                left: isMobile ? '0px' : '-50px' 
+                left: isMobile ? '-20px' : '-50px' 
               }}
             >
               <h3 
                 className="font-bold mb-2 text-left sm:text-center" 
                 style={{ 
-                  fontSize: isMobile ? '20px' : '32px',
+                  fontSize: isMobile ? '30px' : '32px',
                   color: '#EDBD90' 
                 }}
               >
-                2026<br />Ruby Empire
+                2025<br />Emerald Empire
               </h3>
               <p 
-                className="max-w-64 text-left sm:text-center" 
+                className="max-w-64 font-bold text-left sm:text-center" 
                 style={{ 
-                  fontSize: isMobile ? '14px' : '18px',
-                  color: '#FF375B' 
+                  fontSize: isMobile ? '16px' : '18px',
+                  color: '#08fc04'
                 }}
               >
-                The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.
+                
+                Emerald holds the crown, leading with wisdom and vision as the legacy begins.
               </p>
             </div>
             
@@ -185,20 +186,21 @@ const ThemeHeroSection = () => {
               <h3 
                 className="font-bold mb-2" 
                 style={{ 
-                  fontSize: isMobile ? '28px' : '32px',
+                  fontSize: isMobile ? '20px' : '32px',
                   color: '#EDBD90', 
                 }}
               >
-                2025<br />Emerald Empire
+                2026<br />Ruby Empire
               </h3>
               <p 
                 className="max-w-64 mx-auto" 
                 style={{ 
-                  fontSize: isMobile ? '18px' : '18px',
-                  color: '#08fc04', 
+                  fontSize: isMobile ? '14px' : '18px',
+                  color: '#FF375B', 
+                  fontWeight: 'bold',
                 }}
               >
-                Emerald holds the crown, leading with wisdom and vision as the legacy begins.
+                The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.
               </p>
             </div>
             
@@ -221,7 +223,7 @@ const ThemeHeroSection = () => {
                 2027<br />Sapphire Empire
               </h3>
               <p 
-                className="max-w-64 text-right sm:text-center" 
+                className="max-w-64 font-bold text-right sm:text-center" 
                 style={{ 
                   fontSize: isMobile ? '14px' : '18px',
                   color: '#5EBFE6' 
