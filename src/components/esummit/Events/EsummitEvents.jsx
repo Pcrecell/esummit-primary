@@ -19,107 +19,91 @@ const EventsPage = () => {
     const cardRefs = useRef([]);
     const mobileScrollRef = useRef(null);
 
-    const [selectedDate, setSelectedDate] = useState(21);
+    const [selectedDate, setSelectedDate] = useState(22);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
     const tabs = [
-        { date: 21, label: "21st Thursday" },
         { date: 22, label: "22nd Friday" },
         { date: 23, label: "23rd Saturday" },
         { date: 24, label: "24th Sunday" },
     ];
 
     const eventsByDate = {
-        21: [
-            {
-                title: "PANDORA'S PARADOX",
-                time: "2:00PM - 8:00PM", 
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "CASEX",
-                time: "8:00AM - 6:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "2:00PM - 8:00PM", 
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "CASEX",
-                time: "8:00AM - 6:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            },
-        ],
-        22: [
-            {
-                title: "ALICE IN FOUNDERLAND",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25", 
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
-            },
-            {
-                title: "ALICE IN FOUNDERLAND",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25", 
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
-            },
-        ],
-        23: [
-            {
-                title: "PANDORA'S PARADOX",
-                time: "10:00AM - 4:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "ORACLE",
-                time: "5:00PM - 9:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "10:00AM - 4:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "ORACLE",
-                time: "5:00PM - 9:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            }
-        ]
+      22: [
+        {
+          title: "PANDORA'S PARADOX",
+          time: "9:00AM - 4:30PM",
+          venue: "CAMPUS-25",
+          description:
+            "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
+          image:
+            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
+        },
+        {
+          title: "EXPO",
+          time: "11:00AM - 4:30PM",
+          venue: "CAMPUS-06",
+          description:
+            "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
+          image: "https://i.ibb.co/nNmS1sG1/expo-1.png",
+        },
+      ],
+      23: [
+        {
+          title: "ORACLE",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-17",
+          description:
+            "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
+          image: "https://i.ibb.co/kVqHhsfC/o.png",
+        },
+        {
+          title: "ALICE IN FOUNDERLAND",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-05",
+          description:
+            "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
+          image: "https://i.ibb.co/21vwNVG1/aif-left.png",
+        },
+
+        {
+          title: "EXPO",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-06",
+          description:
+            "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
+          image: "https://i.ibb.co/60Fck7gf/expo-2.png",
+        },
+        {
+          title: "PANDORA'S PARADOX",
+          time: "9:00AM - 4:00PM",
+          venue: "CAMPUS-25",
+          description:
+            "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
+          image:
+            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
+        },
+      ],
+      24: [
+        {
+          title: "CASEX",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-07",
+          description:
+            "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
+          image:
+            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
+        },
+        {
+          title: "PANDORA'S PARADOX",
+          time: "9:00AM - 3:00PM",
+          venue: "CAMPUS-25",
+          description:
+            "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
+          image:
+            "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
+        }
+      ]
     };
 
     const handleDateSelect = (date) => {
@@ -325,7 +309,7 @@ const EventsPage = () => {
                                 className="absolute w-full z-10"
                                 style={{ 
                                     top: '20%',
-                                    left: '50%',
+                                    left: '55%',
                                     transform: 'translate(-50%, -50%)'
                                 }}
                             >
