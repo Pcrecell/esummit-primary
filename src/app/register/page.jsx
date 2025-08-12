@@ -97,7 +97,8 @@ export default function Register() {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      const idToken = await user.getIdToken(); 
+      console.log(user);
+      const idToken = await user.getIdToken();
       
       console.log("User registered successfully:", user);
       const userData = {
@@ -113,8 +114,9 @@ export default function Register() {
       const csrfToken = getCookie('csrfToken');
 
       console.log("Registration data");
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+      const url="http://localhost:5000/api"
+      
+      const response = await fetch(`${url}/auth/register`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -127,7 +129,7 @@ export default function Register() {
       console.log("Registration response:", response);
       if (response.error) {
         setError(response.error);
-        setLoading(false); 
+        setLoading(false); // Loading OFF on error
         return;
       } 
       const Data = {
@@ -138,7 +140,7 @@ export default function Register() {
       }
     
     // Set session cookie in backend
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/auth/sessionLogin`, {
       method: 'POST',
       credentials: 'include',
       headers: {
