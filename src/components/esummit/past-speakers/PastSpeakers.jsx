@@ -128,7 +128,7 @@ const rightColumn = speakers.filter((_, i) => i % 2 !== 0);
   Past<br />Speakers
 </h1>
 
-          <p className="text-white text-lg mt-2 mb-6 font-poppins">
+          <p className="text-white text-xl mt-2 mb-6 font-[texturina]">
             Meet the industry leaders shaping the future
           </p>
 <div className="absolute -top-4 left-0 w-full h-20 z-20 pointer-events-none bg-gradient-to-b from-black to-transparent" />  
