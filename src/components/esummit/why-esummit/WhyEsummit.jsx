@@ -345,6 +345,7 @@ const WhyEsummit = () => {
             ))}
           </div>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/0 to-transparent z-0"></div>
       </section>
 
       {/* Parallax section with proper structure */}
