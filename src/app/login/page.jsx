@@ -18,7 +18,7 @@ export default function Login() {
   const navigate = useRouter();
 
   
-  const handleLogin = async (e) => {
+const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -34,7 +34,7 @@ export default function Login() {
       }
 
       const idToken = await response.user.getIdToken();
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/Login`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +45,7 @@ export default function Login() {
       if (response.user.role === "admin") {
         navigate.push("/esummit/admin-dashboard");
       } else {
-        navigate.push("/");
+        window.location.href = "/";
       }
 
     } catch (err) {
@@ -55,7 +55,7 @@ export default function Login() {
     }
 
     setLoading(false);
-  };
+  };
 
   return (
     <AuthLayout>

@@ -15,7 +15,7 @@ import { authAPI } from "../../../lib/services/api.js";
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     // Check session on mount
@@ -24,7 +24,7 @@ export default function EsummitNavbar() {
         const res = await authAPI.verifyToken();
         setIsAuthenticated(res.success);
       } catch {
-        setIsAuthenticated(true);
+        setIsAuthenticated(false);
       }
     })();
   }, []);
@@ -45,7 +45,6 @@ export default function EsummitNavbar() {
       const response = await authAPI.logout();
       if (response.success) {
         setIsAuthenticated(false);
-        // Redirect to home or login page
         window.location.href = "/";
       }
     } catch (error) {
@@ -177,7 +176,7 @@ export default function EsummitNavbar() {
                           }
                           setIsMobileMenuOpen(false);
                         }}
-                        className="text-left text-neutral-200 dark:text-neutral-300"
+                        className="text-left text-neutral-200"
                       >
                         Logout
                       </button>

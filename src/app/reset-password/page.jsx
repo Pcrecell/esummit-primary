@@ -4,7 +4,9 @@
 import React, { useState, useEffect } from 'react';
 import { confirmPasswordReset } from 'firebase/auth';
 import { auth } from '@/lib/utils/firebase/firebase';
-// import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
 import AuthLayout from '@/components/esummit/auth/AuthLayout';
@@ -19,19 +21,18 @@ function ResetPassword() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const code = params.get('oobCode');
+    const code = searchParams.get('oobCode');
     if (code) {
       setOobCode(code);
     } else {
       setError('Invalid or missing password reset code.');
     }
-  }, [location]);
+  }, [searchParams]);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -49,7 +50,7 @@ function ResetPassword() {
       await confirmPasswordReset(auth, oobCode, newPassword);
       setShowConfetti(true);
       setTimeout(() => {
-        navigate('/esummit/login', { state: { message: 'Password reset successful! Please log in.' } });
+        router.push('/login?message=Password reset successful! Please log in.');
       }, 3000);
     } catch (error) {
       console.error("Password Reset Error:", error);
@@ -161,7 +162,7 @@ function ResetPassword() {
             </button>
           </div>
           <Link
-            to="/esummit/login"
+            href="/login"
             className="bg-white hover:bg-gray-200 text-black font-semibold rounded py-2 text-center transition"
           >
             BACK TO LOGIN

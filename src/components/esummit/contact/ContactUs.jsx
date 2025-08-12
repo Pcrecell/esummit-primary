@@ -30,11 +30,38 @@ function App() {
     }));
   };
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-    // You can add your form submission logic here
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            countryCode: "+91", // You can make this dynamic if needed
+            message: formData.message,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        alert(result.error || "Failed to send message.");
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -166,7 +193,8 @@ function App() {
                 <div className="flex justify-center">
                   <button
                     type="submit"
-                    className="font-bold tracking-wide transition-colors duration-200 hover:bg-green-700 flex items-center justify-center rounded px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 text-[10px] sm:text-xs md:text-sm bg-gradient-to-b from-[#016241] to-[#014d32]"
+                    onClick={handleSubmit}
+                    className="font-bold tracking-wide cursor-pointer hover:scale-110 transition-all duration-200 hover:bg-green-700 flex items-center justify-center rounded px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 text-[10px] sm:text-xs md:text-sm bg-gradient-to-b from-[#016241] to-[#014d32]"
                   >
                     <span className="bg-gradient-to-b from-[#F5E34C] via-[#DDAB3C] to-[#8A5F1C] bg-clip-text text-transparent">
                       SEND
