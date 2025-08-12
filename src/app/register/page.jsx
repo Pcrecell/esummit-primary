@@ -97,6 +97,7 @@ export default function Register() {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
+      console.log(user);
       const idToken = await user.getIdToken();
       
       console.log("User registered successfully:", user);
@@ -113,8 +114,9 @@ export default function Register() {
       const csrfToken = getCookie('csrfToken');
 
       console.log("Registration data");
-
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/register`, {
+      const url="http://localhost:5000/api"
+      
+      const response = await fetch(`${url}/auth/register`, {
         method: 'POST',
         credentials: 'include',
         headers: {

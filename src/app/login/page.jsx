@@ -24,6 +24,7 @@ export default function Login() {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log("Login response:", response);
+  
       if (response.error) {
         setError(response.error);
         setLoading(false);
@@ -31,7 +32,7 @@ export default function Login() {
       }
 
       const idToken = await response.user.getIdToken();
-      await fetch(`${process.env.REACT_APP_API_URL}/auth/sessionLogin`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -40,9 +41,9 @@ export default function Login() {
       
       // Navigate based on user role
       if (response.user.role === "admin") {
-        navigate("/esummit/admin-dashboard");
+        navigate.push("/esummit/admin-dashboard");
       } else {
-        navigate("/esummit");
+        navigate.push("/");
       }
 
     } catch (err) {
@@ -107,7 +108,7 @@ export default function Login() {
 
         <div className="text-right mb-1">
           <a
-            href="/esummit/forgot-password"
+            href="/forgot-password"
             className="text-sm text-white hover:text-green-400 hover:underline"
           >
             Forgot your password?
