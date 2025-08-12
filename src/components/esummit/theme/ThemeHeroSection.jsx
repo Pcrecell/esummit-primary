@@ -233,6 +233,35 @@ const ThemeHeroSection = () => {
           </div>
         </div>
       </section>
+
+      
+<section className="relative w-full min-h-[100vh] bg-black">
+  <ScrollStack
+    className="bg-transparent"
+    itemDistance={isMobile ? 60 : 100}
+    itemScale={0.02}
+    itemStackDistance={isMobile ? 20 : 30}
+    stackPosition="10%"
+    baseScale={0.9}
+    rotationAmount={isMobile ? 1 : 2}
+    blurAmount={isMobile ? 2 : 3}
+  >
+    <ScrollStackItem itemClassName="bg-gradient-to-br from-red-900 to-red-600 p-8">
+      <h3 className="text-3xl font-bold mb-4 text-white">2026 Ruby Empire</h3>
+      <p className="text-white">The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.</p>
+    </ScrollStackItem>
+    
+    <ScrollStackItem itemClassName="bg-gradient-to-br from-emerald-900 to-emerald-600 p-8">
+      <h3 className="text-3xl font-bold mb-4 text-white">2025 Emerald Empire</h3>
+      <p className="text-white">Emerald holds the crown, leading with wisdom and vision as the legacy begins.</p>
+    </ScrollStackItem>
+    
+    <ScrollStackItem itemClassName="bg-gradient-to-br from-blue-900 to-blue-600 p-8">
+      <h3 className="text-3xl font-bold mb-4 text-white">2027 Sapphire Empire</h3>
+      <p className="text-white">Sapphire takes the throne, where calm strategy and sharp minds shape the future.</p>
+    </ScrollStackItem>
+  </ScrollStack>
+</section>
       
       {/* Section 3*/}
       <section

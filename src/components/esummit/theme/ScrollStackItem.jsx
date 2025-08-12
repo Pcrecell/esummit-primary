@@ -2,16 +2,14 @@
 
 import { useLayoutEffect, useRef, useCallback } from "react";
 import Lenis from "lenis";
-export const ScrollStackItem = ({ children, itemClassName = "", isFirst = false }) => (
+
+export const ScrollStackItem = ({ children, itemClassName = "" }) => (
   <div
-    className={`scroll-stack-card relative w-full h-[80vh] ${
-      isFirst
-        ? "mt-0 pt-0 rounded-none mb-8 sm:my-8 sm:pt-12 sm:rounded-[40px]"
-        : "my-8 pt-12 rounded-[40px]"
-    } shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative w-200 h-50 my-4 p-3 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
     style={{
-      backfaceVisibility: "hidden",
-      transformStyle: "preserve-3d",
+      width: 'clamp(300px, 70%, 600px)',
+      backfaceVisibility: 'hidden',
+      transformStyle: 'preserve-3d',
     }}
   >
     {children}
@@ -22,11 +20,11 @@ const ScrollStack = ({
   children,
   className = "",
   itemDistance = 100,
-  itemScale = 0.03,
+  itemScale = 0.01,
   itemStackDistance = 30,
-  stackPosition = "20%",
+  stackPosition = "10%",
   scaleEndPosition = "10%",
-  baseScale = 0.85,
+  baseScale = 0.5,
   scaleDuration = 0.5,
   rotationAmount = 0,
   blurAmount = 0,
@@ -107,7 +105,7 @@ const ScrollStack = ({
       }
 
       const newTransform = {
-        translateY: Math.round(translateY * 100) / 100,
+        translateY: Math.round(translateY * 10) / 100,
         scale: Math.round(scale * 1000) / 1000,
         rotation: Math.round(rotation * 100) / 100,
         blur: Math.round(blur * 100) / 100
@@ -243,21 +241,18 @@ const ScrollStack = ({
 
   return (
     <div
-      className={`relative w-full max-w-none mx-auto h-screen overflow-hidden ${className}`.trim()}
+      className={`relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim()}
       ref={scrollerRef}
-      style={{
-        overscrollBehavior: "none",
-        WebkitOverflowScrolling: "auto",
-        scrollBehavior: "auto",
-        WebkitTransform: "translateZ(0)",
-        transform: "translateZ(0)",
-        willChange: "scroll-position",
+      style={{ 
+        overscrollBehavior: 'contain',
+        WebkitOverflowScrolling: 'touch',
+        scrollBehavior: 'smooth',
+        WebkitTransform: 'translateZ(0)',
+        transform: 'translateZ(0)',
+        willChange: 'scroll-position'
       }}
     >
-      <div
-        className="scroll-stack-inner inset-0 pt-0 px-0 pb-[7rem]"
-        style={{ marginTop: 0 }}
-      >
+      <div className="scroll-stack-inner pt-[20vh] px-20 pb-[50rem] min-h-screen">
         {children}
         {/* Spacer so the last pin can release cleanly */}
         <div className="scroll-stack-end w-full h-px" />
