@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
-import ScrollStack, { ScrollStackItem } from "./ScrollStackItem";
+import ScrollOne from "./ScrollOne";
 
 const ThemeHeroSection = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -236,35 +236,13 @@ const ThemeHeroSection = () => {
         </div>
       </section>
 
-      
-<section className="relative w-full min-h-[100vh] bg-black">
-  <ScrollStack
-    className="bg-transparent"
-    itemDistance={isMobile ? 60 : 100}
-    itemScale={0.02}
-    itemStackDistance={isMobile ? 20 : 30}
-    stackPosition="10%"
-    baseScale={0.9}
-    rotationAmount={isMobile ? 1 : 2}
-    blurAmount={isMobile ? 2 : 3}
-  >
-    <ScrollStackItem itemClassName="bg-gradient-to-br from-red-900 to-red-600 p-8">
-      <h3 className="text-3xl font-bold mb-4 text-white">2026 Ruby Empire</h3>
-      <p className="text-white">The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.</p>
-    </ScrollStackItem>
-    
-    <ScrollStackItem itemClassName="bg-gradient-to-br from-emerald-900 to-emerald-600 p-8">
-      <h3 className="text-3xl font-bold mb-4 text-white">2025 Emerald Empire</h3>
-      <p className="text-white">Emerald holds the crown, leading with wisdom and vision as the legacy begins.</p>
-    </ScrollStackItem>
-    
-    <ScrollStackItem itemClassName="bg-gradient-to-br from-blue-900 to-blue-600 p-8">
-      <h3 className="text-3xl font-bold mb-4 text-white">2027 Sapphire Empire</h3>
-      <p className="text-white">Sapphire takes the throne, where calm strategy and sharp minds shape the future.</p>
-    </ScrollStackItem>
-  </ScrollStack>
-</section>
-      
+      {/* Section 2: Image Scroll (one at a time) */}
+      {/* <section className="relative w-full bg-black flex items-center justify-center min-h-[100vh]">
+        <div className="w-[80%] h-[80vh]">
+          <ScrollOne isMobile={isMobile} />
+        </div>
+      </section>
+       */}
       {/* Section 3*/}
       <section
         className="relative w-full bg-black bg-cover bg-center flex flex-col justify-center items-center text-center text-white px-4 py-4 overflow-x-hidden min-h-[60vh]"
@@ -276,35 +254,15 @@ const ThemeHeroSection = () => {
         <div className="absolute top-0 left-0 w-full h-32 z-5" style={{
           background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
         }} />
+        {isMobile && <div className="w-full h-80"></div>}
+        <div className="w-full h-[80vh]">
+          <ScrollOne isMobile={isMobile} />
+        </div>
 
-        {/* Bottom Gradient Overlay */}
         <div className="absolute bottom-0 left-0 w-full h-32 z-5" style={{
           background: "linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
         }} />
 
-        <div className="relative w-full flex flex-col items-center justify-end z-10 h-full pb-8">
-          {/* Register Now Button */}
-          <div className="w-full flex justify-center pt-32 sm:pt-0">
-            <a
-              href="#register"
-              className="inline-block rounded-full font-bold transition-transform transform hover:scale-105 hover:shadow-xl"
-              style={{
-                padding: isMobile ? '12px 24px' : '16px 32px',
-                fontSize: isMobile ? '16px' : '18px',
-                fontFamily: "Judson, serif",
-                backgroundColor: "#20956E",
-                color: "#FFFFFF",
-                border: "2px solid #15A944",
-                boxShadow: `
-                  0 8px 24px rgba(32, 149, 110, 0.4),
-                  0 4px 12px rgba(32, 149, 110, 0.2)
-                `,
-              }}
-            >
-              Register Now
-            </a>
-          </div>
-        </div>
       </section>
     </>
   );
