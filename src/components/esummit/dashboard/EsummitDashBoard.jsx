@@ -142,7 +142,7 @@ const EsummitDashBoard = () => {
 
       {/* Confirmation Popup */}
            {/* Confirmation Popup */}
-      {showConfirmationPopup && (
+      {/* {showConfirmationPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg max-w-md mx-4">
             <h3 className="text-xl font-bold text-black mb-4">Confirm Registration</h3>
@@ -165,7 +165,7 @@ const EsummitDashBoard = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
