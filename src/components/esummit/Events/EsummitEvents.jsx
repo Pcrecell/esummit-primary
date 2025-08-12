@@ -19,106 +19,77 @@ const EventsPage = () => {
     const cardRefs = useRef([]);
     const mobileScrollRef = useRef(null);
 
-    const [selectedDate, setSelectedDate] = useState(21);
+    const [selectedDate, setSelectedDate] = useState(22);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
     const tabs = [
-        { date: 21, label: "21st Thursday" },
         { date: 22, label: "22nd Friday" },
         { date: 23, label: "23rd Saturday" },
         { date: 24, label: "24th Sunday" },
     ];
 
     const eventsByDate = {
-        21: [
-            {
-                title: "PANDORA'S PARADOX",
-                time: "2:00PM - 8:00PM", 
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "CASEX",
-                time: "8:00AM - 6:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "2:00PM - 8:00PM", 
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "CASEX",
-                time: "8:00AM - 6:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            },
-        ],
         22: [
             {
-                title: "ALICE IN FOUNDERLAND",
-                time: "9:00AM - 5:00PM",
+                title: "PANDORA'S PARADOX",
+                time: "9:00AM - 4:30PM",
                 venue: "CAMPUS-25",
                 description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
+                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584353078",
             },
             {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25", 
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
-            },
-            {
-                title: "ALICE IN FOUNDERLAND",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25",
+                title: "EXPO",
+                time: "11:00AM - 4:30PM",
+                venue: "CAMPUS-06",
                 description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
                 image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
-            },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "9:00AM - 5:00PM",
-                venue: "CAMPUS-25", 
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584353078",
             },
         ],
         23: [
             {
+                title: "ORACLE",
+                time: "9:00AM - 3:00PM",
+                venue: "CAMPUS-17",
+                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
+                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Right.png",
+            },
+            {
                 title: "PANDORA'S PARADOX",
-                time: "10:00AM - 4:00PM",
+                time: "9:00AM - 4:00PM",
+                venue: "CAMPUS-25",
+                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
+                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Left.png?updatedAt=1754584352905",
+            },
+            {
+                title: "ALICE IN FOUNDERLAND",
+                time: "9:00AM - 3:PM",
+                venue: "CAMPUS-05",
+                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
+                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
+            },
+            {
+                title: "EXPO",
+                time: "11:00AM - 4:30PM",
+                venue: "CAMPUS-06",
+                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
+                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/AIF_Frame_Right.png?updatedAt=1754584352943",
+            },
+        ],
+        24: [
+            {
+                title: "PANDORA'S PARADOX",
+                time: "9:00AM - 3:00PM", 
                 venue: "CAMPUS-25",
                 description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
                 image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
             },
             {
-                title: "ORACLE",
-                time: "5:00PM - 9:00PM",
-                venue: "CAMPUS-25",
+                title: "CASEX",
+                time: "9:00AM - 3:00PM",
+                venue: "CAMPUS-07",
                 description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
                 image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
             },
-            {
-                title: "PANDORA'S PARADOX",
-                time: "10:00AM - 4:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Pandora_Frame_Right.png?updatedAt=1754584352905",
-            },
-            {
-                title: "ORACLE",
-                time: "5:00PM - 9:00PM",
-                venue: "CAMPUS-25",
-                description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, exercitationem.",
-                image: "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Oracle_Frame_Left.png?updatedAt=1754584352990",
-            }
         ]
     };
 
