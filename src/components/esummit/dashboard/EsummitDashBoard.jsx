@@ -6,6 +6,8 @@ import MapComponent from "./MapComponent";
 // import { authAPI } from "../../services/api";
 import DashBoardCard from "../../../../public/images/esummit/dashboard/Dashboard Card.svg";
 import QuestionMark from "../../../../public/images/esummit/dashboard/Question-Mark.svg";
+import PaymentStart from "./paymentStart";
+import PaymentEnd from "./paymentEnd";
 import Particles from './Particles';
 import Image from "next/image";
 
@@ -14,10 +16,37 @@ const EsummitDashBoard = () => {
   const [loading, setLoading] = useState(true);
   const [paymentDone, setPaymentDone] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [registeredEventId, setRegisteredEventId] = useState(null);
   const qrCode = "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
 
+    const handleEventClick = (eventId) => {
+    if (paymentDone) {
+      setSelectedEventId(eventId);
+      setShowConfirmationPopup(true);
+    }
+  };
 
+  // Handle payment action from PaymentStart popup
+  const handlePaymentFromPopup = () => {
+    setPaymentDone(true);
+  };
+
+  // Handle registration confirmation
+  const handleConfirmRegistration = () => {
+    console.log("Confirming registration for event:", selectedEventId);
+    setRegisteredEventId(selectedEventId);
+    setShowConfirmationPopup(false);
+    console.log("Registration completed, should show PaymentEnd now");
+    console.log("registeredEventId state:", selectedEventId);
+  };
+
+  // Handle popup cancellation
+  const handleCancelRegistration = () => {
+    setSelectedEventId(null);
+    setShowConfirmationPopup(false);
+  };
 
   // useEffect(() => {
   //   let mounted = true;

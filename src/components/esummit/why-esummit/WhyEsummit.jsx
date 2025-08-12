@@ -268,12 +268,12 @@ const WhyEsummit = () => {
   return (
     <div>
       <section
-        className="min-h-screen py-16 px-4 text-white text-center flex flex-col justify-center relative"
+        className="min-h-screen py-100 px-4 text-white text-center flex flex-col justify-center relative"
         style={{
           backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center top",
-          backgroundRepeat: "no-repeat",
+          backgroundRepeat: "repeat-y",
         }}
       >
         {/* Black overlay */}
