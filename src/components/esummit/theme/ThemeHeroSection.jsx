@@ -120,9 +120,12 @@ const ThemeHeroSection = () => {
         }} />
         
         <div className="relative w-full flex flex-col items-center justify-center z-10 h-full">
-          {/* History Image */}
+          {/* History Image - Different for Mobile and Desktop */}
           <img
-            src="https://ik.imagekit.io/ilgcom35w/waves-transparent.png?updatedAt=1754763356561"
+            src={isMobile 
+              ? "https://ik.imagekit.io/ilgcom35w/waves-transparent.png?updatedAt=1754763356561"
+              : "https://ik.imagekit.io/admr8uj75/transparent%20(1)%201.png?updatedAt=1753890656393"
+            }
             alt="History"
             className="w-screen opacity-50 md:opacity-100 max-w-none h-auto object-cover z-10 mb-8"
             style={{
@@ -141,94 +144,188 @@ const ThemeHeroSection = () => {
             className={`absolute left-0 top-1/2 w-full flex ${isMobile ? 'flex-col gap-6' : 'flex-row justify-between'} items-center px-2 md:px-8 lg:px-16`}
             style={{ zIndex: 50, transform: 'translateY(-50%)', pointerEvents: 'none' }}
           >
-            {/* Ruby Empire - Left Side */}
-            <div 
-              className="flex flex-col items-start sm:items-center" 
-              style={{ 
-                position: 'relative', 
-                top: isMobile ? '80px' : '-80px', 
-                left: isMobile ? '-20px' : '-50px' 
-              }}
-            >
-              <h3 
-                className="font-bold mb-2 text-left sm:text-center" 
-                style={{ 
-                  fontSize: isMobile ? '30px' : '32px',
-                  color: '#EDBD90' 
-                }}
-              >
-                2025<br />Emerald Empire
-              </h3>
-              <p 
-                className="max-w-64 font-bold text-left sm:text-center" 
-                style={{ 
-                  fontSize: isMobile ? '16px' : '18px',
-                  color: '#08fc04'
-                }}
-              >
+            {/* Mobile Layout - Same as before */}
+            {isMobile ? (
+              <>
+                {/* Emerald Empire - First on Mobile */}
+                <div 
+                  className="flex flex-col items-start sm:items-center" 
+                  style={{ 
+                    position: 'relative', 
+                    top: '80px', 
+                    left: '-20px' 
+                  }}
+                >
+                  <h3 
+                    className="font-bold mb-2 text-left sm:text-center" 
+                    style={{ 
+                      fontSize: '30px',
+                      color: '#EDBD90' 
+                    }}
+                  >
+                    2025<br />Emerald Empire
+                  </h3>
+                  <p 
+                    className="max-w-64 font-bold text-left sm:text-center" 
+                    style={{ 
+                      fontSize: '16px',
+                      color: '#08fc04'
+                    }}
+                  >
+                    Emerald holds the crown, leading with wisdom and vision as the legacy begins.
+                  </p>
+                </div>
                 
-                Emerald holds the crown, leading with wisdom and vision as the legacy begins.
-              </p>
-            </div>
-            
-            {/* Emerald Empire - Center Top */}
-            <div 
-              className="text-center" 
-              style={{ 
-                position: 'relative', 
-                top: isMobile ? '140px' : '-325px', 
+                {/* Ruby Empire - Second on Mobile */}
+                <div 
+                  className="text-center" 
+                  style={{ 
+                    position: 'relative', 
+                    top: '140px'
+                  }}
+                >
+                  <h3 
+                    className="font-bold mb-2" 
+                    style={{ 
+                      fontSize: '20px',
+                      color: '#EDBD90'
+                    }}
+                  >
+                    2026<br />Ruby Empire
+                  </h3>
+                  <p 
+                    className="max-w-64 mx-auto" 
+                    style={{ 
+                      fontSize: '14px',
+                      color: '#FF375B', 
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.
+                  </p>
+                </div>
                 
-              }}
-            >
-              <h3 
-                className="font-bold mb-2" 
-                style={{ 
-                  fontSize: isMobile ? '20px' : '32px',
-                  color: '#EDBD90', 
-                }}
-              >
-                2026<br />Ruby Empire
-              </h3>
-              <p 
-                className="max-w-64 mx-auto" 
-                style={{ 
-                  fontSize: isMobile ? '14px' : '18px',
-                  color: '#FF375B', 
-                  fontWeight: 'bold',
-                }}
-              >
-                The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.
-              </p>
-            </div>
-            
-            {/* Sapphire Empire - Right Side */}
-            <div 
-              className="flex flex-col items-end sm:items-center" 
-              style={{ 
-                position: 'relative', 
-                top: isMobile ? '270px' : '10px', 
-                right: isMobile ? '-30px' : '-50px' 
-              }}
-            >
-              <h3 
-                className="font-bold mb-2 text-right sm:text-center" 
-                style={{ 
-                  fontSize: isMobile ? '20px' : '32px',
-                  color: '#EDBD90' 
-                }}
-              >
-                2027<br />Sapphire Empire
-              </h3>
-              <p 
-                className="max-w-64 font-bold text-right sm:text-center" 
-                style={{ 
-                  fontSize: isMobile ? '14px' : '18px',
-                  color: '#5EBFE6' 
-                }}
-              >
-                Sapphire takes the throne, where calm strategy and sharp minds shape the future.
-              </p>
-            </div>
+                {/* Sapphire Empire - Third on Mobile */}
+                <div 
+                  className="flex flex-col items-end sm:items-center" 
+                  style={{ 
+                    position: 'relative', 
+                    top: '270px', 
+                    right: '-30px' 
+                  }}
+                >
+                  <h3 
+                    className="font-bold mb-2 text-right sm:text-center" 
+                    style={{ 
+                      fontSize: '20px',
+                      color: '#EDBD90' 
+                    }}
+                  >
+                    2027<br />Sapphire Empire
+                  </h3>
+                  <p 
+                    className="max-w-64 font-bold text-right sm:text-center" 
+                    style={{ 
+                      fontSize: '14px',
+                      color: '#5EBFE6' 
+                    }}
+                  >
+                    Sapphire takes the throne, where calm strategy and sharp minds shape the future.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Desktop Layout - Ruby Left, Emerald Center, Sapphire Right */}
+                
+                {/* Ruby Empire - Left Side on Desktop */}
+                <div 
+                  className="flex flex-col items-center" 
+                  style={{ 
+                    position: 'relative', 
+                    top: '-80px', 
+                    left: '-50px' 
+                  }}
+                >
+                  <h3 
+                    className="font-bold mb-2 text-center" 
+                    style={{ 
+                      fontSize: '32px',
+                      color: '#EDBD90' 
+                    }}
+                  >
+                    2026<br />Ruby Empire
+                  </h3>
+                  <p 
+                    className="max-w-64 font-bold text-center" 
+                    style={{ 
+                      fontSize: '18px',
+                      color: '#FF375B'
+                    }}
+                  >
+                    The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.
+                  </p>
+                </div>
+                
+                {/* Emerald Empire - Center on Desktop */}
+                <div 
+                  className="text-center" 
+                  style={{ 
+                    position: 'relative', 
+                    top: '-325px'
+                  }}
+                >
+                  <h3 
+                    className="font-bold mb-2" 
+                    style={{ 
+                      fontSize: '32px',
+                      color: '#EDBD90'
+                    }}
+                  >
+                    2025<br />Emerald Empire
+                  </h3>
+                  <p 
+                    className="max-w-64 mx-auto" 
+                    style={{ 
+                      fontSize: '18px',
+                      color: '#08fc04', 
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Emerald holds the crown, leading with wisdom and vision as the legacy begins.
+                  </p>
+                </div>
+                
+                {/* Sapphire Empire - Right Side on Desktop */}
+                <div 
+                  className="flex flex-col items-center" 
+                  style={{ 
+                    position: 'relative', 
+                    top: '10px', 
+                    right: '-50px' 
+                  }}
+                >
+                  <h3 
+                    className="font-bold mb-2 text-center" 
+                    style={{ 
+                      fontSize: '32px',
+                      color: '#EDBD90' 
+                    }}
+                  >
+                    2027<br />Sapphire Empire
+                  </h3>
+                  <p 
+                    className="max-w-64 font-bold text-center" 
+                    style={{ 
+                      fontSize: '18px',
+                      color: '#5EBFE6' 
+                    }}
+                  >
+                    Sapphire takes the throne, where calm strategy and sharp minds shape the future.
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
