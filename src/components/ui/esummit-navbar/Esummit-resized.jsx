@@ -195,7 +195,7 @@ export const NavItems = ({ items = [], className }) => {
 
 export const NavbarLogo = () => {
     return (
-        <a href="/esummit">
+        <a href="/">
             <button className="flex items-center px-2 py-1">
                 <Image src={logo} alt="logo" width={100} height={100} />
             </button>
