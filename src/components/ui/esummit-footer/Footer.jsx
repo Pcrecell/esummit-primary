@@ -123,7 +123,7 @@ const Footer = () => {
   <div>
     <p className="font-bold text-white">Sarvagya Singh</p>
     <p className="text-white/80">Chairperson</p>
-    <p className="text-white/80">+91-620002497</p>
+    <p className="text-white/80">+91-6200024970</p>
   </div>
   <div>
     <p className="font-bold text-white">Abhishek Sahoo</p>
@@ -260,7 +260,7 @@ const Footer = () => {
   <div>
     <p className="font-bold text-white">Sarvagya Singh</p>
     <p className="text-white/80">Chairperson</p>
-    <p className="text-white/80">+91-620002497</p>
+    <p className="text-white/80">+91-6200024970</p>
   </div>
   <div>
     <p className="font-bold text-white">Abhishek Sahoo</p>
