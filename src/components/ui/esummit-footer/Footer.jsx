@@ -52,33 +52,49 @@ const Footer = () => {
               <h3 className="text-lg font-bold mb-2 text-green-400 tracking-wider uppercase text-center">
                 Our Initiatives
               </h3>
-              <ul className="space-y-2 text-sm text-center">
-                <a href="/esummit">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer">
-                    E-summit
-                  </li>
-                </a>
-                <a href="/i-camp">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer">
-                    I-Camp
-                  </li>
-                </a>
-                <a href="/build-school">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer mt-1">
-                    BuildSchool
-                  </li>
-                </a>
-                <a href="/hult-prize">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer mt-1">
-                    Hult Prize
-                  </li>
-                </a>
-                <a href="/maverick/">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer mt-1">
-                    Maverick
-                  </li>
-                </a>
-              </ul>
+             <ul className="space-y-2 text-sm text-center">
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/esummit"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      E-summit
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/i-camp"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      I-Camp
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/build-school"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      BuildSchool
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/hult-prize"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      Hult Prize
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/maverick"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      Maverick
+    </a>
+  </li>
+</ul>
+
             </div>
           </div>
 
@@ -103,6 +119,18 @@ const Footer = () => {
                   pcr.ecell@kiit.ac.in
                 </a>
               </div>
+              <div className=" space-y-4 text-sm">
+  <div>
+    <p className="font-bold text-white">Sarvagya Singh</p>
+    <p className="text-white/80">Chairperson</p>
+    <p className="text-white/80">+91-620002497</p>
+  </div>
+  <div>
+    <p className="font-bold text-white">Abhishek Sahoo</p>
+    <p className="text-white/80">Event Head</p>
+    <p className="text-white/80">+91-9833685187</p>
+  </div>
+</div>
             </div>
           </div>
         </div>
@@ -139,32 +167,48 @@ const Footer = () => {
               OUR INITIATIVES
             </h3>
               <ul className="space-y-2 flex flex-col text-sm">
-                <a href="/esummit">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer">
-                    E-summit
-                  </li>
-                </a>
-                <a href="/i-camp">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer">
-                    I-Camp
-                  </li>
-                </a>
-                <a href="/build-school">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer mt-1">
-                    BuildSchool
-                  </li>
-                </a>
-                <a href="/hult-prize">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer mt-1">
-                    Hult Prize
-                  </li>
-                </a>
-                <a href="/maverick/">
-                  <li className="hover:text-green-200 transition-colors duration-150 cursor-pointer mt-1">
-                    Mavericks
-                  </li>
-                </a>
-              </ul>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/esummit"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      E-summit
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/i-camp"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      I-Camp
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/build-school"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      BuildSchool
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/hult-prize"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      Hult Prize
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://www.kiitecell.org/gallery/maverick"
+      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+    >
+      Mavericks
+    </a>
+  </li>
+</ul>
+
           </div>
 
           {/* Column 3: Useful Links */}
@@ -196,15 +240,34 @@ const Footer = () => {
                   E-cell KIIT<br />Bhubaneswar, Odisha
                 </p>
               </div>
-              <div className="flex items-center space-x-2">
+              < div className="flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                 </svg>
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=pcr.ecell@kiit.ac.in" target="_blank" rel="noopener noreferrer" className="hover:text-green-200">
-                  pcr.ecell@kiit.ac.in
-                </a>
+                {/* PCR email */}
+<a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=pcr.ecell@kiit.ac.in"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="hover:text-green-200"
+>
+  pcr.ecell@kiit.ac.in
+</a>
               </div>
+              {/* Extra contacts */}
+<div className="mt-6 space-y-4 text-sm">
+  <div>
+    <p className="font-bold text-white">Sarvagya Singh</p>
+    <p className="text-white/80">Chairperson</p>
+    <p className="text-white/80">+91-620002497</p>
+  </div>
+  <div>
+    <p className="font-bold text-white">Abhishek Sahoo</p>
+    <p className="text-white/80">Event Head</p>
+    <p className="text-white/80">+91-9833685187</p>
+  </div>
+</div>
             </div>
           </div>
         </div>
