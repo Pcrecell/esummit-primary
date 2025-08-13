@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Navbar,
   NavBody,
@@ -8,14 +8,13 @@ import {
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
-} from "../../ui/esummit-navbar/Esummit-resized"
-import { useState,useEffect } from "react"
-import {authAPI} from "../../../lib/services/api.js";
-import { FaUserCircle } from "react-icons/fa"; // for avatar icon
+} from "../../ui/esummit-navbar/Esummit-resized";
+import { useState, useEffect } from "react";
+import { authAPI } from "../../../lib/services/api.js";
 
 export default function EsummitNavbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [expandedIndex, setExpandedIndex] = useState(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -33,19 +32,29 @@ export default function EsummitNavbar() {
   const leftItems = [
     { name: "Home", link: "/" },
     {
-      name: "Events", link: "/events"
+      name: "Events",
+      link: "/events",
     },
     { name: "Theme", link: "/theme" },
-  ]
+  ];
 
+  const navRight = [{ name: "Contact", link: "/contact" }];
 
-  const navRight = [
-    { name: "Contact", link: "/contact" }
-  ]
+  const handleLogout = async () => {
+    try {
+      const response = await authAPI.logout();
+      if (response.success) {
+        setIsAuthenticated(false);
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   const handleToggleDropdown = (idx) => {
-    setExpandedIndex(expandedIndex === idx ? null : idx)
-  }
+    setExpandedIndex(expandedIndex === idx ? null : idx);
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full z-[100]">
@@ -60,49 +69,45 @@ export default function EsummitNavbar() {
                 visible={visible}
               >
                 {isAuthenticated ? (
-                      <div className="relative group">
-                        <button className="flex items-center gap-2 text-white">
-                          <FaUserCircle className="text-2xl" />
-                          <span>Profile</span>
-                        </button>
-                        <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg hidden group-hover:block z-50">
-                          <a
-                            href="/dashboard"
-                            className="block px-4 py-2 text-black hover:bg-gray-100"
-                          >
-                            Dashboard
-                          </a>
-                          <button
-                            onClick={async () => {
-                              const response = await authAPI.logout();
-                              if(response.success){
-                                setIsAuthenticated(false);
-                                // Redirect to home or login page
-                                window.location.href = "/"; 
-                              } 
-                            }}
-                            className="block w-full text-left px-4 py-2 text-black hover:bg-gray-100"
-                          >
-                            Logout
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <a href="/login">
-                          <NavbarButton variant="secondary">Login</NavbarButton>
-                        </a>
-                        <a href="/register">
-                          <NavbarButton variant="primary">Register</NavbarButton>
-                        </a>
-                      </>
-                    )}
-
+                  <div className="relative group">
+                    <div className="cursor-pointer">
+                      <img
+                        src="https://ik.imagekit.io/ilgcom35w/profile.png?updatedAt=1755026433401"
+                        alt="Profile"
+                        className="w-10 h-10 rounded-full object-cover hover:opacity-80 transition-opacity"
+                      />
+                    </div>
+                    <div className="absolute backdrop-blur-3xl bg-black/40 rounded-xl right-0 mt-3 w-32 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                      <a
+                        href="/dashboard"
+                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] hover:text-white rounded"
+                      >
+                        Dashboard
+                      </a>
+                      <a
+                        href=""
+                        onClick={handleLogout}
+                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] rounded"
+                      >
+                        Logout
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <a href="/login">
+                      <NavbarButton variant="secondary">Login</NavbarButton>
+                    </a>
+                    <a href="/register">
+                      <NavbarButton variant="primary">Register</NavbarButton>
+                    </a>
+                  </>
+                )}
               </NavBody>
             </div>
 
             {/* Mobile Navigation */}
-            <div className="flex md:hidden w-full">
+            <div className="flex lg:hidden w-full">
               <MobileNav visible={visible}>
                 <MobileNavHeader>
                   <NavbarLogo />
@@ -153,40 +158,49 @@ export default function EsummitNavbar() {
                     </div>
                   ))}
                   {isAuthenticated ? (
-                      <>
-                        <a
-                          href="/dashboard"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className="text-neutral-200 dark:text-neutral-300"
-                        >
-                          Dashboard
-                        </a>
-                        <button
-                          onClick={async () => {
-                            const response = await authAPI.logout();
-                              if(response.success){
-                                setIsAuthenticated(false);
-                                // Redirect to home or login page
-                                window.location.href = "/"; 
-                              } 
-                            setIsMobileMenuOpen(false)
-                          }}
-                          className="text-left text-neutral-200 dark:text-neutral-300"
-                        >
-                          Logout
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <a href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                          <NavbarButton variant="primary" className="w-full">Login</NavbarButton>
-                        </a>
-                        <a href="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                          <NavbarButton variant="secondary" className="w-full">Register</NavbarButton>
-                        </a>
-                      </>
-                    )}
-
+                    <>
+                      <a
+                        href="/dashboard"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-neutral-200 dark:text-neutral-300"
+                      >
+                        Dashboard
+                      </a>
+                      <button
+                        onClick={async () => {
+                          const response = await authAPI.logout();
+                          if (response.success) {
+                            setIsAuthenticated(false);
+                            // Redirect to home or login page
+                            window.location.href = "/";
+                          }
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="text-left text-neutral-200"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <a
+                        href="/login"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <NavbarButton variant="primary" className="w-full">
+                          Login
+                        </NavbarButton>
+                      </a>
+                      <a
+                        href="/register"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <NavbarButton variant="secondary" className="w-full">
+                          Register
+                        </NavbarButton>
+                      </a>
+                    </>
+                  )}
                 </MobileNavMenu>
               </MobileNav>
             </div>
@@ -194,5 +208,5 @@ export default function EsummitNavbar() {
         )}
       </Navbar>
     </div>
-  )
+  );
 }

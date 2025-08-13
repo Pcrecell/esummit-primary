@@ -100,6 +100,9 @@ const router = useRouter();
           muted
           playsInline
           className="fixed top-0 left-0 w-full h-full object-cover z-[-1] bg-[#010b04]"
+          style={{
+            objectPosition: "calc(50% + 23px) center"
+          }}
         >
           <source
             src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit.mp4?updatedAt=1754759044375"
@@ -107,10 +110,24 @@ const router = useRouter();
           />
           Your browser does not support the video tag.
         </video>
-
+        <div className="relative z-20 w-full pointer-events-none">
+          <div className="flex flex-col font-bold w-full justify-center pt-24 sm:pt-[35vh] ml-4 pointer-events-auto">
+            <h1 className="font-tourney text-5xl sm:text-5xl text-start" style={{ 
+              color: '#FFFFFF', 
+              WebkitTextStroke: '1px #FFFFFF',
+              paintOrder: 'stroke fill'
+            }}>Hey!</h1>
+            <h1 className="font-tourney text-8xl sm:text-8xl text-start" style={{ 
+              color: '#FFFFFF', 
+              WebkitTextStroke: '2px #FFFFFF',
+              paintOrder: 'stroke fill'
+            }}>User</h1>
+          </div>
+        </div>
         <div
-          className="relative min-h-screen font-sans text-white hero-container"
+          className="relative min-h-[80vh] font-sans text-white hero-container"
         />   
+
         <div className="absolute top-[120vh] sm:top-[130vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-80">
           <div className="relative">
             <div className="relative">
@@ -145,19 +162,19 @@ const router = useRouter();
             </div>
           </div>
           <div className="flex items-center justify-center w-full mt-8">
-            <button 
+            {/* <button 
               onClick={() => setPaymentDone(true)} 
               className="py-4 px-8 bg-gradient-to-br font-poppins from-black to-green-600 text-white shadow-lg shadow-[#abd65d] border-b-2 border-white text-2xl rounded-2xl hover:shadow-[#abd65d] hover:shadow-2xl transition-all duration-[1000ms]"
             >
               Pay Now
-            </button>
+            </button> */}
           </div>
         </div>
 
-        <div className="relative min-h-[80vh] sm:min-h-[90vh] font-sans text-white background-container">   
+        <div className="relative min-h-[80vh] sm:min-h-[50vh] font-sans text-white background-container">   
         </div>
       </div>
-      {console.log("Current registeredEventId:", registeredEventId)}
+      {/* {console.log("Current registeredEventId:", registeredEventId)}
       {registeredEventId ? (
         <div>
           <PaymentEnd eventId={registeredEventId} />
@@ -170,11 +187,11 @@ const router = useRouter();
             onPayNow={handlePaymentFromPopup}
           />
         </div>
-      )}
+      )} */}
 
       {/* Confirmation Popup */}
            {/* Confirmation Popup */}
-      {showConfirmationPopup && (
+      {/* {showConfirmationPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg max-w-md mx-4">
             <h3 className="text-xl font-bold text-black mb-4">Confirm Registration</h3>
@@ -197,7 +214,7 @@ const router = useRouter();
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

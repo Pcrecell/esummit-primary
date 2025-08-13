@@ -16,7 +16,9 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useRouter();
-  const handleLogin = async (e) => {
+
+  
+const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -32,7 +34,7 @@ export default function Login() {
       }
 
       const idToken = await response.user.getIdToken();
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/sessionLogin`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/Login`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -41,9 +43,9 @@ export default function Login() {
       
       // Navigate based on user role
       if (response.user.role === "admin") {
-        navigate.push("/esummit/admin-dashboard");
+        navigate.push("/admin-dashboard");
       } else {
-        navigate.push("/");
+        window.location.href = "/";
       }
 
     } catch (err) {
@@ -53,7 +55,7 @@ export default function Login() {
     }
 
     setLoading(false);
-  };
+  };
 
   return (
     <AuthLayout>
@@ -124,7 +126,7 @@ export default function Login() {
             {loading ? "Signing in..." : "LOGIN"}
           </button>
           <a
-            href="/esummit/register"
+            href="/register"
             className="flex items-center justify-center gap-1 bg-transparent hover:bg-white/10 text-white font-semibold rounded py-2 transition"
           >
             CREATE NEW ACCOUNT
