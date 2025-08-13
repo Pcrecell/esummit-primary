@@ -1,8 +1,10 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function Story() {
   const [visibleLines, setVisibleLines] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
   
   const textContent = [
   { text: "ORACLE IS WHERE MYTHS COME TO LIFE AND .", delay: 0 },
@@ -25,6 +27,30 @@ export default function Story() {
 ];
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 } // Trigger when 50% of section is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const timers = textContent.map((line, i) => {
       return setTimeout(() => {
         setVisibleLines(prev => prev + 1);
@@ -32,10 +58,13 @@ export default function Story() {
     });
 
     return () => timers.forEach(timer => clearTimeout(timer));
-  }, []);
+  }, [isVisible]); // Only run when isVisible changes
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div 
+      className="relative h-screen w-full overflow-hidden"
+      ref={sectionRef}
+    >
       {/* Video Background */}
       <video
         autoPlay
@@ -49,24 +78,20 @@ export default function Story() {
           type="video/mp4"
         />
       </video>
-      {/* Top Dark Fading Overlay */}
-<div
-  className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
-  style={{
-    background:
-      "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
-  }}
-></div>
 
-       <div
-        className="absolute bottom-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+      {/* Top and Bottom Overlays (unchanged) */}
+      <div className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+        }}
+      ></div>
+      <div className="absolute bottom-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+        style={{
+          background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
         }}
       ></div>
 
-      {/* Text Overlay - Left Aligned */}
+      {/* Text Overlay */}
       <div className="absolute inset-0 z-10 flex items-center">
         <div className="w-[90%] px-5 py-12 mx-auto text-left">
           <div className="space-y-0.1">
