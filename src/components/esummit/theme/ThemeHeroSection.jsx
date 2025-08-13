@@ -140,7 +140,7 @@ const ThemeHeroSection = () => {
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
               }}
             >
-              Emerald Empires Building Lasting Legacies
+              Emerald Empire : Building Lasting Legacies
             </h2>
           </div>
         </div>
