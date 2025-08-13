@@ -292,7 +292,7 @@ const WhyEsummit = () => {
 
           // style={{ fontFamily: "Texturina, serif" }}
           >
-            <span style={{ textShadow: "5px 5px  black" }}>Why Join </span><span style={{ color: "#2EB24C", textShadow: "5px 5px black" }}>E-Summit ?</span>
+            <span style={{ textShadow: "10px 10px  black" }}>Why Join </span><span style={{ color: "#2EB24C", textShadow: "10px 10px black" }}>E-Summit ?</span>
           </h2>
 
           <div
