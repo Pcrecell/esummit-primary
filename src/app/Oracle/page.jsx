@@ -1,7 +1,11 @@
-import Hero from "@/components/esummit/Oracle/Hero"
+import Hero from "@/components/esummit/Oracle/Hero";
+import Story from "@/components/esummit/Oracle/Story";
 
 export default function Oracle() {
   return (
-    <Hero/> // function name to be modified if needed
-  )
+    <>
+      <Hero />
+      <Story />
+    </>
+  );
 }
