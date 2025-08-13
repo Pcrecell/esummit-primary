@@ -1,7 +1,7 @@
-import Functionname from "@/components/esummit/Oracle/Oracle"
+import Hero from "@/components/esummit/Oracle/Hero"
 
 export default function Oracle() {
   return (
-    <Functionname/> // function name to be modified if needed
+    <Hero/> // function name to be modified if needed
   )
 }
