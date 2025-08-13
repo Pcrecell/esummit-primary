@@ -21,12 +21,12 @@ export default function Stages() {
      if (inView) {
   if (scrollingDown) {
     // Move cards farther apart after flipping
-    controlsLeft.start({ rotateY: 180, x: "-40px", transition: { duration: 1 } });
-    controlsRight.start({ rotateY: 180, x: "40px", transition: { duration: 1 } });
+    controlsLeft.start({ rotateY: 180, x: "-40px", transition: { duration: 1.5 } });
+    controlsRight.start({ rotateY: 180, x: "40px", transition: { duration: 1.5 } });
   } else {
     // Move cards closer before flipping back
-    controlsLeft.start({ rotateY: 0, x: "10px", transition: { duration: 1 } });
-    controlsRight.start({ rotateY: 0, x: "-10px", transition: { duration: 1 } });
+    controlsLeft.start({ rotateY: 0, x: "10px", transition: { duration: 1.5 } });
+    controlsRight.start({ rotateY: 0, x: "-10px", transition: { duration: 1.5 } });
   }
 }
     };
@@ -52,9 +52,17 @@ export default function Stages() {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* Top Dark Fading Overlay */}
+<div
+  className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+  style={{
+    background: "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+  }}
+></div>
+
       {/* Top title */}
       <div className="absolute top-10 w-full flex flex-col items-center text-white pb-12">
-        <p className="text-lg tracking-widest mb-4">STAGES OF</p>
+        <p className="text-xl tracking-widest mb-4">STAGES OF</p>
         <Image
           src="https://i.postimg.cc/ZR1DW5j4/oracle.png"
           alt="Oracle"

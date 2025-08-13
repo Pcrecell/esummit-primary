@@ -49,6 +49,22 @@ export default function Story() {
           type="video/mp4"
         />
       </video>
+      {/* Top Dark Fading Overlay */}
+<div
+  className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+  style={{
+    background:
+      "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+  }}
+></div>
+
+       <div
+        className="absolute bottom-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+        }}
+      ></div>
 
       {/* Text Overlay - Left Aligned */}
       <div className="absolute inset-0 z-10 flex items-center">

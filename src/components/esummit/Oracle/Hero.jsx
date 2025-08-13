@@ -1,12 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import { Cormorant_Garamond } from "next/font/google";
-
+import { useState } from "react";
+import RegisterPopup from "./registerPopup";
+import { MapPinIcon, CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // choose the weights you need
+  weight: ["400", "500", "600", "700"],
 });
 
-export default function Home() {
+export default function Hero() {
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <div
       className="relative h-[100vh] rounded-2xl overflow-hidden shadow-xl"
@@ -17,6 +23,27 @@ export default function Home() {
         backgroundPosition: "center",
       }}
     >
+<div
+  className="absolute z-1 top-1/2 left-1/2 w-[40%] h-[40%] -translate-x-1/2 -translate-y-1/2"
+  style={{
+    backgroundImage: "url('https://i.postimg.cc/mZ8VS9zh/Ellipse-1.png')",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  }}
+></div>
+
+        <div
+  className="absolute w-full h-full object-cover z-5 bg-no-repeat"
+  style={{
+    backgroundImage:
+      "url('https://ik.imagekit.io/lzogar7yp/loop.gif?updatedAt=1755100748779')",
+    backgroundSize: "cover",
+    backgroundPosition: "center 10%", // shifts background downward
+  }}
+></div>
+
+
       <div className="absolute inset-0 flex items-center justify-center text-center z-10">
         <div>
           <Image
@@ -26,19 +53,21 @@ export default function Home() {
             height={200}
             priority
           />
-          <p className="text-white text-lg md:text-2xl tracking-[0.6em] mt-4 font-poppins">
+          <p className="text-white text-md md:text-2xl tracking-[0.6em] mt-4 font-poppins">
             CHAMBER OF SECRETS
           </p>
 
-          {/* Centered PAY NOW button */}
           <div className="flex justify-center mt-8">
-            <div className="group relative w-60 cursor-pointer items-center">
+            <div
+              className="group relative w-60 cursor-pointer items-center"
+              onClick={() => setShowPopup(true)}
+            >
               <img
                 src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
                 alt="Pay Now"
                 className="w-full transition duration-300 group-hover:brightness-50 z-0"
               />
-               <span
+              <span
                 className={`absolute inset-0 z-10 flex items-center justify-center text-[#3A2D07] font-semibold text-xl ${cormorantGaramond.className}`}
               >
                 REGISTER NOW
@@ -46,7 +75,38 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {/* Darker black fading layer at the bottom */}
+<div
+  className="absolute bottom-0 left-0 w-full h-1/2 z-5 pointer-events-none"
+  style={{
+    background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)",
+  }}
+></div>
+
+
+<div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-6 py-3 z-10 flex justify-between items-center text-white text-sm md:text-base bg-black bg-opacity-50 rounded-lg">
+  <div className="flex items-center gap-2">
+        <MapPinIcon className="w-5 h-5 text-white" />
+        <span>Campus 6 Auditorium</span>
       </div>
+
+      {/* Date */}
+      <div className="flex items-center gap-2">
+        <CalendarIcon className="w-5 h-5 text-white" />
+        <span>23rd August, 2025</span>
+      </div>
+
+      {/* Time */}
+      <div className="flex items-center gap-2">
+        <ClockIcon className="w-5 h-5 text-white" />
+        <span>8:15 AM</span>
+      </div>
+</div>
+
+      </div>
+
+      {/* Render Popup */}
+      {showPopup && <RegisterPopup onClose={() => setShowPopup(false)} />}
     </div>
   );
 }
