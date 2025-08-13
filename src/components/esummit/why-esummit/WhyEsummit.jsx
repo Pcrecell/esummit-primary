@@ -6,7 +6,15 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { Anton, Poppins } from "next/font/google";
-import {Event} from "@/components/esummit/Homepage-events/index"
+import { Event } from "@/components/esummit/Homepage-events/index"
+import { DM_Serif_Text } from "next/font/google";
+
+const dmSerifText = DM_Serif_Text({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  style: "normal",
+});
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -173,7 +181,7 @@ const WhyEsummit = () => {
 
     // Create a context for cleanup
     let ctx = gsap.context(() => {
-      
+
       // Transition 1 - Move upward
       gsap.to(transition1.current, {
         yPercent: -50,
@@ -190,11 +198,11 @@ const WhyEsummit = () => {
 
       // Event section - Scale and move
       gsap.fromTo(eventRef.current,
-        { 
+        {
           scale: 1.1,
           y: 0
         },
-        {      
+        {
           // yPercent: -20,
           scale: 1,
           ease: "none",
@@ -262,7 +270,7 @@ const WhyEsummit = () => {
     return () => {
       ctx.revert(); // Clean up
     };
-  }, []); 
+  }, []);
 
   return (
     <div>
@@ -276,26 +284,27 @@ const WhyEsummit = () => {
         }}
       >
         <div className="absolute inset-0 bg-black/60 z-0"></div>
-        
+
         {/* Content with higher z-index */}
         <div className="relative z-10">
           <h2
-            className="text-[40px] sm:text-[70px] font-[Poppins] font-bold mb-36"
-            // style={{ fontFamily: "Texturina, serif" }}
+            className="text-[40px] sm:text-[70px] font-dmSerifText font-bold mb-36"
+
+          // style={{ fontFamily: "Texturina, serif" }}
           >
-            Why Join <span style={{ color: "#2EB24C" }}>E-Summit ?</span>
+            <span style={{ textShadow: "5px 5px  black" }}>Why Join </span><span style={{ color: "#2EB24C", textShadow: "5px 5px black" }}>E-Summit ?</span>
           </h2>
-    
-        <div
-  ref={cardsContainerRef}
-  className="grid grid-cols-2 gap-6 md:gap-8 lg:flex lg:flex-wrap lg:justify-center lg:gap-28 max-w-7xl mx-auto"
->
-  {cards.map((card, index) => (
-    <div
-      key={index}
-      ref={(el) => (cardRefs.current[index] = el)}
-      className="group relative w-[156px] h-[204px] sm:w-[200px] sm:h-[260px] cursor-pointer"
-    >
+
+          <div
+            ref={cardsContainerRef}
+            className="grid grid-cols-2 sm:pl-5 sm:item-center sm:gap-6 md:gap-10 sm:flex md:flex justify-center lg:flex lg:flex-wrap lg:gap-28 max-w-7xl mx-auto"
+          >
+            {cards.map((card, index) => (
+              <div
+                key={index}
+                ref={(el) => (cardRefs.current[index] = el)}
+                className="group relative w-[150px] h-[200px] sm:w-[200px] sm:h-[260px] cursor-pointer"
+              >
                 <div className="absolute inset-0">
                   <img
                     src={card.image}
@@ -361,13 +370,13 @@ const WhyEsummit = () => {
         </div>
         <div className="flex flex-row justify-between -translate-y-[20rem] lg:-translate-y-[44rem] relative z-[60]">
           <div ref={transition2} className="-translate-x-12 z-[60] absolute w-[600px] lg:w-[800px]">
-              <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613" alt="" />
+            <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613" alt="" />
           </div>
           <div ref={transition3} className="translate-x-[32rem] lg:translate-x-[39rem] z-[60] absolute w-[600px] lg:w-[800px]">
-              <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613" alt="" />
+            <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613" alt="" />
           </div>
         </div>
-      </div> 
+      </div>
       <div ref={eventRef} className="bottom-[0rem] lg:bottom-[20rem] z-10 relative hidden lg:block">
         <Event />
         <div className="h-[10vh] bg-black"></div>
