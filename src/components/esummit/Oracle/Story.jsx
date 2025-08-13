@@ -1,20 +1,81 @@
 "use client";
+import { useEffect, useState } from 'react';
 
 export default function Story() {
+  const [visibleLines, setVisibleLines] = useState(0);
+  
+  const textContent = [
+  { text: "ORACLE IS WHERE MYTHS COME TO LIFE AND .", delay: 0 },
+  { text: "ONLY THE BRAVE SURVIVE BEHIND ITS ", delay: 800 },
+  { text: "MYSTERIOUS FRONT IS A MAZE OF TRICKY ", delay: 1600 },
+  { text: "CHALLENGES...TWISTED BY THE SERPENT'S SLY ", delay: 2400 },
+  { text: "COILS, GUARDED BY THE MIGHTY LADON,AND", delay: 3200 },
+  { text: "HAUNTED BY THE WRATH OF THE GORGONS...ALL ", delay: 4000 },
+  { text: "UNDER THE UNBLINKING, DEADLY GAZE OF ", delay: 4800 },
+  { text: "MEDUSA HERSELF.EVERY CHOICE YOU MAKE ", delay: 5600 },
+  { text: "COULD LEAD TO VICTORY...OR TRAP YOU FOREVER. ", delay: 6400 },
+  { text: "FOREVER. ", delay: 7200 },
+  { text: "THIS ISN'T JUST A GAME—IT'S A TEST OF YOUR ", delay: 8000 },
+  { text: "BRAIN, COURAGE, AND QUICK THINKING. THOSE", delay: 8800 },
+  { text: "WHO DARE TO PLAY CAN WIN GLORY, LEARN", delay: 9600 },
+  { text: "FROM MENTORS, AND TAKE HOME REWARDS", delay: 10400 },
+  { text: "WORTHY OF A TRUE CHAMPION. BUT BE", delay: 11200 },
+  { text: "CAREFUL...ONE WRONG MOVE, AND THE LEGEND", delay: 12000 },
+  { text: "MIGHT TURN YOU TO STONE.", delay: 12800 }
+];
+
+  useEffect(() => {
+    const timers = textContent.map((line, i) => {
+      return setTimeout(() => {
+        setVisibleLines(prev => prev + 1);
+      }, line.delay);
+    });
+
+    return () => timers.forEach(timer => clearTimeout(timer));
+  }, []);
+
   return (
     <div className="relative h-screen w-full overflow-hidden">
+      {/* Video Background */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source
-          src="https://ik.imagekit.io/tm5te9cjl/Medusa_Statue_Animation_with_Subtle_Parallax%20(1).mp4?updatedAt=1755029381058" // Replace with your Cloudinary video link
+          src="https://ik.imagekit.io/tm5te9cjl/Medusa_Statue_Animation_with_Subtle_Parallax%20(1).mp4?updatedAt=1715029381058"
           type="video/mp4"
         />
       </video>
+
+      {/* Text Overlay - Left Aligned */}
+      <div className="absolute inset-0 z-10 flex items-center">
+        <div className="w-[90%] px-5 py-12 mx-auto text-left">
+          <div className="space-y-0.1">
+            {textContent.map((line, index) => (
+              <div 
+                key={index}
+                className={`transition-all duration-700 ease-out 
+                  ${index < visibleLines ? 'opacity-100' : 'opacity-0'}
+                `}
+                style={{
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                  fontFamily: '"Times New Roman", Times, serif',
+                  fontWeight: 'bold',
+                  fontSize: 'clamp(1.5rem, 2vw, 2.7rem)',
+                  lineHeight: '1.0',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase'
+                }}
+              >
+                {line.text}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
