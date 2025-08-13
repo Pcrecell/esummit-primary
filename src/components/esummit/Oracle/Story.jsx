@@ -45,7 +45,7 @@ export default function Story() {
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source
-          src="https://ik.imagekit.io/tm5te9cjl/Medusa_Statue_Animation_with_Subtle_Parallax%20(1).mp4?updatedAt=1715029381058"
+          src="https://ik.imagekit.io/5xwmtpwkb/KIITECELL_Aboutus.mp4?updatedAt=1755100824142"
           type="video/mp4"
         />
       </video>
