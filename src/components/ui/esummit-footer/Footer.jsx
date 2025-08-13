@@ -43,10 +43,10 @@ const Footer = () => {
                 Useful Links
               </h3>
               <ul className="space-y-3 text-sm text-center">
-                <a href="/esummit"><li className="hover:text-green-300">Home</li></a>
-                <a href="/aboutus"><li className="hover:text-green-300">About Us</li></a>
-                <a href="/gallery"><li className="hover:text-green-300">Gallery</li></a>
-                <a href="/contactus"><li className="hover:text-green-300">Contact Us</li></a>
+                <a href="/"><li className="hover:text-green-300">Home</li></a>
+                <a href="/theme"><li className="hover:text-green-300">Theme</li></a>
+                <a href="/events"><li className="hover:text-green-300">Events</li></a>
+                <a href="/contact"><li className="hover:text-green-300">Contact Us</li></a>
               </ul>
             </div>
             <div className="flex-1">

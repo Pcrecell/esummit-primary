@@ -43,7 +43,7 @@ const handleLogin = async (e) => {
       
       // Navigate based on user role
       if (response.user.role === "admin") {
-        navigate.push("/esummit/admin-dashboard");
+        navigate.push("/admin-dashboard");
       } else {
         window.location.href = "/";
       }
@@ -126,7 +126,7 @@ const handleLogin = async (e) => {
             {loading ? "Signing in..." : "LOGIN"}
           </button>
           <a
-            href="/esummit/register"
+            href="/register"
             className="flex items-center justify-center gap-1 bg-transparent hover:bg-white/10 text-white font-semibold rounded py-2 transition"
           >
             CREATE NEW ACCOUNT
