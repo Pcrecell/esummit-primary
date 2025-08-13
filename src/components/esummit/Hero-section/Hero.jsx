@@ -1,22 +1,26 @@
 "use client";
-import React, { useState } from "react";
+
+import React, {useState, useEffect} from "react";
 import Carousel from "./EventCarousel";
 import { esummit_hero } from "../../../../public/images/image-links";
+import { authAPI } from "@/lib/services/api.js";
 import Popup from "./paymentPopup";
-
 function Hero() {
-  const [showPopup, setShowPopup] = useState(false);
 
-  // Replace this with your actual auth check
-  const isLoggedIn = true; // set false to test redirect
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+     const [showPopup, setShowPopup] = useState(false);
 
-  const handleGetTicket = () => {
-    if (isLoggedIn) {
-      setShowPopup(true);
-    } else {
-      window.location.href = "/register";
-    }
-  };
+    useEffect(() => {
+        (async () => {
+            try {
+            const res = await authAPI.verifyToken();
+            setIsAuthenticated(res.success);
+            } catch {
+            setIsAuthenticated(false);
+            }
+        })();
+    }, []);
+
 
   return (
     <div
@@ -38,28 +42,26 @@ function Hero() {
         />
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto justify-center items-center">
           <button
-            onClick={() => window.location.href = "/theme"}
+            onClick={() => (window.location.href = "/theme")}
             className="bg-black text-white py-2 px-4 rounded-[20px] border border-white hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
           >
             Know More ↗
           </button>
 
           <button
-            onClick={handleGetTicket}
+
+            onClick={() => (isAuthenticated ? setShowPopup(true) : window.location.href = "/register")}
             className="bg-white text-black py-2 px-4 rounded-[20px] border border-none hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
           >
             Get your ticket ↗
           </button>
 
-          {showPopup && <Popup onClose={() => setShowPopup(false)} />}
         </div>
-
         <div className="w-full max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw] xl-max-w-[50vw] 2xl:max-w-[55vw] mt-16">
           {/* <Carousel /> */}
         </div>
         <div className="h-20 md:h-30 lg:h-20"></div>
       </div>
-
       <div
         className="absolute bottom-0 left-0 w-full"
         style={{
@@ -73,5 +75,4 @@ function Hero() {
     </div>
   );
 }
-
 export default Hero;
