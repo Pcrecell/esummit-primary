@@ -189,6 +189,7 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
+                  cursor: 'pointer',
                 }}
               >
                 KIIT University, Bhubaneswar
@@ -200,12 +201,13 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
             <div>
               <a
                 href="mailto:pcr.ecell@kiit.ac.in"
-                className="text-xs md:text-sm"
+                className="text-xs md:text-sm cursor-pointer"
                 style={{
                   background: 'linear-gradient(180deg, #F5E34C 0%, #DDAB3C 22.84%, #8A5F1C 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
+                  cursor: 'pointer',
                 }}
               >
                 pcr.ecell@kiit.ac.in
