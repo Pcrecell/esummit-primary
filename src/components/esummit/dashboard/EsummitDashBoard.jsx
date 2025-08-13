@@ -26,7 +26,7 @@ const router = useRouter();
   useEffect(() => {
     const isAuthenticated = false;
     if (!isAuthenticated) {
-      router.replace("/login");
+      window.location.replace("/login");
     }
   }, [router]);
   const handleEventClick = (eventId) => {
