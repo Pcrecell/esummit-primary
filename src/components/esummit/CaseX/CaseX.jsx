@@ -90,7 +90,7 @@ export default function CaseX() {
 
                     {/* Stage 1 content box */}
                     <div className="absolute right-0 md:right-2 top-8 w-[37vw]">
-                        <div className="bg-lime-950/20 border border-lime-950/75 rounded-2xl p-6">
+                        <div className="bg-lime-950/60 border border-lime-950/75 rounded-2xl p-6">
                             <h3 className="text-[#958324] text-3xl font-bold font-['League_Spartan'] pb-2">Preliminary Submission</h3>
                             <ul className="text-[#D6C466] text-xl font-normal font-['League_Spartan'] list-disc pl-5">
                                 <li>Participants will receive a real industry-based marketing or business problem</li>
@@ -103,12 +103,12 @@ export default function CaseX() {
 
                     {/* Stage 2 content box */}
                     <div className="absolute left-0 bottom-0 w-[37vw]">
-                        <div className="bg-lime-950/20 border border-lime-950/75 rounded-2xl p-6">
+                        <div className="bg-lime-950/60 border border-lime-950/75 rounded-2xl p-6">
                             <h3 className="text-[#958324] text-3xl font-bold font-['League_Spartan'] pb-2">The Final Battle</h3>
                             <ul className="text-[#D6C466] text-xl font-normal font-['League_Spartan'] list-disc pl-5">
                                 <li>Finalists will present their refined solution live at the Campus 7 Auditorium on Day 3 of E-Summit.</li>
                             </ul>
-                            <p className="text-[#D6C466] text-xl font-normal font-['League_Spartan'] list-disc pl-5">Each team will get:</p>
+                            <p className="text-[#D6C466] text-xl font-normal font-['League_Spartan'] list-disc pt-3 pb-3 pl-5">Each team will get:</p>
                             <ul className="text-[#D6C466] text-xl font-normal font-['League_Spartan'] list-disc pl-5">
                                 <li>10 minutes to present</li>
                                 <li>2 minutes for Q&amp;A with the jury</li>
@@ -118,11 +118,11 @@ export default function CaseX() {
                 </div>
 
                 {/* Mobile layout */}
-                <div className="md:hidden grid gap-6 items-center">
+                <div className="md:hidden grid items-center">
                     {/* Stage 1 */}
-                    <div className="flex flex-col items-center gap-3">
+                    <div className="flex flex-col items-center">
                         <div className="relative">
-                            <img src="https://ik.imagekit.io/wlknxcf5m/stage-labyrinth.png" alt="Stage 1 Labyrinth" className="w-48 h-48 rounded-full" />
+                            <img src="https://ik.imagekit.io/wlknxcf5m/stage-labyrinth.png" alt="Stage 1 Labyrinth" className="w-96 h-96 rounded-full" />
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <span className="text-orange-300 text-3xl font-bold font-['League_Spartan'] [text-shadow:_2px_4px_4px_rgb(0_0_0_/_0.25)]">Stage 1</span>
                             </div>
@@ -138,15 +138,10 @@ export default function CaseX() {
                         </div>
                     </div>
 
-                    {/* Path image */}
-                    <div className="flex justify-center">
-                        <img src="https://ik.imagekit.io/wlknxcf5m/stage-path.png" alt="Path" className="w-3/4 rotate-[-8deg]" />
-                    </div>
-
                     {/* Stage 2 */}
-                    <div className="flex flex-col items-center gap-3">
+                    <div className="flex flex-col items-center">
                         <div className="relative">
-                            <img src="https://ik.imagekit.io/wlknxcf5m/stage-labyrinth.png" alt="Stage 2 Labyrinth" className="w-48 h-48 rounded-full" />
+                            <img src="https://ik.imagekit.io/wlknxcf5m/stage-labyrinth.png" alt="Stage 2 Labyrinth" className="w-96 h-96 rounded-full" />
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <span className="text-orange-300 text-3xl font-bold font-['League_Spartan'] [text-shadow:_2px_4px_4px_rgb(0_0_0_/_0.25)]">Stage 2</span>
                             </div>
@@ -178,14 +173,14 @@ export default function CaseX() {
                 <h2 className="text-4xl md:text-6xl font-normal font-['Girassol'] text-[#1C8201] mb-10 text-center">Venue and Time</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 place-items-center">
                     <div className="flex flex-col items-center gap-4 text-center">
-                        <img src="https://ik.imagekit.io/wlknxcf5m/calendar.png" alt="Calendar" className="w-[15vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
+                        <img src="https://ik.imagekit.io/wlknxcf5m/clock.png" alt="Clock" className="w-[40vw] md:w-[15vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
                         <div>
                             <p className="text-2xl md:text-3xl font-['League_Spartan'] text-white">24 August 2025</p>
                             <p className="text-lg md:text-xl font-['League_Spartan'] text-white opacity-90">9:00 AM - 4:00 PM</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-4 text-center">
-                        <img src="https://ik.imagekit.io/wlknxcf5m/clock.png" alt="Clock" className="w-[12vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
+                        <img src="https://ik.imagekit.io/wlknxcf5m/calendar.png" alt="Calendar" className="w-[48vw] md:w-[18vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
                         <div>
                             <p className="text-3xl md:text-4xl font-['League_Spartan'] text-white">Campus 17</p>
                             <p className="text-lg md:text-xl font-['League_Spartan'] text-white opacity-90">Auditorium</p>
@@ -212,7 +207,7 @@ export default function CaseX() {
                 <div className="absolute inset-0 bg-gradient-to-b from-[#000C00] via-transparent to-[#000C00] pointer-events-none" />
                 <div className="relative max-w-[1200px] mx-auto px-6 md:px-8 z-10">
                     <h2 className="text-center text-4xl md:text-6xl font-normal font-['Girassol'] text-[#1C8201] mb-12">Evaluation Criteria</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 justify-items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:gap-12 justify-items-center">
                         
                         <div className="relative w-[23rem] h-[14rem]">
                             <img
