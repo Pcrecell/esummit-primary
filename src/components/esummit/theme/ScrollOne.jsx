@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const images = [
+    "https://ik.imagekit.io/kiitecell/Emerald_Desc.png",
     "https://ik.imagekit.io/kiitecell/Ruby_Desc.png",
-    "https://ik.imagekit.io/kiitecell/Sapphire_Desc.png",
-    "https://ik.imagekit.io/kiitecell/Emerald_Desc.png"
+    "https://ik.imagekit.io/kiitecell/Sapphire_Desc.png"
 ];
 
 function useIsMobile() {
