@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import {} from 'next/font/google'
+import {Alumni_Sans_Inline_One} from 'next/font/google'
 
 const Alumini = Alumni_Sans_Inline_One({
   subsets: ['latin'],
@@ -73,8 +73,8 @@ export default function ComingSoon() {
           />
         </div>
         <div className='flex flex-col gap-6'>
-          <p className='text-9xl text-[#2eb24c] tracking-wider font-[Alumni_Sans_Inline_One]'>We Are Cooking.</p>
-          <p className='text-2xl text-white text-center font-bold'>We’re going to launch our event specific website very soon</p>
+          <p className='text-7xl text-center md:text-9xl text-[#2eb24c] tracking-wider font-[Alumni_Sans_Inline_One]'>Launching Soon.</p>
+          <p className='text-xl md:text-2xl text-white text-center font-bold'>We’re going to launch our event specific website very soon</p>
         </div>
       </div>
     </div>

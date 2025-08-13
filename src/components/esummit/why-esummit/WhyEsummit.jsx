@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { Anton } from "next/font/google";
+import { Anton, Poppins } from "next/font/google";
 import {Event} from "@/components/esummit/Homepage-events/index"
 
 // Register ScrollTrigger plugin
@@ -280,8 +280,8 @@ const WhyEsummit = () => {
         {/* Content with higher z-index */}
         <div className="relative z-10">
           <h2
-            className="text-[40px] sm:text-[50px] font-serif font-bold mb-36"
-            style={{ fontFamily: "Texturina, serif" }}
+            className="text-[40px] sm:text-[70px] font-[Poppins] font-bold mb-36"
+            // style={{ fontFamily: "Texturina, serif" }}
           >
             Why Join <span style={{ color: "#2EB24C" }}>E-Summit ?</span>
           </h2>
@@ -368,7 +368,7 @@ const WhyEsummit = () => {
           </div>
         </div>
       </div> 
-      <div ref={eventRef} className="bottom-[15rem] lg:bottom-[20rem] z-10 relative translate-y-10">
+      <div ref={eventRef} className="bottom-[0rem] lg:bottom-[20rem] z-10 relative hidden lg:block">
         <Event />
         <div className="h-[10vh] bg-black"></div>
       </div>

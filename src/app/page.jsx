@@ -12,7 +12,9 @@ export default function HomePage() {
       <Hero />
       <WhyEsummit/>
       {/* <Support /> */}
-      {/* <Event /> */}
+      <div className="lg:hidden">
+        <Event />
+      </div>
       <PastSpeakers/>
       <PastSponser/>
     </main>

@@ -1,7 +1,7 @@
-import EsummitEventsApp from "@/components/esummit/Events/EsummitEventsApp";
+import ComingSoon from "@/components/esummit/comingsoon/comingsoon"
 
-export default function HomePage() {
+export default function Soon() {
   return (
-    <EsummitEventsApp />
+    <ComingSoon/>
   )
 }

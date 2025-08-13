@@ -31,7 +31,7 @@ export const authAPI = {
   },
 
   verifyToken: async () => {
-    const response = await fetch(`${API_URL}/users/me`, {
+    const response = await fetch(`${API_URL}/users/`, {
       method: 'GET',
       credentials: 'include', 
     });
