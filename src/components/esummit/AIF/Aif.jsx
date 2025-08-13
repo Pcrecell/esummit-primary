@@ -66,7 +66,7 @@ export default function Aif() {
               Alice in Founderland is a fast-paced entrepreneurship simulation
               where quick thinking beats perfect planning. Inspired by the four
               suits - Diamonds, Clubs, Hearts, and Spades - each round tests
-              your ability to navigate risk, strategy, conflict, and chaos.No
+              your ability to navigate risk, strategy, conflict, and chaos. No
               scripts. No second takes. Just instinct, pressure, and survival.
             </p>
           </div>
@@ -81,7 +81,7 @@ export default function Aif() {
               <img
                 src="https://i.ibb.co/Vccv1fBw/Banner-ideas-removebg-preview-1.png"
                 alt="Register Here"
-                className="w-auto h-20 md:h-24 object-contain"
+                className="w-auto h-20 md:h-28 object-contain"
               />
               <span
                 className="absolute inset-0 flex items-center justify-center text-black font-bold text-lg md:text-xl"

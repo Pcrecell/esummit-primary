@@ -14,6 +14,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♢ The Billionaire Buzz-Off: You'll play solo and bid virtual money to answer questions. Make smart decisions to save money and stay in the game.",
     },
     {
       id: "clubs",
@@ -24,6 +26,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♣ The Idea Forge: You'll team up and pitch an idea. Be quick, clear, and convincing — your teamwork and communication will be key.",
     },
     {
       id: "hearts",
@@ -34,6 +38,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♥ Founder Feud: Now you're on your own. You'll speak on a topic in front of others. This round tests your confidence and clarity.",
     },
     {
       id: "spades",
@@ -43,6 +49,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♠ The Founder's Gambit: You'll face a surprise business challenge. Think fast, present a solution, and deal with an unexpected twist.",
     },
   ];
 
@@ -109,7 +117,8 @@ const FlippableRounds = () => {
 
   const CardBack = ({ card }) => {
     return (
-      <div className="w-full h-full overflow-hidden rounded-2xl">
+      <div className="relative w-full h-full overflow-hidden rounded-2xl">
+        {/* Background image */}
         <img
           src={card.contentImg}
           alt={`${card.suit} back content`}
@@ -120,8 +129,20 @@ const FlippableRounds = () => {
             if (fallback) fallback.style.display = "flex";
           }}
         />
+
+        {/* Fallback for background image */}
         <div className="absolute inset-0 flex items-center justify-center bg-gray-600 text-white text-sm hidden">
           Content loading...
+        </div>
+
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 rounded-2xl"></div>
+
+        {/* Text overlay */}
+        <div className="absolute inset-0 flex items-center justify-center p-12">
+          <p className="text-black text-center text-xs font-medium leading-loose drop-shadow-lg font-['Poppins',sans-serif] max-w-full">
+            {card.backText}
+          </p>
         </div>
       </div>
     );
