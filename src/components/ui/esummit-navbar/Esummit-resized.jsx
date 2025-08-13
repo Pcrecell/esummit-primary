@@ -52,35 +52,35 @@ export const NavBody = ({ leftItems = [], rightItems = [], children, className, 
         >
             <div className="flex items-center gap-8 flex-grow">
                 <a href="/" className="flex items-center px-2 py-1">
-                  {(!cellLoaded && !cellErrored) && (
-                    <Skeleton
-                      variant="circular"
-                      animation="pulse"
-                      width={50}
-                      height={50}
-                      sx={{ position: 'absolute', left: 0, top: 0 }}
+                    {(!cellLoaded && !cellErrored) && (
+                        <Skeleton
+                            variant="circular"
+                            animation="pulse"
+                            width={50}
+                            height={50}
+                            sx={{ position: 'absolute', left: 0, top: 0 }}
+                        />
+                    )}
+                    <Image
+                        src={"https://ik.imagekit.io/fhervghik/E-Cell%20Website/E-Cell%20Logo.webp"}
+                        alt="logo"
+                        width={50}
+                        height={50}
+                        className={`transition-opacity duration-700 ${cellLoaded ? 'opacity-100' : 'opacity-0'} ${cellErrored ? 'hidden' : ''}`}
+                        onLoad={() => setCellLoaded(true)}
+                        onError={() => setCellErrored(true)}
+                        style={{ position: 'relative', zIndex: 1 }}
+                        draggable={false}
                     />
-                  )}
-                  <Image
-                    src={cell}
-                    alt="logo"
-                    width={50}
-                    height={50}
-                    className={`transition-opacity duration-700 ${cellLoaded ? 'opacity-100' : 'opacity-0'} ${cellErrored ? 'hidden' : ''}`}
-                    onLoad={() => setCellLoaded(true)}
-                    onError={() => setCellErrored(true)}
-                    style={{ position: 'relative', zIndex: 1 }}
-                    draggable={false}
-                  />
-                  {cellErrored && (
-                    <Skeleton
-                      variant="circular"
-                      animation="pulse"
-                      width={50}
-                      height={50}
-                      sx={{ position: 'absolute', left: 0, top: 0 }}
-                    />
-                  )}
+                    {cellErrored && (
+                        <Skeleton
+                            variant="circular"
+                            animation="pulse"
+                            width={50}
+                            height={50}
+                            sx={{ position: 'absolute', left: 0, top: 0 }}
+                        />
+                    )}
                 </a>
                 <NavItems items={leftItems} />
             </div>
@@ -198,6 +198,7 @@ export const NavbarLogo = () => {
         <a href="/">
             <button className="flex items-center px-2 py-1">
                 <Image src={logo} alt="logo" width={100} height={100} />
+                <Image src={"https://ik.imagekit.io/fhervghik/E-Cell%20Website/E-Cell%20Logo.webp"} alt="logo" width={100} height={100} />
             </button>
         </a>
     )
