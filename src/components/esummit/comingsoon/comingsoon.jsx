@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import {Alumni_Sans_Inline_One} from 'next/font/google'
+import {Montserrat} from 'next/font/google'
+import {Instagram, Linkedin, Youtube} from "lucide-react"
 
-const Alumini = Alumni_Sans_Inline_One({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: "400"
 })
 
 export default function ComingSoon() {
@@ -50,6 +50,9 @@ export default function ComingSoon() {
           loop
           muted
           playsInline
+          style={{
+            filter: "contrast(1.2)"
+          }}
           className={`w-full h-full object-cover ${videoLoaded ? 'block' : 'hidden'}`}
           preload="auto"
         >
@@ -61,20 +64,31 @@ export default function ComingSoon() {
         </video>
         
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
-      <div className='absolute inset-0 flex flex-col gap-12 justify-center items-center z-10'>
+      <div className='absolute inset-0 flex flex-col gap-12 justify-end items-center z-10 mb-12'>
         <div className=''>
           <Image
             src={"https://i.postimg.cc/C1s2B7Ds/image.png"}
-            width={600}
-            height={600}
+            width={300}
+            height={300}
           />
         </div>
-        <div className='flex flex-col gap-6'>
-          <p className='text-7xl text-center md:text-9xl text-[#2eb24c] tracking-wider font-[Alumni_Sans_Inline_One]'>Launching Soon.</p>
-          <p className='text-xl md:text-2xl text-white text-center font-bold'>We’re going to launch our event specific website very soon</p>
+        <div className='flex flex-col gap-6 w-full'>
+          <p className='text-5xl text-center md:text-7xl text-[#ffffff] font-[Montserrat] font-semibold md:tracking-widest'>Launching <span className='font-extrabold text-[#0ef743]'>Soon</span></p>
+          <p className='text-md max-w-80 mx-auto md:text-xl md:max-w-none text-white text-center font-bold'>"We’re going to launch our event specific website very soon"</p>
+        </div>
+        <div className='flex flex-row gap-5 justify-self-end items-end'>
+          <a href="https://www.instagram.com/ecell_kiit/" target='_blank'>
+            <Instagram/>
+          </a>
+          <a href="https://www.linkedin.com/company/kiit-e-cell/" target='_blank'>
+            <Linkedin/>
+          </a>
+          <a href="https://www.youtube.com/@KIIT-ECELL" target='_blank'>
+            <Youtube/>
+          </a>
         </div>
       </div>
     </div>
