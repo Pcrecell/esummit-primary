@@ -10,6 +10,7 @@ import PaymentStart from "./paymentStart";
 import PaymentEnd from "./paymentEnd";
 import Particles from './Particles';
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const EsummitDashBoard = () => {
   const [userData, setUserData] = useState(null);
@@ -21,12 +22,17 @@ const EsummitDashBoard = () => {
   const [registeredEventId, setRegisteredEventId] = useState(null);
   const qrCode = "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
 
-    const handleEventClick = (eventId) => {
-    if (paymentDone) {
-      setSelectedEventId(eventId);
-      setShowConfirmationPopup(true);
+const router = useRouter();
+  useEffect(() => {
+    const isAuthenticated = false;
+    if (!isAuthenticated) {
+      window.location.replace("/login");
     }
-  };
+  }, [router]);
+  const handleEventClick = (eventId) => {
+    setSelectedEventId(eventId);
+    setShowConfirmationPopup(true);
+  }; 
 
   // Handle payment action from PaymentStart popup
   const handlePaymentFromPopup = () => {

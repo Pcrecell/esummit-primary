@@ -121,6 +121,7 @@ const Footer = () => {
                 </a>
               </div>
               <div className=" space-y-4 text-sm">
+
                 <div>
                   <div className="flex flex-row gap-2">
                     <Phone fill="#ffffff" height={15} width={15} />
@@ -226,10 +227,10 @@ const Footer = () => {
               USEFUL LINKS
             </h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/esummit" className="hover:text-green-200">Home</a></li>
-              <li><a href="/aboutus" className="hover:text-green-200">About Us</a></li>
-              <li><a href="/gallery" className="hover:text-green-200">Gallery</a></li>
-              <li><a href="/contactus" className="hover:text-green-200">Contact Us</a></li>
+              <li><a href="/" className="hover:text-green-200">Home</a></li>
+              <li><a href="/theme" className="hover:text-green-200">Theme</a></li>
+              <li><a href="/events" className="hover:text-green-200">Events</a></li>
+              <li><a href="/contact" className="hover:text-green-200">Contact Us</a></li>
               <li><a href="/tos" className="hover:text-green-200">Terms of Service</a></li>
               <li><a href="/pp" className="hover:text-green-200">Privacy Policy</a></li>
             </ul>

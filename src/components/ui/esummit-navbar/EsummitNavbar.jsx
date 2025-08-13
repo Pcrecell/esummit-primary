@@ -87,7 +87,7 @@ export default function EsummitNavbar() {
                       <a
                         href=""
                         onClick={handleLogout}
-                        className="block px-4 py-2 text-black hover:bg-gray-100 rounded"
+                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] rounded"
                       >
                         Logout
                       </a>
