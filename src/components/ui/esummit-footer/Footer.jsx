@@ -8,6 +8,7 @@ import {
   Youtube,
   Facebook,
   ArrowRight,
+  Phone,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -123,7 +124,7 @@ const Footer = () => {
   <div>
     <p className="font-bold text-white">Sarvagya Singh</p>
     <p className="text-white/80">Chairperson</p>
-    <p className="text-white/80">+91-620002497</p>
+    <p className="text-white/80">+91-6200024970</p>
   </div>
   <div>
     <p className="font-bold text-white">Abhishek Sahoo</p>
@@ -258,9 +259,13 @@ const Footer = () => {
               {/* Extra contacts */}
 <div className="mt-6 space-y-4 text-sm">
   <div>
+    <div className = "flex flex-row gap-2">
+    <Phone fill="#ffffff" height={15} width={15}/>
     <p className="font-bold text-white">Sarvagya Singh</p>
+    </div>
     <p className="text-white/80">Chairperson</p>
-    <p className="text-white/80">+91-620002497</p>
+    
+    <p className="text-white/80">+91 6200024970</p>
   </div>
   <div>
     <p className="font-bold text-white">Abhishek Sahoo</p>

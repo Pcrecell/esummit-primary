@@ -18,22 +18,22 @@ const anton = Anton({
 
 const cards = [
   {
-    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/image-22-2.png",
+    image: "https://ik.imagekit.io/d73k0qzwc/image%20(22).png",
     number: "15+",
     label: "Speakers",
   },
   {
-    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/image-22-2.png",
+    image: "https://ik.imagekit.io/d73k0qzwc/image%20(22).png",
     number: "150k",
     label: "prize pool",
   },
   {
-    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/image-22-2.png",
+    image: "https://ik.imagekit.io/d73k0qzwc/image%20(22).png",
     number: "5+",
     label: "events",
   },
   {
-    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/image-22-2.png",
+    image: "https://ik.imagekit.io/d73k0qzwc/image%20(22).png",
     number: "3+",
     label: "powerpacked\ndays",
   },
@@ -288,7 +288,7 @@ const WhyEsummit = () => {
     
         <div
   ref={cardsContainerRef}
-  className="grid grid-cols-2 gap-6 md:gap-8 lg:flex lg:flex-wrap lg:justify-between lg:gap-28 max-w-6xl mx-4"
+  className="grid grid-cols-2 gap-6 md:gap-8 lg:flex lg:flex-wrap lg:justify-center lg:gap-28 max-w-7xl mx-auto"
 >
   {cards.map((card, index) => (
     <div
