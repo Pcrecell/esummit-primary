@@ -3,11 +3,15 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+const customIcon = new L.Icon({
+  iconUrl: 'https://ik.imagekit.io/wlknxcf5m/line_10112299.png',
+  iconRetinaUrl: 'https://ik.imagekit.io/wlknxcf5m/line_10112299.png',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -30],
+  shadowUrl: null,
+  shadowSize: null,
+  shadowAnchor: null,
 });
 
 const PopupOpener = ({ markerRef }) => {
@@ -164,7 +168,7 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>'
       />
-      <Marker position={markerPosition} ref={markerRef}>
+  <Marker position={markerPosition} ref={markerRef} icon={customIcon}>
         <Popup
           className="custom-popup responsive-popup"
           autoClose={false}
