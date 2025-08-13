@@ -1,10 +1,14 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ScrollOne from "./ScrollOne";
 
 const ThemeHeroSection = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const emeraldRef = useRef(null);
+  const rubyRef = useRef(null);
+  const sapphireRef = useRef(null);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -19,11 +23,54 @@ const ThemeHeroSection = () => {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // Highlight active timeline item based on scroll
+  useEffect(() => {
+    if (!isMobile) return;
+  // Trigger when element crosses center area of viewport for stable activation
+  // Use a wider center band for stable active detection
+  const options = { root: null, rootMargin: '-30% 0px -30% 0px', threshold: 0 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target === emeraldRef.current) setActiveIndex(0);
+          if (entry.target === rubyRef.current) setActiveIndex(1);
+          if (entry.target === sapphireRef.current) setActiveIndex(2);
+        }
+      });
+    }, options);
+    [emeraldRef, rubyRef, sapphireRef].forEach(ref => ref.current && observer.observe(ref.current));
+    return () => observer.disconnect();
+  }, [isMobile]);
+    // Highlight active timeline item based on scroll position for smooth activation
+    useEffect(() => {
+      if (!isMobile) return;
+      const handleScroll = () => {
+        const items = [emeraldRef.current, rubyRef.current, sapphireRef.current];
+        const centerY = window.innerHeight / 2;
+        let minDist = Infinity;
+        let minIndex = 0;
+        items.forEach((item, idx) => {
+          if (!item) return;
+          const rect = item.getBoundingClientRect();
+          const itemCenter = rect.top + rect.height / 2;
+          const dist = Math.abs(itemCenter - centerY);
+          if (dist < minDist) {
+            minDist = dist;
+            minIndex = idx;
+          }
+        });
+        setActiveIndex(minIndex);
+      };
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [isMobile]);
+
   return (
     <>
       {/* Section 1: Main Hero Section */}
       <section
-        className="relative w-full bg-black flex flex-col justify-center min-h-[110vh] items-center text-center text-white px-4 pb-8 overflow-x-hidden"
+        className="relative w-full bg-black flex flex-col justify-center min-h-[110vh] items-center text-center text-white px-4 pb-8 overflow-x-hidden mb-12 sm:mb-0"
       >
         {/* Background Video */}
         <video
@@ -93,17 +140,16 @@ const ThemeHeroSection = () => {
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
               }}
             >
-              Emerald Empires Building Lasting Legacies
+              Emerald Empire : Building Lasting Legacies
             </h2>
           </div>
         </div>
       </section>
-
       {/* Section 2: History Image and Timeline */}
       <section
         className="relative w-full bg-black flex flex-col justify-center items-center text-center text-white min-h-[60vh]"
         style={{
-          backgroundImage: `url("https://ik.imagekit.io/admr8uj75/Download%20AI%20generated%20tropical%20rainforest,%20with%20towering%20trees%20and%20dense%20greenery,%20providing%20a%20lush%20for%20free%201.png?updatedAt=1754509960696")`,
+          backgroundImage: !isMobile? (`url("https://ik.imagekit.io/admr8uj75/Download%20AI%20generated%20tropical%20rainforest,%20with%20towering%20trees%20and%20dense%20greenery,%20providing%20a%20lush%20for%20free%201.png?updatedAt=1754509960696")`):(''),
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat"
@@ -122,113 +168,83 @@ const ThemeHeroSection = () => {
         <div className="relative w-full flex flex-col items-center justify-center z-10 h-full">
           {/* History Image - Different for Mobile and Desktop */}
           <img
-            src={isMobile 
-              ? "https://ik.imagekit.io/ilgcom35w/waves-transparent.png?updatedAt=1754763356561"
+            src={isMobile
+              ? "https://ik.imagekit.io/wlknxcf5m/Group%201000002420(1).png"
               : "https://ik.imagekit.io/admr8uj75/transparent%20(1)%201.png?updatedAt=1753890656393"
             }
             alt="History"
-            className="w-screen opacity-50 md:opacity-100 max-w-none h-auto object-cover z-10 mb-8"
+            className="opacity-100 md:opacity-100 z-10"
             style={{
-              position: "relative",
-              left: "50%",
-              right: "50%",
-              transform: isMobile 
-                ? "translateX(-30%) translateY(200px) rotate(45deg)" 
-                : "translateX(-50%) translateY(-150px)",
-              minWidth: isMobile ? "180vw" : "100vw",
+              position: 'relative',
+              left: '50%',
+              transform: isMobile
+                ? 'translateX(-50%)'
+                : 'translateX(-50%) translateY(-150px)',
+              minWidth: '100vw',
+              height: 'auto'
             }}
           />
 
           {/* Timeline Headings and Descriptions Overlapping History Image */}
           <div
-            className={`absolute left-0 top-1/2 w-full flex ${isMobile ? 'flex-col gap-6' : 'flex-row justify-between'} items-center px-2 md:px-8 lg:px-16`}
-            style={{ zIndex: 50, transform: 'translateY(-50%)', pointerEvents: 'none' }}
+            className={`${isMobile
+              ? 'absolute w-full flex flex-col gap-6 items-center px-4 py-8'
+              : 'absolute left-0 top-1/2 w-full flex flex-row justify-between items-center px-2 md:px-8 lg:px-16'}`}
+            style={{ zIndex: 50, pointerEvents: 'none' }}
           >
             {/* Mobile Layout - Same as before */}
-            {isMobile ? (
+              {isMobile ? (
               <>
                 {/* Emerald Empire - First on Mobile */}
-                <div 
-                  className="flex flex-col items-start sm:items-center" 
-                  style={{ 
-                    position: 'relative', 
-                    top: '80px', 
-                    left: '-20px' 
-                  }}
-                >
-                  <h3 
-                    className="font-bold mb-2 text-left sm:text-center" 
-                    style={{ 
-                      fontSize: '30px',
-                      color: '#EDBD90' 
-                    }}
+                <div ref={emeraldRef} className="flex flex-col items-center px-4">
+                  <h3
+                    className={`font-bold mb-2 text-center text-[#EDBD90] transition-all duration-300 ease-out ${activeIndex === 0 ? 'text-3xl scale-105' : 'text-xl opacity-70'}`}
                   >
                     2025<br />Emerald Empire
                   </h3>
-                  <p 
-                    className="max-w-64 font-bold text-left sm:text-center" 
-                    style={{ 
-                      fontSize: '16px',
-                      color: '#08fc04'
-                    }}
+                  <p
+                    className={`max-w-64 font-bold text-center text-[#08fc04] transition-all duration-300 ease-out ${activeIndex === 0 ? 'text-base opacity-100' : 'text-sm opacity-70'}`}
                   >
                     Emerald holds the crown, leading with wisdom and vision as the legacy begins.
                   </p>
                 </div>
-                
+
+                {/* Connector between Emerald and Ruby */}
+                <div className="flex flex-col items-center">
+                  <div className="w-3 h-3 bg-[#00FF37] rounded-full"></div>
+                  <div className="w-[3px] h-24 bg-gradient-to-b from-[#00FF37] to-[#FF0000]"></div>
+                  <div className="w-3 h-3 bg-[#FF0000] rounded-full"></div>
+                </div>
+
                 {/* Ruby Empire - Second on Mobile */}
-                <div 
-                  className="text-center" 
-                  style={{ 
-                    position: 'relative', 
-                    top: '140px'
-                  }}
-                >
-                  <h3 
-                    className="font-bold mb-2" 
-                    style={{ 
-                      fontSize: '20px',
-                      color: '#EDBD90'
-                    }}
-                  >
-                    2026<br />Ruby Empire
-                  </h3>
-                  <p 
-                    className="max-w-64 mx-auto" 
-                    style={{ 
-                      fontSize: '14px',
-                      color: '#FF375B', 
-                      fontWeight: 'bold'
-                    }}
+                <div ref={rubyRef} className="flex flex-col items-center px-4">
+                   <h3 
+                    className={`font-bold mb-2 text-center text-[#EDBD90] transition-all duration-300 ease-out ${activeIndex === 1 ? 'text-3xl scale-105' : 'text-xl opacity-70'}`}
+                   >
+                     2026<br />Ruby Empire
+                   </h3>
+                  <p
+                    className={`max-w-64 mx-auto font-bold text-[#FF375B] transition-all duration-300 ease-out ${activeIndex === 1 ? 'text-base opacity-100' : 'text-sm opacity-70'}`}
                   >
                     The crown passes to Ruby - Bold, Fiery and ready to spark a new era of innovation.
                   </p>
                 </div>
                 
+                {/* Connector between Ruby and Sapphire */}
+                <div className="flex flex-col items-center">
+                  <div className="w-3 h-3 bg-[#FF0000] rounded-full"></div>
+                  <div className="w-[3px] h-24 bg-gradient-to-b from-[#FF0000] to-[#013CC5]"></div>
+                  <div className="w-3 h-3 bg-[#013CC5] rounded-full"></div>
+                </div>
                 {/* Sapphire Empire - Third on Mobile */}
-                <div 
-                  className="flex flex-col items-end sm:items-center" 
-                  style={{ 
-                    position: 'relative', 
-                    top: '270px', 
-                    right: '-30px' 
-                  }}
-                >
-                  <h3 
-                    className="font-bold mb-2 text-right sm:text-center" 
-                    style={{ 
-                      fontSize: '20px',
-                      color: '#EDBD90' 
-                    }}
-                  >
-                    2027<br />Sapphire Empire
-                  </h3>
-                  <p 
-                    className="max-w-64 font-bold text-right sm:text-center" 
-                    style={{ 
-                      fontSize: '14px',
-                      color: '#5EBFE6' 
-                    }}
+                <div ref={sapphireRef} className="flex flex-col items-center px-4">
+                   <h3 
+                    className={`font-bold mb-2 text-center text-[#EDBD90] transition-all duration-300 ease-out ${activeIndex === 2 ? 'text-3xl scale-105' : 'text-xl opacity-70'}`}
+                   >
+                     2027<br />Sapphire Empire
+                   </h3>
+                  <p
+                    className={`max-w-64 font-bold text-center text-[#5EBFE6] transition-all duration-300 ease-out ${activeIndex === 2 ? 'text-base opacity-100' : 'text-sm opacity-70'}`}
                   >
                     Sapphire takes the throne, where calm strategy and sharp minds shape the future.
                   </p>
@@ -339,7 +355,7 @@ const ThemeHeroSection = () => {
        */}
       {/* Section 3*/}
       <section
-        className="relative w-full bg-black bg-cover bg-center flex flex-col justify-center items-center text-center text-white px-4 py-4 overflow-x-hidden min-h-[60vh]"
+        className="relative w-full bg-black bg-cover bg-center flex flex-col justify-center items-center text-center text-white px-4 py-4 min-h-[60vh]"
         style={{
           backgroundImage: `url("https://ik.imagekit.io/admr8uj75/Download%20AI%20generated%20tropical%20rainforest,%20with%20towering%20trees%20and%20dense%20greenery,%20providing%20a%20lush%20for%20free%201.png?updatedAt=1754509960696")`,
         }}
@@ -348,7 +364,7 @@ const ThemeHeroSection = () => {
         <div className="absolute top-0 left-0 w-full h-32 z-5" style={{
           background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent)"
         }} />
-        {isMobile && <div className="w-full h-80"></div>}
+        {isMobile && <div className="w-full h-32"></div>}
         <div className="w-full h-[50vh] md:h-[90vh]">
           <ScrollOne isMobile={isMobile} />
         </div>

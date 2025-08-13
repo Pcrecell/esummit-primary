@@ -65,7 +65,7 @@ export default function Register() {
 
     if (!email.endsWith(".ac.in")) {
       setError(
-        "Students must use their KIIT email ID (e.g., example@kiit.ac.in)."
+        "Students must use their KIIT/KISS/KLS/KIMS/KSOM email ID (e.g., example@kiit.ac.in)."
       );
       return false;
     }
@@ -80,8 +80,8 @@ export default function Register() {
         setError("Please enter your hostel email ID.");
         return false;
       }
-      if (!hostelEmail.trim().endsWith("@kiit.ac.in")) {
-        setError("Hostel email must end with @kiit.ac.in.");
+      if (!hostelEmail.trim().endsWith("@kiit.ac.in" || "@kims.ac.in" || "@ksom.ac.in" || "@kls.ac.in" || "@kiss.ac.in")) {
+        setError("Hostel email must end with @kiit.ac.in, @kims.ac.in, @ksom.ac.in, @kls.ac.in, @kiss.ac.in");
         return false;
       }
     }
@@ -158,7 +158,7 @@ export default function Register() {
   };
 
   // ----------- DYNAMIC EMAIL PLACEHOLDER ----------- //
-  const emailPlaceholder = "Enter your KIIT mail ID (e.g : @kiit.ac.in)";
+  const emailPlaceholder = "Enter your KIIT/KISS/KLS/KIMS/KSOM mail ID (e.g : @kiit.ac.in)";
 
   return (
     <AuthLayout>

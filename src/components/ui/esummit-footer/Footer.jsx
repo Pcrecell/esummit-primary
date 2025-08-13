@@ -42,7 +42,7 @@ const Footer = () => {
               <h3 className="text-lg font-bold mb-2 text-green-400 tracking-wider uppercase text-center">
                 Useful Links
               </h3>
-              <ul className="space-y-3 text-sm text-center">
+              <ul className="flex flex-col gap-2 text-sm text-center">
                 <a href="/"><li className="hover:text-green-300">Home</li></a>
                 <a href="/theme"><li className="hover:text-green-300">Theme</li></a>
                 <a href="/events"><li className="hover:text-green-300">Events</li></a>
@@ -121,14 +121,23 @@ const Footer = () => {
                 </a>
               </div>
               <div className=" space-y-4 text-sm">
+
                 <div>
-                  <p className="font-bold text-white">Sarvagya Singh</p>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Sarvagya Singh</p>
+                  </div>
                   <p className="text-white/80">Chairperson</p>
+
                   <p className="text-white/80">+91-6200024970</p>
                 </div>
                 <div>
-                  <p className="font-bold text-white">Abhishek Sahoo</p>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Abhishek Sahoo</p>
+                  </div>
                   <p className="text-white/80">Event Head</p>
+
                   <p className="text-white/80">+91-9833685187</p>
                 </div>
               </div>
@@ -218,10 +227,10 @@ const Footer = () => {
               USEFUL LINKS
             </h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/esummit" className="hover:text-green-200">Home</a></li>
-              <li><a href="/aboutus" className="hover:text-green-200">About Us</a></li>
-              <li><a href="/gallery" className="hover:text-green-200">Gallery</a></li>
-              <li><a href="/contactus" className="hover:text-green-200">Contact Us</a></li>
+              <li><a href="/" className="hover:text-green-200">Home</a></li>
+              <li><a href="/theme" className="hover:text-green-200">Theme</a></li>
+              <li><a href="/events" className="hover:text-green-200">Events</a></li>
+              <li><a href="/contact" className="hover:text-green-200">Contact Us</a></li>
               <li><a href="/tos" className="hover:text-green-200">Terms of Service</a></li>
               <li><a href="/pp" className="hover:text-green-200">Privacy Policy</a></li>
             </ul>
@@ -268,8 +277,12 @@ const Footer = () => {
                   <p className="text-white/80">+91-6200024970</p>
                 </div>
                 <div>
-                  <p className="font-bold text-white">Abhishek Sahoo</p>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Abhishek Sahoo</p>
+                  </div>
                   <p className="text-white/80">Event Head</p>
+
                   <p className="text-white/80">+91-9833685187</p>
                 </div>
               </div>

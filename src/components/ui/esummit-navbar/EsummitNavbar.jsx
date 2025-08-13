@@ -10,7 +10,7 @@ import {
   MobileNavMenu,
 } from "../../ui/esummit-navbar/Esummit-resized";
 import { useState, useEffect } from "react";
-import { authAPI } from "../../../lib/services/api.js";
+import { authAPI } from "@/lib/services/api.js";
 
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -87,7 +87,7 @@ export default function EsummitNavbar() {
                       <a
                         href=""
                         onClick={handleLogout}
-                        className="block px-4 py-2 text-black hover:bg-gray-100 rounded"
+                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] rounded"
                       >
                         Logout
                       </a>

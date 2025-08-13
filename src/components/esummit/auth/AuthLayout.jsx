@@ -20,13 +20,16 @@ export default function AuthLayout({ children, hideGreenBox = false }) {
 
       {!hideGreenBox && (
         <div className="hidden md:block absolute right-0 top-0 h-full bg-none translate-y-1 w-[36vw] z-0">
-          <Image
-            src={"https://ik.imagekit.io/fhervghik/E-Cell%20Website/ChatGPT%20Image%20Aug%207,%202025,%2007_23_04%20PM.png"}
-            style={"linear-gradient(to right, black 0%, transparent 70%)"}
-            alt="Auth Page"
-            width={1000}
-            height={1200}
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={"https://ik.imagekit.io/ecellkiit/E-Cell%20Website/ChatGPT%20Image%20Aug%207,%202025,%2007_23_04%20PM.png"}
+              alt="Auth Page"
+              width={1000}
+              height={1200}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/70 to-transparent pointer-events-none" />
+          </div>
         </div>
       )}
     </div>
