@@ -10,7 +10,7 @@ import {
   MobileNavMenu,
 } from "../../ui/esummit-navbar/Esummit-resized";
 import { useState, useEffect } from "react";
-import { authAPI } from "../../../lib/services/api.js";
+import { authAPI } from "@/lib/services/api.js";
 
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
