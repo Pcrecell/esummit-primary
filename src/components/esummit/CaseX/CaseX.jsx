@@ -102,7 +102,7 @@ export default function CaseX() {
                     </p>
                     {/* Register button positioned on bottom border */}
                     <button
-                        onClick={() => setShowPopup(true)}
+                        onClick={() => setShowPopup(false)}
                         className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                     >
                         <img
@@ -139,7 +139,7 @@ export default function CaseX() {
                         />
                         <div className="w-[70vw] pl-[25vw] text-center justify-start"><span class="text-white text-[2vw] lg:text-2xl font-bold font-['League_Spartan']">Got sharp ideas? Love cracking real-world problems?<br/><br/></span><span class="text-white text-[2vw] lg:text-2xl font-light font-['League_Spartan']">Case Battle is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br/>Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br/>Think you've got what it takes?<br/><br/></span><span class="text-white text-[2vw] lg:text-2xl font-bold font-['League_Spartan']">This is not a case study. This is war.</span></div>
                         <div className="absolute left-[62vw] -translate-x-1/2 bottom-[-32px] z-20">
-                            <button onClick={() => setShowPopup(true)}>
+                            <button onClick={() => setShowPopup(false)}>
                                 <img
                                     src="https://ik.imagekit.io/wlknxcf5m/CaseXRegisterbutton%20(1).png"
                                     alt="Register"
@@ -440,6 +440,7 @@ export default function CaseX() {
                 </div>
             </section>
 
+            {/*}
             <div className="w-full flex justify-center mt-8">
                 <img
                     src="https://ik.imagekit.io/wlknxcf5m/WhatsApp_Image_2025-08-12_at_01.07.11_040c8e40-removebg-preview__1__cleanup-removebg-preview%201.png"
@@ -447,7 +448,6 @@ export default function CaseX() {
                     className="h-16"
                 />
             </div>
-            {/*}
             <section 
                 id="speaker" 
                 className="h-screen w-full mt-14 md:mt-20 bg-cover bg-center py-16 md:py-20 relative flex items-start justify-center"
@@ -457,7 +457,6 @@ export default function CaseX() {
                 <img src="https://ik.imagekit.io/wlknxcf5m/Group%207.png" className="absolute h-[50vh] -top-[5vh] z-15" />
                 <div className="absolute w-[60vw] top-[50vh] text-center justify-start text-white text-2xl font-light font-['League_Spartan'] z-15">In a world driven by innovation and analytics, consulting is where smart thinking meets real-world impact. Whether it’s solving business puzzles or shaping billion-dollar decisions, consultants are problem-solvers at heart.<br/><br/>Road to Consulting is your chance to dive into this high-stakes world—understand what it takes, why it matters, and how you can get there, no matter your background.<br/>With India’s consulting industry set to triple by 2025, there’s no better time to explore the path of strategy, structure, and success.</div>
             </section>
-            */}
             <div className="w-screen px-[15vw] mt-[10vh] text-center justify-center"><span class="text-white text-5xl font-normal font-['Girassol']">Be Ready to Learn from [Speaker Name]<br/><br/></span><span class="text-white text-2xl font-light font-['League_Spartan']"><br/><br/>Get insights straight from [Speaker Name], a consultant from [Firm Name, e.g., McKinsey & Company], who brings real client experience, interview expertise, and insider knowledge of the consulting world.<br/>From cracking live cases to building leadership skills early, [Speaker Name] will walk you through:<br/><br/> </span><span class="text-white text-2xl font-bold font-['League_Spartan']">How to think like a consultant?<br/> What top firms really look for?<br/><br/></span><span class="text-white text-2xl font-light font-['League_Spartan']">And how college is the best place to start preparing</span></div>
             <section className="w-full mt-14 md:mt-32 border-t bg-black border-[#D6C466]">
                 <div className="w-[82vw] mx-auto py-10">
@@ -468,6 +467,7 @@ export default function CaseX() {
                     </div>
                 </div>
             </section>
+            */}
 
             {/* POPUP FORM */}
             {showPopup && (
