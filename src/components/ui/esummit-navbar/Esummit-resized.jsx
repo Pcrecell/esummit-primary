@@ -62,7 +62,7 @@ export const NavBody = ({ leftItems = [], rightItems = [], children, className, 
                     />
                   )}
                   <Image
-                    src={cell}
+                    src={"https://ik.imagekit.io/ecellkiit/E-Cell%20Website/ecell-logo.png?updatedAt=1755075880401"}
                     alt="logo"
                     width={50}
                     height={50}
@@ -197,7 +197,7 @@ export const NavbarLogo = () => {
     return (
         <a href="/">
             <button className="flex items-center px-2 py-1">
-                <Image src={logo} alt="logo" width={100} height={100} />
+                <Image src={"https://ik.imagekit.io/ecellkiit/E-Cell%20Website/logo.png?updatedAt=1755075880371"} alt="logo" width={100} height={100} />
             </button>
         </a>
     )

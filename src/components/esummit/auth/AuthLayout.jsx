@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 // import { Link } from "react-router-dom";
 import { user_auth_pages } from "../../../../public/images/image-links";

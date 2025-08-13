@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/navigation";
 import AuthLayout from "@/components/esummit/auth/AuthLayout";
 import { getCookie } from "@/lib/utils/getCookie";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "@/lib/utils/firebase/firebase"; // <-- use your initialized auth
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Register() {
   const [firstname, setFirstname] = useState("");
@@ -19,7 +20,6 @@ export default function Register() {
   const [error, setError] = useState("");
   const navigate = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-
 
   const gmailRegex = /@(gmail|googlemail)\.com$/i;
   const nameRegex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/;
@@ -52,7 +52,9 @@ export default function Register() {
   // ----------- FORM VALIDATION ----------- //
   const validateForm = () => {
     if (!nameRegex.test(firstname.trim()) || !nameRegex.test(lastname.trim())) {
-      setError("First and last name must only contain letters and single spaces between words.");
+      setError(
+        "First and last name must only contain letters and single spaces between words."
+      );
       return false;
     }
 
@@ -62,10 +64,11 @@ export default function Register() {
     }
 
     if (!email.endsWith(".ac.in")) {
-      setError("Students must use their KIIT email ID (e.g., example@kiit.ac.in).");
+      setError(
+        "Students must use their KIIT email ID (e.g., example@kiit.ac.in)."
+      );
       return false;
     }
-
 
     if (hostelType === null) {
       setError("Please select whether you are a Hostelite or Dayboarder.");
@@ -83,7 +86,7 @@ export default function Register() {
       }
     }
 
-    setError("");  // Clear error on successful validation
+    setError(""); // Clear error on successful validation
     return true;
   };
 
@@ -94,63 +97,58 @@ export default function Register() {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log(user);
       const idToken = await user.getIdToken();
-      
+
       console.log("User registered successfully:", user);
       const userData = {
+        uid: user.uid,
+        email,
         firstname,
         lastname,
+        isKiitCollege: true, // Only KIIT students allowed
         phone,
-        email,
-        password,
+        college: "KIIT",
         hostelType,
         hostelEmail,
-        uid: user.uid,
+        idToken,
       };
-      const csrfToken = getCookie('csrfToken');
+      const csrfToken = getCookie("csrfToken");
 
-      console.log("Registration data");
-      const url="http://localhost:5000/api"
-      
-      const response = await fetch(`${url}/auth/register`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-csrf-token': csrfToken,
-        },
-        body: JSON.stringify(userData),
-      });
+      console.log("Registration data", userData);
 
-      console.log("Registration response:", response);
-      if (response.error) {
-        setError(response.error);
-        setLoading(false); // Loading OFF on error
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "x-csrf-token": csrfToken,
+          },
+          body: JSON.stringify(userData),
+        }
+      );
+
+      const result = await response.json();
+      console.log("Registration response:", result);
+
+      if (!response.ok) {
+        setError(result.error || "Registration failed.");
+        setLoading(false);
         return;
-      } 
+      }
+
       const Data = {
         name: `${firstname} ${lastname}`,
         email: email,
-        phone:phone,
-        uid:user.uid
-      }
-    
-    // Set session cookie in backend
-    await fetch(`${process.env.REACT_APP_API_URL}/auth/sessionLogin`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-csrf-token': csrfToken,
-      },
-      body: JSON.stringify({ idToken }),
-    });
-      navigate("/esummit/paymentchoice", { state: Data });
-      setLoading(false); // Loading OFF after success
+        phone: phone,
+        uid: user.uid,
+      };
+      window.location.href = "/"; // or any route that uses the navbar
+      // navigate.push("/payment", { state: Data });
+      setLoading(false);
     } catch (err) {
       setError("Failed to register. Please try again.");
       console.error("Registration error:", err);
@@ -176,7 +174,9 @@ export default function Register() {
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
-            <label className="block text-gray-300 mb-0.5 text-xs pl-1">First Name</label>
+            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+              First Name
+            </label>
             <input
               type="text"
               placeholder="Enter your first name"
@@ -187,7 +187,9 @@ export default function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-300 mb-0.5 text-xs pl-1">Last Name</label>
+            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+              Last Name
+            </label>
             <input
               type="text"
               placeholder="Enter your last name"
@@ -198,7 +200,9 @@ export default function Register() {
           </div>
         </div>
         <div>
-          <label className="block text-gray-300 mb-0.5 text-xs pl-1">Phone Number</label>
+          <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+            Phone Number
+          </label>
           <input
             type="tel"
             placeholder="Enter your phone number"
@@ -209,7 +213,9 @@ export default function Register() {
           />
         </div>
         <div>
-          <label className="block text-gray-300 mb-0.5 text-xs pl-1">Email Address</label>
+          <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+            Email Address
+          </label>
           <input
             type="email"
             placeholder={emailPlaceholder}
@@ -221,40 +227,42 @@ export default function Register() {
         </div>
 
         {/* ----------- Conditional hostelType field ----------- */}
-        
-          <div>
-            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
-              Are you a Hostelite or Dayboarder?
+
+        <div>
+          <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+            Are you a Hostelite or Dayboarder?
+          </label>
+          <div className="flex gap-4 mt-1">
+            <label className="flex items-center gap-2 text-white">
+              <input
+                type="radio"
+                name="hostelType"
+                value="true"
+                checked={hostelType === true}
+                onChange={() => setHostelType(true)}
+                required
+              />
+              Hostelite
             </label>
-            <div className="flex gap-4 mt-1">
-              <label className="flex items-center gap-2 text-white">
-                <input
-                  type="radio"
-                  name="hostelType"
-                  value="true"
-                  checked={hostelType === true}
-                  onChange={() => setHostelType(true)}
-                  required
-                />
-                Hostelite
-              </label>
-              <label className="flex items-center gap-2 text-white">
-                <input
-                  type="radio"
-                  name="hostelType"
-                  value="false"
-                  checked={hostelType === false}
-                  onChange={() => setHostelType(false)}
-                />
-                Dayboarder
-              </label>
-            </div>
+            <label className="flex items-center gap-2 text-white">
+              <input
+                type="radio"
+                name="hostelType"
+                value="false"
+                checked={hostelType === false}
+                onChange={() => setHostelType(false)}
+              />
+              Dayboarder
+            </label>
           </div>
+        </div>
 
         {/* ----------- Conditional hostelEmail field ----------- */}
         {hostelType === true && (
           <div>
-            <label className="block text-gray-300 mb-0.5 text-xs pl-1">Hostel Email ID</label>
+            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+              Hostel Email ID
+            </label>
             <input
               type="email"
               placeholder="Enter your hostel email ID"
@@ -267,29 +275,30 @@ export default function Register() {
         )}
 
         <div>
-  <label className="block text-gray-300 mb-0.5 text-xs pl-1">Password</label>
-  <input
-    type={showPassword ? "text" : "password"}
-    placeholder="Password"
-    className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    required
-  />
-  <div className="mt-2 flex items-center gap-2">
-    <input
-      type="checkbox"
-      id="showPassword"
-      checked={showPassword}
-      onChange={() => setShowPassword(!showPassword)}
-      className="accent-green-600"
-    />
-    <label htmlFor="showPassword" className="text-sm text-gray-400">
-      Show Password
-    </label>
-  </div>
-</div>
-
+          <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+            Password
+          </label>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <div className="mt-2 flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+              className="accent-green-600"
+            />
+            <label htmlFor="showPassword" className="text-sm text-gray-400">
+              Show Password
+            </label>
+          </div>
+        </div>
 
         <button
           type="submit"
@@ -301,15 +310,14 @@ export default function Register() {
           {loading ? "Creating Account..." : "SIGN UP"}
         </button>
 
-      <div className="flex justify-center">
-       <p className="text-sm text-gray-400 mt-4 text-center">
-       Already have an account?{" "}
-       <a href="/esummit/login" className="text-green-400 hover:underline">
-       Login here
-      </a>
-      </p>
-    </div>
-
+        <div className="flex justify-center">
+          <p className="text-sm text-gray-400 mt-4 text-center">
+            Already have an account?{" "}
+            <a href="/login" className="text-green-400 hover:underline">
+              Login here
+            </a>
+          </p>
+        </div>
       </form>
     </AuthLayout>
   );

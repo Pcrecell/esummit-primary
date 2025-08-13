@@ -8,6 +8,7 @@ import {
   Youtube,
   Facebook,
   ArrowRight,
+  Phone,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -42,58 +43,58 @@ const Footer = () => {
                 Useful Links
               </h3>
               <ul className="space-y-3 text-sm text-center">
-                <a href="/esummit"><li className="hover:text-green-300">Home</li></a>
-                <a href="/aboutus"><li className="hover:text-green-300">About Us</li></a>
-                <a href="/gallery"><li className="hover:text-green-300">Gallery</li></a>
-                <a href="/contactus"><li className="hover:text-green-300">Contact Us</li></a>
+                <a href="/"><li className="hover:text-green-300">Home</li></a>
+                <a href="/theme"><li className="hover:text-green-300">Theme</li></a>
+                <a href="/events"><li className="hover:text-green-300">Events</li></a>
+                <a href="/contact"><li className="hover:text-green-300">Contact Us</li></a>
               </ul>
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-bold mb-2 text-green-400 tracking-wider uppercase text-center">
                 Our Initiatives
               </h3>
-             <ul className="space-y-2 text-sm text-center">
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/esummit"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      E-summit
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/i-camp"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      I-Camp
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/build-school"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      BuildSchool
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/hult-prize"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      Hult Prize
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/maverick"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      Maverick
-    </a>
-  </li>
-</ul>
+              <ul className="space-y-2 text-sm text-center">
+                <li>
+                  <a
+                    href="https://www.kiitecell.org/gallery/esummit"
+                    className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                  >
+                    E-summit
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.kiitecell.org/gallery/i-camp"
+                    className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                  >
+                    I-Camp
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.kiitecell.org/gallery/build-school"
+                    className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                  >
+                    BuildSchool
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.kiitecell.org/gallery/hult-prize"
+                    className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                  >
+                    Hult Prize
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.kiitecell.org/gallery/maverick"
+                    className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                  >
+                    Maverick
+                  </a>
+                </li>
+              </ul>
 
             </div>
           </div>
@@ -120,17 +121,17 @@ const Footer = () => {
                 </a>
               </div>
               <div className=" space-y-4 text-sm">
-  <div>
-    <p className="font-bold text-white">Sarvagya Singh</p>
-    <p className="text-white/80">Chairperson</p>
-    <p className="text-white/80">+91-620002497</p>
-  </div>
-  <div>
-    <p className="font-bold text-white">Abhishek Sahoo</p>
-    <p className="text-white/80">Event Head</p>
-    <p className="text-white/80">+91-9833685187</p>
-  </div>
-</div>
+                <div>
+                  <p className="font-bold text-white">Sarvagya Singh</p>
+                  <p className="text-white/80">Chairperson</p>
+                  <p className="text-white/80">+91-6200024970</p>
+                </div>
+                <div>
+                  <p className="font-bold text-white">Abhishek Sahoo</p>
+                  <p className="text-white/80">Event Head</p>
+                  <p className="text-white/80">+91-9833685187</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -166,48 +167,48 @@ const Footer = () => {
             <h3 className="font-bold mb-4 text-base uppercase tracking-wider">
               OUR INITIATIVES
             </h3>
-              <ul className="space-y-2 flex flex-col text-sm">
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/esummit"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      E-summit
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/i-camp"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      I-Camp
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/build-school"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      BuildSchool
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/hult-prize"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      Hult Prize
-    </a>
-  </li>
-  <li>
-    <a
-      href="https://www.kiitecell.org/gallery/maverick"
-      className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
-    >
-      Mavericks
-    </a>
-  </li>
-</ul>
+            <ul className="space-y-2 flex flex-col text-sm">
+              <li>
+                <a
+                  href="https://www.kiitecell.org/gallery/esummit"
+                  className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                >
+                  E-summit
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.kiitecell.org/gallery/i-camp"
+                  className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                >
+                  I-Camp
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.kiitecell.org/gallery/build-school"
+                  className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                >
+                  BuildSchool
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.kiitecell.org/gallery/hult-prize"
+                  className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                >
+                  Hult Prize
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.kiitecell.org/gallery/maverick"
+                  className="hover:text-green-200 transition-colors duration-150 cursor-pointer"
+                >
+                  Mavericks
+                </a>
+              </li>
+            </ul>
 
           </div>
 
@@ -246,28 +247,32 @@ const Footer = () => {
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                 </svg>
                 {/* PCR email */}
-<a
-  href="https://mail.google.com/mail/?view=cm&fs=1&to=pcr.ecell@kiit.ac.in"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="hover:text-green-200"
->
-  pcr.ecell@kiit.ac.in
-</a>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=pcr.ecell@kiit.ac.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-200"
+                >
+                  pcr.ecell@kiit.ac.in
+                </a>
               </div>
               {/* Extra contacts */}
-<div className="mt-6 space-y-4 text-sm">
-  <div>
-    <p className="font-bold text-white">Sarvagya Singh</p>
-    <p className="text-white/80">Chairperson</p>
-    <p className="text-white/80">+91-620002497</p>
-  </div>
-  <div>
-    <p className="font-bold text-white">Abhishek Sahoo</p>
-    <p className="text-white/80">Event Head</p>
-    <p className="text-white/80">+91-9833685187</p>
-  </div>
-</div>
+              <div className="mt-6 space-y-4 text-sm">
+                <div>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Sarvagya Singh</p>
+                  </div>
+                  <p className="text-white/80">Chairperson</p>
+
+                  <p className="text-white/80">+91-6200024970</p>
+                </div>
+                <div>
+                  <p className="font-bold text-white">Abhishek Sahoo</p>
+                  <p className="text-white/80">Event Head</p>
+                  <p className="text-white/80">+91-9833685187</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
