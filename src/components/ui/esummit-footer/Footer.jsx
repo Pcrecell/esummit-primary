@@ -42,7 +42,7 @@ const Footer = () => {
               <h3 className="text-lg font-bold mb-2 text-green-400 tracking-wider uppercase text-center">
                 Useful Links
               </h3>
-              <ul className="space-y-3 text-sm text-center">
+              <ul className="flex flex-col gap-2 text-sm text-center">
                 <a href="/"><li className="hover:text-green-300">Home</li></a>
                 <a href="/theme"><li className="hover:text-green-300">Theme</li></a>
                 <a href="/events"><li className="hover:text-green-300">Events</li></a>
@@ -122,13 +122,21 @@ const Footer = () => {
               </div>
               <div className=" space-y-4 text-sm">
                 <div>
-                  <p className="font-bold text-white">Sarvagya Singh</p>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Sarvagya Singh</p>
+                  </div>
                   <p className="text-white/80">Chairperson</p>
+
                   <p className="text-white/80">+91-6200024970</p>
                 </div>
                 <div>
-                  <p className="font-bold text-white">Abhishek Sahoo</p>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Abhishek Sahoo</p>
+                  </div>
                   <p className="text-white/80">Event Head</p>
+
                   <p className="text-white/80">+91-9833685187</p>
                 </div>
               </div>
@@ -268,8 +276,12 @@ const Footer = () => {
                   <p className="text-white/80">+91-6200024970</p>
                 </div>
                 <div>
-                  <p className="font-bold text-white">Abhishek Sahoo</p>
+                  <div className="flex flex-row gap-2">
+                    <Phone fill="#ffffff" height={15} width={15} />
+                    <p className="font-bold text-white">Abhishek Sahoo</p>
+                  </div>
                   <p className="text-white/80">Event Head</p>
+
                   <p className="text-white/80">+91-9833685187</p>
                 </div>
               </div>
