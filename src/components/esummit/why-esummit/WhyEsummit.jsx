@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { Anton, Poppins } from "next/font/google";
-import { Event } from "@/components/esummit/Homepage-events/index"
+import { Event } from "@/components/esummit/Homepage-events/index";
 import { DM_Serif_Text } from "next/font/google";
 
 const dmSerifText = DM_Serif_Text({
@@ -98,7 +98,8 @@ const WhyEsummit = () => {
                       ease: "power2.out",
                     });
 
-                    const corners = otherCard.querySelectorAll(".corner-outline");
+                    const corners =
+                      otherCard.querySelectorAll(".corner-outline");
                     gsap.to(corners, {
                       opacity: 1,
                       duration: 0.3,
@@ -175,13 +176,18 @@ const WhyEsummit = () => {
     }
 
     // Make sure elements exist before creating animations
-    if (!sectionRef.current || !transition1.current || !transition2.current || !transition3.current || !eventRef.current) {
+    if (
+      !sectionRef.current ||
+      !transition1.current ||
+      !transition2.current ||
+      !transition3.current ||
+      !eventRef.current
+    ) {
       return;
     }
 
     // Create a context for cleanup
     let ctx = gsap.context(() => {
-
       // Transition 1 - Move upward
       gsap.to(transition1.current, {
         yPercent: -50,
@@ -192,15 +198,16 @@ const WhyEsummit = () => {
           end: "bottom top",
           scrub: 1,
           invalidateOnRefresh: true,
-          markers: false
+          markers: false,
         },
       });
 
       // Event section - Scale and move
-      gsap.fromTo(eventRef.current,
+      gsap.fromTo(
+        eventRef.current,
         {
           scale: 1.1,
-          y: 0
+          y: 0,
         },
         {
           // yPercent: -20,
@@ -212,16 +219,17 @@ const WhyEsummit = () => {
             end: "bottom top",
             scrub: 1,
             invalidateOnRefresh: true,
-          }
+          },
         }
       );
 
       // Transition 2 - Left side movement
-      gsap.fromTo(transition2.current,
+      gsap.fromTo(
+        transition2.current,
         {
           xPercent: 0,
           yPercent: 0,
-          rotation: 0
+          rotation: 0,
         },
         {
           yPercent: 30,
@@ -240,11 +248,12 @@ const WhyEsummit = () => {
       );
 
       // Transition 3 - Right side movement
-      gsap.fromTo(transition3.current,
+      gsap.fromTo(
+        transition3.current,
         {
           xPercent: 0,
           yPercent: 0,
-          rotation: 0
+          rotation: 0,
         },
         {
           yPercent: 30,
@@ -261,7 +270,6 @@ const WhyEsummit = () => {
           },
         }
       );
-
     });
 
     // Refresh ScrollTrigger after setup
@@ -277,7 +285,8 @@ const WhyEsummit = () => {
       <section
         className="min-h-screen py-16 px-4 text-white text-center flex flex-col justify-center relative"
         style={{
-          backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp')",
+          backgroundImage:
+            "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
@@ -289,10 +298,12 @@ const WhyEsummit = () => {
         <div className="relative z-10">
           <h2
             className="text-[40px] sm:text-[70px] font-dmSerifText font-bold mb-36"
-
-          // style={{ fontFamily: "Texturina, serif" }}
+            style={{
+              filter: "drop-shadow(5px 10px 10px rgba(0, 0, 0, 1))",
+            }}
           >
-            <span style={{ textShadow: "10px 10px  black" }}>Why Join </span><span style={{ color: "#2EB24C", textShadow: "10px 10px black" }}>E-Summit ?</span>
+            <span>Why Join </span>
+            <span style={{ color: "#00FF3A" }}>E-Summit ?</span>
           </h2>
 
           <div
@@ -314,7 +325,9 @@ const WhyEsummit = () => {
 
                   <div
                     className="absolute inset-0 flex flex-col items-center justify-center text-black px-2 text-center z-10"
-                    style={{ transform: `rotate(${textRotationAngles[index]}deg)` }}
+                    style={{
+                      transform: `rotate(${textRotationAngles[index]}deg)`,
+                    }}
                   >
                     <div
                       className={`text-4xl sm:text-7xl font-extrabold leading-none ${anton.className}`}
@@ -357,10 +370,14 @@ const WhyEsummit = () => {
       </section>
 
       {/* Parallax section with proper structure */}
-      <div ref={sectionRef} className="h-[120vh] z-60 hidden lg:block"
-        style={{
-          // backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp?updatedAt=1755000413347')"
-        }}
+      <div
+        ref={sectionRef}
+        className="h-[120vh] z-60 hidden lg:block"
+        style={
+          {
+            // backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp?updatedAt=1755000413347')"
+          }
+        }
       >
         <div ref={transition1} className="translate-y-48 z-[40] relative">
           <img
@@ -369,15 +386,30 @@ const WhyEsummit = () => {
           />
         </div>
         <div className="flex flex-row justify-between -translate-y-[20rem] lg:-translate-y-[44rem] relative z-[60]">
-          <div ref={transition2} className="-translate-x-12 z-[60] absolute w-[600px] lg:w-[800px]">
-            <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613" alt="" />
+          <div
+            ref={transition2}
+            className="-translate-x-12 z-[60] absolute w-[600px] lg:w-[800px]"
+          >
+            <img
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613"
+              alt=""
+            />
           </div>
-          <div ref={transition3} className="translate-x-[32rem] lg:translate-x-[39rem] z-[60] absolute w-[600px] lg:w-[800px]">
-            <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613" alt="" />
+          <div
+            ref={transition3}
+            className="translate-x-[32rem] lg:translate-x-[39rem] z-[60] absolute w-[600px] lg:w-[800px]"
+          >
+            <img
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613"
+              alt=""
+            />
           </div>
         </div>
       </div>
-      <div ref={eventRef} className="bottom-[0rem] lg:bottom-[20rem] z-10 relative hidden lg:block">
+      <div
+        ref={eventRef}
+        className="bottom-[0rem] lg:bottom-[20rem] z-10 relative hidden lg:block"
+      >
         <Event />
         <div className="h-[10vh] bg-black"></div>
       </div>
