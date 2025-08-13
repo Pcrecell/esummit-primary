@@ -13,15 +13,15 @@ const Rules = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute inset-0 w-full h-full flex items-center
-        justify-center">
-        <img
-          src="https://i.ibb.co/bjhQqcpX/Rectangle-63.png"
-          alt="Background overlay"
-          className="w-full h-full object-cover opacity-100"
+        {/* Gradient Overlay */}
+        <div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            background:
+              "linear-gradient(to bottom, #011209 0%, rgba(0,0,0,0) 44%, #011209 100%)",
+          }}
         />
-        </div>
-        {/* Main Frame Container - Increased size */}
+
         <div
           className="relative z-10 w-full h-full flex flex-col justify-center items-center scale-y-110"
           style={{

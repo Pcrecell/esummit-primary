@@ -135,9 +135,6 @@ const FlippableRounds = () => {
           Content loading...
         </div>
 
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 rounded-2xl"></div>
-
         {/* Text overlay */}
         <div className="absolute inset-0 flex items-center justify-center p-12">
           <p className="text-black text-center text-xs font-medium leading-loose drop-shadow-lg font-['Poppins',sans-serif] max-w-full">
@@ -157,13 +154,16 @@ const FlippableRounds = () => {
           backgroundImage: "url('https://i.ibb.co/Y7LJ8NCb/image-11.png')",
         }}
       />
-      <div className="absolute inset-0 w-full h-full flex items-center justify-center">
-        <img
-          src="https://i.ibb.co/bjhQqcpX/Rectangle-63.png"
-          alt="Background overlay"
-          className="w-full h-full object-cover opacity-100"
-        />
-      </div>
+
+      {/* Gradient Overlay */}
+      <div
+        className="absolute inset-0 w-full h-full"
+        style={{
+          background:
+            "linear-gradient(to bottom, #011209 0%, rgba(0,0,0,0) 44%, #011209 100%)",
+        }}
+      />
+
       <div className="relative z-10 w-full flex flex-col items-center">
         {/* Header decoration */}
         <div className="flex justify-center mb-8">
