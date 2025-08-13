@@ -8,6 +8,7 @@ const images = [
 
 function useIsMobile() {
     const [isMobile, setIsMobile] = useState(false);
+
     useEffect(() => {
         const mq = window.matchMedia('(max-width: 640px)');
         setIsMobile(mq.matches);
@@ -207,9 +208,9 @@ const ScrollOne = () => {
                     />
                 </div>
             </div>
-            <div className="w-full flex justify-center pt-4">
+            <div className={`w-full flex justify-center pt-4`}>
                 <a
-                    href="#register"
+                    href="/register"
                     className="inline-block rounded-full font-bold transition-transform transform hover:scale-105 hover:shadow-xl"
                     style={{
                         padding: '18px 40px',
