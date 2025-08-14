@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Milker:wght@400;700&display=swap');
 @import "tailwindcss";
 
 
@@ -10,10 +11,14 @@
 .leaflet-popup-content a {
   cursor: pointer !important;
 }
+.font-milker {
+  font-family: 'Milker', sans-serif;
+}
 
 .custom-popup .leaflet-popup-content a:hover {
   cursor: pointer !important;
 }
+
 
 * { 
   user-select: none;
