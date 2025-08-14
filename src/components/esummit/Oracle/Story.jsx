@@ -1,69 +1,52 @@
 "use client";
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from "react";
+import { Cormorant_Garamond } from "next/font/google";
 
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 export default function Story() {
   const [visibleLines, setVisibleLines] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
-  
+
   const textContent = [
-  { text: "ORACLE IS WHERE MYTHS COME TO LIFE AND .", delay: 0 },
-  { text: "ONLY THE BRAVE SURVIVE BEHIND ITS ", delay: 800 },
-  { text: "MYSTERIOUS FRONT IS A MAZE OF TRICKY ", delay: 1600 },
-  { text: "CHALLENGES...TWISTED BY THE SERPENT'S SLY ", delay: 2400 },
-  { text: "COILS, GUARDED BY THE MIGHTY LADON,AND", delay: 3200 },
-  { text: "HAUNTED BY THE WRATH OF THE GORGONS...ALL ", delay: 4000 },
-  { text: "UNDER THE UNBLINKING, DEADLY GAZE OF ", delay: 4800 },
-  { text: "MEDUSA HERSELF.EVERY CHOICE YOU MAKE ", delay: 5600 },
-  { text: "COULD LEAD TO VICTORY...OR TRAP YOU FOREVER. ", delay: 6400 },
-  { text: "FOREVER. ", delay: 7200 },
-  { text: "THIS ISN'T JUST A GAME—IT'S A TEST OF YOUR ", delay: 8000 },
-  { text: "BRAIN, COURAGE, AND QUICK THINKING. THOSE", delay: 8800 },
-  { text: "WHO DARE TO PLAY CAN WIN GLORY, LEARN", delay: 9600 },
-  { text: "FROM MENTORS, AND TAKE HOME REWARDS", delay: 10400 },
-  { text: "WORTHY OF A TRUE CHAMPION. BUT BE", delay: 11200 },
-  { text: "CAREFUL...ONE WRONG MOVE, AND THE LEGEND", delay: 12000 },
-  { text: "MIGHT TURN YOU TO STONE.", delay: 12800 }
-];
+    "ORACLE IS WHERE MYTHS COME ALIVE.",
+    "ONLY THE BRAVE SURVIVE ITS MAZE.",
+    "TWISTED BY SERPENT COILS, GUARDED BY LADON,",
+    "AND HAUNTED BY THE WRATH OF GORGONS.",
+    "UNDER MEDUSA'S DEADLY, UNBLINKING GAZE,",
+    "EVERY CHOICE COULD BRING GLORY OR DOOM.",
+    "THIS ISN’T JUST A GAME—IT’S A TEST OF COURAGE.",
+    "DARE TO PLAY, WIN GLORY, LEARN FROM MENTORS,",
+    "EARN REWARDS WORTHY OF A CHAMPION.",
+    "BUT ONE WRONG MOVE...AND YOU’RE STONE."
+  ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.5 } // Trigger when 50% of section is visible
-    );
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      // Scroll progress through the section
+      let scrollProgress = (windowHeight - rect.top) / (rect.height );
+      scrollProgress = Math.min(Math.max(scrollProgress, 0), 1);
+
+      // Determine how many lines should be visible based on scroll
+      const linesToShow = Math.floor(scrollProgress * textContent.length);
+      setVisibleLines(linesToShow);
     };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const timers = textContent.map((line, i) => {
-      return setTimeout(() => {
-        setVisibleLines(prev => prev + 1);
-      }, line.delay);
-    });
-
-    return () => timers.forEach(timer => clearTimeout(timer));
-  }, [isVisible]); // Only run when isVisible changes
-
   return (
-    <div 
-      className="relative h-screen w-full overflow-hidden"
+    <div
+      className="relative h-[100vh] w-full overflow-hidden" // taller so scrolling triggers
       ref={sectionRef}
     >
       {/* Video Background */}
@@ -80,48 +63,47 @@ export default function Story() {
         />
       </video>
 
-      {/* Top and Bottom Overlays (unchanged) */}
-      <div className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+      {/* Overlays */}
+      <div
+        className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
         style={{
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
         }}
       ></div>
-      <div className="absolute bottom-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+      <div
+        className="absolute bottom-0 left-0 w-full h-1/3 z-5 pointer-events-none"
         style={{
-          background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
         }}
       ></div>
 
-      {/* Text Overlay */}
-      <div className="absolute inset-0 z-10 flex items-center">
-        <div className="w-[90%] px-5 py-12 mx-auto text-left">
-          <div className="space-y-0.1 hidden md:block">
-            {textContent.map((line, index) => (
-              <div 
-                key={index}
-                className={`transition-all duration-700 ease-out font-milker 
-  text-sm md:text-2xl lg:text-3xl 
-  ${index < visibleLines ? 'opacity-100' : 'opacity-0'}
-`}
-
-                style={{
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-                  fontWeight: 'bold',
-                  fontSize: 'clamp(1.5rem, 2vw, 2.7rem)',
-                  lineHeight: '1.0',
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase'
-                }}
-              >
-                {line.text}
-              </div>
-            ))}
-          </div>
-          <div className="block md:hidden text-center">
-  <p>
-    {textContent.map(item => item.text).join(" ")}
-  </p>
-</div>
+      {/* Text */}
+      <div className="sticky top-0 flex h-screen items-center z-10">
+        <div className="w-[90%] px-5 py-12 mx-auto text-left space-y-2">
+          {textContent.map((text, index) => (
+            <p
+              key={index}
+              className={`transition-all duration-500 ease-out ${cormorantGaramond.className}
+                text-sm md:text-2xl lg:text-3xl text-white
+                ${
+                  index < visibleLines
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4"
+                }`}
+              style={{
+                textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+                fontWeight: "regular",
+                fontSize: "clamp(1.5rem, 2vw, 2.7rem)",
+                lineHeight: "1.25",
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+              }}
+            >
+              {text}
+            </p>
+          ))}
         </div>
       </div>
     </div>
