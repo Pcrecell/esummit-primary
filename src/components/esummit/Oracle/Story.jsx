@@ -80,32 +80,46 @@ export default function Story() {
       ></div>
 
       {/* Text */}
-      <div className="sticky top-0 flex h-screen items-center z-10">
-        <div className="w-[90%] px-5 py-12 mx-auto text-left space-y-2">
-          {textContent.map((text, index) => (
-            <p
-              key={index}
-              className={`transition-all duration-500 ease-out ${cormorantGaramond.className}
-                text-sm md:text-2xl lg:text-3xl text-white
-                ${
-                  index < visibleLines
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              style={{
-                textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
-                fontWeight: "regular",
-                fontSize: "clamp(1.5rem, 2vw, 2.7rem)",
-                lineHeight: "1.25",
-                letterSpacing: "0.05em",
-                textTransform: "uppercase",
-              }}
-            >
-              {text}
-            </p>
-          ))}
-        </div>
-      </div>
+      {/* Desktop view (hidden on mobile) */}
+<div className="hidden md:sticky md:top-0 md:flex h-screen items-center z-10">
+  <div className="w-[90%] px-5 py-12 mx-auto text-left space-y-2">
+    {textContent.map((text, index) => (
+      <p
+        key={index}
+        className={`transition-all duration-500 ease-out ${cormorantGaramond.className}
+          text-2xl lg:text-3xl text-white
+          ${index < visibleLines ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        style={{
+          textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+          fontSize: "clamp(1.5rem, 2vw, 2.7rem)",
+          lineHeight: "1.25",
+          letterSpacing: "0.05em",
+          textTransform: "uppercase",
+        }}
+      >
+        {text}
+      </p>
+    ))}
+  </div>
+</div>
+
+{/* Mobile view (hidden on desktop) */}
+<div className="md:hidden flex flex-col justify-center items-center h-full p-4">
+  {textContent.map((text, index) => (
+    <p
+      key={index}
+      className={`text-center text-lg leading-relaxed transition-all duration-500 ease-out ${cormorantGaramond.className} text-white
+        ${index < visibleLines ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+      style={{
+        animationDelay: `${index * 0.15}s`,
+        textShadow: "1px 1px 3px rgba(0,0,0,0.8)",
+      }}
+    >
+      {text}
+    </p>
+  ))}
+</div>
+
     </div>
   );
 }
