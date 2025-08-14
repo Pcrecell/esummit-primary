@@ -72,6 +72,10 @@ function Hero() {
           zIndex: 15,
         }}
       />
+      {showPopup && (
+  <Popup onClose={() => setShowPopup(false)} />
+)}
+
     </div>
   );
 }
