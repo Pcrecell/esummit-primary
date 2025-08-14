@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from 'react';
 
+
 export default function Story() {
   const [visibleLines, setVisibleLines] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -98,12 +99,11 @@ export default function Story() {
             {textContent.map((line, index) => (
               <div 
                 key={index}
-                className={`transition-all duration-700 ease-out 
+                className={`transition-all duration-700 ease-out font-milker 
                   ${index < visibleLines ? 'opacity-100' : 'opacity-0'}
                 `}
                 style={{
                   textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-                  fontFamily: '"Times New Roman", Times, serif',
                   fontWeight: 'bold',
                   fontSize: 'clamp(1.5rem, 2vw, 2.7rem)',
                   lineHeight: '1.0',
