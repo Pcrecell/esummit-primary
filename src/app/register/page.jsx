@@ -100,14 +100,12 @@ export default function Register() {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
       const idToken = await user.getIdToken();
-
-      console.log("User registered successfully:", user);
       const userData = {
         uid: user.uid,
         email,
         firstname,
         lastname,
-        isKiitCollege: true, // Only KIIT students allowed
+        isKiitCollege: true, 
         phone,
         college: "KIIT",
         hostelType,

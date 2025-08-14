@@ -10,7 +10,8 @@ import {
   MobileNavMenu,
 } from "../../ui/esummit-navbar/Esummit-resized";
 import { useState, useEffect } from "react";
-import { authAPI } from "../../../lib/services/api.js";
+import { authAPI } from "@/lib/services/api.js";
+import { useRouter } from "next/navigation";
 
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -45,7 +46,8 @@ export default function EsummitNavbar() {
       const response = await authAPI.logout();
       if (response.success) {
         setIsAuthenticated(false);
-        window.location.href = "/";
+        useRouter().push("/")
+
       }
     } catch (error) {
       console.error("Logout error:", error);
