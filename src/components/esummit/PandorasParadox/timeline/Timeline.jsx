@@ -40,25 +40,28 @@ const Timeline = () => {
         </h1>
 
         {/* Main Content Container */}
-        <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-6xl gap-12 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-start md:items-center justify-between w-full max-w-6xl gap-12 lg:gap-8">
           
           {/* Hourglass with Timeline Entries */}
-          <div className="flex-shrink-0 relative">
+          <div style = {{zIndex: 4}} className="flex-shrink-0 relative">
             <Image
               src={hourglassImage}
               alt="Timeline Hourglass"
               width={200}
               height={300}
-              className="w-48 h-72 md:w-56 md:h-80 lg:w-64 lg:h-96 object-contain drop-shadow-2xl"
+              
+              className="w-48 h-72 md:w-56 md:h-80 z-4 lg:w-64 lg:h-96 object-contain drop-shadow-2xl"
             />
             
             {/* Timeline Entries placed precisely within the three hourglass blocks */}
-            <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 pointer-events-none flex">
               {/* Top block */}
+              
               <div
-                className="absolute flex items-center justify-end text-right px-[2%]"
-                style={{ top: '16%', left: '56%', width: '38%', height: '18%' }}
+                className="absolute flex items-center z-1 justify-center text-center px-[2%]"
+                style={{ top: '16%', left: '56%', width: '50%', height: '18%', left: "90%", zIndex: 3 }}
               >
+                <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#9E8851]"></div>
                 <div className="w-full">
                   <p className={`${poppins.className} text-xs sm:text-sm md:text-base font-bold text-amber-100 drop-shadow-2xl leading-tight`}>22 August</p>
                   <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>9:00 AM - 4:00 PM</p>
@@ -67,9 +70,10 @@ const Timeline = () => {
 
               {/* Middle block */}
               <div
-                className="absolute flex items-center justify-end text-right px-[2%]"
-                style={{ top: '43%', left: '56%', width: '38%', height: '14%' }}
+                className="absolute flex z-2 items-center justify-center text-center px-[2%]"
+                style={{ top: '43%', left: '56%', width: '50%', height: '14%', left: "90%", zIndex: 2 }}
               >
+                <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#3E3620]"></div>
                 <div className="w-full">
                   <p className={`${poppins.className} text-xs sm:text-sm md:text-base font-bold text-amber-100 drop-shadow-2xl leading-tight`}>23 August</p>
                   <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>9:00 AM - 4:00 PM</p>
@@ -78,9 +82,10 @@ const Timeline = () => {
 
               {/* Bottom block */}
               <div
-                className="absolute flex items-center justify-end text-right px-[2%]"
-                style={{ top: '70%', left: '56%', width: '38%', height: '18%' }}
+                className="absolute flex z-3 items-center justify-center text-center px-[2%]"
+                style={{ top: '67%', left: '56%', width: '50%', height: '18%', left: "90%", zIndex: 1 }}
               >
+                <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#9E8851]"></div>
                 <div className="w-full">
                   <p className={`${poppins.className} text-xs sm:text-sm md:text-base font-bold text-amber-100 drop-shadow-2xl leading-tight`}>24 August</p>
                   <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>9:00 AM - 4:00 PM</p>
@@ -89,8 +94,9 @@ const Timeline = () => {
             </div>
           </div>
 
+
           {/* Location Section with text on image */}
-          <div className="flex-shrink-0 relative">
+          <div className="flex-shrink-0 relative justify-center">
             <Image
               src={locationSignImage}
               alt="Location Sign"
@@ -98,9 +104,8 @@ const Timeline = () => {
               height={280}
               className="w-48 h-64 md:w-56 md:h-72 lg:w-64 lg:h-80 object-contain drop-shadow-2xl"
             />
-            
-            {/* Campus Text positioned on the location sign */}
             <div className="absolute inset-0 flex flex-col items-center justify-center px-[6%] py-[12%]">
+            <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#3E3620]"></div>
               <div className="text-center max-w-full">
                 <p className={`${poppins.className} text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-amber-100 drop-shadow-xl tracking-wide leading-tight`}>
                   Campus-25
