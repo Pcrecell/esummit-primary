@@ -2,6 +2,7 @@ import "../app/globals.css";
 import PageTransition from "@/components/shared/PageTransition";
 import EsummitNavbar from "@/components/ui/esummit-navbar/EsummitNavbar";
 import Footer from "@/components/ui/esummit-footer/Footer";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: 'E-Summit 2025 | KIIT E-Cell',
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-black text-white overflow-x-hidden">
+        <Analytics/>
         <EsummitNavbar />
         <PageTransition>
           {children}
