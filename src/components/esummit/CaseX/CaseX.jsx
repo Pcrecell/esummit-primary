@@ -113,7 +113,7 @@ export default function CaseX() {
                     </p>
                     {/* Register button positioned on bottom border */}
                     <button
-                        onClick={() => setShowPopup(false)}
+                        onClick={() => setShowPopup(true)}
                         className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                     >
                         <img
@@ -148,7 +148,7 @@ export default function CaseX() {
                         />
                         <div className="w-[85vw] pl-[35vw] text-center justify-start"><span class="text-white text-[2vw] lg:text-2xl font-bold font-['League_Spartan']">Got sharp ideas? Love cracking real-world problems?<br/><br/></span><span class="text-white text-[2vw] lg:text-2xl font-light font-['League_Spartan']">Case-X is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br/>Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br/>Think you've got what it takes?<br/><br/></span><span class="text-white text-[2vw] lg:text-2xl font-bold font-['League_Spartan']">This is not a case study. This is war.</span></div>
                         <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
-                            <button onClick={() => setShowPopup(false)}>
+                            <button onClick={() => setShowPopup(true)}>
                                 <img
                                     src="https://ik.imagekit.io/wlknxcf5m/CaseXRegisterbutton%20(1).png"
                                     alt="Register"
@@ -484,22 +484,35 @@ export default function CaseX() {
                 </div>
 
 
-            <div className="w-full mt-14 md:mt-32 border-t bg-black border-[green]" />
+
+            <div className="w-screen px-[15vw] mt-[10vh] text-center justify-center"><span class="text-white text-5xl font-normal font-['Girassol']">Be Ready to Learn from [Speaker Name]<br/><br/></span><span class="text-white text-2xl font-light font-['League_Spartan']"><br/><br/>Get insights straight from [Speaker Name], a consultant from [Firm Name, e.g., McKinsey & Company], who brings real client experience, interview expertise, and insider knowledge of the consulting world.<br/>From cracking live cases to building leadership skills early, [Speaker Name] will walk you through:<br/><br/> </span><span class="text-white text-2xl font-bold font-['League_Spartan']">How to think like a consultant?<br/> What top firms really look for?<br/><br/></span><span class="text-white text-2xl font-light font-['League_Spartan']">And how college is the best place to start preparing</span></div>
             
+            <section className="w-full mt-14 md:mt-32 border-t bg-black border-[#D6C466]">
+                <div className="w-[82vw] mx-auto py-10">
+                    <h3 className="text-xl text-center font-bold font-['Cinzel_Decorative']">Event POC</h3>
+                    <div className="mt-3 space-y-1 text-center text-xl md:text-xl font-light font-['Poppins']">
+                        <p>Aarish Aabdi - 9907086720</p>
+                        <p>aarish.kiitecell@gmail.com</p>
+                    </div>
+                </div>
+            </section>            
 
             {/* POPUP FORM */}
             {showPopup && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
                     <div className="relative w-[835px] h-[494px] bg-[#1B0D00] rounded-3xl border-4 border-[#CFB43C]">
-                        {/* Close button */}
                         <button 
                             onClick={() => setShowPopup(false)}
                             className="absolute top-4 right-4 text-[#CFB43C] hover:text-[#CFB43C]/80 text-2xl font-bold"
                         >
                             ×
                         </button>
-
-                        {/* Tab Headers */}
+                        <div className="w-full h-full flex items-center justify-center">
+                            <p className="text-6xl font-light font-['League_Spartan'] text-[#CFB43C] text-center">
+                                Registrations Starting Soon!
+                            </p>
+                        </div>
+                        {/*
                         <div className="flex justify-center mt-8 gap-12">
                             <button 
                                 onClick={() => setActiveTab('join')}
@@ -515,7 +528,6 @@ export default function CaseX() {
                             </button>
                         </div>
 
-                        {/* Tab Underline */}
                         <div className="flex justify-center mt-2">
                             {activeTab === 'join' && (
                                 <div className="w-32 h-0 border-b border-[#CFB43C] ml-[-220px]"></div>
@@ -525,10 +537,8 @@ export default function CaseX() {
                             )}
                         </div>
 
-                        {/* Form Fields */}
                         <div className="px-16 mt-8">
                             <div className="grid grid-cols-2 gap-8">
-                                {/* Left Column */}
                                 <div className="space-y-6">
                                     <div className="relative">
                                         <input
@@ -546,7 +556,6 @@ export default function CaseX() {
                                     </div>
                                 </div>
 
-                                {/* Right Column */}
                                 <div className="space-y-6">
                                     <div className="relative">
                                         <input
@@ -566,7 +575,6 @@ export default function CaseX() {
                                 </div>
                             </div>
 
-                            {/* Register Button */}
                             <div className="flex justify-center mt-46">
                                 <button className="hover:scale-105 transition-transform cursor-pointer">
                                     <img
@@ -577,6 +585,7 @@ export default function CaseX() {
                                 </button>
                             </div>
                         </div>
+                        */}
                     </div>
                 </div>
             )}
