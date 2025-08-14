@@ -55,42 +55,42 @@ const Rules = () => {
                 </h2>
               </div>
               <div
-                className={`${poppins.className} space-y-4 text-yellow-100 max-w-md text-sm -ml-8 mt-4`}
+                className={`${poppins.className} space-y-3 relative left-14 top-9 text-yellow-100 max-w-sm text-sm -ml-8 mt-4`}
               >
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1">
                   <p>1.Only registered participants may compete.</p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1">
                   <p>2.Be on time; latecomers will be disqualified.</p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1 max-w-88">
                   <p>3.Maintain discipline and professionalism at all times.</p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1 max-w-96 text-pretty">
                   <p>
                     4.Cheating, plagiarism, or disruption leads to
                     disqualification.
                   </p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1">
                   <p>
                     5.No phones, laptops, or external help unless permitted.
                   </p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1">
                   <p>6.No communication during solo rounds.</p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1">
                   <p>7.Eliminated participants must not interfere.</p>
                 </div>
 
-                <div className="flex items-start space-x-2">
+                <div className="flex items-start space-x-1">
                   <p>8.Play fair. Respect the game and its players.</p>
                 </div>
               </div>

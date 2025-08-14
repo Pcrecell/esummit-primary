@@ -1,25 +1,25 @@
 "use client";
 import Image from "next/image";
-import { Cinzel } from "next/font/google";
+import { Cinzel, Cinzel_Decorative } from "next/font/google";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "900"],
   display: "swap",
 });
+
+const cinzel_decrovative = Cinzel_Decorative({
+  subsets: ['latin'],
+  weight: "900",
+  display: "swap"
+})
 
 export default function FounderlandCard() {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-[#011209] px-4 py-8">
       {/* Mobile Scroll - Small size at top on mobile */}
-      <div className="lg:hidden mb-4 h-[120px] w-[150px] flex-shrink-0">
-        <Image
-          src="https://i.ibb.co/HDp97W96/Spell-Scroll-2-removebg-preview-2.png"
-          alt="Scroll"
-          width={300}
-          height={300}
-          className="object-contain"
-        />
+      <div className="lg:hidden mb-4 z-20 flex-shrink-0">
+         <p className={`text-[#D4AF37] ${cinzel_decrovative.className} text-center text-4xl font-extrabold`}>WHAT'S IN IT FOR YOU?</p>
       </div>
 
       {/* Container for card and scroll */}
@@ -33,6 +33,9 @@ export default function FounderlandCard() {
             height={700}
             className="object-contain opacity-90"
           />
+          <div>
+            <p className={`text-[#5b3b31] ${cinzel_decrovative.className} text-center text-4xl absolute top-48 left-40 font-extrabold rotate-[-17deg]`}>WHAT'S<br/>IN IT<br/>FOR YOU?</p>
+          </div>
         </div>
 
         {/* Card */}

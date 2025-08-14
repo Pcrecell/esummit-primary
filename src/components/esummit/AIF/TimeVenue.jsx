@@ -13,7 +13,7 @@ const RoundsSection = ({
 }) => {
   return (
     <div
-      className="py-8 md:py-16 px-4 bg-cover bg-center bg-no-repeat relative"
+      className="py-8 md:py-16 px-8 bg-cover bg-center bg-no-repeat relative"
       style={{
         backgroundImage: "url('https://i.ibb.co/Lz9SwGXR/image-12.png')",
         backgroundColor: "#011209", // Fallback color
@@ -65,11 +65,11 @@ const RoundsSection = ({
 
             {/* Venue Card */}
             <div className="relative w-full max-w-sm">
-              <div className="absolute -left-12 md:-left-16 top-1/2 transform -translate-y-1/2 z-10">
+              <div className="absolute -left-8 md:-left-16 top-1/2 transform -translate-y-1/2 z-10">
                 <img
                   src={round2Image}
                   alt="Round 2"
-                  className="w-28 h-28 md:w-36 md:h-36 object-contain"
+                  className="w-20x h-20 md:w-36 md:h-36 object-contain"
                 />
               </div>
 

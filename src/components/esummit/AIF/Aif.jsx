@@ -93,25 +93,25 @@ export default function Aif() {
               className="relative cursor-pointer hover:scale-105 transition-transform duration-200"
               onClick={() => {
                 // Add your registration logic here
-                window.open("#", "_blank");
+                // window.open("#", "_blank");
               }}
             >
               <img
                 src="https://i.ibb.co/Vccv1fBw/Banner-ideas-removebg-preview-1.png"
                 alt="Register Here"
-                className="w-auto h-16 sm:h-20 md:h-24 lg:h-28 object-contain"
+                className="w-auto h-36 lg:h-32 object-contain"
               />
               <span
-                className={`${cinzel.className} absolute inset-0 flex items-center justify-center text-black font-bold text-base sm:text-lg md:text-xl lg:text-2xl`}
+                className={`${cinzel.className} absolute inset-0 left-15 lg:left-10 flex max-w-48 text-center items-center justify-center text-black font-bold text-sm lg:text-lg`}
                 style={{
                   fontWeight: 600,
                   lineHeight: "100%",
-                  letterSpacing: "0.1em",
+                  letterSpacing: "0.05em",
                   color: "#44261A",
                   textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
                 }}
               >
-                REGISTER
+                 REGISTRATION COMING SOON
               </span>
             </button>
           </div>
