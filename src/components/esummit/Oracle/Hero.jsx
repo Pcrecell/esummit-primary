@@ -99,7 +99,7 @@ export default function Hero() {
       {/* Time */}
       <div className="flex items-center gap-2">
         <ClockIcon className="w-5 h-5 text-white" />
-        <span>8:15 AM</span>
+        <span>8:30 AM</span>
       </div>
 </div>
 
