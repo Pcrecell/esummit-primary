@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/navigation";
 import AuthLayout from "@/components/esummit/auth/AuthLayout";
@@ -26,6 +26,14 @@ export default function Register() {
   const collegeNameRegex = /^[a-zA-Z\s]*$/;
 
   // Restrict phone input to digits and max 10 chars
+
+  useEffect(() => {
+    // Check if user is already logged in
+    if (localStorage.getItem("login") === "true") {
+      window.location.href = "/dashboard"; // Redirect to home or dashboard if already logged in
+    }
+  }, [navigate]);
+
   const handlePhoneChange = (e) => {
     let input = e.target.value.replace(/\D/g, "");
     if (input.length > 10) input = input.slice(0, 10);
@@ -80,8 +88,20 @@ export default function Register() {
         setError("Please enter your hostel email ID.");
         return false;
       }
-      if (!hostelEmail.trim().endsWith("@kiit.ac.in" || "@kims.ac.in" || "@ksom.ac.in" || "@kls.ac.in" || "@kiss.ac.in")) {
-        setError("Hostel email must end with @kiit.ac.in, @kims.ac.in, @ksom.ac.in, @kls.ac.in, @kiss.ac.in");
+      if (
+        !hostelEmail
+          .trim()
+          .endsWith(
+            "@kiit.ac.in" ||
+              "@kims.ac.in" ||
+              "@ksom.ac.in" ||
+              "@kls.ac.in" ||
+              "@kiss.ac.in"
+          )
+      ) {
+        setError(
+          "Hostel email must end with @kiit.ac.in, @kims.ac.in, @ksom.ac.in, @kls.ac.in, @kiss.ac.in"
+        );
         return false;
       }
     }
@@ -105,7 +125,7 @@ export default function Register() {
         email,
         firstname,
         lastname,
-        isKiitCollege: true, 
+        isKiitCollege: true,
         phone,
         college: "KIIT",
         hostelType,
@@ -138,6 +158,8 @@ export default function Register() {
         return;
       }
 
+      localStorage.setItem("login", "true");
+
       const Data = {
         name: `${firstname} ${lastname}`,
         email: email,
@@ -156,7 +178,8 @@ export default function Register() {
   };
 
   // ----------- DYNAMIC EMAIL PLACEHOLDER ----------- //
-  const emailPlaceholder = "Enter your KIIT/KISS/KLS/KIMS/KSOM mail ID (e.g : @kiit.ac.in)";
+  const emailPlaceholder =
+    "Enter your KIIT/KISS/KLS/KIMS/KSOM mail ID (e.g : @kiit.ac.in)";
 
   return (
     <AuthLayout>
