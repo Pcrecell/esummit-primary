@@ -20,9 +20,9 @@ const Footer = () => {
           />
         </div>
       </div>
-      <div className="text-center text-xs text-white opacity-80">
+      {/* <div className="text-center text-xs text-white opacity-80">
         &copy; {new Date().getFullYear()} Expo Ecell. All rights reserved.
-      </div>
+      </div> */}
     </footer>
   );
 };

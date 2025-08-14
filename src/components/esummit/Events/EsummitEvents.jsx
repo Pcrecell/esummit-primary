@@ -5,12 +5,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import EventCard from "./EventCard";
+import { useRouter } from "next/navigation";
 import EventsCalendar from "./EventsCalendar";
 import EventsMap from "./EventsMap";
 import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
 import { authAPI } from "@/lib/services/api"; // make sure you have this
-import { useRouter } from "next/navigation"; // Next.js router
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -19,7 +19,7 @@ const EventsPage = () => {
   const leftSectionRef = useRef(null);
   const cardRefs = useRef([]);
   const mobileScrollRef = useRef(null);
-  const router = useRouter(); 
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
@@ -38,7 +38,7 @@ const EventsPage = () => {
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/7xWdGYwv/hack-r.png",
-        url: "/oracle"
+        route: "/pandoras-paradox",
       },
       {
         title: "EXPO",
@@ -47,6 +47,7 @@ const EventsPage = () => {
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
         image: "https://i.ibb.co/QFJHRt47/expo-l.png",
+        route: "/expo",
       },
     ],
     23: [
@@ -57,7 +58,7 @@ const EventsPage = () => {
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
         image: "https://i.ibb.co/gZQgcF5j/oracle-r.png",
-        route: "/events/oracle",
+        route: "/oracle",
       },
       {
         title: "ALICE IN FOUNDERLAND",
@@ -66,6 +67,7 @@ const EventsPage = () => {
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
         image: "https://i.ibb.co/YFnnwgGP/aif-l.png",
+        route: "/aif",
       },
 
       {
@@ -75,6 +77,7 @@ const EventsPage = () => {
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
         image: "https://i.ibb.co/4Rky463J/expo-r.png",
+        route: "/expo",
       },
       {
         title: "PANDORA'S PARADOX",
@@ -83,6 +86,7 @@ const EventsPage = () => {
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        route: "/pandoras-paradox",
       },
     ],
     24: [
@@ -93,6 +97,7 @@ const EventsPage = () => {
         description:
           "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
         image: "https://i.ibb.co/jPCnVcs0/casex-r.png",
+        route: "/case-x",
       },
       {
         title: "PANDORA'S PARADOX",
@@ -101,6 +106,7 @@ const EventsPage = () => {
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        route: "/pandoras-paradox",
       },
     ],
   };
@@ -318,16 +324,16 @@ const EventsPage = () => {
                 <EventCard left={index % 2 === 0} eventData={eventData} />
 
                 <div className="w-full flex justify-center mt-9 rounded-full">
-                <button
-  className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
-  onClick={() => {
-    if (eventData.route) {
-      router.push(eventData.route); // Navigate to event page
-    }
-  }}
->
-  Know More
-</button>
+                  <button
+                    className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
+                    onClick={() => {
+                      if (eventData.route) {
+                        router.push(eventData.route); // Navigate to event page
+                      }
+                    }}
+                  >
+                    Know More
+                  </button>
                 </div>
               </div>
             ))}
@@ -424,9 +430,16 @@ const EventsPage = () => {
                   <div className="w-full max-w-sm mx-auto">
                     <EventCard left={index % 2 === 0} eventData={eventData} />
                     <div className="w-full flex justify-center mt-6 rounded-full">
-                      <button className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full">
-                        Know More
-                      </button>
+                        <button
+                          onClick={() => {
+                            if (eventData.route) {
+                              router.push(eventData.route); // Navigate to event page
+                            }
+                          }}
+                          className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
+                        >
+                          Know More
+                        </button>
                     </div>
                   </div>
                 </div>
