@@ -24,12 +24,12 @@ export default function Hero() {
       }}
     >
 <div
-  className="absolute z-1 top-1/2 left-1/2 w-[40%] h-[40%] -translate-x-1/2 -translate-y-1/2"
+  className="absolute z-1 top-1/2 left-1/2 w-[100%] h-[100%] -translate-x-1/2 -translate-y-1/2"
   style={{
     backgroundImage: "url('https://i.postimg.cc/mZ8VS9zh/Ellipse-1.png')",
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
+    backgroundPosition: "center ",
   }}
 ></div>
 
