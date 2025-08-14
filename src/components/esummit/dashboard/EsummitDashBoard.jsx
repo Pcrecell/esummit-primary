@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 // import DashBoardCard from "./DashBoardCard";
 import MapComponent from "./MapComponent";
-// import { authAPI } from "../../services/api";
+import { authAPI } from "../../../lib/services/api";
 import DashBoardCard from "../../../../public/images/esummit/dashboard/Dashboard Card.svg";
 import QuestionMark from "../../../../public/images/esummit/dashboard/Question-Mark.svg";
 import PaymentStart from "./paymentStart";
@@ -24,11 +24,30 @@ const EsummitDashBoard = () => {
 
 const router = useRouter();
   useEffect(() => {
-    const isAuthenticated = false;
-    if (!isAuthenticated) {
-      window.location.replace("/login");
+  let mounted = true;
+
+  (async () => {
+    try {
+      const userResponse = await authAPI.verifyToken();
+      console.log("User response:", userResponse);
+
+      if (mounted && userResponse?.user) {
+        setUserData(userResponse.user);
+      } else {
+        router.replace("/login"); // only redirect if no user found
+      }
+    } catch (err) {
+      router.replace("/login"); // redirect on error too
+    } finally {
+      if (mounted) setLoading(false);
     }
-  }, [router]);
+  })();
+
+  return () => {
+    mounted = false;
+  };
+}, [router]);
+
   const handleEventClick = (eventId) => {
     setSelectedEventId(eventId);
     setShowConfirmationPopup(true);
@@ -54,30 +73,31 @@ const router = useRouter();
     setShowConfirmationPopup(false);
   };
 
-  // useEffect(() => {
-  //   let mounted = true;
-  //   (async () => {
-  //     try {
-  //       const userResponse = await authAPI.verifyToken();
-  //       if (mounted && userResponse && userResponse.user) {
-  //         setUserData(userResponse.user);
-  //       }
-  //     } catch (err) {
-  //       // handle error
-  //     } finally {
-  //       if (mounted) setLoading(false);
-  //     }
-  //   })();
-  //   return () => { mounted = false; };
-  // }, []);
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const userResponse = await authAPI.verifyToken();
+        console.log("User response:", userResponse);
+        if (mounted && userResponse && userResponse.user) {
+          setUserData(userResponse.user);
+        }
+      } catch (err) {
+        // handle error
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
 
-  // if (loading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
-  //       Loading...
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -117,11 +137,21 @@ const router = useRouter();
               WebkitTextStroke: '1px #FFFFFF',
               paintOrder: 'stroke fill'
             }}>Hey!</h1>
-            <h1 className="font-tourney text-8xl sm:text-8xl text-start" style={{ 
-              color: '#FFFFFF', 
-              WebkitTextStroke: '2px #FFFFFF',
-              paintOrder: 'stroke fill'
-            }}>User</h1>
+            <h1
+  className={`font-tourney text-start ${
+    (userData?.firstname?.length || 0) > 8
+      ? "text-6xl sm:text-6xl" // smaller if > 8 chars
+      : "text-8xl sm:text-8xl" // normal size otherwise
+  }`}
+  style={{
+    color: "#FFFFFF",
+    WebkitTextStroke: "2px #FFFFFF",
+    paintOrder: "stroke fill",
+  }}
+>
+  {userData?.firstname || "User"}
+</h1>
+
           </div>
         </div>
         <div
