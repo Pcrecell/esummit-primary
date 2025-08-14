@@ -130,37 +130,113 @@ const WhyEsummit = () => {
 
   // Parallax scroll animations
   useGSAP(() => {
-    if (window.innerWidth < 1024) return;
-    if (!sectionRef.current || !transition1.current || !transition2.current || !transition3.current || !eventRef.current) return;
+    if (window.innerWidth < 1024) {
+      return;
+    }
 
-    const ctx = gsap.context(() => {
+    // Make sure elements exist before creating animations
+    if (
+      !sectionRef.current ||
+      !transition1.current ||
+      !transition2.current ||
+      !transition3.current ||
+      !eventRef.current
+    ) {
+      return;
+    }
+
+    // Create a context for cleanup
+    let ctx = gsap.context(() => {
+      // Transition 1 - Move upward
       gsap.to(transition1.current, {
         yPercent: -50,
         ease: "none",
-        scrollTrigger: { trigger: sectionRef.current, start: "top bottom", end: "bottom top", scrub: 1 },
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+          invalidateOnRefresh: true,
+          markers: false,
+        },
       });
 
+      // Event section - Scale and move
       gsap.fromTo(
         eventRef.current,
-        { scale: 1.1, y: 0 },
-        { scale: 1, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top+=300 bottom", end: "bottom top", scrub: 1 } }
+        {
+          scale: 1.1,
+          y: 0,
+        },
+        {
+          // yPercent: -20,
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top+=300 bottom",
+            end: "bottom top",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        }
       );
 
+      // Transition 2 - Left side movement
       gsap.fromTo(
         transition2.current,
-        { xPercent: 0, yPercent: 0, rotation: 0 },
-        { yPercent: 30, xPercent: -150, rotation: 60, duration: 0.5, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top bottom", end: "bottom top", scrub: 1 } }
+        {
+          xPercent: 0,
+          yPercent: 0,
+          rotation: 0,
+        },
+        {
+          yPercent: 30,
+          xPercent: -150,
+          rotation: 60,
+          duration: 0.5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        }
       );
 
+      // Transition 3 - Right side movement
       gsap.fromTo(
         transition3.current,
-        { xPercent: 0, yPercent: 0, rotation: 0 },
-        { yPercent: 30, xPercent: 150, rotation: 60, duration: 0.5, ease: "none", scrollTrigger: { trigger: sectionRef.current, start: "top bottom", end: "bottom top", scrub: 1 } }
+        {
+          xPercent: 0,
+          yPercent: 0,
+          rotation: 0,
+        },
+        {
+          yPercent: 30,
+          xPercent: 150,
+          rotation: 60,
+          duration: 0.5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        }
       );
     });
 
+    // Refresh ScrollTrigger after setup
     ScrollTrigger.refresh();
-    return () => ctx.revert();
+
+    return () => {
+      ctx.revert(); // Clean up
+    };
   }, []);
 
   return (
@@ -245,22 +321,47 @@ const WhyEsummit = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/0 to-transparent z-0"></div>
       </section>
 
-      {/* Parallax section */}
-      <div ref={sectionRef} className="h-[120vh] hidden lg:block">
-        <div ref={transition1} className="translate-y-48 relative z-[40]">
-          <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset1.png" alt="" />
+      {/* Parallax section with proper structure */}
+      <div
+        ref={sectionRef}
+        className="h-[120vh] z-60 hidden lg:block"
+        style={
+          {
+            // backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group%201000002405%20(1)%201.webp?updatedAt=1755000413347')"
+          }
+        }
+      >
+        <div ref={transition1} className="translate-y-48 z-[40] relative">
+          <img
+            src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset1.png?updatedAt=1754770554602"
+            alt=""
+          />
         </div>
-        <div className="flex flex-row justify-between -translate-y-[44rem] relative z-[60]">
-          <div ref={transition2} className="absolute w-[600px] lg:w-[800px] -translate-x-12 z-[60]">
-            <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png" alt="" />
+        <div className="flex flex-row justify-between -translate-y-[20rem] lg:-translate-y-[44rem] relative z-[60]">
+          <div
+            ref={transition2}
+            className="-translate-x-12 z-[60] absolute w-[600px] lg:w-[800px]"
+          >
+            <img
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613"
+              alt=""
+            />
           </div>
-          <div ref={transition3} className="absolute w-[600px] lg:w-[800px] translate-x-[39rem] z-[60]">
-            <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png" alt="" />
+          <div
+            ref={transition3}
+            className="translate-x-[32rem] lg:translate-x-[39rem] z-[60] absolute w-[600px] lg:w-[800px]"
+          >
+            <img
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/asset4.png?updatedAt=1754770554613"
+              alt=""
+            />
           </div>
-        </div>
+        </div>  
       </div>
-
-      <div ref={eventRef} className="relative hidden lg:block bottom-20 z-10">
+      <div
+        ref={eventRef}
+        className="bottom-[0rem] lg:bottom-[20rem] z-10 relative hidden lg:block"
+      >
         <Event />
         <div className="h-[10vh] bg-black"></div>
       </div>
