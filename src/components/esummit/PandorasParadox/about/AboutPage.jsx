@@ -1,8 +1,7 @@
 import Image from "next/image";
-import Particles from "../../lib/utils/Particles";
-import ScrollFloat from "../../lib/utils/ScrollFloat";
-import aboutBg from "../../assets/images/about-side-bg.png";
-import banner from "../../assets/images/about-banner.png";
+import Particles from "./Particles";
+import aboutBg from "../../../../../public/images/hackathon/about-side-bg.png";
+import banner from "../../../../../public/images/hackathon/about-banner.png";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({

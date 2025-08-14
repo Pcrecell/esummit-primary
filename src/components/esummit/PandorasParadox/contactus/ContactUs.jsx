@@ -1,6 +1,6 @@
 import Image from "next/image";
-import ContactMap from "../../lib/utils/ContactMap";
-import bgImage from "../../assets/images/contact-us-bg.png";
+import ContactMap from "./ContactMap";
+import bgImage from "../../../../../public/images/hackathon/contact-us-bg.png";
  
 
 const ContactUs = () => {

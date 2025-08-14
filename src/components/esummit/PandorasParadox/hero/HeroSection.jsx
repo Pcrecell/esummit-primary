@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import heroBg from "../../assets/images/kiitecell-hero-bg.png";
+import heroBg from "../../../../../public/images/hackathon/kiitecell-hero-bg.png";
 import Image from "next/image";
-import heroRegisterButton from "../../assets/images/hero-register-button.png";
+import heroRegisterButton from "../../../../../public/images/hackathon/hero-register-button.png";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({

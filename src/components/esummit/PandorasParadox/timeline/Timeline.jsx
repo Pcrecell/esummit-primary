@@ -1,7 +1,7 @@
 import Image from "next/image";
-import bgImage from "../../assets/images/timeline-bg.png";
-import hourglassImage from "../../assets/images/timeline-hourglass.png";
-import locationSignImage from "../../assets/images/location-sign.png";
+import bgImage from "../../../../../public/images/hackathon/timeline-bg.png";
+import hourglassImage from "../../../../../public/images/hackathon/timeline-hourglass.png";
+import locationSignImage from "../../../../../public/images/hackathon/location-sign.png";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({

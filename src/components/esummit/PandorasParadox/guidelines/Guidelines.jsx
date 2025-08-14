@@ -1,7 +1,5 @@
-"use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
-import bgImage from "../../assets/images/guidelines-bg.png";
+import bgImage from "../../../../../public/images/hackathon/guidelines-bg.png";
 import Image from "next/image";
 
 

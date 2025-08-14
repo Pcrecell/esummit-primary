@@ -1,8 +1,7 @@
-"use client";
 
 import React from "react";
 import Image from "next/image";
-import bgImage from "../../assets/images/why-us-bg.png";
+import bgImage from "../../../../../public/images/hackathon/why-us-bg.png";
 
 const Circle = ({ className = "", children }) => (
   <div

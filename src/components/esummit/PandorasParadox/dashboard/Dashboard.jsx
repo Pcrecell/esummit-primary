@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import bgImage from "../../assets/images/dashboard-bg.png";
+import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
 
 const Dashboard = () => {
   // action: 'idle' | 'join' | 'create' | 'details' | 'registered'

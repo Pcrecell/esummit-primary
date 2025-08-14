@@ -1,7 +1,7 @@
 import PandorasParadox from '@/components/esummit/PandorasParadox/PandorasParadox'
 import React from 'react'
 
-const page = () => {
+export default function hackathon() {
   return (
     <div>
       <PandorasParadox />
@@ -9,4 +9,3 @@ const page = () => {
   )
 }
 
-export default page
