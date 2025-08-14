@@ -296,6 +296,16 @@ const EventsPage = () => {
     cardRefs.current = cardRefs.current.slice(0, currentEvents.length);
   }, [currentEvents]);
 
+  const handleKnowMore = (route) => {
+    // Check login status before navigating
+    if (localStorage.getItem("login") === "true") {
+      if (route) router.push(route);
+    } else {
+      // Redirect to login page if not logged in
+      router.push("/login");
+    }
+  };
+
   return (
     <div className="min-h-screen overflow-hidden">
       <HeroSection />
@@ -335,11 +345,7 @@ const EventsPage = () => {
                 <div className="w-full flex justify-center mt-9 rounded-full">
                   <button
                     className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
-                    onClick={() => {
-                      if (eventData.route) {
-                        router.push(eventData.route); // Navigate to event page
-                      }
-                    }}
+                    onClick={() => handleKnowMore(eventData.route)}
                   >
                     Know More
                   </button>
@@ -443,16 +449,12 @@ const EventsPage = () => {
                   <div className="w-full max-w-sm mx-auto">
                     <EventCard left={index % 2 === 0} eventData={eventData} />
                     <div className="w-full flex justify-center mt-6 rounded-full">
-                        <button
-                          onClick={() => {
-                            if (eventData.route) {
-                              router.push(eventData.route); // Navigate to event page
-                            }
-                          }}
-                          className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
-                        >
-                          Know More
-                        </button>
+                      <button
+                        onClick={() => handleKnowMore(eventData.route)}
+                        className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
+                      >
+                        Know More
+                      </button>
                     </div>
                   </div>
                 </div>
