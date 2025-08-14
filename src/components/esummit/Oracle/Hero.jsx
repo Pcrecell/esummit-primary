@@ -92,30 +92,32 @@ export default function Hero() {
 ></div>
 
 
-<div className="absolute bottom-4 left-1/2 -translate-x-1/2 
-    w-full max-w-6xl px-8 py-4 z-10 
-    flex justify-between items-center 
+<div
+  className="absolute bottom-4 left-1/2 -translate-x-1/2 
+    w-full max-w-6xl px-6 py-4 z-10 
+    flex flex-col md:flex-row justify-center md:justify-between items-center gap-3 md:gap-8
     text-white text-sm md:text-base 
-    bg-black bg-opacity-50 rounded-full">
+    bg-black bg-opacity-50 rounded-full md:rounded-full rounded-xl"
+>
 
   {/* Location */}
   <div className="flex items-center gap-2">
     <MapPinIcon className="w-5 h-5 text-white" />
-    <span>Campus 6 Auditorium</span>
+    <span className="text-center md:text-left">Campus 6 Auditorium</span>
   </div>
 
   {/* Date */}
-<div className="flex items-center gap-2 -ml-20">
-  <CalendarIcon className="w-5 h-5 text-white" />
-  <span>23rd August, 2025</span>
-</div>
-
+  <div className="flex items-center gap-2">
+    <CalendarIcon className="w-5 h-5 text-white" />
+    <span className="text-center md:text-left">23rd August, 2025</span>
+  </div>
 
   {/* Time */}
   <div className="flex items-center gap-2">
     <ClockIcon className="w-5 h-5 text-white" />
-    <span>8:30 AM</span>
+    <span className="text-center md:text-left">8:30 AM</span>
   </div>
+
 </div>
 
 
