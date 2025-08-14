@@ -58,12 +58,12 @@ export default function About() {
             {/* Left Side - About The Event */}
             <div className="w-full lg:flex-1 lg:pr-16 text-center lg:text-left mb-8 lg:mb-0">
               <h1
-                className={`${cinzelDecorative.className} text-4xl sm:text-5xl md:text-6xl font-black`}
+                className={`${cinzelDecorative.className} text-4xl sm:text-5xl md:text-7xl drop-shadow-2xl text-shadow-2xs text-shadow-black drop-shadow-black font-black`}
                 style={{
                   color: "#BCA13A",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
-                  fontWeight: "600",
+                  fontWeight: "900",
                   textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
                   lineHeight: "1.5",
                 }}
