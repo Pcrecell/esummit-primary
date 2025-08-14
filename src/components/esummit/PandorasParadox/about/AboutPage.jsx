@@ -13,7 +13,7 @@ const AboutPage = () => {
   return (
     <section
       id="aboutus"
-      className="relative min-h-[100vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
+      className="relative min-h-[120vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0 max-h-[90vh]">
@@ -31,7 +31,7 @@ const AboutPage = () => {
       </div>
 
       {/* Bottom black gradient overlay*/}
-      <div className="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
+      <div className="absolute bottom-0 left-0 right-0 h-84 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
 
       {/* Top black gradient overlay */}
      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-black/80 to-transparent z-10" /> 
