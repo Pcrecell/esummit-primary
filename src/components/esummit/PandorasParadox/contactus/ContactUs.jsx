@@ -12,7 +12,7 @@ const ContactUs = () => {
         src={bgImage}
         alt="Contact Us Background"
         fill
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "cover" , opacity:0.6}}
         className="z-0"
         priority
       />
