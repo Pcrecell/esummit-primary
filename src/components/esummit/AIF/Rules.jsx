@@ -55,7 +55,7 @@ const Rules = () => {
                 </h2>
               </div>
               <div
-                className={`${poppins.className} space-y-3 relative left-14 top-9 text-yellow-100 max-w-sm text-sm -ml-8 mt-4`}
+                className={`${poppins.className} space-y-3 relative left-14 top-9 text-yellow-100 max-w-sm text-sm -ml-8 mt-12 mb-6`}
               >
                 <div className="flex items-start space-x-1">
                   <p>1.Only registered participants may compete.</p>
