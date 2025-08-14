@@ -445,7 +445,7 @@ export default function CaseX() {
                     src="https://ik.imagekit.io/wlknxcf5m/Group%207%20(1).png"
                     className="absolute h-[20vh] sm:h-[25vh] md:h-[50vh] w-auto -top-[2vh] sm:-top-[4vh] md:-top-[5vh] z-15"
                 />
-                <div className="relative mt-[22vh] sm:mt-[26vh] md:mt-[30vh] w-[90%] md:w-[60vw] text-center text-white text-sm sm:text-base md:text-2xl font-light font-['League_Spartan'] z-15">
+                <div className="relative mt-[22vh] sm:mt-[26vh] md:mt-[35vh] w-[90%] md:w-[60vw] text-center text-white text-sm sm:text-base md:text-2xl font-light font-['League_Spartan'] z-15">
                     In today’s fast-paced tech landscape, product management is where vision
                     meets execution. Whether it’s creating products people love, launching
                     innovative features, or scaling solutions to millions, product managers are
