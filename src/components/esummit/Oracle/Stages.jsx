@@ -54,11 +54,18 @@ export default function Stages() {
     >
       {/* Top Dark Fading Overlay */}
 <div
-  className="absolute top-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+  className="absolute top-0 left-0 w-full h-1/8 z-5 pointer-events-none"
   style={{
     background: "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
   }}
 ></div>
+{/* Bottom Dark Fading Overlay - Add this right after the Top Dark Fading Overlay */}
+<div
+  className="absolute bottom-0 left-0 w-full h-1/3 z-5 pointer-events-none"
+  style={{
+    background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
+  }}
+/>
 
       {/* Top title */}
       <div className="absolute top-10 w-full flex flex-col items-center text-white pb-12">
