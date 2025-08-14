@@ -484,15 +484,7 @@ export default function CaseX() {
                 </div>
 
 
-            <section className="w-full mt-14 md:mt-32 border-t bg-black border-[#D6C466]">
-                <div className="w-[82vw] mx-auto py-10">
-                    <h3 className="text-2xl font-bold font-['Cinzel_Decorative']">Contact Us</h3>
-                    <div className="mt-3 space-y-1 text-xl md:text-2xl font-light font-['Poppins']">
-                        <p>9907086720 (Syed Aarish Aabdi)</p>
-                        <p>aarish.kiitecell@gmail.com</p>
-                    </div>
-                </div>
-            </section>
+            <div className="w-full mt-14 md:mt-32 border-t bg-black border-[green]" />
             
 
             {/* POPUP FORM */}
