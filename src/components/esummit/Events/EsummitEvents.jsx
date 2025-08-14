@@ -9,6 +9,8 @@ import EventsCalendar from "./EventsCalendar";
 import EventsMap from "./EventsMap";
 import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
+import { authAPI } from "@/lib/services/api"; // make sure you have this
+import { useRouter } from "next/navigation"; // Next.js router
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -17,7 +19,7 @@ const EventsPage = () => {
   const leftSectionRef = useRef(null);
   const cardRefs = useRef([]);
   const mobileScrollRef = useRef(null);
-
+  const router = useRouter(); 
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
@@ -54,6 +56,7 @@ const EventsPage = () => {
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
         image: "https://i.ibb.co/gZQgcF5j/oracle-r.png",
+        route: "/events/oracle",
       },
       {
         title: "ALICE IN FOUNDERLAND",
@@ -314,9 +317,16 @@ const EventsPage = () => {
                 <EventCard left={index % 2 === 0} eventData={eventData} />
 
                 <div className="w-full flex justify-center mt-9 rounded-full">
-                  <button className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full">
-                    Know More
-                  </button>
+                <button
+  className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
+  onClick={() => {
+    if (eventData.route) {
+      router.push(eventData.route); // Navigate to event page
+    }
+  }}
+>
+  Know More
+</button>
                 </div>
               </div>
             ))}
