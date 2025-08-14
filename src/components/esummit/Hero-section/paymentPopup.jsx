@@ -44,7 +44,7 @@ const Popup = ({ imageUrl, onClose, children }) => {
           onClick={onClose}
         />
   <div className="text-white text-center text-lg font-bold">
-    Payment not supported
+    Payment Coming Soon
   </div>
 </div>
 
