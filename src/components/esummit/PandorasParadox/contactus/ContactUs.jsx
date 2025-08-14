@@ -101,7 +101,7 @@ const ContactUs = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-[#9DB59F]">
               <div className="flex flex-col items-center justify-center py-4 md:py-2">
                 <h3 className="text-white text-sm md:text-base tracking-widest font-semibold">SUJAY KUMAR</h3>
-                <p className="text-gray-300 text-[10px] md:text-xs">Event Head</p>
+                <p className="text-gray-300 text-[10px] md:text-xs">Event Lead</p>
                 <p className="text-gray-300 text-[10px] md:text-xs mt-2">+91-7750015353</p>
                 <p className="text-gray-300 text-[10px] md:text-xs">sujay.kiitecell@gmail.com</p>
               </div>

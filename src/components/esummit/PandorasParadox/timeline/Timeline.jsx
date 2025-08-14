@@ -11,7 +11,7 @@ const poppins = Poppins({
 
 const Timeline = () => {
   return (
-    <div className="w-full relative overflow-hidden min-h-screen py-16 md:py-24">
+    <div className="w-full relative overflow-hidden max-h-[120vh] md:min-h-screen py-0 md:py-16 md:py-24">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -40,7 +40,7 @@ const Timeline = () => {
         </h1>
 
         {/* Main Content Container */}
-        <div className="flex flex-col lg:flex-row items-start md:items-center justify-between w-full max-w-6xl gap-12 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-center md:items-center justify-between w-full max-w-6xl gap-12 lg:gap-8">
           
           {/* Hourglass with Timeline Entries */}
           <div className="flex-shrink-0 relative z-[100]">
@@ -94,13 +94,13 @@ const Timeline = () => {
           </div>
 
           {/* Location Section with text on image */}
-          <div className="flex-shrink-0 relative justify-center z-[9999] mr-12">
+          <div className="flex-shrink-0 relative justify-center z-[9999] mr-5 md:mr-12">
             <Image
               src={locationSignImage}
               alt="Location Sign"
               width={200}
               height={280}
-              className="relative z-[2] ml-32 md:ml-36 lg:ml-48 w-48 h-64 md:w-56 md:h-72 lg:w-64 lg:h-80 object-contain drop-shadow-2xl"
+              className="relative z-[2] ml-32 md:ml-56 lg:ml-48 w-48 h-64 md:w-56 md:h-72 lg:w-84 lg:h-100 object-contain drop-shadow-2xl"
             />
             <div className="absolute inset-0 z-[1] flex flex-col items-center justify-center px-[6%] py-[12%]">
             <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#3E3620]"></div>
