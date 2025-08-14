@@ -3,12 +3,10 @@ import ContactMap from "./ContactMap";
 import bgImage from "../../../../../public/images/hackathon/contact-us-bg.png";
 import { Poppins, Arima } from "next/font/google";
 
-
 const arima = Arima({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
-
 
 const ContactUs = () => {
   return (
@@ -38,7 +36,7 @@ const ContactUs = () => {
         <div className="flex flex-col md:flex-row">
           {/* Left: Form */}
           <div className="flex-1 flex flex-col justify-center px-8 py-10 md:py-10">
-            <h2 className={`${arima.className}text-white text-5xl md:text-6xl font-bold mb-2 select-none`}>
+            <h2 className={`${arima.className} text-white text-5xl md:text-6xl font-bold mb-2 select-none`}>
               CONTACT US
             </h2>
             <p className="text-[10px] md:text-xs text-gray-300 mb-8 tracking-widest select-none">
@@ -78,7 +76,7 @@ const ContactUs = () => {
                 <label className="text-[10px] text-gray-300 mb-2 tracking-widest select-none">
                   MESSAGE
                 </label>
-                <textarea className="bg-transparent border border-[#9DB59F] outline-none text-white rounded-md p-3 min-h-[110px] resize-none" />
+                <textarea className="bg-transparent border border-[#9DB59F] outline-none text-white p-3 min-h-[110px] resize-none" style={{ borderTopRightRadius: '16px', borderBottomLeftRadius: '16px', borderTopLeftRadius: 0, borderBottomRightRadius: 0 }} />
               </div>
             </form>
           </div>
