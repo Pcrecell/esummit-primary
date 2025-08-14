@@ -124,7 +124,7 @@ const ContactMap = () => {
           return (
             <button
               onClick={handleRecenter}
-              className="absolute bottom-3 right-3 z-[1000] bg-white/90 hover:bg-green-500 hover:text-white text-green-500 font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 text-xs md:text-sm"
+              className="absolute bottom-3 right-3 z-[1000] bg-white/90 hover:bg-green-300 hover:text-black text-black font-bold py-2 px-4 rounded-lg shadow transition-colors duration-200 text-xs md:text-sm"
               style={{textDecoration: 'none'}}
             >
               Recenter

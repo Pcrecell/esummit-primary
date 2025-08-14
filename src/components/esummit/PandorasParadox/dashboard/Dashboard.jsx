@@ -102,7 +102,7 @@ const Dashboard = () => {
       <div className="absolute top-0 left-0 w-full h-44 bg-gradient-to-b from-black via-black/80 to-transparent z-10" />
 
       {/* Greeting (top-left) */}
-      <div className="absolute top-6 left-6 z-20 select-none">
+      <div className="absolute top-20 left-6 md:left-20 z-20 select-none">
         <div className="text-base md:text-2xl font-mono text-white/90">Hey,</div>
         <div className="text-2xl md:text-6xl font-mono font-extrabold text-green-400 drop-shadow">
           Saksham
@@ -110,8 +110,8 @@ const Dashboard = () => {
       </div>
 
       {/* Track toggle (always visible) */}
-      <div className="absolute top-6 right-0 -translate-x-1/2 z-20">
-        <div className="flex items-center gap-2 rounded-full bg-black/40 border border-green-400/60 px-15 py-1 shadow-lg backdrop-blur">
+      <div className="absolute top-30 right-0 md:-translate-x-1/2 z-20">
+        <div className="flex items-center gap-2 rounded-full bg-black/40 border border-green-400/60 px-1 md:px-15 py-1 shadow-lg backdrop-blur">
           <button
             onClick={() => setSelectedTrack("beginner")}
             className={`${selectedTrack === "beginner"
