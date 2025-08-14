@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useNavigate, Link } from "react-router-dom";
 import { useRouter } from "next/navigation";
 import { authAPI } from "@/lib/services/api";
 import AuthLayout from "@/components/esummit/auth/AuthLayout";
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/lib/utils/firebase/firebase'; // your firebase.js
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/utils/firebase/firebase"; // your firebase.js
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -17,8 +16,14 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useRouter();
 
-  
-const handleLogin = async (e) => {
+  useEffect(() => {
+    // Check if user is already logged in
+    if (localStorage.getItem("login") === "true") {
+      window.location.href = "/dashboard"; // Redirect to home or dashboard if already logged in
+    }
+  }, [navigate]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -26,7 +31,7 @@ const handleLogin = async (e) => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log("Login response:", response);
-  
+
       if (response.error) {
         setError(response.error);
         setLoading(false);
@@ -35,19 +40,21 @@ const handleLogin = async (e) => {
 
       const idToken = await response.user.getIdToken();
       await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/Login`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ idToken }),
       });
-      
+
+      // Set login status in localStorage if login is successful
+      localStorage.setItem("login", "true");
+
       // Navigate based on user role
       if (response.user.role === "admin") {
         navigate.push("/admin-dashboard");
       } else {
         window.location.href = "/";
       }
-
     } catch (err) {
       setError("Failed to sign in. Please try again.");
       console.error("Login error:", err);
@@ -55,7 +62,7 @@ const handleLogin = async (e) => {
     }
 
     setLoading(false);
-  };
+  };
 
   return (
     <AuthLayout>
@@ -84,29 +91,30 @@ const handleLogin = async (e) => {
         </div>
 
         <div>
-  <label className="block text-gray-300 mb-0.5 text-xs pl-1">Password</label>
-  <input
-    type={showPassword ? "text" : "password"}
-    placeholder="Password"
-    className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    required
-  />
-  <div className="mt-2 flex items-center gap-2">
-    <input
-      type="checkbox"
-      id="showPassword"
-      checked={showPassword}
-      onChange={() => setShowPassword(!showPassword)}
-      className="accent-green-600"
-    />
-    <label htmlFor="showPassword" className="text-sm text-gray-400">
-      Show Password
-    </label>
-  </div>
-</div>
-
+          <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+            Password
+          </label>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <div className="mt-2 flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+              className="accent-green-600"
+            />
+            <label htmlFor="showPassword" className="text-sm text-gray-400">
+              Show Password
+            </label>
+          </div>
+        </div>
 
         <div className="text-right mb-1">
           <a

@@ -46,8 +46,8 @@ export default function EsummitNavbar() {
       const response = await authAPI.logout();
       if (response.success) {
         setIsAuthenticated(false);
-        useRouter().push("/")
-
+        localStorage.removeItem("login");
+        window.location.href = "/";
       }
     } catch (error) {
       console.error("Logout error:", error);
