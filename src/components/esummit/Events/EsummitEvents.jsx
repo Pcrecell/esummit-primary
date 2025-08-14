@@ -33,6 +33,7 @@ const EventsPage = () => {
         title: "PANDORA'S PARADOX",
         time: "9:00AM - 4:30PM",
         venue: "CAMPUS-25",
+        coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/7xWdGYwv/hack-r.png",
@@ -41,6 +42,7 @@ const EventsPage = () => {
         title: "EXPO",
         time: "11:00AM - 4:30PM",
         venue: "CAMPUS-06",
+        coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
         image: "https://i.ibb.co/QFJHRt47/expo-l.png",
@@ -51,6 +53,7 @@ const EventsPage = () => {
         title: "ORACLE",
         time: "9:00AM - 3:00PM",
         venue: "CAMPUS-17",
+        coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
         image: "https://i.ibb.co/gZQgcF5j/oracle-r.png",
@@ -59,15 +62,16 @@ const EventsPage = () => {
         title: "ALICE IN FOUNDERLAND",
         time: "9:00AM - 3:00PM",
         venue: "CAMPUS-05",
+        coordinates: [20.352904448394906, 85.81402616826391],
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
         image: "https://i.ibb.co/YFnnwgGP/aif-l.png",
       },
-
       {
         title: "EXPO",
         time: "9:00AM - 3:00PM",
         venue: "CAMPUS-06",
+        coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
         image: "https://i.ibb.co/4Rky463J/expo-r.png",
@@ -76,6 +80,7 @@ const EventsPage = () => {
         title: "PANDORA'S PARADOX",
         time: "9:00AM - 4:00PM",
         venue: "CAMPUS-25",
+        coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/twjYHtFw/hack-l.png",
@@ -86,6 +91,7 @@ const EventsPage = () => {
         title: "CASEX",
         time: "9:00AM - 3:00PM",
         venue: "CAMPUS-07",
+        coordinates: [20.350485952792063, 85.82069263354178],
         description:
           "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
         image: "https://i.ibb.co/jPCnVcs0/casex-r.png",
@@ -94,6 +100,7 @@ const EventsPage = () => {
         title: "PANDORA'S PARADOX",
         time: "9:00AM - 3:00PM",
         venue: "CAMPUS-25",
+        coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/twjYHtFw/hack-l.png",
@@ -107,6 +114,7 @@ const EventsPage = () => {
   };
 
   const currentEvents = eventsByDate[selectedDate] || eventsByDate[21];
+  const currentEvent = currentEvents[currentCardIndex];
 
   useEffect(() => {
     const scrollContainer = mobileScrollRef.current;
@@ -283,7 +291,7 @@ const EventsPage = () => {
       {/* Desktop Layout */}
       <div
         ref={desktopLayoutRef}
-        className="lg:h-[120vh] lg:flex hidden relative"
+        className="lg:h-[110vh] lg:flex hidden relative"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(24, 28, 13, 1) 0%, rgba(24, 28, 13, 0.3) 70%, rgba(0, 0, 0, 1) 100%), url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Events_Image_Background_Desktop.png?updatedAt=1754584353201")`,
           backgroundSize: "100%",
@@ -304,10 +312,10 @@ const EventsPage = () => {
               <div
                 key={`${selectedDate}-${index}`}
                 ref={(el) => (cardRefs.current[index] = el)}
-                className="absolute w-full z-10"
+                className="absolute w-full max-w-4xl z-10"
                 style={{
-                  top: "20%",
-                  left: "55%",
+                  top: "50%",
+                  left: "50%",
                   transform: "translate(-50%, -50%)",
                 }}
               >
@@ -324,7 +332,7 @@ const EventsPage = () => {
         </div>
 
         {/* Right Static Section */}
-        <div className="w-2/5 p-8 bg-none h-[60vh] my-auto scale-75 flex flex-col justify-center translate-y-3">
+        <div className="w-[35%] p-8 bg-none h-[60vh] scale-75 my-auto flex flex-col justify-center">
           <div className="translate-y-3">
             <h1 className="text-3xl font-cormorant-infant text-center text-[#f8d6a4] font-semibold">
               Events Calendar
@@ -342,7 +350,11 @@ const EventsPage = () => {
             <h1 className="text-3xl font-cormorant-infant text-center translate-y-5 text-[#f8d6a4] font-semibold">
               Map Of The Emerald Empire
             </h1>
-            <EventsMap />
+            <EventsMap
+              coordinates={currentEvent?.coordinates || [20.3534, 85.8195]}
+              label={currentEvent?.title || "Event Location"}
+              campus={currentEvent?.venue}
+            />
           </div>
         </div>
       </div>
@@ -451,7 +463,11 @@ const EventsPage = () => {
           <h1 className="text-2xl md:pb-0 pb-10 font-cormorant-infant text-center text-[#f8d6a4] font-semibold">
             MAP OF EMERALD EMPIRE
           </h1>
-          <EventsMap />
+          <EventsMap
+            coordinates={currentEvent?.coordinates || [20.3534, 85.8195]}
+            label={currentEvent?.title || "Event Location"}
+            campus={currentEvent?.venue}
+          />
         </div>
       </div>
     </div>
