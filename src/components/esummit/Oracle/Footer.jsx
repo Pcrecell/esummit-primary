@@ -13,7 +13,7 @@ const Footer = () => {
         {/* Right side - Contact scroll image */}
         <div className="flex-shrink-0 flex items-center justify-center">
           <img 
-            src="https://ik.imagekit.io/lzogar7yp/Frame%20263.png?updatedAt=1755194658819" 
+            src="https://ik.imagekit.io/lzogar7yp/Frame%20263.png?updatedAt=1755198081116" 
             alt="Contact scroll" 
             className="h-32 sm:h-36 md:h-40 lg:h-48 xl:h-56 w-auto"
             style={{ minWidth: '300px' }}
