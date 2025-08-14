@@ -33,8 +33,9 @@ export default function About() {
               "linear-gradient(to bottom, #011209 0%, rgba(0,0,0,0)60%, #011209 98%)",
           }}
         />
-        {/* Image at left end */}
-        <div className="absolute left-0 top-0 h-full flex items-center">
+
+        {/* Image - positioned differently for mobile vs desktop */}
+        <div className="absolute left-0 top-0 h-full flex items-center lg:block hidden">
           <img
             src="https://i.ibb.co/dwpP5YDn/download-96-1.png"
             alt=""
@@ -42,53 +43,65 @@ export default function About() {
           />
         </div>
 
-        <div className="container mx-auto px-8 flex items-center min-h-screen relative z-10">
-          {/* Left Side - About The Event */}
-          <div className="flex-1 pr-16">
-            <h1
-              className={`${cinzelDecorative.className} text-6xl md:text-6xl font-black mb-8`}
-              style={{
-                color: "#BCA13A",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                fontWeight: "600",
-                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                lineHeight: "1.5",
-              }}
-            >
-              ABOUT
-              <br />
-              THE
-              <br />
-              EVENT
-            </h1>
-          </div>
+        {/* Mobile background image - faded and full width */}
+        <div className="absolute inset-0 lg:hidden">
+          <img
+            src="https://i.ibb.co/dwpP5YDn/download-96-1.png"
+            alt=""
+            className="w-full h-full object-cover opacity-20"
+          />
+        </div>
 
-          {/* Right Side - Description Text */}
-          <div className="flex-1 -ml-16 pr-4]">
-            <div
-              className={`${laila.className} text-lg md:text-2xl leading-relaxed`}
-              style={{
-                color: "#FCE691",
-                fontWeight: 400,
-                lineHeight: "1.6",
-              }}
-            >
-              <p className="mb-6">
-                Alice in Founderland is a fast-paced entrepreneurship simulation
-                where quick thinking beats perfect planning.
-              </p>
+        <div className="container mx-auto px-4 md:px-8 flex items-center min-h-screen relative z-10">
+          {/* Content container - stacked on mobile, side-by-side on desktop */}
+          <div className="w-full flex flex-col lg:flex-row items-center lg:items-start">
+            {/* Left Side - About The Event */}
+            <div className="w-full lg:flex-1 lg:pr-16 text-center lg:text-left mb-8 lg:mb-0">
+              <h1
+                className={`${cinzelDecorative.className} text-4xl sm:text-5xl md:text-6xl font-black`}
+                style={{
+                  color: "#BCA13A",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  fontWeight: "600",
+                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+                  lineHeight: "1.5",
+                }}
+              >
+                ABOUT
+                <br />
+                THE
+                <br />
+                EVENT
+              </h1>
+            </div>
 
-              <p className="mb-6">
-                Inspired by the four suits - Diamonds, Clubs, Hearts, and Spades
-                - each round tests your ability to navigate risk, strategy,
-                conflict, and chaos.
-              </p>
+            {/* Right Side - Description Text */}
+            <div className="w-full lg:flex-1 lg:-ml-16 lg:pr-4">
+              <div
+                className={`${laila.className} text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed text-center lg:text-left`}
+                style={{
+                  color: "#FCE691",
+                  fontWeight: 400,
+                  lineHeight: "1.6",
+                }}
+              >
+                <p className="mb-6">
+                  Alice in Founderland is a fast-paced entrepreneurship
+                  simulation where quick thinking beats perfect planning.
+                </p>
 
-              <p>
-                No scripts. No second takes. Just instinct, pressure, and
-                survival.
-              </p>
+                <p className="mb-6">
+                  Inspired by the four suits - Diamonds, Clubs, Hearts, and
+                  Spades - each round tests your ability to navigate risk,
+                  strategy, conflict, and chaos.
+                </p>
+
+                <p>
+                  No scripts. No second takes. Just instinct, pressure, and
+                  survival.
+                </p>
+              </div>
             </div>
           </div>
         </div>
