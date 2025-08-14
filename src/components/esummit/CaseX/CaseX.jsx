@@ -483,9 +483,6 @@ export default function CaseX() {
                 </div>
                 </div>
 
-
-
-            <div className="w-screen px-[15vw] mt-[10vh] text-center justify-center"><span class="text-white text-5xl font-normal font-['Girassol']">Be Ready to Learn from [Speaker Name]<br/><br/></span><span class="text-white text-2xl font-light font-['League_Spartan']"><br/><br/>Get insights straight from [Speaker Name], a consultant from [Firm Name, e.g., McKinsey & Company], who brings real client experience, interview expertise, and insider knowledge of the consulting world.<br/>From cracking live cases to building leadership skills early, [Speaker Name] will walk you through:<br/><br/> </span><span class="text-white text-2xl font-bold font-['League_Spartan']">How to think like a consultant?<br/> What top firms really look for?<br/><br/></span><span class="text-white text-2xl font-light font-['League_Spartan']">And how college is the best place to start preparing</span></div>
             
             <section className="w-full mt-14 md:mt-32 border-t bg-black border-[#D6C466]">
                 <div className="w-[82vw] mx-auto py-10">
