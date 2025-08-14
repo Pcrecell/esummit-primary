@@ -59,8 +59,7 @@ export default function Hero() {
 
           <div className="flex justify-center mt-8">
             <div
-              className="group relative w-60 cursor-pointer items-center"
-              onClick={() => setShowPopup(true)}
+              className="group relative w-85 cursor-pointer items-center"
             >
               <img
                 src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
@@ -70,7 +69,7 @@ export default function Hero() {
               <span
                 className={`absolute inset-0 z-10 flex items-center justify-center text-[#3A2D07] font-semibold text-xl ${cormorantGaramond.className}`}
               >
-                REGISTER NOW
+                REGISTRATION STARTING SOON
               </span>
             </div>
           </div>

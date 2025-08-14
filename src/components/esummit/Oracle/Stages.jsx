@@ -18,22 +18,39 @@ export default function Stages() {
       const scrollingDown = currentScrollY > lastScrollY.current;
       lastScrollY.current = currentScrollY;
 
-     if (inView) {
-  if (scrollingDown) {
-    // Move cards farther apart after flipping
-    controlsLeft.start({ rotateY: 180, x: "-40px", transition: { duration: 1.5 } });
-    controlsRight.start({ rotateY: 180, x: "40px", transition: { duration: 1.5 } });
-  } else {
-    // Move cards closer before flipping back
-    controlsLeft.start({ rotateY: 0, x: "10px", transition: { duration: 1.5 } });
-    controlsRight.start({ rotateY: 0, x: "-10px", transition: { duration: 1.5 } });
-  }
-}
-    };
+     const isMobile = window.innerWidth < 640; 
+    const offset = isMobile ? 10 : 40; 
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [inView, controlsLeft, controlsRight]);
+    if (inView) {
+      if (scrollingDown) {
+        controlsLeft.start({
+          rotateY: 180,
+          x: `-${offset}px`,
+          transition: { duration: 1.5 }
+        });
+        controlsRight.start({
+          rotateY: 180,
+          x: `${offset}px`,
+          transition: { duration: 1.5 }
+        });
+      } else {
+        controlsLeft.start({
+          rotateY: 0,
+          x: isMobile ? "5px" : "10px",
+          transition: { duration: 1.5 }
+        });
+        controlsRight.start({
+          rotateY: 0,
+          x: isMobile ? "-5px" : "-10px",
+          transition: { duration: 1.5 }
+        });
+      }
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [inView, controlsLeft, controlsRight]);
 
   const cardStyles =
     "relative w-[300px] h-[450px] [transform-style:preserve-3d]";

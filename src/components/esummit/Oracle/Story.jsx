@@ -95,13 +95,15 @@ export default function Story() {
       {/* Text Overlay */}
       <div className="absolute inset-0 z-10 flex items-center">
         <div className="w-[90%] px-5 py-12 mx-auto text-left">
-          <div className="space-y-0.1">
+          <div className="space-y-0.1 hidden md:block">
             {textContent.map((line, index) => (
               <div 
                 key={index}
                 className={`transition-all duration-700 ease-out font-milker 
-                  ${index < visibleLines ? 'opacity-100' : 'opacity-0'}
-                `}
+  text-sm md:text-2xl lg:text-3xl 
+  ${index < visibleLines ? 'opacity-100' : 'opacity-0'}
+`}
+
                 style={{
                   textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
                   fontWeight: 'bold',
@@ -115,6 +117,11 @@ export default function Story() {
               </div>
             ))}
           </div>
+          <div className="block md:hidden text-center">
+  <p>
+    {textContent.map(item => item.text).join(" ")}
+  </p>
+</div>
         </div>
       </div>
     </div>
