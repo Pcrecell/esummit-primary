@@ -19,9 +19,7 @@ const EventsPage = () => {
   const leftSectionRef = useRef(null);
   const cardRefs = useRef([]);
   const mobileScrollRef = useRef(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-const router = useRouter();
-
+  const router = useRouter(); 
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
@@ -30,18 +28,6 @@ const router = useRouter();
     { date: 23, label: "23rd Saturday" },
     { date: 24, label: "24th Sunday" },
   ];
-
-  useEffect(() => {
-  (async () => {
-    try {
-      const res = await authAPI.verifyToken();
-      setIsAuthenticated(res.success);
-    } catch {
-      setIsAuthenticated(false);
-    }
-  })();
-}, []);
-
 
   const eventsByDate = {
     22: [
@@ -331,19 +317,16 @@ const router = useRouter();
                 <EventCard left={index % 2 === 0} eventData={eventData} />
 
                 <div className="w-full flex justify-center mt-9 rounded-full">
-                 <button
+                <button
   className="py-1 px-6 cursor-pointer hover:scale-110 transition-all duration-300 text-black bg-[#e3a57d] border-2 border-yellow-400 rounded-full"
   onClick={() => {
-    if (isAuthenticated) {
-      router.push(eventData.route); // Go to event-specific page
-    } else {
-      router.push("/register"); // Redirect to register if not logged in
+    if (eventData.route) {
+      router.push(eventData.route); // Navigate to event page
     }
   }}
 >
   Know More
 </button>
-
                 </div>
               </div>
             ))}
