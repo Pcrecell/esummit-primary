@@ -121,6 +121,7 @@ const Footer = () => {
                 </a>
               </div>
               <div className=" space-y-4 text-sm">
+
                 <div>
                   <div className="flex flex-row gap-2">
                     <Phone fill="#ffffff" height={15} width={15} />

@@ -1,13 +1,14 @@
 "use client";
+
 import React, {useState, useEffect} from "react";
 import Carousel from "./EventCarousel";
 import { esummit_hero } from "../../../../public/images/image-links";
 import { authAPI } from "@/lib/services/api.js";
-
+import Popup from "./paymentPopup";
 function Hero() {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
+     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -48,11 +49,13 @@ function Hero() {
           </button>
 
           <button
-            onClick={() => (isAuthenticated ? window.location.href = "/dashboard" : window.location.href = "/register")}
+
+            onClick={() => (isAuthenticated ? setShowPopup(true) : window.location.href = "/register")}
             className="bg-white text-black py-2 px-4 rounded-[20px] border border-none hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
           >
             Get your ticket ↗
           </button>
+
         </div>
         <div className="w-full max-w-[90vw] md:max-w-[70vw] lg:max-w-[55vw] xl-max-w-[50vw] 2xl:max-w-[55vw] mt-16">
           {/* <Carousel /> */}
@@ -72,5 +75,4 @@ function Hero() {
     </div>
   );
 }
-
 export default Hero;

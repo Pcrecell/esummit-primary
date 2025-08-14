@@ -15,6 +15,12 @@ const PaymentChoice = () => {
 
   const userData = { name, email, phone, uid };
 
+   useEffect(() => {
+    if (!name || !email || !phone || !uid) {
+      router.replace("/dashboard"); // or login page
+    }
+  }, [name, email, phone, uid, router]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -44,7 +50,7 @@ const PaymentChoice = () => {
 
   const handlePaymentLater = (e) => {
     e.preventDefault();
-    router.push("/esummit/Dashboard");
+    router.push("/dashboard");
   };
 
   return (
