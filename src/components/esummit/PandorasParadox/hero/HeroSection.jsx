@@ -87,7 +87,7 @@ const HeroSection = () => {
                 {/* <span className="pointer-events-none rounded-full absolute inset-0 z-20 -translate-x-[120%] bg-gradient-to-r from-transparent via-amber-100/60 to-transparent skew-x-12 transition-transform duration-700 ease-out group-hover:translate-x-[120%]" /> */}
                 {/* Centered text overlay */}
                 <div className="absolute inset-0 z-30 flex items-center justify-center">
-                  <span className={`${poppins.className} text-white font-semibold text-xs sm:text-xs md:text-base lg:text-base transition-all group-hover:-translate-y-0.5 tracking-wide pointer-events-none select-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]`}>
+                  <span className={`${poppins.className} text-white font-semibold text-xs sm:text-xs md:text-base lg:text-base transition-all duration-500 group-hover:scale-102 group-hover:-translate-y-0.5 tracking-wide pointer-events-none select-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]`}>
                     Registrations Starting Soon
                   </span>
                 </div>

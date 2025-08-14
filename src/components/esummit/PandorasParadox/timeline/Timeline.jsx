@@ -93,7 +93,6 @@ const Timeline = () => {
             </div>
           </div>
 
-
           {/* Location Section with text on image */}
           <div className="flex-shrink-0 relative justify-center z-[9999] mr-12">
             <Image

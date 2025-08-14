@@ -1,7 +1,7 @@
-
 import React from "react";
 import Image from "next/image";
 import bgImage from "../../../../../public/images/hackathon/why-us-bg.png";
+import bottle from "../../../../../public/images/hackathon/bottle.png";
 
 const Circle = ({ className = "", children }) => (
   <div
@@ -28,7 +28,13 @@ const WhyUsScreen = () => {
       }}
     >
       {/* Background loader for Next.js */}
-      <Image src={bgImage} alt="" fill className="object-cover -z-50 opacity-0 pointer-events-none" priority />
+      <Image
+        src={bgImage}
+        alt=""
+        fill
+        className="object-cover -z-50 opacity-0 pointer-events-none"
+        priority
+      />
 
       {/* Global dim overlay for contrast */}
       <div className="absolute inset-0 bg-black/35 z-10" />
@@ -48,24 +54,65 @@ const WhyUsScreen = () => {
         </div>
 
         {/* Circles placed around */}
-        <Circle className="absolute left-[36%] top-[6%] w-64 h-64 text-xl font-serif">Beyond a<br/>hackathon</Circle>
-        <Circle className="absolute right-[5%] top-[18%] w-52 h-52 text-xl font-serif">Two-Tier<br/>Structure</Circle>
-        <Circle className="absolute right-[28%] top-[44%] w-60 h-60 text-xl font-serif">Expert<br/>Mentorship</Circle>
-        <Circle className="absolute left-[8%] bottom-[4%] w-[22rem] h-[22rem] text-2xl font-serif">Big Challenges,<br/>Big Rewards</Circle>
-        <Circle className="absolute right-[10%] bottom-[6%] w-36 h-36 text-sm font-serif">Beginner<br/>Friendly</Circle>
+        <Circle className="absolute left-[36%] top-[6%] w-64 h-64 text-xl font-serif">
+          Beyond a<br />
+          hackathon
+        </Circle>
+        <Circle className="absolute right-[5%] top-[18%] w-52 h-52 text-xl font-serif">
+          Two-Tier
+          <br />
+          Structure
+        </Circle>
+        <Circle className="absolute right-[28%] top-[44%] w-60 h-60 text-xl font-serif">
+          Expert
+          <br />
+          Mentorship
+        </Circle>
+        <Circle className="absolute left-[8%] bottom-[4%] w-[22rem] h-[22rem] text-2xl font-serif">
+          Big Challenges,
+          <br />
+          Big Rewards
+        </Circle>
+        <Circle className="absolute right-[10%] bottom-[6%] w-36 h-36 text-sm font-serif">
+          Beginner
+          <br />
+          Friendly
+        </Circle>
       </div>
 
       {/* Mobile layout: smaller circles, heading on top */}
       <div className="md:hidden relative z-20 w-full max-w-sm mx-auto px-4 py-10">
-        <h2 className="text-center text-[#D4AF37] text-3xl font-serif font-bold select-none mb-6">Why Paradox?</h2>
+        <Image className = "" width={200} height={280} src={bottle.src || bottle}></Image>
+        <h2 className="text-center text-[#D4AF37] text-3xl font-serif font-bold select-none mb-6">
+          Why Paradox?
+        </h2>
         <div className="grid grid-cols-2 gap-4">
-          <Circle className="w-32 h-32 text-xs font-serif">Beyond a<br/>hackathon</Circle>
-          <Circle className="w-28 h-28 text-xs font-serif">Two-Tier<br/>Structure</Circle>
+          <Circle className="w-32 h-32 text-xs font-serif">
+            Beyond a<br />
+            hackathon
+          </Circle>
+          <Circle className="w-28 h-28 text-xs font-serif">
+            Two-Tier
+            <br />
+            Structure
+          </Circle>
           <div className="col-span-2 flex justify-center">
-            <Circle className="w-52 h-52 text-base font-serif">Big Challenges,<br/>Big Rewards</Circle>
+            <Circle className="w-52 h-52 text-base font-serif">
+              Big Challenges,
+              <br />
+              Big Rewards
+            </Circle>
           </div>
-          <Circle className="w-32 h-32 text-xs font-serif">Expert<br/>Mentorship</Circle>
-          <Circle className="w-24 h-24 text-[10px] font-serif">Beginner<br/>Friendly</Circle>
+          <Circle className="w-32 h-32 text-xs font-serif">
+            Expert
+            <br />
+            Mentorship
+          </Circle>
+          <Circle className="w-24 h-24 text-[10px] font-serif">
+            Beginner
+            <br />
+            Friendly
+          </Circle>
         </div>
       </div>
     </section>
