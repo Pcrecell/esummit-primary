@@ -3,11 +3,15 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+const customIcon = new L.Icon({
+  iconUrl: 'https://ik.imagekit.io/wlknxcf5m/line_10112299.png',
+  iconRetinaUrl: 'https://ik.imagekit.io/wlknxcf5m/line_10112299.png',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -30],
+  shadowUrl: null,
+  shadowSize: null,
+  shadowAnchor: null,
 });
 
 const PopupOpener = ({ markerRef }) => {
@@ -164,7 +168,7 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>'
       />
-      <Marker position={markerPosition} ref={markerRef}>
+  <Marker position={markerPosition} ref={markerRef} icon={customIcon}>
         <Popup
           className="custom-popup responsive-popup"
           autoClose={false}
@@ -185,6 +189,7 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
+                  cursor: 'pointer',
                 }}
               >
                 KIIT University, Bhubaneswar
@@ -196,12 +201,13 @@ const EcellMap = React.forwardRef(({ disableDragging = false }, ref) => {
             <div>
               <a
                 href="mailto:pcr.ecell@kiit.ac.in"
-                className="text-xs md:text-sm"
+                className="text-xs md:text-sm cursor-pointer"
                 style={{
                   background: 'linear-gradient(180deg, #F5E34C 0%, #DDAB3C 22.84%, #8A5F1C 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
+                  cursor: 'pointer',
                 }}
               >
                 pcr.ecell@kiit.ac.in
