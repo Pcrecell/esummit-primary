@@ -151,7 +151,8 @@ const FlippableRounds = () => {
       <div
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('https://i.ibb.co/Y7LJ8NCb/image-11.png')",
+          backgroundImage:
+            "url('https://i.ibb.co/C5xnSp7v/Gemini-Generated-Image-v9fbx9v9fbx9v9fb-1.png')",
         }}
       />
 
@@ -174,8 +175,11 @@ const FlippableRounds = () => {
           />
         </div>
 
-        {/* Main title */}
-        <h2 className="text-5xl md:text-6xl font-bold text-yellow-400 text-center mb-12 tracking-widest drop-shadow-2xl">
+        {/* Main title with Cinzel font */}
+        <h2
+          className="text-5xl md:text-6xl font-bold text-yellow-400 text-center mb-12 tracking-widest drop-shadow-2xl"
+          style={{ fontFamily: "Cinzel, serif" }}
+        >
           ROUNDS
         </h2>
 
