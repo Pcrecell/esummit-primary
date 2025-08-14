@@ -36,6 +36,7 @@ const EventsPage = () => {
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
         image: "https://i.ibb.co/7xWdGYwv/hack-r.png",
+        url: "/oracle"
       },
       {
         title: "EXPO",
