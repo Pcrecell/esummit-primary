@@ -77,7 +77,18 @@ const ContactUs = () => {
                   MESSAGE
                 </label>
                 <textarea className="bg-transparent border border-[#9DB59F] outline-none text-white p-3 min-h-[110px] resize-none" style={{ borderTopRightRadius: '16px', borderBottomLeftRadius: '16px', borderTopLeftRadius: 0, borderBottomRightRadius: 0 }} />
+                <div className="mt-5 w-full flex justify-end">
+                  <a href="">
+                  <button
+                    className="inline-flex items-center gap-2 rounded-full bg-[#9DB59F] text-black px-6 py-2 md:px-8 md:py-3 text-sm md:text-base font-semibold shadow-[0_4px_14px_0_rgba(157,181,159,0.35)] hover:shadow-[0_6px_20px_rgba(157,181,159,0.45)] hover:bg-[#B4C9B7] focus:outline-none focus:ring-2 focus:ring-[#9DB59F]/60 active:translate-y-[1px] transition-all duration-200"
+                  >
+                    <span>Send</span>
+                    
+                  </button>
+                  </a>
+                </div>
               </div>
+              
             </form>
           </div>
 
