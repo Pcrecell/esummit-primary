@@ -1,12 +1,17 @@
 "use client";
-
 import Image from "next/image";
+import { Cinzel } from "next/font/google";
 
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 export default function FounderlandCard() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#011209]">
       {/* Card */}
-      <div className="relative bg-[#000E08] border border-[#D4AF37] rounded-lg px-26 py-14 max-w-2xl w-full text-[#D4AF37] left-30">
+      <div className="relative bg-[#001F11] border border-[#BCA13A] rounded-lg px-26 py-14 max-w-2xl w-full text-[#BCA13A] left-30">
         {/* Scroll Overlay */}
         <div className="absolute -left-74 top-3/7 -translate-y-3/5 h-[400px] w-[420px]">
           <Image
@@ -30,9 +35,9 @@ export default function FounderlandCard() {
           <li>Win exciting goodies, certificates.</li>
         </ol>
 
-        <p className="mt-6 text-[#D4AF37] text-lg">
-          One champion walks away with the title:{" "}
-          <span className="text-[#D4AF37] font-bold">ACE OF FOUNDERLAND</span>
+        <p className="mt-6 ml-22 text-[#D4AF37] text-lg">
+          One champion walks away with the title: <br></br>
+          <span className={cinzel.className} >ACE OF FOUNDERLAND</span>
         </p>
       </div>
     </div>

@@ -1,4 +1,8 @@
 import React from "react";
+import { Cinzel, Poppins } from "next/font/google";
+
+const cinzel = Cinzel({ subsets: ["latin"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
 const Rules = () => {
   return (
@@ -22,74 +26,74 @@ const Rules = () => {
           }}
         />
 
-        <div
-          className="relative z-10 w-full h-full flex flex-col justify-center items-center scale-y-110"
-          style={{
-            backgroundImage: `url('https://i.ibb.co/j96BdzCk/Borde-Fondo-Vintage-Verde-Plantilla-PSD-Descarga-Gratuita-Pikbest-removebg-preview-2.png')`,
-            backgroundSize: "contain",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        >
-          {/* Content Container */}
-          <div className="relative z-10 flex flex-col h-full w-full max-w-6xl">
-            {/* Red Banner at Top */}
-            <div className="flex justify-center -mt-16 pb-8">
-              <div className="relative">
-                <img
-                  src="https://i.ibb.co/RpKdWJps/Three-Kingdoms-Blade-GUI-Art-JH-Kim-removebg-preview-1.png"
-                  alt="Rules Banner"
-                  className="w-auto max-w-2xl h-auto object-contain"
-                />
-                {/* Banner Text Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <h1
-                    className="text-4xl md:text-5xl font-bold text-center"
-                    style={{
-                      fontFamily: "Firlest, serif",
-                      fontWeight: 700,
-                      color: "#BCA13A",
-                      textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
-                    }}
-                  >
-                    RULES AND
-                  </h1>
-                  <h2
-                    className="text-4xl md:text-5xl font-bold text-center"
-                    style={{
-                      fontFamily: "Firlest, serif",
-                      fontWeight: 700,
-                      color: "#BCA13A",
-                      textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
-                    }}
-                  >
-                    REGULATIONS
-                  </h2>
+        {/* Content Container */}
+        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center">
+          {/* Image with Content Overlay */}
+          <div className="relative flex justify-center items-center">
+            <img
+              src="https://i.ibb.co/9kZY4Q54/Group-15-1.png"
+              alt="Rules and Regulations"
+              className="w-auto h-auto max-w-xl object-contain drop-shadow-lg"
+              style={{
+                filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.3))",
+              }}
+            />
+
+            {/* Content Overlay */}
+            <div className="absolute inset-0 flex flex-col justify-center items-center px-8 py-2">
+              {/* Header Text - Moved up */}
+              <div className="text-center mb-8 -mt-8">
+                <h1
+                  className={`${cinzel.className} text-3xl md:text-4xl font-bold text-yellow-400 tracking-wider mb-2`}
+                >
+                  RULES AND
+                </h1>
+                <h2
+                  className={`${cinzel.className} text-3xl md:text-4xl font-bold text-yellow-400 tracking-wider`}
+                >
+                  REGULATIONS
+                </h2>
+              </div>
+              <div
+                className={`${poppins.className} space-y-4 text-yellow-100 max-w-md text-sm -ml-8 mt-4`}
+              >
+                <div className="flex items-start space-x-2">
+                  <p>1.Only registered participants may compete.</p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>2.Be on time; latecomers will be disqualified.</p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>3.Maintain discipline and professionalism at all times.</p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>
+                    4.Cheating, plagiarism, or disruption leads to
+                    disqualification.
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>
+                    5.No phones, laptops, or external help unless permitted.
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>6.No communication during solo rounds.</p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>7.Eliminated participants must not interfere.</p>
+                </div>
+
+                <div className="flex items-start space-x-2">
+                  <p>8.Play fair. Respect the game and its players.</p>
                 </div>
               </div>
-            </div>
-
-            {/* Rules Content Image */}
-            <div className="flex-1 flex items-center justify-center px-8 py-6 -mt-36">
-              <div className="w-full max-w-xl flex justify-center">
-                <img
-                  src="https://i.ibb.co/RkNfXpV0/1-Only-registered-participants-may-compete-2-Be-on-time-latecomers-will-be-disqualified-3-Maintain-d.png"
-                  alt="Rules and Regulations Content"
-                  className="w-auto h-auto max-w-xs object-contain drop-shadow-lg"
-                  style={{
-                    filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.3))",
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Playing Cards at Bottom of Frame */}
-            <div className="flex justify-center -mt-12 pb-12">
-              <img
-                src="https://i.ibb.co/QvgrcWjC/1000138557-1-1-1.png"
-                alt="Playing Cards"
-                className="w-auto h-24 md:h-28 object-contain drop-shadow-lg"
-              />
             </div>
           </div>
         </div>
