@@ -13,16 +13,16 @@ const AboutPage = () => {
   return (
     <section
       id="aboutus"
-      className="relative min-h-[120vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
+      className="relative min-h-[100vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 max-h-[90vh]">
         <Image
           src={aboutBg}
           alt="About background"
           fill
           priority
-          className="object-cover opacity-30"
+          className="object-cover opacity-30 "
         />
         {/* Greenish overlay */}
         <div className="absolute inset-0 bg-green-900/20"></div>
