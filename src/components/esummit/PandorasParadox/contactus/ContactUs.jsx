@@ -1,7 +1,14 @@
 import Image from "next/image";
 import ContactMap from "./ContactMap";
 import bgImage from "../../../../../public/images/hackathon/contact-us-bg.png";
- 
+import { Poppins, Arima } from "next/font/google";
+
+
+const arima = Arima({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
 
 const ContactUs = () => {
   return (
@@ -31,7 +38,7 @@ const ContactUs = () => {
         <div className="flex flex-col md:flex-row">
           {/* Left: Form */}
           <div className="flex-1 flex flex-col justify-center px-8 py-10 md:py-10">
-            <h2 className="text-white text-5xl md:text-6xl font-bold mb-2 select-none">
+            <h2 className={`${arima.className}text-white text-5xl md:text-6xl font-bold mb-2 select-none`}>
               CONTACT US
             </h2>
             <p className="text-[10px] md:text-xs text-gray-300 mb-8 tracking-widest select-none">
@@ -98,13 +105,13 @@ const ContactUs = () => {
                 <h3 className="text-white text-sm md:text-base tracking-widest font-semibold">SUJAY KUMAR</h3>
                 <p className="text-gray-300 text-[10px] md:text-xs">Event Head</p>
                 <p className="text-gray-300 text-[10px] md:text-xs mt-2">+91-7750015353</p>
-                <p className="text-gray-300 text-[10px] md:text-xs">sujay.kiitecell.org</p>
+                <p className="text-gray-300 text-[10px] md:text-xs">sujay.kiitecell@gmail.com</p>
               </div>
               <div className="flex flex-col items-center justify-center py-4 md:py-2">
                 <h3 className="text-white text-sm md:text-base tracking-widest font-semibold">RUPAM DAS</h3>
                 <p className="text-gray-300 text-[10px] md:text-xs">Event POC</p>
                 <p className="text-gray-300 text-[10px] md:text-xs mt-2">+91-7908473621</p>
-                <p className="text-gray-300 text-[10px] md:text-xs">rupam.kiitecell.org</p>
+                <p className="text-gray-300 text-[10px] md:text-xs">rupam.kiitecell@gmail.com</p>
               </div>
             </div>
           </div>
