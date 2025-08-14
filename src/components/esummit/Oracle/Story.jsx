@@ -50,18 +50,20 @@ export default function Story() {
       ref={sectionRef}
     >
       {/* Video Background */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source
-          src="https://ik.imagekit.io/5xwmtpwkb/KIITECELL_Aboutus.mp4?updatedAt=1755100824142"
-          type="video/mp4"
-        />
-      </video>
+     <video
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  className="absolute inset-0 w-full h-full object-cover z-0"
+>
+  <source
+    src="https://ik.imagekit.io/5xwmtpwkb/KIITECELL_Aboutus.mp4?updatedAt=1755100824142"
+    type="video/mp4"
+  />
+</video>
+
 
       {/* Overlays */}
       <div
