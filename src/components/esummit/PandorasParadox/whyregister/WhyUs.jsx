@@ -60,7 +60,7 @@ const WhyUsScreen = () => {
             className="absolute -top-10 -left-8 drop-shadow-xl pointer-events-none select-none"
             priority
           />
-          <div className="text-5xl xl:text-6xl font-serif font-bold tracking-wide leading-tight">
+          <div className="text-5xl xl:text-6xl font-serif font-bold tracking-wide md:text-4xl leading-tight">
             <div className="">Why</div>
             <div className="">Paradox?</div>
           </div>
@@ -110,7 +110,7 @@ const WhyUsScreen = () => {
 
       {/* Mobile layout: smaller circles, heading on top */}
       <div className="md:hidden relative z-20 w-full max-w-sm mx-auto px-4 py-10">
-        <h2 className="text-center text-[#D4AF37] text-3xl font-serif font-bold select-none mb-6">
+        <h2 className="text-center text-[#D4AF37] text-5xl font-serif font-bold select-none mb-6">
           Why Paradox?
         </h2>
         <div className="grid grid-cols-2 gap-4">
