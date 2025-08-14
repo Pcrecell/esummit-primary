@@ -14,6 +14,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♢ The Billionaire Buzz-Off: You'll play solo and bid virtual money to answer questions. Make smart decisions to save money and stay in the game.",
     },
     {
       id: "clubs",
@@ -24,6 +26,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♣ The Idea Forge: You'll team up and pitch an idea. Be quick, clear, and convincing — your teamwork and communication will be key.",
     },
     {
       id: "hearts",
@@ -34,6 +38,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♥ Founder Feud: Now you're on your own. You'll speak on a topic in front of others. This round tests your confidence and clarity.",
     },
     {
       id: "spades",
@@ -43,6 +49,8 @@ const FlippableRounds = () => {
       backType: "image",
       contentImg:
         "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+      backText:
+        "♠ The Founder's Gambit: You'll face a surprise business challenge. Think fast, present a solution, and deal with an unexpected twist.",
     },
   ];
 
@@ -109,7 +117,8 @@ const FlippableRounds = () => {
 
   const CardBack = ({ card }) => {
     return (
-      <div className="w-full h-full overflow-hidden rounded-2xl">
+      <div className="relative w-full h-full overflow-hidden rounded-2xl">
+        {/* Background image */}
         <img
           src={card.contentImg}
           alt={`${card.suit} back content`}
@@ -120,75 +129,103 @@ const FlippableRounds = () => {
             if (fallback) fallback.style.display = "flex";
           }}
         />
+
+        {/* Fallback for background image */}
         <div className="absolute inset-0 flex items-center justify-center bg-gray-600 text-white text-sm hidden">
           Content loading...
+        </div>
+
+        {/* Text overlay */}
+        <div className="absolute inset-0 flex items-center justify-center p-12">
+          <p className="text-black text-center text-xs font-medium leading-loose drop-shadow-lg font-['Poppins',sans-serif] max-w-full">
+            {card.backText}
+          </p>
         </div>
       </div>
     );
   };
 
   return (
-    <section
-      className="min-h-screen py-16 px-4 flex flex-col items-center"
-      style={{ backgroundColor: "#011209" }}
-    >
-      {/* Header decoration */}
-      <div className="w-full max-w-md mb-8">
-        <img
-          src="https://i.ibb.co/nsBFDqTV/Gold-rule-lines-and-ornaments-set-for-elegant-design-decorative-elements-separators-Premium-Vector-r.png"
-          alt="Decorative header border"
-          className="w-full h-auto object-contain"
-          onError={(e) => (e.target.style.display = "none")}
-        />
-      </div>
+    <section className="min-h-screen py-16 px-4 flex flex-col items-center relative overflow-hidden">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            "url('https://i.ibb.co/C5xnSp7v/Gemini-Generated-Image-v9fbx9v9fbx9v9fb-1.png')",
+        }}
+      />
 
-      {/* Main title */}
-      <h2 className="text-5xl md:text-6xl font-bold text-yellow-500 text-center mb-12 tracking-widest drop-shadow-2xl">
-        ROUNDS
-      </h2>
+      {/* Gradient Overlay */}
+      <div
+        className="absolute inset-0 w-full h-full"
+        style={{
+          background:
+            "linear-gradient(to bottom, #011209 0%, rgba(0,0,0,0) 44%, #011209 100%)",
+        }}
+      />
 
-      {/* Card grid layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-10 max-w-2xl w-full mx-auto px-4">
-        {gameCards.map((card) => {
-          const isFlipped = activeCards[card.id];
+      <div className="relative z-10 w-full flex flex-col items-center">
+        {/* Header decoration */}
+        <div className="flex justify-center mb-8">
+          <img
+            src="https://i.ibb.co/nsBFDqTV/Gold-rule-lines-and-ornaments-set-for-elegant-design-decorative-elements-separators-Premium-Vector-r.png"
+            alt="Decorative header"
+            className="w-64 h-auto"
+          />
+        </div>
 
-          return (
-            <div
-              key={card.id}
-              className="h-52 cursor-pointer"
-              style={{ perspective: "1000px" }}
-              onClick={() => flipCard(card.id)}
-            >
-              {/* 3D card container */}
+        {/* Main title with Cinzel font */}
+        <h2
+          className="text-5xl md:text-6xl font-bold text-yellow-400 text-center mb-12 tracking-widest drop-shadow-2xl"
+          style={{ fontFamily: "Cinzel, serif" }}
+        >
+          ROUNDS
+        </h2>
+
+        {/* Card grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-10 max-w-2xl w-full mx-auto px-4">
+          {gameCards.map((card) => {
+            const isFlipped = activeCards[card.id];
+
+            return (
               <div
-                className="relative w-full h-full transition-transform duration-700 hover:scale-105"
-                style={{
-                  transformStyle: "preserve-3d",
-                  transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-                }}
+                key={card.id}
+                className="h-52 cursor-pointer"
+                style={{ perspective: "1000px" }}
+                onClick={() => flipCard(card.id)}
               >
-                {/* Front side */}
+                {/* 3D card container */}
                 <div
-                  className="absolute inset-0 w-full h-full shadow-2xl rounded-2xl"
-                  style={{ backfaceVisibility: "hidden" }}
-                >
-                  <CardFront card={card} />
-                </div>
-
-                {/* Back side */}
-                <div
-                  className="absolute inset-0 w-full h-full shadow-2xl rounded-2xl"
+                  className="relative w-full h-full transition-transform duration-700 hover:scale-105"
                   style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
+                    transformStyle: "preserve-3d",
+                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
                   }}
                 >
-                  <CardBack card={card} />
+                  {/* Front side */}
+                  <div
+                    className="absolute inset-0 w-full h-full shadow-2xl rounded-2xl"
+                    style={{ backfaceVisibility: "hidden" }}
+                  >
+                    <CardFront card={card} />
+                  </div>
+
+                  {/* Back side */}
+                  <div
+                    className="absolute inset-0 w-full h-full shadow-2xl rounded-2xl"
+                    style={{
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
+                  >
+                    <CardBack card={card} />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );
