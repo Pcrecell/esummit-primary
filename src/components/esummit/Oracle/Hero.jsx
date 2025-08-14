@@ -60,33 +60,34 @@ export default function Hero() {
             ORACLE
           </h1>
 
-          <p className="text-white text-md md:text-2xl tracking-[0.6em] mt-4 font-poppins text-center">
+          <p className="text-white text-md md:text-2xl tracking-[0.2em] mt-4 font-poppins text-center">
             CHAMBER OF SECRETS
           </p>
 
           <div className="flex justify-center mt-12">
-            <div className="group relative w-85 items-center">
-              {/* Image shown when not hovering */}
-              <img
-                src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
-                alt="Pay Now"
-                className="w-full z-0 hidden group-hover:block"
-              />
+  <div className="group relative w-64 sm:w-72 md:w-85 items-center">
+    {/* Image shown when not hovering */}
+    <img
+      src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
+      alt="Pay Now"
+      className="w-full z-0 hidden group-hover:block"
+    />
 
-              {/* Image shown on hover */}
-              <img
-                src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png" // replace with hover image link
-                alt="Pay Now Hover"
-                className="w-full z-0  group-hover:hidden"
-              />
+    {/* Image shown on hover */}
+    <img
+      src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
+      alt="Pay Now Hover"
+      className="w-full z-0 group-hover:hidden"
+    />
 
-              <span
-                className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-xl ${cormorantGaramond.className}`}
-              >
-                REGISTRATION STARTING SOON
-              </span>
-            </div>
-          </div>
+    <span
+      className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-sm sm:text-base md:text-xl ${cormorantGaramond.className}`}
+    >
+      REGISTRATION STARTING SOON
+    </span>
+  </div>
+</div>
+
         </div>
 
         {/* Darker black fading layer at the bottom */}
