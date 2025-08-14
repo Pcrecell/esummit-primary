@@ -183,6 +183,7 @@ const EventsPage = () => {
         start: "top top",
         end: `+=${window.innerHeight * totalCards}`,
         pin: true,
+        markers: false, //----------------------------------------
         scrub: 1,
         onUpdate: (self) => {
           const progress = self.progress;
@@ -324,7 +325,7 @@ const EventsPage = () => {
                 ref={(el) => (cardRefs.current[index] = el)}
                 className="absolute w-full max-w-4xl z-10"
                 style={{
-                  top: "50%",
+                  top: "30%",
                   left: "50%",
                   transform: "translate(-50%, -50%)",
                 }}
