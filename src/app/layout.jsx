@@ -1,6 +1,7 @@
 import "../app/globals.css";
 import PageTransition from "@/components/shared/PageTransition";
 import EsummitNavbar from "@/components/ui/esummit-navbar/EsummitNavbar";
+import Footer from "@/components/ui/esummit-footer/Footer";
 import { Analytics } from "@vercel/analytics/next"
 import Head from "next/head";
 
