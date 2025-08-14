@@ -3,6 +3,13 @@
 import React from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/navigation';
+import { Bayon } from "next/font/google"
+
+const bayon = Bayon({
+  subsets: ["latin"],
+  weight: "400",
+}
+)
 
 const HeroSection = () => {
   const router = useRouter();
@@ -35,12 +42,26 @@ const HeroSection = () => {
         <img 
           src="https://ik.imagekit.io/admr8uj75/Founders%20Arena.png?updatedAt=1755003598419" 
           alt="Expo Hero" 
-          className="mx-auto mb-8 sm:mb-12 max-w-xs md:max-w-sm lg:max-w-full h-auto"
+          className="mx-auto mb-8 sm:mb-12 hidden lg:block lg:max-w-full h-auto"
           style={{ maxHeight: '120px' }}
         />
+        <img 
+          src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Frame%20264.png?updatedAt=1755199715811" 
+          alt="Expo Hero" 
+          className="mx-auto sm:mb-12 translate-y-16 block lg:hidden lg:max-w-full h-auto"
+          style={{ maxHeight: '120px' }}
+        />
+
+        <div className='relative lg:absolute -left-28 top-20 lg:top-[16.5rem] text-shadow-2xs text-shadow-black'>
+          <p className='font-[Bayon] text-2xl lg:text-5xl lg:rotate-[-5deg]'>22K<br/>PRIZE POOL</p>
+        </div>
+
+        <div className='relative lg:absolute -right-32 lg: top-6 lg:top-[17.5rem]'>
+          <p className='font-[Bayon] text-2xl lg:text-5xl lg:rotate-[10deg]'>23 24<br/>AUGUST</p>
+        </div>
         
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mt-72 sm:mt-80 md:mt-96 lg:mt-72">
+        <div className="flex flex-col sm:flex-row gap-4 -translate-y-24 lg:translate-y-8 sm:gap-6 justify-center items-center mt-72 sm:mt-80 md:mt-96 lg:mt-72">
           {/* Contact Us Button */}
           <button
             className="bg-green-600 hover:bg-green-700 text-black font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base min-w-[160px] sm:min-w-[180px] cursor-pointer"
