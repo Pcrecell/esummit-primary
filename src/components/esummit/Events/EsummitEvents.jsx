@@ -11,6 +11,8 @@ import EventsMap from "./EventsMap";
 import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
 import { authAPI } from "@/lib/services/api"; // make sure you have this
+import { useAuth } from "@/lib/context/AuthContext";
+
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -22,6 +24,8 @@ const EventsPage = () => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const { userData, profile, loading } = useAuth();
+
 
   const tabs = [
     { date: 22, label: "22nd Friday" },
@@ -298,9 +302,9 @@ const EventsPage = () => {
 
   const handleKnowMore = (route) => {
     // Check login status before navigating
-    if (localStorage.getItem("login") === "true") {
-      if (route) router.push(route);
-    } else {
+    
+      if (route && userData) router.push(route);
+     else {
       // Redirect to login page if not logged in
       router.push("/login");
     }

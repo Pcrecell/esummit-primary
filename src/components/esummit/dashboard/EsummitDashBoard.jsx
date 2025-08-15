@@ -10,44 +10,35 @@ import PaymentStart from "./paymentStart";
 import PaymentEnd from "./paymentEnd";
 import Particles from './Particles';
 import Image from "next/image";
+import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
-
 const EsummitDashBoard = () => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+ const { userData, profile, loading } = useAuth();
   const [paymentDone, setPaymentDone] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [registeredEventId, setRegisteredEventId] = useState(null);
   const qrCode = "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
+  const router = useRouter();
 
-const router = useRouter();
   useEffect(() => {
-  let mounted = true;
-
-  (async () => {
-    try {
-      const userResponse = await authAPI.verifyToken();
-      console.log("User response:", userResponse);
-
-      if (mounted && userResponse?.user) {
-        setUserData(userResponse.user);
-      } else {
-        router.replace("/login"); // only redirect if no user found
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
       }
-    } catch (err) {
-      router.replace("/login"); // redirect on error too
-    } finally {
-      if (mounted) setLoading(false);
+      console.log("userData:", userData);
+      console.log("profile:", profile);
     }
-  })();
+  }, [userData, profile, loading, router]);
 
-  return () => {
-    mounted = false;
-  };
-}, [router]);
-
+   if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+  }
   const handleEventClick = (eventId) => {
     setSelectedEventId(eventId);
     setShowConfirmationPopup(true);
@@ -72,32 +63,6 @@ const router = useRouter();
     setSelectedEventId(null);
     setShowConfirmationPopup(false);
   };
-
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const userResponse = await authAPI.verifyToken();
-        console.log("User response:", userResponse);
-        if (mounted && userResponse && userResponse.user) {
-          setUserData(userResponse.user);
-        }
-      } catch (err) {
-        // handle error
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    })();
-    return () => { mounted = false; };
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
-        Loading...
-      </div>
-    );
-  }
 
   return (
     <div>
@@ -139,7 +104,7 @@ const router = useRouter();
             }}>Hey!</h1>
             <h1
   className={`font-tourney text-start ${
-    (userData?.firstname?.length || 0) > 8
+    (profile?.firstname?.length || 0) > 8
       ? "text-6xl sm:text-6xl" // smaller if > 8 chars
       : "text-8xl sm:text-8xl" // normal size otherwise
   }`}
@@ -149,7 +114,7 @@ const router = useRouter();
     paintOrder: "stroke fill",
   }}
 >
-  {userData?.firstname || "User"}
+  {profile?.firstname || "User"}
 </h1>
 
           </div>

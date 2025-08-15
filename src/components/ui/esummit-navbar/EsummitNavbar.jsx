@@ -12,23 +12,20 @@ import {
 import { useState, useEffect } from "react";
 import { authAPI } from "@/lib/services/api.js";
 import { useRouter } from "next/navigation";
-
+import { useAuth } from "@/lib/context/AuthContext";
 export default function EsummitNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { userData, profile,loading } = useAuth();
+  const router = useRouter();
+useEffect(() => {
+  if (userData) {
+    setIsAuthenticated(true);
+    
+  }
 
-  useEffect(() => {
-    // Check session on mount
-    (async () => {
-      try {
-        const res = await authAPI.verifyToken();
-        setIsAuthenticated(res.success);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    })();
-  }, []);
+}, [userData, profile,,loading, router]);
 
   const leftItems = [
     { name: "Home", link: "/" },

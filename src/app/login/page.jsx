@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 // import { useNavigate, Link } from "react-router-dom";
 import { useRouter } from "next/navigation";
 import { authAPI } from "@/lib/services/api";
+import { useAuth } from "@/lib/context/AuthContext";
 import AuthLayout from "@/components/esummit/auth/AuthLayout";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/utils/firebase/firebase"; // your firebase.js
@@ -14,14 +15,19 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useRouter();
-
+  const router = useRouter();
+  const { userData, profile } = useAuth();
   useEffect(() => {
-    // Check if user is already logged in
-    if (localStorage.getItem("login") === "true") {
-      window.location.href = "/dashboard"; // Redirect to home or dashboard if already logged in
+    if (!loading) {
+      if (userData) {
+          console.log("userData:", userData);
+          router.replace("/dashboard");
+      }
+        else {
+          router.replace("/login");
+        }
     }
-  }, [navigate]);
+  }, [userData, profile, loading,router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -46,12 +52,10 @@ export default function Login() {
         body: JSON.stringify({ idToken }),
       });
 
-      // Set login status in localStorage if login is successful
-      localStorage.setItem("login", "true");
 
       // Navigate based on user role
       if (response.user.role === "admin") {
-        navigate.push("/admin-dashboard");
+        router.push("/admin-dashboard");
       } else {
         window.location.href = "/";
       }
