@@ -27,7 +27,7 @@ export default function Hero() {
       className="relative h-[100vh] rounded-2xl overflow-hidden shadow-xl"
       style={{
         backgroundImage:
-          "url('https://i.postimg.cc/9MfqyX4w/KIITESUMMIT-Oracle-hero.png')",
+          "url('https://ik.imagekit.io/1bsukh3d7/KIITESUMMIT_Oracle_hero.webp?updatedAt=1755243863782')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -46,7 +46,7 @@ export default function Hero() {
         className="absolute w-full h-full object-cover z-5 bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://ik.imagekit.io/lzogar7yp/loop2.gif?updatedAt=1755177318012')",
+            "url('https://ik.imagekit.io/lzogar7yp/1000145433%20(1).gif?updatedAt=1755244971763')",
           backgroundSize: "cover",
           backgroundPosition: "center 30%", // shifts background downward
         }}
@@ -65,7 +65,7 @@ export default function Hero() {
           </p>
 
           <div className="flex justify-center mt-12">
-  <div className="group relative w-64 sm:w-72 md:w-85 items-center">
+  <div className="group relative w-48 sm:w-72 md:w-48 items-center cursor-pointer" onClick={() => setShowPopup(true)}>
     {/* Image shown when not hovering */}
     <img
       src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
@@ -83,7 +83,7 @@ export default function Hero() {
     <span
       className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-sm sm:text-base md:text-xl ${cormorantGaramond.className}`}
     >
-      REGISTRATION STARTING SOON
+      REGISTER NOW
     </span>
   </div>
 </div>
