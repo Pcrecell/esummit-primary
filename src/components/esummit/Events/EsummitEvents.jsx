@@ -223,7 +223,7 @@ const EventsPage = () => {
             )}
             <div
               ref={desktopScrollRef}
-              className="flex flex-col h-full overflow-y-auto scrollbar-hide snap-y snap-mandatory"
+              className="flex flex-col h-full overflow-x-hidden scrollbar-hide snap-y snap-mandatory"
               style={{
                 WebkitOverflowScrolling: "touch",
                 scrollbarWidth: "none",
