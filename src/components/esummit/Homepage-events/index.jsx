@@ -148,7 +148,7 @@ export const Event = () => {
     <div
       className="w-full bg-cover bg-center flex items-center justify-center relative md:translate-y-40"
       style={{
-        backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
+        backgroundImage: `url('https://ik.imagekit.io/1bsukh3d7/image-2.webp?updatedAt=1755242219835')`,
         minHeight: "110vh",
         backgroundSize: "cover",
         backgroundPosition: "calc(50%) center"
