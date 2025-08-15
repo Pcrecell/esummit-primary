@@ -14,17 +14,28 @@ const JoinTeamPage = () => {
   const [yourElixirId, setYourElixirId] = useState("");
   const [teamLeadElixirId, setTeamLeadElixirId] = useState("");
   const [teamId, setTeamId] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!teamName.trim()) newErrors.teamName = "Team Name is required.";
+    if (!yourElixirId.trim()) newErrors.yourElixirId = "Your Elixir ID is required.";
+    if (!teamLeadElixirId.trim()) newErrors.teamLeadElixirId = "Lead Elixir ID is required.";
+    if (!teamId.trim()) newErrors.teamId = "Team ID is required.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     console.log("Joining team:", { 
       teamName, 
       yourElixirId, 
       teamLeadElixirId, 
       teamId 
     });
-    // Add your submission logic here
-    router.push('/success'); // Redirect after submission
+    router.push('/success'); 
   };
 
   return (
@@ -38,70 +49,71 @@ const JoinTeamPage = () => {
             minHeight: "400px",
           }}
         >
-          {/* Title */}
           <h2 className={`${cormorantGaramond.className} text-3xl font-bold text-[#C0A869] md:mb-6 text-center`}>
             Join a Team
           </h2>
 
-          {/* Form Inputs */}
           <form onSubmit={handleSubmit} className="w-full max-w-sm md:space-y-3 space-y-1">
-            {/* Team Name */}
-            <div className="flex items-center gap-2 md:w-full">
-              <label className="text-white font-semibold text-sm w-32 text-left">
-                Team Name:
-              </label>
-              <input
-                type="text"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-                className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800"
-                required
-              />
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 md:w-full">
+                <label className="text-white font-semibold text-sm w-32 text-left">
+                  Team Name:
+                </label>
+                <input
+                  type="text"
+                  value={teamName}
+                  onChange={(e) => setTeamName(e.target.value)}
+                  className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800"
+                />
+              </div>
+              {errors.teamName && <span className="text-red-400 text-xs">{errors.teamName}</span>}
             </div>
 
-            {/* Your Elixir ID */}
-            <div className="flex items-center gap-2 md:w-full">
-              <label className="text-white font-semibold text-sm w-32 text-left">
-                Your Elixir ID:
-              </label>
-              <input
-                type="text"
-                value={yourElixirId}
-                onChange={(e) => setYourElixirId(e.target.value)}
-                className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
-                required
-              />
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 md:w-full">
+                <label className="text-white font-semibold text-sm w-32 text-left">
+                  Your Elixir ID:
+                </label>
+                <input
+                  type="text"
+                  value={yourElixirId}
+                  onChange={(e) => setYourElixirId(e.target.value)}
+                  className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
+                />
+              </div>
+              {errors.yourElixirId && <span className="text-red-400 text-xs">{errors.yourElixirId}</span>}
             </div>
 
-            {/* Team Lead Elixir ID */}
-            <div className="flex items-center gap-2 md:w-full">
-              <label className="text-white font-semibold text-sm w-32 text-left">
-               Lead Elixir ID:
-              </label>
-              <input
-                type="text"
-                value={teamLeadElixirId}
-                onChange={(e) => setTeamLeadElixirId(e.target.value)}
-                className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
-                required
-              />
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 md:w-full">
+                <label className="text-white font-semibold text-sm w-32 text-left">
+                 Lead Elixir ID:
+                </label>
+                <input
+                  type="text"
+                  value={teamLeadElixirId}
+                  onChange={(e) => setTeamLeadElixirId(e.target.value)}
+                  className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
+                />
+              </div>
+              {errors.teamLeadElixirId && <span className="text-red-400 text-xs">{errors.teamLeadElixirId}</span>}
             </div>
 
-            {/* Team ID */}
-            <div className="flex items-center gap-2 md:w-full">
-              <label className="text-white font-semibold text-sm w-32 text-left">
-                Team ID:
-              </label>
-              <input
-                type="text"
-                value={teamId}
-                onChange={(e) => setTeamId(e.target.value)}
-                className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800"
-                required
-              />
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 md:w-full">
+                <label className="text-white font-semibold text-sm w-32 text-left">
+                  Team ID:
+                </label>
+                <input
+                  type="text"
+                  value={teamId}
+                  onChange={(e) => setTeamId(e.target.value)}
+                  className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800"
+                />
+              </div>
+              {errors.teamId && <span className="text-red-400 text-xs">{errors.teamId}</span>}
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-center ">
               <button
                 type="submit"

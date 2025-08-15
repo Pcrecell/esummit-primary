@@ -16,6 +16,7 @@ const CreateTeamPage = () => {
     teamName: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,13 +26,23 @@ const CreateTeamPage = () => {
     }));
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.elixirId.trim()) newErrors.elixirId = "Elixir ID is required";
+    if (!formData.teamName.trim()) newErrors.teamName = "Team name is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleCreateTeam = (e) => {
     e.preventDefault();
+    if (!validateForm()) return; // Stop if form is invalid
+
     setIsSubmitting(true);
-    
     setTimeout(() => {
       setIsSubmitting(false);
-      router.push('/success'); // Change to your desired route
+      router.push('/oracle'); // Change to your desired route
     }, 1000);
   };
 
@@ -52,46 +63,55 @@ const CreateTeamPage = () => {
           </h2>
 
           <div className="flex flex-col gap-2 md:gap-4 items-center">
-            <div className="flex items-center gap-2 md:gap-4">
-              <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
-                Your Name:
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
-                disabled={isSubmitting}
-              />
+            <div className="flex flex-col w-full">
+              <div className="flex items-center gap-2 md:gap-4">
+                <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
+                  Your Name:
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
+                  disabled={isSubmitting}
+                />
+              </div>
+              {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
             </div>
 
-            <div className="flex items-center gap-2 md:gap-4">
-              <label className={`${cormorantGaramond.className} font-semibold text-white w-auto `}>
-                Your Elixir ID:
-              </label>
-              <input
-                type="text"
-                name="elixirId"
-                value={formData.elixirId}
-                onChange={handleInputChange}
-                className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
-                disabled={isSubmitting}
-              />
+            <div className="flex flex-col w-full">
+              <div className="flex items-center gap-2 md:gap-4">
+                <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
+                  Your Elixir ID:
+                </label>
+                <input
+                  type="text"
+                  name="elixirId"
+                  value={formData.elixirId}
+                  onChange={handleInputChange}
+                  className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
+                  disabled={isSubmitting}
+                />
+              </div>
+              {errors.elixirId && <p className="text-red-500 text-xs">{errors.elixirId}</p>}
             </div>
 
-            <div className="flex items-center gap-2 md:gap-4">
-              <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
-                Team Name:
-              </label>
-              <input
-                type="text"
-                name="teamName"
-                value={formData.teamName}
-                onChange={handleInputChange}
-                className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
-                disabled={isSubmitting}
-              />
+            <div className="flex flex-col w-full">
+              <div className="flex items-center gap-2 md:gap-4">
+                <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
+                  Team Name:
+                </label>
+                <input
+                  type="text"
+                  name="teamName"
+                  value={formData.teamName}
+                  onChange={handleInputChange}
+                  className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
+                  disabled={isSubmitting}
+                />
+              </div>
+              {errors.teamName && <p className="text-red-500 text-xs">{errors.teamName}</p>}
             </div>
           </div>
 
