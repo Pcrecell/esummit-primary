@@ -24,14 +24,15 @@ const cinzel = Cinzel({
 });
 
 export default function Aif() {
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+  const [isPaymentDone, setIsPaymentDone] = useState(false)
 
   const openRegistration = () => {
-    setIsRegistrationOpen(true);
+    setIsRegistrationPopupOpen(true);
   };
 
   const closeRegistration = () => {
-    setIsRegistrationOpen(false);
+    setIsRegistrationPopupOpen(false);
   };
 
   // Handle backdrop click to close modal
@@ -111,6 +112,7 @@ export default function Aif() {
             <button
               className="relative cursor-pointer hover:scale-105 transition-transform duration-200"
               onClick={openRegistration}
+              // disabled={isPaymentDone}
             >
               <img
                 src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Banner-ideas-removebg-preview-1.webp?updatedAt=1755288301404"
@@ -141,7 +143,7 @@ export default function Aif() {
       <Rules />
 
       {/* Registration Popup Modal */}
-      {isRegistrationOpen && (
+      {isRegistrationPopupOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center bg-black md:bg-black/50 cursor-pointer"
           onClick={handleBackdropClick}
