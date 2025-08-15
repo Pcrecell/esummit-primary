@@ -26,11 +26,11 @@ const EventCard = ({ eventData, left }) => {
                     `}
                 >
                     <div className={`
-                        max-w-[85%] sm:max-w-[70%] md:max-w-[60%] lg:max-w-[50%] xl:max-w-[40%]
+                        max-w-[85%] sm:max-w-[70%] md:max-w-[60%] lg:max-w-[50%] xl:max-w-[50%]
                         ${left ? 'text-left' : 'text-right'}
                     `}>
                         <h2 className={`
-                            text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-36
+                            text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-72
                             font-bold font-cormorant-infant mb-1 sm:mb-2 text-black
                             sm:max-w-full
                         `}>
