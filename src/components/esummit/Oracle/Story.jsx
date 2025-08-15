@@ -59,7 +59,7 @@ export default function Story() {
   className="absolute inset-0 w-full h-full object-cover z-0"
 >
   <source
-    src="https://ik.imagekit.io/5xwmtpwkb/KIITECELL_Aboutus.mp4?updatedAt=1755100824142"
+    src="https://ik.imagekit.io/1bsukh3d7/KIITECELL_Aboutus%20(1)%20(1).mp4?updatedAt=1755245327558"
     type="video/mp4"
   />
 </video>

@@ -146,7 +146,7 @@ export const Event = () => {
 
   return (
     <div
-      className="w-full bg-cover bg-center flex items-center justify-center relative translate-y-40"
+      className="w-full bg-cover bg-center flex items-center justify-center relative md:translate-y-40"
       style={{
         backgroundImage: `url('https://i.postimg.cc/tR5Gf4xW/image-2.png')`,
         minHeight: "110vh",
@@ -159,12 +159,49 @@ export const Event = () => {
       <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-5"></div>
 
       <div className="relative w-full max-w-6xl px-4">
-        <button
-          onClick={prev}
-          className="absolute left-4 md:-left-8 md:top-1/2 top-[35%] -translate-y-1/2 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full p-2"
-        >
-          <ChevronLeft size={32} />
-        </button>
+
+        {/* Left Arrow */}
+<button
+  onClick={prev}
+  className="absolute left-4 md:-left-8 md:top-1/2 top-[35%] -translate-y-1/2 z-20 text-white bg-black/60 hover:bg-black/80 rounded-full p-3 touch-manipulation"
+  style={{ pointerEvents: 'auto' }}
+>
+  <ChevronLeft size={24} className="md:w-8 md:h-8" />
+</button>
+
+{/* Right Arrow */}
+<button
+  onClick={next}
+  className="absolute right-4 md:-right-8 md:top-1/2 top-[35%] -translate-y-1/2 z-20 text-white bg-black/60 hover:bg-black/80 rounded-full p-3 touch-manipulation"
+  style={{ pointerEvents: 'auto' }}
+>
+  <ChevronRight size={24} className="md:w-8 md:h-8" />
+</button>
+       <AnimatePresence mode="wait">
+  <motion.div
+  key={events[current].id}
+  className="relative w-full flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 px-4 md:-mt-40 z-10 py-8 md:py-0"
+  initial={{ opacity: 0, x: 100 }}
+  animate={{ opacity: 1, x: 0 }}
+  exit={{ opacity: 0, x: -100 }}
+  drag="x"
+  dragConstraints={{ left: 0, right: 0 }}
+  onDragEnd={handleDragEnd}
+>
+    {/* Left Text */}
+    <div className="text-white w-full md:w-1/3 flex flex-col items-center justify-center ">
+      <h2
+        className="text-4xl md:text-5xl font-bold font-poppins mb-2 text-center md:-mt-32 text-[#00FF3B]"
+      >
+        {events[current].title}
+      </h2>
+      <p className="text-lg opacity-80 font-inter text-center">
+        {events[current].date}        
+      </p>
+       <p className="text-lg opacity-80 font-inter text-center">
+        {events[current].time}        
+      </p>
+    </div>
 
         <button
           onClick={next}

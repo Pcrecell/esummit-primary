@@ -31,7 +31,7 @@ const Popup = ({ imageUrl, onClose, children }) => {
   className="relative w-[90%] max-w-md rounded-2xl shadow-lg flex items-center justify-center"
   style={{
     height: "400px", // add height so image is fully visible
-    backgroundImage: `url("https://i.postimg.cc/N0tMvzMp/Asset-3.png")`,
+    backgroundImage: `url("https://i.postimg.cc/sgynnQ7x/Asset-3-1.png")`,
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
