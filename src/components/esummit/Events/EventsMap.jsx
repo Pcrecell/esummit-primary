@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 
-const EventsMap = () => {
+const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location", campus = "Campus" }) => {
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -72,7 +72,7 @@ const EventsMap = () => {
                 mapInstanceRef.current = map;
                 
                 // Set view with appropriate zoom for mobile
-                map.setView([20.3534, 85.8195], isSmallScreen ? 15 : 16);
+                map.setView(coordinates, isSmallScreen ? 15 : 16);
                 
                 // Apply background styling
                 if (mapRef.current) {
@@ -97,23 +97,14 @@ const EventsMap = () => {
                 }, 200);
                 
                 // Add custom markers
-                const icon = L.icon({
-                    iconUrl: "https://cdn-icons-png.flaticon.com/512/616/616494.png",
-                    iconSize: isSmallScreen ? [24, 24] : [32, 32],
-                    iconAnchor: isSmallScreen ? [12, 24] : [16, 32],
-                });
-                
-                L.marker([20.3534, 85.8195], { icon }).addTo(map)
-                    .bindPopup("You are here! 🏴‍☠️");
-                
                 const pinpointIcon = L.icon({
                     iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
                     iconSize: isSmallScreen ? [24, 24] : [32, 32],
-                    iconAnchor: isSmallScreen ? [12, 24] : [16, 32],
+                    iconAnchor: isSmallScreen ? [12, 24] : [16, 22],
                 });
                 
-                L.marker([20.3534, 85.8195], { icon: pinpointIcon }).addTo(map)
-                    .bindPopup("Pinpoint Location!<br>20.3534, 85.8195");
+                L.marker(coordinates, { icon: pinpointIcon }).addTo(map)
+                    .bindPopup(`${label}<br>${campus}`);
 
                 // Hide unwanted markers
                 setTimeout(() => {
@@ -151,7 +142,7 @@ const EventsMap = () => {
                 mapRef.current.innerHTML = '';
             }
         };
-    }, [isSmallScreen]);
+    }, [isSmallScreen, coordinates, label]);
 
     return (
         <div className="w-full flex justify-center items-center">
