@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Cinzel_Decorative, Cinzel } from "next/font/google";
 import FlippableRounds from "./Rounds";
 import TimeVenue from "./TimeVenue";
 import WhatsIt from "./WhatsIt";
 import Rules from "./Rules";
 import About from "./About";
+import EventRegistration from "./EventRegistration"; // Import the EventRegistration component
 
 // Configure fonts
 const cinzelDecorative = Cinzel_Decorative({
@@ -23,6 +24,16 @@ const cinzel = Cinzel({
 });
 
 export default function Aif() {
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
+  const openRegistration = () => {
+    setIsRegistrationOpen(true);
+  };
+
+  const closeRegistration = () => {
+    setIsRegistrationOpen(false);
+  };
+
   return (
     <div className={`${cinzelDecorative.variable} ${cinzel.variable}`}>
       <div
@@ -91,10 +102,7 @@ export default function Aif() {
           <div className="mt-8 md:mt-12 flex justify-center">
             <button
               className="relative cursor-pointer hover:scale-105 transition-transform duration-200"
-              onClick={() => {
-                // Add your registration logic here
-                // window.open("#", "_blank");
-              }}
+              onClick={openRegistration}
             >
               <img
                 src="https://i.ibb.co/Vccv1fBw/Banner-ideas-removebg-preview-1.png"
@@ -111,7 +119,7 @@ export default function Aif() {
                   textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)",
                 }}
               >
-                 REGISTRATION COMING SOON
+                REGISTER NOW
               </span>
             </button>
           </div>
@@ -123,6 +131,23 @@ export default function Aif() {
       <FlippableRounds />
       <WhatsIt />
       <Rules />
+
+      {/* Registration Popup Modal */}
+      {isRegistrationOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="bg-white rounded-lg shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-y-auto">
+            <div className="relative">
+              <button
+                onClick={closeRegistration}
+                className="absolute top-4 right-4 z-60 text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+              >
+                ×
+              </button>
+              <EventRegistration onClose={closeRegistration} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
