@@ -39,8 +39,7 @@ const EventRegistration = () => {
             value.trim()
           )
         ) {
-          error =
-            "Please enter a valid email ID";
+          error = "Please enter a valid email ID";
         }
         break;
 
@@ -155,7 +154,7 @@ const EventRegistration = () => {
         />
 
         {/* Title */}
-        <div className="absolute top-28 left-0 right-0 z-20 text-center">
+        <div className="absolute top-28 left-0 right-0 z-20 text-center px-4">
           <h1
             className="text-2xl font-bold uppercase tracking-widest text-white drop-shadow-lg"
             style={{ fontFamily: "Cinzel, serif" }}
@@ -317,6 +316,170 @@ const EventRegistration = () => {
                 >
                   SUBMIT
                 </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Layout */}
+      <div className="block md:hidden w-full max-w-sm mx-auto">
+        {/* Mobile Title with gradient background */}
+        <div className="text-center mb-8">
+          <div className="relative">
+            <h1
+              className="text-2xl font-bold uppercase tracking-widest text-white drop-shadow-lg relative z-10 py-4"
+              style={{ fontFamily: "Cinzel, serif" }}
+            >
+              Join The Event
+            </h1>
+            <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/20 via-yellow-500/30 to-yellow-600/20 rounded-lg blur-sm"></div>
+          </div>
+        </div>
+
+        {/* Mobile Form */}
+        <div className="bg-gradient-to-b from-gray-900/50 to-black/80 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30 shadow-2xl">
+          <div className="space-y-4">
+            {/* Form Fields */}
+            <div className="space-y-4">
+              {/* Full Name */}
+              <div>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Full Name"
+                  value={formData.fullName}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
+                    errors.fullName
+                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                  }`}
+                  style={{ fontFamily: "Inria Serif, serif" }}
+                  required
+                />
+                {errors.fullName && (
+                  <p className="text-red-400 text-xs mt-1 font-medium">
+                    {errors.fullName}
+                  </p>
+                )}
+              </div>
+
+              {/* Contact Number */}
+              <div>
+                <input
+                  type="tel"
+                  name="contactNumber"
+                  placeholder="Contact Number"
+                  value={formData.contactNumber}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  maxLength="10"
+                  className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
+                    errors.contactNumber
+                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                  }`}
+                  style={{ fontFamily: "Inria Serif, serif" }}
+                  required
+                />
+                {errors.contactNumber && (
+                  <p className="text-red-400 text-xs mt-1 font-medium">
+                    {errors.contactNumber}
+                  </p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email ID"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
+                    errors.email
+                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                  }`}
+                  style={{ fontFamily: "Inria Serif, serif" }}
+                  required
+                />
+                {errors.email && (
+                  <p className="text-red-400 text-xs mt-1 font-medium">
+                    {errors.errors}
+                  </p>
+                )}
+              </div>
+
+              {/* Elixir ID */}
+              <div>
+                <input
+                  type="text"
+                  name="elixirId"
+                  placeholder="Elixir ID"
+                  value={formData.elixirId}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
+                    errors.elixirId
+                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                  }`}
+                  style={{ fontFamily: "Inria Serif, serif" }}
+                  required
+                />
+                {errors.elixirId && (
+                  <p className="text-red-400 text-xs mt-1 font-medium">
+                    {errors.elixirId}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Terms */}
+            <div className="flex items-start space-x-3 mt-6">
+              <input
+                type="checkbox"
+                name="agreeTerms"
+                id="agreeTermsMobile"
+                checked={formData.agreeTerms}
+                onChange={handleInputChange}
+                className="mt-1 w-4 h-4 text-yellow-500 bg-yellow-600/80 border-yellow-500/60 rounded focus:ring-yellow-400 focus:ring-2 flex-shrink-0"
+                required
+              />
+              <label
+                htmlFor="agreeTermsMobile"
+                className="text-white text-sm leading-relaxed"
+                style={{ fontFamily: "Inria Serif, serif" }}
+              >
+                I confirm that I am a KIIT student and agree to abide by the
+                event rules and decisions.
+              </label>
+            </div>
+            {errors.agreeTerms && (
+              <p className="text-red-400 text-xs mt-1 font-medium pl-7">
+                {errors.agreeTerms}
+              </p>
+            )}
+
+            {/* Mobile Submit Button */}
+            <div className="flex justify-center mt-8">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!isFormValid()}
+                className={`px-8 py-3 rounded-full font-bold text-lg tracking-wider transition-all duration-300 transform hover:scale-105 ${
+                  isFormValid()
+                    ? "bg-gradient-to-r from-yellow-600 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-400 hover:shadow-lg hover:shadow-yellow-500/25"
+                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                }`}
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                SUBMIT
               </button>
             </div>
           </div>
