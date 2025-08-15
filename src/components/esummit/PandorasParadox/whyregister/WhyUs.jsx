@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import bgImage from "../../../../../public/images/hackathon/why-us-bg.png";
 import bottle from "../../../../../public/images/hackathon/bottle.png";
+import BegVsAdvPage from "./BegVsAdvPage";
 
 const Circle = ({ className = "", children, style = {} }) => (
   <div
@@ -22,6 +23,8 @@ const Circle = ({ className = "", children, style = {} }) => (
 
 const WhyUsScreen = () => {
   return (
+    <div>
+      <BegVsAdvPage />
     <section
       id="whyus"
       className="relative min-h-[110vh] bg-black flex flex-col items-center justify-center"
@@ -190,6 +193,7 @@ const WhyUsScreen = () => {
         .animate-bubble-5 { animation: bubbleFloat5 9s ease-in-out infinite; animation-delay: 0.6s; }
       `}</style>
     </section>
+    </div>
   );
 };
 

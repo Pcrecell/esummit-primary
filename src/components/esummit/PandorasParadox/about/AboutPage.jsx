@@ -15,6 +15,7 @@ const AboutPage = () => {
       id="aboutus"
       className="relative min-h-[120vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
     >
+      
       {/* Background Image */}
       <div className="absolute inset-0 z-0 max-h-[90vh]">
         <Image
