@@ -10,10 +10,10 @@ const FlippableRounds = () => {
       suit: "diamonds",
       frontType: "overlay",
       overlayImg:
-        "https://i.ibb.co/mLjq3xc/0d2df1170f576f8e4fd49e4d18c1031d-removebg-preview-5.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/0d2df1170f576f8e4fd49e4d18c1031d-removebg-preview-5.webp?updatedAt=1755288297155",
       backType: "image",
       contentImg:
-        "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Screenshot-2025-07-26-004030-removebg-preview-1.webp?updatedAt=1755288297262",
       backText:
         "♢ The Billionaire Buzz-Off: You'll play solo and bid virtual money to answer questions. Make smart decisions to save money and stay in the game.",
     },
@@ -22,10 +22,10 @@ const FlippableRounds = () => {
       suit: "clubs",
       frontType: "overlay",
       overlayImg:
-        "https://i.ibb.co/gMyJ7s8J/9a28829e79ed21c4e74f284fb1557814-t-removebg-preview-1.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/9a28829e79ed21c4e74f284fb1557814-t-removebg-preview-1.webp?updatedAt=1755288297202",
       backType: "image",
       contentImg:
-        "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Screenshot-2025-07-26-004030-removebg-preview-1.webp?updatedAt=1755288297262",
       backText:
         "♣ The Idea Forge: You'll team up and pitch an idea. Be quick, clear, and convincing — your teamwork and communication will be key.",
     },
@@ -34,10 +34,10 @@ const FlippableRounds = () => {
       suit: "hearts",
       frontType: "overlay",
       overlayImg:
-        "https://i.ibb.co/gb71bhQr/0d2df1170f576f8e4fd49e4d18c1031d-removebg-preview-3.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/0d2df1170f576f8e4fd49e4d18c1031d-removebg-preview-3.webp?updatedAt=1755288296975",
       backType: "image",
       contentImg:
-        "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Screenshot-2025-07-26-004030-removebg-preview-1.webp?updatedAt=1755288297262",
       backText:
         "♥ Founder Feud: Now you're on your own. You'll speak on a topic in front of others. This round tests your confidence and clarity.",
     },
@@ -45,10 +45,10 @@ const FlippableRounds = () => {
       id: "spades",
       suit: "spades",
       frontType: "overlay",
-      overlayImg: "https://i.ibb.co/99007PHh/images-removebg-preview-2-1.png",
+      overlayImg: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/images-removebg-preview-2-1.webp?updatedAt=1755288297164",
       backType: "image",
       contentImg:
-        "https://i.ibb.co/8n876k00/Screenshot-2025-07-26-004030-removebg-preview-1.png",
+        "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Screenshot-2025-07-26-004030-removebg-preview-1.webp?updatedAt=1755288297262",
       backText:
         "♠ The Founder's Gambit: You'll face a surprise business challenge. Think fast, present a solution, and deal with an unexpected twist.",
     },
@@ -84,14 +84,14 @@ const FlippableRounds = () => {
       <div className="relative w-full h-full overflow-hidden rounded-2xl">
         {/* Main background */}
         <img
-          src="https://i.ibb.co/Qjh4BV7Y/Screenshot-2025-07-26-002748-removebg-preview-2.png"
+          src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Screenshot-2025-07-26-002748-removebg-preview-2.webp?updatedAt=1755288297348"
           alt={`${card.suit} card front`}
           className="w-full h-full object-cover"
           onError={handleImgError}
         />
 
         {/* Fallback for background */}
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-600 text-white text-sm hidden">
+        <div className="absolute inset-0 items-center justify-center bg-gray-600 text-white text-sm hidden">
           Loading background...
         </div>
 
@@ -107,7 +107,7 @@ const FlippableRounds = () => {
           />
 
           {/* Fallback for overlay */}
-          <div className="absolute inset-0 flex items-center justify-center text-white text-sm hidden">
+          <div className="absolute inset-0 items-center justify-center text-white text-sm hidden">
             Loading symbol...
           </div>
         </div>
@@ -131,7 +131,7 @@ const FlippableRounds = () => {
         />
 
         {/* Fallback for background image */}
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-600 text-white text-sm hidden">
+        <div className="absolute inset-0 items-center justify-center bg-gray-600 text-white text-sm hidden">
           Content loading...
         </div>
 
@@ -152,7 +152,7 @@ const FlippableRounds = () => {
         className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://i.ibb.co/C5xnSp7v/Gemini-Generated-Image-v9fbx9v9fbx9v9fb-1.png')",
+            "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Gemini-Generated-Image-v9fbx9v9fbx9v9fb-1.webp?updatedAt=1755288297757')",
         }}
       />
 

@@ -142,13 +142,15 @@ const EventRegistration = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen w-full bg-black px-4 py-8">
-      {/* Desktop Image container */}
-      <div className="hidden md:block relative max-w-2xl w-full flex items-center justify-center min-h-[600px] bg-transparent">
+    <div className="relative flex items-center justify-center w-full bg-black/0 "
+
+    >
+      {/* Image container */}
+      <div className="relative max-w-2xl w-full flex items-center justify-center md:min-h-[600px] bg-transparent">
         <img
           src="https://i.ibb.co/qMjzxJcd/download-70-removebg-preview-cleanup-1.png"
           alt="Decorative Frame"
-          className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full hidden md:block object-contain pointer-events-none select-none"
         />
 
         {/* Title */}
@@ -162,7 +164,7 @@ const EventRegistration = () => {
         </div>
 
         {/* Form container */}
-        <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
+        <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-36 mt-12">
           <div className="space-y-4">
             {/* First Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -290,12 +292,12 @@ const EventRegistration = () => {
             )}
 
             {/* Submit Button */}
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center -translate-y-8">
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={!isFormValid()}
-                className="group disabled:cursor-not-allowed transform hover:-translate-y-2 transition-all duration-300 hover:scale-110 disabled:hover:scale-100 disabled:hover:translate-y-0 relative"
+                className="group disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-110 disabled:hover:scale-100 disabled:hover:translate-y-0 relative"
               >
                 <img
                   src="https://i.ibb.co/C3kCrrPy/The-PNG-Stock-removebg-preview-1.png"

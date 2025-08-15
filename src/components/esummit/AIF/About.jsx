@@ -35,9 +35,9 @@ export default function About() {
         />
 
         {/* Image - positioned differently for mobile vs desktop */}
-        <div className="absolute left-0 top-0 h-full flex items-center lg:block hidden">
+        <div className="absolute left-0 top-0 h-full items-center lg:block hidden">
           <img
-            src="https://i.ibb.co/dwpP5YDn/download-96-1.png"
+            src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-96-1.webp?updatedAt=1755288301389"
             alt=""
             className="h-4/5 w-auto object-cover"
           />
@@ -46,7 +46,7 @@ export default function About() {
         {/* Mobile background image - faded and full width */}
         <div className="absolute inset-0 lg:hidden">
           <img
-            src="https://i.ibb.co/dwpP5YDn/download-96-1.png"
+            src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-96-1.webp?updatedAt=1755288301389"
             alt=""
             className="w-full h-full object-cover opacity-20"
           />

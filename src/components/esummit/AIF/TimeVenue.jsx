@@ -7,15 +7,15 @@ const gideonRoman = Gideon_Roman({
 });
 
 const RoundsSection = ({
-  round1Image = "https://i.ibb.co/ympzzNm8/download-71-removebg-preview-1.png",
-  round2Image = "https://i.ibb.co/4RCWGmY5/wmremove-transformed-removebg-preview-1-1.png",
-  round3Image = "https://i.ibb.co/Tqgy0Rdc/download-86-removebg-preview-1.png",
+  round1Image = "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-71-removebg-preview-1.webp?updatedAt=1755288301245",
+  round2Image = "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/wmremove-transformed-removebg-preview-1-1.webp?updatedAt=1755288301111",
+  round3Image = "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-86-removebg-preview-1.webp?updatedAt=1755288301259",
 }) => {
   return (
     <div
       className="py-8 md:py-16 px-8 bg-cover bg-center bg-no-repeat relative"
       style={{
-        backgroundImage: "url('https://i.ibb.co/Lz9SwGXR/image-12.png')",
+        backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/image-12.webp?updatedAt=1755288512746')",
         backgroundColor: "#011209", // Fallback color
       }}
     >
