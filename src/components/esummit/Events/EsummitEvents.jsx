@@ -206,7 +206,7 @@ const EventsPage = () => {
           <div className="relative z-10 w-full h-full">
             {/* Vertical Pagination (left side) */}
             {currentEvents.length > 1 && (
-              <div className="absolute left-2 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
+              <div className="absolute -left-1 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
         {currentEvents.map((_, index) => (
                   <button
                     key={`v-dot-${index}`}
@@ -247,7 +247,7 @@ const EventsPage = () => {
                     </div>
                       {/* Up/Down controls (right side) */}
                       {currentEvents.length > 1 && (
-                        <div className="hidden lg:flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2 z-20">
+                        <div className="hidden lg:flex flex-col gap-2 absolute -right-8 top-1/2 -translate-y-1/2 z-20">
                           <button
                             aria-label="Previous event"
                             onClick={() => scrollDesktopToIndex(Math.max(0, currentCardIndex - 1))}
