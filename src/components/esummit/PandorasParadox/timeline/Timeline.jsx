@@ -33,7 +33,7 @@ const Timeline = () => {
       {/* Top black gradient overlay */}
      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-black/80 to-transparent z-10" /> 
 
-      <div className="relative z-[9999] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center">
+      <div className="relative z-[99] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center">
         {/* Title */}
         <h1 className={`text-6xl md:text-7xl lg:text-8xl font-bold text-yellow-600 text-center mb-16 tracking-wider drop-shadow-2xl`}>
           TIMELINE
