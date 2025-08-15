@@ -49,7 +49,11 @@ const handleLogin = async (e) => {
       }
 
     } catch (err) {
-      setError("Failed to sign in. Please try again.");
+      if((err.toString()).includes("invalid-credential")) {
+        setError("Incorrect Email or Password. Please Try Again.")
+      } else {
+        setError("Failed to Log In. Please try again.");
+      }
       console.error("Login error:", err);
       setLoading(false);
     }

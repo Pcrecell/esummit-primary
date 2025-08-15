@@ -148,7 +148,14 @@ export default function Register() {
       // navigate.push("/payment", { state: Data });
       setLoading(false);
     } catch (err) {
-      setError("Failed to register. Please try again.");
+      if((err.toString()).includes("email-already-in-use")) {
+        setError("This Email is Already Registered. Please Try Again.");
+      } else if((err.toString()).includes("weak-password")) {
+        setError("Password Must Be At Least 6 Characters.");
+      }    
+      else {
+        setError("Failed to register. Please try again.");
+      }
       console.error("Registration error:", err);
     }
 
