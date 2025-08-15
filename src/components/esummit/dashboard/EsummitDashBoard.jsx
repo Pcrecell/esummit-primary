@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 // import DashBoardCard from "./DashBoardCard";
@@ -8,7 +8,7 @@ import DashBoardCard from "../../../../public/images/esummit/dashboard/Dashboard
 import QuestionMark from "../../../../public/images/esummit/dashboard/Question-Mark.svg";
 import PaymentStart from "./paymentStart";
 import PaymentEnd from "./paymentEnd";
-import Particles from './Particles';
+import Particles from "./Particles";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -20,38 +20,39 @@ const EsummitDashBoard = () => {
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [registeredEventId, setRegisteredEventId] = useState(null);
-  const qrCode = "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
+  const qrCode =
+    "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
 
-const router = useRouter();
+  const router = useRouter();
   useEffect(() => {
-  let mounted = true;
+    let mounted = true;
 
-  (async () => {
-    try {
-      const userResponse = await authAPI.verifyToken();
-      console.log("User response:", userResponse);
+    (async () => {
+      try {
+        const userResponse = await authAPI.verifyToken();
+        console.log("User response:", userResponse);
 
-      if (mounted && userResponse?.user) {
-        setUserData(userResponse.user);
-      } else {
-        router.replace("/login"); // only redirect if no user found
+        if (mounted && userResponse?.user) {
+          setUserData(userResponse.user);
+        } else {
+          router.replace("/login"); // only redirect if no user found
+        }
+      } catch (err) {
+        router.replace("/login"); // redirect on error too
+      } finally {
+        if (mounted) setLoading(false);
       }
-    } catch (err) {
-      router.replace("/login"); // redirect on error too
-    } finally {
-      if (mounted) setLoading(false);
-    }
-  })();
+    })();
 
-  return () => {
-    mounted = false;
-  };
-}, [router]);
+    return () => {
+      mounted = false;
+    };
+  }, [router]);
 
   const handleEventClick = (eventId) => {
     setSelectedEventId(eventId);
     setShowConfirmationPopup(true);
-  }; 
+  };
 
   // Handle payment action from PaymentStart popup
   const handlePaymentFromPopup = () => {
@@ -88,7 +89,9 @@ const router = useRouter();
         if (mounted) setLoading(false);
       }
     })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (loading) {
@@ -102,9 +105,12 @@ const router = useRouter();
   return (
     <div>
       <div className="relative">
-        <div className="absolute inset-0 z-10 " style={{ width: '100%', height: '100%' }}>
+        <div
+          className="absolute inset-0 z-10 "
+          style={{ width: "100%", height: "100%" }}
+        >
           <Particles
-            particleColors={['#b3d11c', '#b3d11c']}
+            particleColors={["#b3d11c", "#b3d11c"]}
             particleCount={2000}
             particleSpread={10}
             speed={0.2}
@@ -121,7 +127,7 @@ const router = useRouter();
           playsInline
           className="fixed top-0 left-0 w-full h-full object-cover z-[-1] bg-[#010b04]"
           style={{
-            objectPosition: "calc(50% + 23px) center"
+            objectPosition: "calc(50% + 23px) center",
           }}
         >
           <source
@@ -132,63 +138,75 @@ const router = useRouter();
         </video>
         <div className="relative z-20 w-full pointer-events-none">
           <div className="flex flex-col font-bold w-full justify-center pt-24 sm:pt-[35vh] ml-4 pointer-events-auto">
-            <h1 className="font-tourney text-5xl sm:text-5xl text-start" style={{ 
-              color: '#FFFFFF', 
-              WebkitTextStroke: '1px #FFFFFF',
-              paintOrder: 'stroke fill'
-            }}>Hey!</h1>
             <h1
-  className={`font-tourney text-start ${
-    (userData?.firstname?.length || 0) > 8
-      ? "text-6xl sm:text-6xl" // smaller if > 8 chars
-      : "text-8xl sm:text-8xl" // normal size otherwise
-  }`}
-  style={{
-    color: "#FFFFFF",
-    WebkitTextStroke: "2px #FFFFFF",
-    paintOrder: "stroke fill",
-  }}
->
-  {userData?.firstname || "User"}
-</h1>
-
+              className="font-tourney text-4xl sm:text-5xl text-start"
+              style={{
+                color: "#FFFFFF",
+                WebkitTextStroke: "1px #FFFFFF",
+                paintOrder: "stroke fill",
+              }}
+            >
+              Hey!
+            </h1>
+            <h1
+              className={`font-tourney text-start ${
+                (userData?.firstname?.length || 0) > 8
+                  ? "text-6xl sm:text-6xl" // smaller if > 8 chars
+                  : "text-6xl sm:text-8xl" // normal size otherwise
+              }`}
+              style={{
+                color: "#FFFFFF",
+                WebkitTextStroke: "2px #FFFFFF",
+                paintOrder: "stroke fill",
+              }}
+            >
+              {userData?.firstname || "User"}
+            </h1>
           </div>
         </div>
-        <div
-          className="relative min-h-[80vh] font-sans text-white hero-container"
-        />   
+        <div className="relative min-h-[80vh] font-sans text-white hero-container" />
 
         <div className="absolute top-[120vh] sm:top-[130vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-80">
           <div className="relative">
             <div className="relative">
-              <Image src={DashBoardCard} alt="card" className="w-full"  />
+              <Image src={DashBoardCard} alt="card" className="w-full" />
               {!paymentDone && (
-                <div className="absolute inset-0 bg-black/50 rounded-lg" 
-                style={{
-                  top: '21%',
-                  left: '0',
-                  right: '0',
-                  bottom: '0'
-                }}
+                <div
+                  className="absolute inset-0 bg-black/50 rounded-lg"
+                  style={{
+                    top: "21%",
+                    left: "0",
+                    right: "0",
+                    bottom: "0",
+                  }}
                 ></div>
               )}
             </div>
-            
+
             <div className="absolute bottom-[10vh]">
-              {paymentDone ?                 
-              <Image src={qrCode} alt="qr-code" className="scale-75"  width={400} height={400}
-                style={{
-                  transition: "all",
-                  animationDuration: "500ms"
-                }}
-              /> : 
-              <Image src={QuestionMark} alt="Question Mark" className="scale-100" 
-                style={{
-                  transition: "all",
-                  animationDuration: "500ms",
-                }}
-              />
-              }
+              {paymentDone ? (
+                <Image
+                  src={qrCode}
+                  alt="qr-code"
+                  className="scale-75"
+                  width={400}
+                  height={400}
+                  style={{
+                    transition: "all",
+                    animationDuration: "500ms",
+                  }}
+                />
+              ) : (
+                <Image
+                  src={QuestionMark}
+                  alt="Question Mark"
+                  className="scale-100"
+                  style={{
+                    transition: "all",
+                    animationDuration: "500ms",
+                  }}
+                />
+              )}
             </div>
           </div>
           <div className="flex items-center justify-center w-full mt-8">
@@ -201,8 +219,7 @@ const router = useRouter();
           </div>
         </div>
 
-        <div className="relative min-h-[80vh] sm:min-h-[50vh] font-sans text-white background-container">   
-        </div>
+        <div className="relative min-h-[80vh] sm:min-h-[50vh] font-sans text-white background-container"></div>
       </div>
       {/* {console.log("Current registeredEventId:", registeredEventId)}
       {registeredEventId ? (
@@ -220,7 +237,7 @@ const router = useRouter();
       )} */}
 
       {/* Confirmation Popup */}
-           {/* Confirmation Popup */}
+      {/* Confirmation Popup */}
       {/* {showConfirmationPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg max-w-md mx-4">
