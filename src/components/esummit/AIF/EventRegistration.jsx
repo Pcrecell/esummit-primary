@@ -10,6 +10,7 @@ const EventRegistration = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const validateField = (name, value) => {
     let error = "";
@@ -113,7 +114,7 @@ const EventRegistration = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       console.log("Form submitted:", formData);
-      alert("Registration submitted successfully!");
+      setIsSubmitted(true);
       // Reset form after successful submission
       setFormData({
         fullName: "",
@@ -124,6 +125,15 @@ const EventRegistration = () => {
       });
       setErrors({});
     }
+  };
+
+  const handleJoinDiscord = () => {
+    // Replace with your actual Discord server invite link
+    window.open("https://discord.gg/your-server-invite", "_blank");
+  };
+
+  const handleBackToForm = () => {
+    setIsSubmitted(false);
   };
 
   const isFormValid = () => {
@@ -141,10 +151,132 @@ const EventRegistration = () => {
     );
   };
 
-  return (
-    <div className="relative flex items-center justify-center w-full bg-black/0 "
+  // Success Message Component
+  if (isSubmitted) {
+    return (
+      <div className="relative flex items-center justify-center w-full bg-black/0">
+        {/* Desktop Success Layout */}
+        <div className="relative max-w-2xl w-full flex items-center justify-center md:min-h-[600px] bg-transparent">
+          <img
+            src="https://i.ibb.co/qMjzxJcd/download-70-removebg-preview-cleanup-1.png"
+            alt="Decorative Frame"
+            className="absolute inset-0 w-full h-full hidden md:block object-contain pointer-events-none select-none"
+          />
 
-    >
+          {/* Success Content */}
+          <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 text-center">
+            <div className="space-y-6">
+              {/* Success Icon */}
+              <div className="flex justify-center mb-8">
+                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
+                  <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Thank you message */}
+              <h2
+                className="text-3xl font-bold text-white mb-4"
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                Thank You!
+              </h2>
+              
+              <p
+                className="text-white text-lg mb-8 leading-relaxed"
+                style={{ fontFamily: "Inria Serif, serif" }}
+              >
+                Your registration has been submitted successfully. Welcome to Alice in Founderland!
+              </p>
+
+              {/* Discord Button */}
+              <div className="space-y-4">
+                <button
+                  onClick={handleJoinDiscord}
+                  className="group transform flex justify-center items-center transition-all duration-300 hover:scale-110 relative"
+                >
+                  <img
+                    src="https://i.ibb.co/C3kCrrPy/The-PNG-Stock-removebg-preview-1.png"
+                    alt="Join Discord"
+                    className="h-32 w-auto transition-all duration-300 hover:brightness-110 hover:drop-shadow-2xl filter drop-shadow-lg"
+                  />
+                  <span
+                    className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg tracking-wider transition-all duration-300"
+                    style={{ fontFamily: "Cinzel, serif" }}
+                  >
+                    JOIN DISCORD
+                  </span>
+                </button>
+
+                {/* Back to form link */}
+                <button
+                  onClick={handleBackToForm}
+                  className="text-yellow-400 hover:text-yellow-300 underline text-sm transition-colors duration-300"
+                  style={{ fontFamily: "Inria Serif, serif" }}
+                >
+                  Register another participant
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Success Layout */}
+        <div className="block md:hidden w-full max-w-sm mx-auto">
+          <div className="bg-gradient-to-b from-gray-900/50 to-black/80 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30 shadow-2xl text-center">
+            {/* Success Icon */}
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Thank you message */}
+            <h2
+              className="text-2xl font-bold text-white mb-4"
+              style={{ fontFamily: "Cinzel, serif" }}
+            >
+              Thank You!
+            </h2>
+            
+            <p
+              className="text-white text-base mb-8 leading-relaxed"
+              style={{ fontFamily: "Inria Serif, serif" }}
+            >
+              Your registration has been submitted successfully. Welcome to Alice in Founderland!
+            </p>
+
+            {/* Discord Button */}
+            <div className="space-y-4">
+              <button
+                onClick={handleJoinDiscord}
+                className="px-8 py-3 rounded-full font-bold text-lg tracking-wider transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400 hover:shadow-lg hover:shadow-blue-500/25 w-full"
+                style={{ fontFamily: "Cinzel, serif" }}
+              >
+                JOIN DISCORD
+              </button>
+
+              {/* Back to form link */}
+              <button
+                onClick={handleBackToForm}
+                className="text-yellow-400 hover:text-yellow-300 underline text-sm transition-colors duration-300"
+                style={{ fontFamily: "Inria Serif, serif" }}
+              >
+                Register another participant
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Original Form Component (unchanged)
+  return (
+    <div className="relative flex items-center justify-center w-full bg-black/0 ">
       {/* Image container */}
       <div className="relative max-w-2xl w-full flex items-center justify-center md:min-h-[600px] bg-transparent">
         <img
@@ -410,7 +542,7 @@ const EventRegistration = () => {
                 />
                 {errors.email && (
                   <p className="text-red-400 text-xs mt-1 font-medium">
-                    {errors.errors}
+                    {errors.email}
                   </p>
                 )}
               </div>
