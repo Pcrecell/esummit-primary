@@ -13,8 +13,8 @@ export default function HomePage() {
       <WhyEsummit/>
       {/* <Support /> */}
       <div className="lg:hidden">
-        <Event />
-      </div>
+        <Event /> {/* For Large Screen Devices Events Page Is Being Loaded in WhyE-Summit Component To Achieve The Parallax Effecr*/}
+      </div> 
       <PastSpeakers/>
       <PastSponser/>
     </main>

@@ -2,8 +2,6 @@
 import { cn } from "../../../lib/utils/cn.js"
 import { IconMenu2, IconX } from "@tabler/icons-react"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react"
-import logo from "../../../../public/Images/esummit/navbar/logo.png"
-import cell from "../../../../public/images/esummit/navbar/ecell-logo.png"
 import React, { useRef, useState } from "react"
 import Image from "next/image.js"
 import { Skeleton } from '@mui/material';

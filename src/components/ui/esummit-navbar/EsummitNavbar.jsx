@@ -12,23 +12,15 @@ import {
 import { useState, useEffect } from "react";
 import { authAPI } from "@/lib/services/api.js";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
 
 export default function EsummitNavbar() {
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { userData, profile, loading } = useAuth();
 
-  useEffect(() => {
-    // Check session on mount
-    (async () => {
-      try {
-        const res = await authAPI.verifyToken();
-        setIsAuthenticated(res.success);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    })();
-  }, []);
 
   const leftItems = [
     { name: "Home", link: "/" },
@@ -39,15 +31,16 @@ export default function EsummitNavbar() {
     { name: "Theme", link: "/theme" },
   ];
 
-  const navRight = [{ name: "Contact", link: "/contact" }];
+  const navRight = [
+    { name: "Contact", link: "/contact" },
+    { name: "FAQ", link: "/faq" }
+  ];
 
   const handleLogout = async () => {
     try {
       const response = await authAPI.logout();
       if (response.success) {
-        setIsAuthenticated(false);
-        localStorage.removeItem("login");
-        window.location.href = "/";
+        router.push("/")
       }
     } catch (error) {
       console.error("Logout error:", error);
@@ -70,7 +63,7 @@ export default function EsummitNavbar() {
                 rightItems={navRight}
                 visible={visible}
               >
-                {isAuthenticated ? (
+                {userData ? (
                   <div className="relative group">
                     <div className="cursor-pointer">
                       <img
@@ -159,7 +152,7 @@ export default function EsummitNavbar() {
                       ) : null}
                     </div>
                   ))}
-                  {isAuthenticated ? (
+                  {userData ? (
                     <>
                       <a
                         href="/dashboard"
@@ -172,9 +165,9 @@ export default function EsummitNavbar() {
                         onClick={async () => {
                           const response = await authAPI.logout();
                           if (response.success) {
-                            setIsAuthenticated(false);
+                            // setIsAuthenticated(false);
                             // Redirect to home or login page
-                            window.location.href = "/";
+                            router.push("/")
                           }
                           setIsMobileMenuOpen(false);
                         }}

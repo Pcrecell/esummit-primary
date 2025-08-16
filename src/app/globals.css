@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Milker:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Girassol&family=League+Spartan:wght@100..900&display=swap');  
 @import "tailwindcss";
 
+/* User-provided Google Fonts links converted to @import (added per request) */
 
 /* @import url('https://fonts.googleapis.com/css2?family=Tourney:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
@@ -19,6 +22,13 @@
   cursor: pointer !important;
 }
 
+.font-leage-spartan {
+  font-family: 'League Spartan', sans-serif;
+}
+
+.font-girassol {
+  font-family: 'Girassol', sans-serif;
+}
 
 * { 
   user-select: none;
@@ -68,9 +78,19 @@ body {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
 .scroll-left {
   display: flex;
   animation: scrollLeft 10s linear infinite;
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+  display: flex;
 }
 .fade-mask {
   mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, black);
@@ -689,9 +709,9 @@ code {
   z-index: -1; 
 
   /*background-image: url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%201000002385%20(2).webp");*/
-  background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
+  /* background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
   background-position: calc(50% + 30px) top;
-  background-size: cover;
+  background-size: cover; */
 
   transform: rotate(180deg);
   filter: blur(1px);
@@ -703,12 +723,12 @@ code {
   height: 100%;
 }
 
-.hero-container{
+/* .hero-container{
 background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
   background-position: calc(50% + 100px) center;
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 /* src/auth/ForgotPassword.css */
 .forgot-password-page {
   display: flex;

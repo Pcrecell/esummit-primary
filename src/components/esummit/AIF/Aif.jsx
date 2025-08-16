@@ -24,14 +24,23 @@ const cinzel = Cinzel({
 });
 
 export default function Aif() {
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
+  const [isPaymentDone, setIsPaymentDone] = useState(false)
 
   const openRegistration = () => {
-    setIsRegistrationOpen(true);
+    setIsRegistrationPopupOpen(true);
   };
 
   const closeRegistration = () => {
-    setIsRegistrationOpen(false);
+    setIsRegistrationPopupOpen(false);
+  };
+
+  // Handle backdrop click to close modal
+  const handleBackdropClick = (e) => {
+    // Only close if clicking on the backdrop itself, not on child elements
+    if (e.target === e.currentTarget) {
+      closeRegistration();
+    }
   };
 
   return (
@@ -40,7 +49,7 @@ export default function Aif() {
         className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center px-4 md:px-8"
         style={{
           backgroundColor: "#011209",
-          backgroundImage: `url('https://i.ibb.co/vCYRnxjf/Group-17.png')`,
+          backgroundImage: `url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group-17.webp?updatedAt=1755288302456')`,
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
@@ -103,9 +112,10 @@ export default function Aif() {
             <button
               className="relative cursor-pointer hover:scale-105 transition-transform duration-200"
               onClick={openRegistration}
+              // disabled={isPaymentDone}
             >
               <img
-                src="https://i.ibb.co/Vccv1fBw/Banner-ideas-removebg-preview-1.png"
+                src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Banner-ideas-removebg-preview-1.webp?updatedAt=1755288301404"
                 alt="Register Here"
                 className="w-auto h-36 lg:h-32 object-contain"
               />
@@ -133,15 +143,21 @@ export default function Aif() {
       <Rules />
 
       {/* Registration Popup Modal */}
-      {isRegistrationOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-white rounded-lg shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-y-auto">
+      {isRegistrationPopupOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black md:bg-black/50 cursor-pointer"
+          onClick={handleBackdropClick}
+        >
+          <div 
+            className="bg-transparent rounded-lg shadow-2xl max-w-4xl w-full mx-4 max-h-[95vh] md:max-h-[95vh] overflow-y-auto cursor-default"
+            onClick={(e) => e.stopPropagation()} 
+          >
             <div className="relative">
               <button
                 onClick={closeRegistration}
-                className="absolute top-4 right-4 z-60 text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                className="absolute top-0 right-0 md:top-8 md:right-4 z-60 text-gray-500 bg-white hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
               >
-                ×
+                <p className="pb-2 font-medium">x</p>
               </button>
               <EventRegistration onClose={closeRegistration} />
             </div>

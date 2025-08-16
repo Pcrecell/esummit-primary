@@ -63,7 +63,7 @@ export const trusted_by_companies = {
 
 export const esummit_hero = {
   esummit_logo: {link: "https://i.postimg.cc/C1s2B7Ds/image.png", alt: "E-Summit Logo"},
-  esummit_hero_bg: {link: "https://i.postimg.cc/brwjzrrg/heroimg.avif", alt: "Medusa"}
+  esummit_hero_bg: {link: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/heroimg.avif?updatedAt=1755291548023", alt: "Medusa"}
 }
 
 //E-Cell Gallery Page
@@ -155,7 +155,7 @@ export const user_auth_pages = {
 //E-Summit Events Page
 
 export const esummit_events_page = {
-  hero_section: {link: "https://i.postimg.cc/66zYM1HJ/coming-soon.avif", alt: "Hero Section Image"}
+  hero_section: {link: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/coming-soon.avif?updatedAt=1755290813114", alt: "Hero Section Image"}
 }
 
 export const liaison_officers = {

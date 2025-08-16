@@ -31,8 +31,8 @@ const JoinTeamPage = () => {
     if (!validateForm()) return;
     console.log("Joining team:", { 
       teamName, 
-      yourUId, 
-      teamLeadUId, 
+      yourElixirId, 
+      teamLeadElixirId, 
       teamId 
     });
     router.push('/success'); 

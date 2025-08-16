@@ -8,6 +8,7 @@ import EventsCalendar from "./EventsCalendar";
 import EventsMap from "./EventsMap";
 import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const EventsPage = () => {
   const desktopScrollRef = useRef(null);
@@ -15,6 +16,7 @@ const EventsPage = () => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const { userData, profile, loading } = useAuth();
   // note: scroll listeners are attached after events are derived
 
   const tabs = [
@@ -32,7 +34,7 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://i.ibb.co/7xWdGYwv/hack-r.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/hack-r.webp?updatedAt=1755242215568",
         route: "/pandoras-paradox",
       },
       {
@@ -42,7 +44,7 @@ const EventsPage = () => {
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-        image: "https://i.ibb.co/QFJHRt47/expo-l.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/expo-l.webp?updatedAt=1755242215588",
         route: "/expo",
       },
     ],
@@ -54,7 +56,7 @@ const EventsPage = () => {
         coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
-        image: "https://i.ibb.co/gZQgcF5j/oracle-r.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/oracle-r.webp?updatedAt=1755242215530",
         route: "/oracle",
       },
       {
@@ -64,8 +66,8 @@ const EventsPage = () => {
         coordinates: [20.352904448394906, 85.81402616826391],
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
-        image: "https://i.ibb.co/YFnnwgGP/aif-l.png",
-        route: "/aif",
+        image: "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
+        route: "/AIF",
       },
       {
         title: "EXPO",
@@ -74,7 +76,7 @@ const EventsPage = () => {
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-        image: "https://i.ibb.co/4Rky463J/expo-r.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/expo-r.webp?updatedAt=1755242215505",
         route: "/expo",
       },
       {
@@ -84,7 +86,7 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
         route: "/pandoras-paradox",
       },
     ],
@@ -96,7 +98,7 @@ const EventsPage = () => {
         coordinates: [20.350485952792063, 85.82069263354178],
         description:
           "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
-        image: "https://i.ibb.co/jPCnVcs0/casex-r.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/casex-r.webp?updatedAt=1755242215640",
         route: "/case-x",
       },
       {
@@ -106,7 +108,7 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://i.ibb.co/twjYHtFw/hack-l.png",
+        image: "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
         route: "/pandoras-paradox",
       },
     ],
@@ -117,8 +119,13 @@ const EventsPage = () => {
     setCurrentCardIndex(0); // Reset to first card when date changes
   };
   const handleKnowMore = (route) => {
-    if (!route) return;
-    router.push(route);
+    if (route && userData) {
+      router.push(route);
+    }
+    else {
+      // Redirect to login page if not logged in
+      router.push("/login");
+    }
   };
 
   // Smoothly scroll desktop carousel to a specific index (RAF-based)
@@ -206,7 +213,7 @@ const EventsPage = () => {
           <div className="relative z-10 w-full h-full">
             {/* Vertical Pagination (left side) */}
             {currentEvents.length > 1 && (
-              <div className="absolute left-2 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
+              <div className="absolute -left-1 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
         {currentEvents.map((_, index) => (
                   <button
                     key={`v-dot-${index}`}
@@ -247,7 +254,7 @@ const EventsPage = () => {
                     </div>
                       {/* Up/Down controls (right side) */}
                       {currentEvents.length > 1 && (
-                        <div className="hidden lg:flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2 z-20">
+                        <div className="hidden lg:flex flex-col gap-2 absolute -right-8 top-1/2 -translate-y-1/2 z-20">
                           <button
                             aria-label="Previous event"
                             onClick={() => scrollDesktopToIndex(Math.max(0, currentCardIndex - 1))}
@@ -361,7 +368,7 @@ const EventsPage = () => {
                       >
                         Know More
                       </button>
-                    </div>
+                    </div>  
                   </div>
                 </div>
               ))}
