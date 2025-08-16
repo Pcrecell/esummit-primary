@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Milker:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Girassol&family=League+Spartan:wght@100..900&display=swap');  
 @import "tailwindcss";
 
+/* User-provided Google Fonts links converted to @import (added per request) */
 
 /* @import url('https://fonts.googleapis.com/css2?family=Tourney:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
@@ -19,6 +22,13 @@
   cursor: pointer !important;
 }
 
+.font-leage-spartan {
+  font-family: 'League Spartan', sans-serif;
+}
+
+.font-girassol {
+  font-family: 'Girassol', sans-serif;
+}
 
 * { 
   user-select: none;
