@@ -51,7 +51,7 @@ const PaymentChoice = () => {
         <div
           className="w-full h-[700px] bg-center bg-no-repeat bg-contain text-white flex items-center justify-center"
           style={{
-            backgroundImage: `url('https://i.postimg.cc/9fnRYv6K/KIITESUMMIT-POPUP-PAY.png')`,
+            backgroundImage: `url('https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAY.webp?updatedAt=1755353166962')`,
           }}
         >
           <div className="flex flex-col gap-y-2 items-center">
@@ -66,7 +66,7 @@ const PaymentChoice = () => {
               className="group relative w-40 cursor-pointer"
             >
                 <img
-                  src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
+                  src="https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAYButtoon.webp?updatedAt=1755353301612"
                   alt="Pay Now"
                   className="w-full transition duration-300 group-hover:brightness-50 z-0"
                 />
@@ -80,7 +80,7 @@ const PaymentChoice = () => {
               onClick={handlePaymentLater}
             >
               <img
-                src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
+                src="https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAYButtoon2.webp?updatedAt=1755353301688"
                 alt="Walk Away"
                 className="w-full transition duration-300 group-hover:brightness-50 z-0"
               />

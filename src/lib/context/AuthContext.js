@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      console.log("Firebase User: ", firebaseUser)
+      // console.log("Firebase User: ", firebaseUser)
       if (firebaseUser) {
         setUserData(firebaseUser);
         // Fetch user profile from Firestore

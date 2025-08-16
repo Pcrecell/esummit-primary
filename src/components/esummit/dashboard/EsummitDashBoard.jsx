@@ -25,7 +25,6 @@ const EsummitDashBoard = () => {
     "https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%2013.png";
   const router = useRouter();
 
-  console.log(profile);
 
   const copyToClipboard = async (text) => {
     try {
@@ -154,7 +153,7 @@ const EsummitDashBoard = () => {
         <div className="relative min-h-[80vh] font-sans text-white hero-container" />
 
         {/* UUID Section - Only show when payment is done - Positioned just above QR */}
-        {profile.payment && (
+        {profile?.payment && (
           <div className="absolute top-[93vh] sm:top-[103vh] left-1/2 -translate-x-1/2 z-40 w-64">
             <div
               className="bg-black/90 backdrop-blur-sm border-b-3 p-4 shadow-lg"
@@ -224,7 +223,7 @@ const EsummitDashBoard = () => {
         )}
 
         {/* Username Section - Only show when payment is done - Positioned under QR */}
-        {profile.payment && (
+        {profile?.payment && (
           <div className="absolute top-[135vh] sm:top-[145vh] left-1/2 -translate-x-1/2 z-40 w-64">
             <div
               className="bg-black/90 backdrop-blur-sm border-t-3 p-4 shadow-lg"
@@ -240,7 +239,7 @@ const EsummitDashBoard = () => {
                   </span>
                   <span className="text-xl">
                     {profile?.firstname
-                      ? `${profile.firstname} ${profile.lastname || ""}`.trim()
+                      ? `${profile?.firstname} ${profile?.lastname || ""}`.trim()
                       : "USER NAME"}
                   </span>
                 </p>
@@ -253,7 +252,7 @@ const EsummitDashBoard = () => {
           <div className="relative">
             <div className="relative">
               <Image src={DashBoardCard} alt="card" className="w-full" />
-              {!profile.payment && (
+              {!profile?.payment && (
                 <div
                   className="absolute inset-0 bg-black/50 rounded-lg"
                   style={{
@@ -267,7 +266,7 @@ const EsummitDashBoard = () => {
             </div>
 
             <div className="absolute bottom-[10vh]">
-              {profile.payment ? (
+              {profile?.payment ? (
                 // <Image src={qrCode} alt="qr-code" className="scale-75"  width={400} height={400}
                 //   style={{
                 //     transition: "all",
@@ -295,8 +294,8 @@ const EsummitDashBoard = () => {
         
             <button
               onClick={() => router.replace("/payment")}
-              hidden={(profile.payment)}
-              disabled={(profile.payment)}
+              hidden={(profile?.payment)}
+              disabled={(profile?.payment)}
               className="py-4 px-8 bg-gradient-to-br font-poppins from-black to-green-600 text-white shadow-lg shadow-[#abd65d] border-b-2 border-white text-2xl rounded-2xl hover:shadow-[#abd65d] hover:shadow-2xl transition-all duration-[1000ms]"
             >
               Pay Now
