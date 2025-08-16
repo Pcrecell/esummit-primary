@@ -54,7 +54,7 @@ const PaymentChoice = () => {
             backgroundImage: `url('https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAY.webp?updatedAt=1755353166962')`,
           }}
         >
-          <div className="flex flex-col gap-y-2 items-center">
+          <div className="flex flex-col md:gap-y-2 items-center">
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Secure your spot at E-Summit <br />– but don’t miss out!
             </p>
