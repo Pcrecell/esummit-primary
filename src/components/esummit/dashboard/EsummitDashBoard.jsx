@@ -285,7 +285,8 @@ const EsummitDashBoard = () => {
             {/* FAQ Link */}
             <div className="mt-4">
               <a
-                href="/faq"
+                // href="/faq"
+                onClick={() => {router.push("/faq")}}
                 className="text-white hover:text-green-400 underline font-poppins font-bold text-sm transition-colors duration-300"
               >
                 Have questions? Check our FAQ
