@@ -1,10 +1,10 @@
-import Dashboard from '@/components/esummit/PandorasParadox/dashboard/Dashboard'
+import DashboardFetch from '@/components/esummit/PandorasParadox/Dashboard'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Dashboard />
+        <DashboardFetch />
     </div>
   )
 }
