@@ -2,11 +2,10 @@
 import { cn } from "../../../lib/utils/cn.js"
 import { IconMenu2, IconX } from "@tabler/icons-react"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react"
-import logo from "../../../../public/Images/esummit/navbar/logo.png"
-import cell from "../../../../public/images/esummit/navbar/ecell-logo.png"
 import React, { useRef, useState } from "react"
 import Image from "next/image.js"
 import { Skeleton } from '@mui/material';
+import { useRouter } from "next/navigation.js"
 
 export const Navbar = ({ children, className }) => {
     const ref = useRef(null)
@@ -33,6 +32,9 @@ export const Navbar = ({ children, className }) => {
 export const NavBody = ({ leftItems = [], rightItems = [], children, className, visible }) => {
     const [cellLoaded, setCellLoaded] = useState(false);
     const [cellErrored, setCellErrored] = useState(false);
+    // Shared state for both left and right nav items
+    const [hovered, setHovered] = useState(null);
+    const [clicked, setClicked] = useState(null);
 
     return (
         <motion.div
@@ -49,6 +51,7 @@ export const NavBody = ({ leftItems = [], rightItems = [], children, className, 
                 "relative z-[60] mx-auto flex max-w-7xl items-center justify-between rounded-full bg-black/40 px-8 py-2",
                 className
             )}
+            onMouseLeave={() => setHovered(null)}
         >
             <div className="flex items-center gap-8 flex-grow">
                 <a href="https://kiitecell.org" className="flex items-center px-2 py-1">
@@ -82,9 +85,16 @@ export const NavBody = ({ leftItems = [], rightItems = [], children, className, 
                     />
                   )}
                 </a>
-                <NavItems items={leftItems} />
+                <NavItems 
+                    items={leftItems} 
+                    hovered={hovered}
+                    setHovered={setHovered}
+                    clicked={clicked}
+                    setClicked={setClicked}
+                    itemIndexOffset={0}
+                    section="left"
+                />
             </div>
-
 
             <div className="absolute left-1/2 -translate-x-1/2">
                 <NavbarLogo />
@@ -92,41 +102,66 @@ export const NavBody = ({ leftItems = [], rightItems = [], children, className, 
 
             <div className="flex items-center gap-10">
                 <div className="flex items-center gap-4">
-                    <NavItems items={rightItems} />
+                    <NavItems 
+                        items={rightItems}
+                        hovered={hovered}
+                        setHovered={setHovered}
+                        clicked={clicked}
+                        setClicked={setClicked}
+                        itemIndexOffset={leftItems.length}
+                        section="right"
+                    />
                 </div>
                 <div className="flex items-center gap-2">
                     {children}
                 </div>
             </div>
-
         </motion.div>
     )
 }
 
-export const NavItems = ({ items = [], className }) => {
-    const [hovered, setHovered] = useState(null);
-    const [clicked, setClicked] = useState(null);
+export const NavItems = ({ 
+    items = [], 
+    className, 
+    hovered, 
+    setHovered, 
+    clicked, 
+    setClicked, 
+    itemIndexOffset = 0,
+    section = "left" // "left" or "right"
+}) => {
+    const router = useRouter();
+
+    // Determine if the hovered/clicked item is in this section
+    const isLeftSection = section === "left";
+    const sectionStart = itemIndexOffset;
+    const sectionEnd = itemIndexOffset + items.length - 1;
+    
+    const isHoveredInThisSection = hovered !== null && hovered >= sectionStart && hovered <= sectionEnd;
+    const isClickedInThisSection = clicked !== null && clicked >= sectionStart && clicked <= sectionEnd;
 
     return (
         <motion.div
-            onMouseLeave={() => setHovered(null)}
             className={cn("flex flex-row items-center text-sm font-medium space-x-1", className)}
         >
             {items.map((item, idx) => {
-                const isActive = hovered === idx || clicked === idx;
+                const globalIdx = idx + itemIndexOffset;
+                const isHovered = hovered === globalIdx;
+                const isClicked = clicked === globalIdx;
+                const isActive = isHovered || isClicked;
                 const isDropdown = !!item.dropdown;
+                
                 return (
                     <div
-                        key={`nav-${idx}`}
+                        key={`nav-${globalIdx}`}
                         className="relative"
-                        onMouseEnter={() => setHovered(idx)}
-                        onMouseLeave={() => setHovered(null)}
-                        onClick={() => setClicked(clicked === idx ? null : idx)}
+                        onMouseEnter={() => setHovered(globalIdx)}
+                        onClick={() => setClicked(clicked === globalIdx ? null : globalIdx)}
                     >
                         {/* Use Link here for items with a direct link */}
                         {item.link && !isDropdown ? (
                             <a
-                                href={item.link}
+                                onClick={() => {router.push(item.link)}}
                                 className={cn(
                                     "relative px-3 py-1",
                                     isActive
@@ -134,12 +169,24 @@ export const NavItems = ({ items = [], className }) => {
                                         : "text-neutral-300 hover:text-neutral-700 dark:text-neutral-300"
                                 )}
                             >
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="hovered"
-                                        className="absolute inset-0 rounded-full bg-gray-100 dark:bg-neutral-800"
-                                    />
-                                )}
+                                <AnimatePresence>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId={isHoveredInThisSection ? `hovered-${section}` : undefined}
+                                            initial={isHoveredInThisSection ? undefined : { opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.8 }}
+                                            transition={{ 
+                                                type: "spring", 
+                                                stiffness: 400, 
+                                                damping: 30,
+                                                opacity: { duration: 0.15 },
+                                                scale: { duration: 0.15 }
+                                            }}
+                                            className="absolute inset-0 rounded-full bg-gray-100 dark:bg-neutral-800"
+                                        />
+                                    )}
+                                </AnimatePresence>
                                 <span className="relative z-10">{item.name}</span>
                             </a>
                         ) : (
@@ -152,12 +199,24 @@ export const NavItems = ({ items = [], className }) => {
                                         : "text-neutral-300 hover:text-neutral-700 dark:text-neutral-300"
                                 )}
                             >
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="hovered"
-                                        className="absolute inset-0 rounded-full bg-gray-100 dark:bg-neutral-800"
-                                    />
-                                )}
+                                <AnimatePresence>
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId={isHoveredInThisSection ? `hovered-${section}` : undefined}
+                                            initial={isHoveredInThisSection ? undefined : { opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.8 }}
+                                            transition={{ 
+                                                type: "spring", 
+                                                stiffness: 400, 
+                                                damping: 30,
+                                                opacity: { duration: 0.15 },
+                                                scale: { duration: 0.15 }
+                                            }}
+                                            className="absolute inset-0 rounded-full bg-gray-100 dark:bg-neutral-800"
+                                        />
+                                    )}
+                                </AnimatePresence>
                                 <span className="relative z-10">{item.name}</span>
                             </button>
                         )}
@@ -176,8 +235,8 @@ export const NavItems = ({ items = [], className }) => {
                                         {item.dropdown.map((subItem, subIdx) => (
                                             <a
                                                 key={`dropdown-${subIdx}`}
-                                                href={subItem.link}
-                                                className="text-white hover:text-neutral-300 text-sm"
+                                                onClick={() => {router.push(subItem.link)}}
+                                                className="text-white hover:text-neutral-300 text-sm cursor-pointer"
                                             >
                                                 {subItem.name}
                                             </a>

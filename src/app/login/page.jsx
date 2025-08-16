@@ -19,7 +19,7 @@ export default function Login() {
   const router = useRouter();
 
 
-  const { userData, profile } = useAuth();
+  const { userData, setUserData, profile, setProfile, _} = useAuth();
   useEffect(() => {
     if (!loading) {
       if (userData) {

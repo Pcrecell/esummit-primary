@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      // console.log("Firebase User: ", firebaseUser)
       if (firebaseUser) {
         setUserData(firebaseUser);
         console.log("Firebase user data:", firebaseUser);
@@ -29,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ userData, profile, loading}}>
+    <AuthContext.Provider value={{ userData, setUserData, profile, setProfile, loading}}>
       {children}
     </AuthContext.Provider>
   );

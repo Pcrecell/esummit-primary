@@ -15,7 +15,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 
 export default function HomePage() {
   const aboutRef = useRef(null);
-  const { userData, profile, loading } = useAuth();
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
   const router = useRouter();
   
     useEffect(() => {
@@ -46,9 +46,9 @@ export default function HomePage() {
         <About />
       </div>
       <MoreInfo />
-      {/* <div id="registration-section">
+      <div id="registration-section">
         <Registration />
-      </div> */}
+      </div>
       <Footer />
     </div>
   );

@@ -6,7 +6,8 @@ import TimeVenue from "./TimeVenue";
 import WhatsIt from "./WhatsIt";
 import Rules from "./Rules";
 import About from "./About";
-import EventRegistration from "./EventRegistration"; // Import the EventRegistration component
+import EventRegistration from "./EventRegistration";
+import RegistrationSuccess from "./RegistrationSuccess";
 
 // Configure fonts
 const cinzelDecorative = Cinzel_Decorative({
@@ -25,14 +26,34 @@ const cinzel = Cinzel({
 
 export default function Aif() {
   const [isRegistrationPopupOpen, setIsRegistrationPopupOpen] = useState(false);
-  const [isPaymentDone, setIsPaymentDone] = useState(false)
+  const [isPaymentDone, setIsPaymentDone] = useState(false);
+  const [showSuccessPage, setShowSuccessPage] = useState(false);
+  const [registeredUserData, setRegisteredUserData] = useState(null);
 
   const openRegistration = () => {
     setIsRegistrationPopupOpen(true);
+    setShowSuccessPage(false); // Reset success page when opening registration
   };
 
   const closeRegistration = () => {
     setIsRegistrationPopupOpen(false);
+    setShowSuccessPage(false);
+    setRegisteredUserData(null);
+  };
+
+  const handleRegistrationSuccess = (userData) => {
+    setRegisteredUserData(userData);
+    setShowSuccessPage(true);
+  };
+
+  const handleJoinDiscord = () => {
+    // Replace with your actual Discord invite link
+    const discordInviteLink = "https://discord.gg/your-server-invite";
+    window.open(discordInviteLink, "_blank", "noopener,noreferrer");
+  };
+
+  const handleBackToForm = () => {
+    setShowSuccessPage(false);
   };
 
   // Handle backdrop click to close modal
@@ -159,7 +180,20 @@ export default function Aif() {
               >
                 <p className="pb-2 font-medium">x</p>
               </button>
-              <EventRegistration onClose={closeRegistration} />
+              
+              {/* Conditionally render either registration form or success page */}
+              {!showSuccessPage ? (
+                <EventRegistration 
+                  onClose={closeRegistration}
+                  onRegistrationSuccess={handleRegistrationSuccess}
+                />
+              ) : (
+                <RegistrationSuccess
+                  onClose={closeRegistration}
+                  onJoinDiscord={handleJoinDiscord}
+                  userData={registeredUserData}
+                />
+              )}
             </div>
           </div>
         </div>

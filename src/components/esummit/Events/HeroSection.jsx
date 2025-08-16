@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { esummit_events_page } from '../../../../public/images/image-links';
-import { Anton } from "next/font/google"
+// import { Anton } from "next/font/google"
 
 const HeroSection = () => {
 

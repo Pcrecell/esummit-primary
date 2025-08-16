@@ -37,7 +37,7 @@ const ScrollOne = () => {
 
 
      const [isAuthenticated, setIsAuthenticated] = useState(false);
-     const { userData, profile, loading } = useAuth();
+     const { userData, setUserData, profile, setProfile, loading} = useAuth();
      const router = useRouter();
 
 

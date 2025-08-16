@@ -21,7 +21,7 @@ export default function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const { userData, profile,loading } = useAuth();
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
 useEffect(() => {
   if (userData) {

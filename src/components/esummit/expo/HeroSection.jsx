@@ -76,7 +76,7 @@ const HeroSection = () => {
             className="bg-gray-200 hover:bg-green-700 text-black font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base min-w-[160px] sm:min-w-[180px] cursor-pointer"
             onClick={handleRegisterClick}
           >
-            <span>Registration Coming Soon</span>
+            <span>Registration</span>
             <p style={{ fontFamily: 'Arial, sans-serif' }}>&#x2197;</p>
           </button>
         </div>
