@@ -83,9 +83,7 @@ const HeroSection = () => {
                   height={deviceType === "mobile" ? 70 : 100}
                   className="relative z-10 cursor-pointer transition-transform duration-500 ease-out group-hover:scale-102 group-hover:-translate-y-0.5"
                 />
-                {/* Shine sweep */}
-                {/* <span className="pointer-events-none rounded-full absolute inset-0 z-20 -translate-x-[120%] bg-gradient-to-r from-transparent via-amber-100/60 to-transparent skew-x-12 transition-transform duration-700 ease-out group-hover:translate-x-[120%]" /> */}
-                {/* Centered text overlay */}
+                
                 <div className="absolute inset-0 z-30 flex items-center justify-center">
                   <span className={`${poppins.className} text-white font-semibold text-xs sm:text-xs md:text-base lg:text-base transition-all duration-500 group-hover:scale-102 group-hover:-translate-y-0.5 group-hover:bg-amber-300/25 px-4 py-2 rounded-full tracking-wide pointer-events-none select-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]`} style={{background: 'transparent'}}>
                     Registrations Starting Soon

@@ -310,12 +310,12 @@ const Dashboard = () => {
                       handleJoinTeamChange("yourName", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                    placeholder="Enter your name"
+                    placeholder="ENTER YOUR NAME"
                   />
                 </div>
                 <div>
                   <label className="block text-white/90 text-xs sm:text-sm font-mono mb-2">
-                    Your EID
+                    Your UID
                   </label>
                   <input
                     type="text"
@@ -324,7 +324,7 @@ const Dashboard = () => {
                       handleJoinTeamChange("yourEid", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                    placeholder="Enter EID"
+                    placeholder="Enter UID"
                   />
                 </div>
                 <div>
@@ -399,12 +399,12 @@ const Dashboard = () => {
                       handleCreateTeamChange("yourName", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                    placeholder="Enter your name"
+                    placeholder="ENTER YOUR NAME"
                   />
                 </div>
                 <div>
                   <label className="block text-white/90 text-xs sm:text-sm font-mono mb-2">
-                    Your Elixer
+                    YOUR UID
                   </label>
                   <input
                     type="text"
@@ -413,7 +413,7 @@ const Dashboard = () => {
                       handleCreateTeamChange("yourElixer", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                    placeholder="Enter your elixer"
+                    placeholder="ENTER YOUR UID"
                   />
                 </div>
                 <div>
@@ -427,7 +427,7 @@ const Dashboard = () => {
                       handleCreateTeamChange("teamName", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                    placeholder="Enter team name"
+                    placeholder="ENTER TEAM NAME"
                   />
                 </div>
                 <div className="flex justify-center pt-2">
@@ -505,21 +505,21 @@ const Dashboard = () => {
                       value={newTeammateName}
                       onChange={(e) => setNewTeammateName(e.target.value)}
                       className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                      placeholder="Enter teammate name"
+                      placeholder="ENTER TEAMMATE'S NAME"
                       disabled={isAddingMember}
                     />
                   </div>
 
                   <div>
                     <label className="block text-white/90 text-sm font-mono mb-2 tracking-wider">
-                      YOUR TEAMMATE ELIXIR ID:
+                      YOUR TEAMMATE UID:
                     </label>
                     <input
                       type="text"
                       value={newTeammateId}
                       onChange={(e) => setNewTeammateId(e.target.value)}
                       className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                      placeholder="Enter teammate elixir ID"
+                      placeholder="ENTER YOUR TEAMMATE'S UID"
                       disabled={isAddingMember}
                     />
                   </div>
@@ -591,7 +591,7 @@ const Dashboard = () => {
       </div>
 
       {/* Small helper text showing selected track */}
-      <div className="absolute md:bottom-20 right-4 sm:right-8 text-lg sm:text-2xl md:text-3xl text-right text-yellow-200/90 font-mono z-20">
+      <div className="absolute md:bottom-20 right-4 sm:right-8 text-lg sm:text-2xl md:text-3xl text-right text-green-400/70 font-mono z-20">
         {selectedTrack === "beginner" ? "Beginner" : "Advanced"}
       </div>
 
