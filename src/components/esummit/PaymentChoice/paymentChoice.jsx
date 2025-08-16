@@ -43,7 +43,7 @@ const PaymentChoice = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black">
       <div
         ref={modalRef}
         className="relative w-full max-w-md rounded-2xl shadow-2xl"
@@ -62,7 +62,7 @@ const PaymentChoice = () => {
               Price: Rs.249
             </p>
             {/* DONT USE THE FOLLOWING BILLING LINK IN PRODUCTION - USE A DIFFERENT LINK 17796 - Testing, 17972 - Production */}
-            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972" >            
+            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796" target="_blank" >            
             <div
               className="group relative w-40 cursor-pointer"
             >
