@@ -141,7 +141,6 @@ const Dashboard = () => {
         },
       });
 
-      console.log("Member added successfully:", response.data);
 
       // Find the first empty slot and add the new teammate
       if (teammate1Name === "-") {

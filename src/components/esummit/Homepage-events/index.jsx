@@ -108,7 +108,6 @@ export const Event = () => {
       try {
         const eventsWithBlur = await addBlurDataUrls(initialEvents);
         setEvents(eventsWithBlur);
-        console.log('Events with blur data URLs:', eventsWithBlur);
       } catch (error) {
         console.error('Failed to initialize blur URLs:', error);
         setEvents(initialEvents); // Fallback to original events

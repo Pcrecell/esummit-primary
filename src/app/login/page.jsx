@@ -19,11 +19,9 @@ export default function Login() {
 
 
   const { userData, profile } = useAuth();
-  console.log(userData)
   useEffect(() => {
     if (!loading) {
       if (userData) {
-          console.log("userData:", userData);
           router.replace("/dashboard");
       }
         else {
@@ -39,7 +37,6 @@ export default function Login() {
 
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Login response:", response);
 
       if (response.error) {
         setError(response.error);

@@ -146,8 +146,6 @@ if ( loading) {
       };
       const csrfToken = getCookie("csrfToken");
 
-      console.log("Registration data", userData);
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         {
@@ -162,7 +160,6 @@ if ( loading) {
       );
 
       const result = await response.json();
-      console.log("Registration response:", result);
 
       if (!response.ok) {
         setError(result.error || "Registration failed.");

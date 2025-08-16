@@ -112,7 +112,6 @@ const EventRegistration = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      console.log("Form submitted:", formData);
       alert("Registration submitted successfully!");
       // Reset form after successful submission
       setFormData({

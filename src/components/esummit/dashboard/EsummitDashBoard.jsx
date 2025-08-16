@@ -27,8 +27,6 @@ const EsummitDashBoard = () => {
       if (!userData) {
         router.replace("/login");
       }
-      console.log("userData:", userData);
-      console.log("profile:", profile);
     }
   }, [userData, profile, loading, router]);
 
@@ -51,11 +49,8 @@ const EsummitDashBoard = () => {
 
   // Handle registration confirmation
   const handleConfirmRegistration = () => {
-    console.log("Confirming registration for event:", selectedEventId);
     setRegisteredEventId(selectedEventId);
     setShowConfirmationPopup(false);
-    console.log("Registration completed, should show PaymentEnd now");
-    console.log("registeredEventId state:", selectedEventId);
   };
 
   // Handle popup cancellation
