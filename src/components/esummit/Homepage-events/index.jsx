@@ -87,14 +87,14 @@ const initialEvents = [
     desc: "KIIT E-Cell's flagship hackathon where ideas meet impact.In 72 hours, participants take on real-world challenges guided by experienced mentors.Our unique two-tier system makes this arena accessible to everyone - from amateurs to experts.Innovation, resources, and rewards - all on one stage.",
     image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002415.webp",
   },
-  {
-    id: "5",
-    title: "FOUNDER'S ARENA",
-    date: "22.08.25-23.08.25",
-    time: "11.00AM-4.30PM",
-    desc: "EXPO 2025 is where vision meets opportunity. This two-day powerhouse event provides a podium for student-led startups, emerging business and established companies to collectively demonstrate innovation, develop collaborative opportunities and attract investments.From mentorship to investment it's a launchpad for entrepreneurship.Here, visions become ventures.",
-    image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002413.webp",
-  },
+  // {
+  //   id: "5",
+  //   title: "FOUNDER'S ARENA",
+  //   date: "22.08.25-23.08.25",
+  //   time: "11.00AM-4.30PM",
+  //   desc: "EXPO 2025 is where vision meets opportunity. This two-day powerhouse event provides a podium for student-led startups, emerging business and established companies to collectively demonstrate innovation, develop collaborative opportunities and attract investments.From mentorship to investment it's a launchpad for entrepreneurship.Here, visions become ventures.",
+  //   image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002413.webp",
+  // },
 ];
 
 export const Event = () => {
@@ -108,7 +108,6 @@ export const Event = () => {
       try {
         const eventsWithBlur = await addBlurDataUrls(initialEvents);
         setEvents(eventsWithBlur);
-        console.log('Events with blur data URLs:', eventsWithBlur);
       } catch (error) {
         console.error('Failed to initialize blur URLs:', error);
         setEvents(initialEvents); // Fallback to original events

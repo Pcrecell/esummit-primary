@@ -17,7 +17,6 @@ const Footer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Subscribed with email:", email);
     setEmail("");
   };
 

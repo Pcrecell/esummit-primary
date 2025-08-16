@@ -4,6 +4,7 @@ import EsummitNavbar from "@/components/ui/esummit-navbar/EsummitNavbar";
 import Footer from "@/components/ui/esummit-footer/Footer";
 import { Analytics } from "@vercel/analytics/next"
 import Head from "next/head";
+import { AuthProvider } from "@/lib/context/AuthContext";
 
 export const metadata = {
   title: 'E-Summit 2025 | KIIT E-Cell',
@@ -19,10 +20,12 @@ export default function RootLayout({ children }) {
       </Head>
       <body className="bg-black text-white overflow-x-hidden">
         <Analytics/>
+        <AuthProvider>
         <EsummitNavbar />
         <PageTransition>
           {children}
         </PageTransition>
+        </AuthProvider>
         <Footer />
       </body>
     </html>

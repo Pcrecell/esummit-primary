@@ -8,6 +8,7 @@ import EventsCalendar from "./EventsCalendar";
 import EventsMap from "./EventsMap";
 import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const EventsPage = () => {
   const desktopScrollRef = useRef(null);
@@ -15,6 +16,7 @@ const EventsPage = () => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const { userData, profile, loading } = useAuth();
   // note: scroll listeners are attached after events are derived
 
   const tabs = [
@@ -117,8 +119,13 @@ const EventsPage = () => {
     setCurrentCardIndex(0); // Reset to first card when date changes
   };
   const handleKnowMore = (route) => {
-    if (!route) return;
-    router.push(route);
+    if (route && userData) {
+      router.push(route);
+    }
+    else {
+      // Redirect to login page if not logged in
+      router.push("/login");
+    }
   };
 
   // Smoothly scroll desktop carousel to a specific index (RAF-based)

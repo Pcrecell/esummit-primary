@@ -23,12 +23,12 @@ const JoinPopup = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Joining team:", { 
-      teamName, 
-      yourElixirId, 
-      teamLeadElixirId, 
-      teamId 
-    });
+    // console.log("Joining team:", { 
+    //   teamName, 
+    //   yourElixirId, 
+    //   teamLeadElixirId, 
+    //   teamId 
+    // });
   };
 
   return (
