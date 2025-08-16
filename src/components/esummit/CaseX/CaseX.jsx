@@ -33,6 +33,7 @@ export default function CaseX() {
     });
     const [newMemberName, setNewMemberName] = useState('');
     const [newMemberElixir, setNewMemberElixir] = useState('');
+    const [addMemberError, setAddMemberError] = useState('');
 
     // Create team form state
     const [createFirstName, setCreateFirstName] = useState('');
@@ -63,6 +64,7 @@ export default function CaseX() {
                 { id: 3, name: 'Amit Singh', elixirId: '11111', isLead: true },
                 { id: 4, name: 'Priya Sharma', elixirId: '22222', isLead: false },
                 { id: 5, name: 'Raj Patel', elixirId: '33333', isLead: false },
+                { id: 6, name: 'Raj Patel', elixirId: '33333', isLead: false },
             ]
         }
     ]);
@@ -91,16 +93,26 @@ export default function CaseX() {
             return false;
         }
         
+        // Local state check: already in current team (covers cases where existingTeams isn't updated)
+        if (teammates.some(m => m.elixirId === elixirId)) {
+            setJoinError('You are already a member of this team!');
+            return false;
+        }
+
+        // Global uniqueness: elixirId should not exist in any team (primary key across teams)
+        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === elixirId));
+        if (teamWithThisElixir) {
+            if (teamWithThisElixir.teamId === teamId) {
+                setJoinError('You are already a member of this team!');
+            } else {
+                setJoinError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
+            }
+            return false;
+        }
+
         // Check if team is full
         if (targetTeam.members.length >= 4) {
             setJoinError('Team is full (maximum 4 members)!');
-            return false;
-        }
-        
-        // Check if user is already in the team
-        const userAlreadyInTeam = targetTeam.members.find(member => member.elixirId === elixirId);
-        if (userAlreadyInTeam) {
-            setJoinError('You are already a member of this team!');
             return false;
         }
         
@@ -677,7 +689,25 @@ export default function CaseX() {
                                                 />
                                                 <button
                                                     onClick={() => {
-                                                        if (!newMemberName || !newMemberElixir || teammates.length >= 4) return;
+                                                        setAddMemberError('');
+                                                        if (!newMemberName || !newMemberElixir) {
+                                                            setAddMemberError('Please fill both fields.');
+                                                            return;
+                                                        }
+                                                        if (teammates.length >= 4) {
+                                                            setAddMemberError('Team is full (maximum 4 members).');
+                                                            return;
+                                                        }
+                                                        // Global uniqueness check across all teams
+                                                        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === newMemberElixir));
+                                                        if (teamWithThisElixir) {
+                                                            if (teamWithThisElixir.teamId === teamInfo.teamId) {
+                                                                setAddMemberError('This Elixir ID is already in your team.');
+                                                            } else {
+                                                                setAddMemberError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
+                                                            }
+                                                            return;
+                                                        }
                                                         const newMember = { id: Date.now(), name: newMemberName, elixirId: newMemberElixir, isLead: false };
                                                         setTeammates(prev => [...prev, newMember]);
                                                         setNewMemberName('');
@@ -688,6 +718,13 @@ export default function CaseX() {
                                                     +
                                                 </button>
                                             </div>
+                                            { /* Local duplicate check for current UI team state */ }
+                                            {teammates.some(m => m.elixirId === newMemberElixir) && !addMemberError && newMemberElixir && (
+                                                <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">This Elixir ID is already in your team.</p>
+                                            )}
+                                            {addMemberError && (
+                                                <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">{addMemberError}</p>
+                                            )}
                                         </div>
                                     )}
 
