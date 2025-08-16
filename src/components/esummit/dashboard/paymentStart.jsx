@@ -164,22 +164,34 @@ function PaymentStart({ onEventSelect, onBack, paymentEnabled = false, onPayNow 
           <p className="text-gray-700 mb-6">
             You need to complete the payment before registering for events.
           </p>
-          <div className="flex gap-4 justify-end">
-            <button 
-              onClick={handleClosePaymentPopup}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
-            >
-              Cancel
-            </button>
-            <button 
-              onClick={() => {
-                handleClosePaymentPopup();
-                if (onPayNow) onPayNow();
-              }}
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-            >
-              Pay Now
-            </button>
+          <div className="flex flex-col gap-4">
+            <div className="flex gap-4 justify-end">
+              <button 
+                onClick={handleClosePaymentPopup}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  handleClosePaymentPopup();
+                  if (onPayNow) onPayNow();
+                }}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+              >
+                Pay Now
+              </button>
+            </div>
+            
+            {/* FAQ Link */}
+            <div className="text-center">
+              <a
+                href="/faq"
+                className="text-green-600 hover:text-green-700 underline text-sm transition-colors duration-300"
+              >
+                Have questions? Check our FAQ
+              </a>
+            </div>
           </div>
         </div>
       </div>

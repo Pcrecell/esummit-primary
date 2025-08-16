@@ -77,7 +77,7 @@ const EventsPage = () => {
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
         image: "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
-        route: "/aif",
+        route: "/AIF",
       },
       {
         title: "EXPO",
@@ -96,7 +96,7 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://ik.imagekit.io/1bsukh3d7/hack-r.webp?updatedAt=1755242215568",
+        image: "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
         route: "/pandoras-paradox",
       },
     ],

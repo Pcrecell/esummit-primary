@@ -36,7 +36,10 @@ useEffect(() => {
     { name: "Theme", link: "/theme" },
   ];
 
-  const navRight = [{ name: "Contact", link: "/contact" }];
+  const navRight = [
+    { name: "Contact", link: "/contact" },
+    { name: "FAQ", link: "/faq" }
+  ];
 
   const handleLogout = async () => {
     try {

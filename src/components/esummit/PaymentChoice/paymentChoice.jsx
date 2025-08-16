@@ -1,25 +1,21 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const PaymentChoice = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const modalRef = useRef(null);
+  const { userData, profile, loading } = useAuth();
 
-  const name = searchParams.get("name") || "";
-  const email = searchParams.get("email") || "";
-  const phone = searchParams.get("phone") || "";
-  const uid = searchParams.get("uid") || "";
-
-  const userData = { name, email, phone, uid };
-
-   useEffect(() => {
-    if (!name || !email || !phone || !uid) {
-      router.replace("/dashboard"); // or login page
+  useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+      }
     }
-  }, [name, email, phone, uid, router]);
+  }, [userData, profile, loading, router]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -31,22 +27,15 @@ const PaymentChoice = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [router]);
 
-  const handlePayment = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/initiate-payment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
-    });
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+   }
 
-    const data = await res.json();
-    if (data.status === "success") {
-      window.location.assign(data.paymentUrl);
-    } else {
-      console.error("Payment initiation failed:", data.message);
-      alert("Payment initiation failed. Please try again.");
-    }
-  };
+
 
   const handlePaymentLater = (e) => {
     e.preventDefault();
@@ -55,7 +44,10 @@ const PaymentChoice = () => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
-      <div ref={modalRef} className="relative w-full max-w-md rounded-2xl shadow-2xl">
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-md rounded-2xl shadow-2xl"
+      >
         <div
           className="w-full h-[700px] bg-center bg-no-repeat bg-contain text-white flex items-center justify-center"
           style={{
@@ -68,34 +60,44 @@ const PaymentChoice = () => {
             </p>
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Price: Rs.249
-            </p>            
-       <div
-  className="group relative w-40 cursor-pointer"
-  onClick={handlePayment}
->
-  <img
-    src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
-    alt="Pay Now"
-    className="w-full transition duration-300 group-hover:brightness-50 z-0"
-  />
-  <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
-    PAY NOW
-  </span>
-</div>
-          <div
-  className="group relative w-40 cursor-pointer transition duration-300"
-  onClick={handlePaymentLater}
->
-  <img
-    src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
-    alt="Walk Away"
-    className="w-full transition duration-300 group-hover:brightness-50 z-0"
-  />
-  <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
-    WALK AWAY
-  </span>
-</div>
+            </p>
+            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972" >            
+            <div
+              className="group relative w-40 cursor-pointer"
+            >
+                <img
+                  src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
+                  alt="Pay Now"
+                  className="w-full transition duration-300 group-hover:brightness-50 z-0"
+                />
+              <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
+                PAY NOW
+              </span>
+            </div>
+            </a>
+            <div
+              className="group relative w-40 cursor-pointer transition duration-300"
+              onClick={handlePaymentLater}
+            >
+              <img
+                src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
+                alt="Walk Away"
+                className="w-full transition duration-300 group-hover:brightness-50 z-0"
+              />
+              <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
+                WALK AWAY
+              </span>
+            </div>
 
+            {/* FAQ Link */}
+            <div className="translate-y-24">
+              <a
+                href="/faq"
+                className="text-green-400 hover:text-green-300 underline font-poppins text-sm transition-colors duration-300"
+              >
+                Have questions? Check our FAQ
+              </a>
+            </div>
           </div>
         </div>
       </div>
