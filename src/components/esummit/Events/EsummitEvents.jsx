@@ -86,7 +86,7 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://ik.imagekit.io/1bsukh3d7/hack-r.webp?updatedAt=1755242215568",
+        image: "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
         route: "/pandoras-paradox",
       },
     ],
