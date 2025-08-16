@@ -14,7 +14,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const EsummitDashBoard = () => {
-  const { userData, profile, loading } = useAuth();
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
@@ -75,21 +75,6 @@ const EsummitDashBoard = () => {
 
   return (
     <div>
-      {/* Scrolling Message at Top */}
-      {/* <div className="fixed top-16 left-0 w-full bg-gradient-to-r from-green-600 to-black text-white py-2 sm:py-3 z-50 overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap min-w-full">
-          <span className="text-sm sm:text-lg font-bold mx-4 sm:mx-8 inline-block min-w-max">
-            Your payment will reflect within 6 hours. Please avoid multiple transactions, as we are not responsible for duplicate payments.
-          </span>
-          <span className="text-sm sm:text-lg font-bold mx-4 sm:mx-8 inline-block min-w-max">
-            Your payment will reflect within 6 hours. Please avoid multiple transactions, as we are not responsible for duplicate payments.
-          </span>
-          <span className="text-sm sm:text-lg font-bold mx-4 sm:mx-8 inline-block min-w-max">
-            Your payment will reflect within 6 hours. Please avoid multiple transactions, as we are not responsible for duplicate payments.
-          </span>
-        </div>
-      </div> */}
-      
       <div className="relative mt-12">
         <div
           className="absolute inset-0 z-10 "
@@ -153,8 +138,7 @@ const EsummitDashBoard = () => {
         <div className="relative min-h-[80vh] font-sans text-white hero-container" />
 
         {/* UUID Section - Only show when payment is done - Positioned just above QR */}
-        {profile?.payment && (
-          <div className="absolute top-[93vh] sm:top-[103vh] left-1/2 -translate-x-1/2 z-40 w-64">
+          <div className="relative top-0 left-1/2 -translate-x-1/2 z-40 w-64">
             <div
               className="bg-black/90 backdrop-blur-sm border-b-3 p-4 shadow-lg"
               style={{ borderBottomColor: "#D8BA5F" }}
@@ -220,11 +204,9 @@ const EsummitDashBoard = () => {
               </div>
             </div>
           </div>
-        )}
 
         {/* Username Section - Only show when payment is done - Positioned under QR */}
-        {profile?.payment && (
-          <div className="absolute top-[135vh] sm:top-[145vh] left-1/2 -translate-x-1/2 z-40 w-64">
+          <div className="relative bottom-0 left-1/2 -translate-x-1/2 z-40 w-64">
             <div
               className="bg-black/90 backdrop-blur-sm border-t-3 p-4 shadow-lg"
               style={{ borderTopColor: "#D8BA5F" }}
@@ -246,7 +228,6 @@ const EsummitDashBoard = () => {
               </div>
             </div>
           </div>
-        )}
 
         <div className="absolute top-[120vh] sm:top-[130vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-80">
           <div className="relative">
@@ -293,7 +274,7 @@ const EsummitDashBoard = () => {
           <div className="flex flex-col items-center justify-center w-full mt-8">
         
             <button
-              onClick={() => router.replace("/payment")}
+              onClick={() => userData ? router.replace("/payment") : router.replace("/login")}
               hidden={(profile?.payment)}
               disabled={(profile?.payment)}
               className="py-4 px-8 bg-gradient-to-br font-poppins from-black to-green-600 text-white shadow-lg shadow-[#abd65d] border-b-2 border-white text-2xl rounded-2xl hover:shadow-[#abd65d] hover:shadow-2xl transition-all duration-[1000ms]"

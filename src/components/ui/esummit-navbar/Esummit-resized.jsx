@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/
 import React, { useRef, useState } from "react"
 import Image from "next/image.js"
 import { Skeleton } from '@mui/material';
+import { useRouter } from "next/navigation.js"
 
 export const Navbar = ({ children, className }) => {
     const ref = useRef(null)
@@ -105,6 +106,8 @@ export const NavItems = ({ items = [], className }) => {
     const [hovered, setHovered] = useState(null);
     const [clicked, setClicked] = useState(null);
 
+    const router = useRouter();
+
     return (
         <motion.div
             onMouseLeave={() => setHovered(null)}
@@ -124,7 +127,8 @@ export const NavItems = ({ items = [], className }) => {
                         {/* Use Link here for items with a direct link */}
                         {item.link && !isDropdown ? (
                             <a
-                                href={item.link}
+                                // href={item.link}
+                                onClick={() => {router.push(item.link)}}
                                 className={cn(
                                     "relative px-3 py-1",
                                     isActive
@@ -174,7 +178,8 @@ export const NavItems = ({ items = [], className }) => {
                                         {item.dropdown.map((subItem, subIdx) => (
                                             <a
                                                 key={`dropdown-${subIdx}`}
-                                                href={subItem.link}
+                                                // href={subItem.link}
+                                                onClick={() => {useRouter(subItem.link)}}
                                                 className="text-white hover:text-neutral-300 text-sm"
                                             >
                                                 {subItem.name}

@@ -42,11 +42,11 @@ export const authAPI = {
   },
 
   logout: async () => {
+    signOut(auth);
     const response = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
       credentials: 'include',
     });
-    signOut(auth);
     return { success: true };
   },
 };

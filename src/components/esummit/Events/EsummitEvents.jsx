@@ -16,7 +16,7 @@ const EventsPage = () => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const { userData, profile, loading } = useAuth();
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
   // note: scroll listeners are attached after events are derived
 
   const tabs = [

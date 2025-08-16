@@ -8,7 +8,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 
 
 export default function HomePage() {
-    const { userData, profile, loading } = useAuth();
+    const { userData, setUserData, profile, setProfile, loading} = useAuth();
     const router = useRouter();
 
     useEffect(() => {
