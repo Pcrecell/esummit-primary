@@ -155,7 +155,7 @@ export default function Aif() {
             <div className="relative">
               <button
                 onClick={closeRegistration}
-                className="absolute top-16 md:top-8 md:right-4 z-60 text-gray-500 bg-white hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                className="absolute top-0 right-0 md:top-8 md:right-4 z-60 text-gray-500 bg-white hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
               >
                 <p className="pb-2 font-medium">x</p>
               </button>

@@ -151,7 +151,7 @@ const EsummitDashBoard = () => {
             <h1
               className={`font-tourney text-start ${
                 (userData?.firstname?.length || 0) > 8
-                  ? "text-6xl sm:text-6xl" // smaller if > 8 chars
+                  ? "text-5xl sm:text-6xl" // smaller if > 8 chars
                   : "text-6xl sm:text-8xl" // normal size otherwise
               }`}
               style={{
