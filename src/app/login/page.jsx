@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authAPI } from "@/lib/services/api";
 import { useAuth } from "@/lib/context/AuthContext";
+import { useAuth } from "@/lib/context/AuthContext";
 import AuthLayout from "@/components/esummit/auth/AuthLayout";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/utils/firebase/firebase"; // your firebase.js
@@ -16,17 +17,19 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+
   const { userData, profile } = useAuth();
   useEffect(() => {
     if (!loading) {
       if (userData) {
-          console.log("userData:", userData);
           router.replace("/dashboard");
       }
         else {
           router.replace("/login");
         }
     }
+  }, [userData, profile, loading,router]);
   }, [userData, profile, loading,router]);
 
   const handleLogin = async (e) => {
@@ -36,7 +39,6 @@ export default function Login() {
 
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Login response:", response);
 
       if (response.error) {
         setError(response.error);

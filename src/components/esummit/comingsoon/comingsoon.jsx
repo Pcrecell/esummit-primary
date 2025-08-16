@@ -19,9 +19,8 @@ export default function ComingSoon() {
     if (video) {
       const handleCanPlay = () => {
         video.play().catch(error => {
-          console.log("Autoplay prevented, trying muted play:", error);
           video.muted = true;
-          video.play().catch(e => console.log("Still can't play:", e));
+          video.play().catch(e => console.error("Cant Play Video: ", e));
         });
         setVideoLoaded(true);
       };

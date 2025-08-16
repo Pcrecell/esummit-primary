@@ -47,9 +47,6 @@ function PaymentEnd({ eventId, onPaymentComplete, onBack }) {
   const finalEventId = eventId || urlId;
   const event = events.find((e) => e.id === finalEventId);
 
-  console.log("PaymentEnd rendered with eventId:", eventId);
-  console.log("Final eventId:", finalEventId);
-  console.log("Found event:", event);
 
   if (!event) {
     return <div className="text-white p-10 min-h-screen bg-black flex items-center justify-center">

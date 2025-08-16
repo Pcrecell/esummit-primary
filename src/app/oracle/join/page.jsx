@@ -29,12 +29,6 @@ const JoinTeamPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-    console.log("Joining team:", { 
-      teamName, 
-      yourElixirId, 
-      teamLeadElixirId, 
-      teamId 
-    });
     router.push('/success'); 
   };
 

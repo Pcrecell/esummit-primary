@@ -112,7 +112,6 @@ const EventRegistration = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      console.log("Form submitted:", formData);
       alert("Registration submitted successfully!");
       // Reset form after successful submission
       setFormData({
@@ -146,7 +145,7 @@ const EventRegistration = () => {
 
     >
       {/* Image container */}
-      <div className="relative max-w-2xl w-full flex items-center justify-center md:min-h-[600px] bg-transparent">
+      <div className="relative max-w-2xl w-full hidden md:flex items-center justify-center md:min-h-[600px] bg-transparent">
         <img
           src="https://i.ibb.co/qMjzxJcd/download-70-removebg-preview-cleanup-1.png"
           alt="Decorative Frame"
@@ -164,11 +163,12 @@ const EventRegistration = () => {
         </div>
 
         {/* Form container */}
-        <div className="relative z-10 flex justify-center h-full translate-y-24 items-center w-full max-w-md mx-auto px-8 py-12 pt-48">
-          <p className="text-3xl">Registration Starting Soon!!</p>
+        <div className="relative z-10 flex justify-center h-full items-center w-full max-w-md mx-auto px-8 py-0 pt-0">
+              <p className="relative text-3xl flex justify-center top-6 items-center">Registration Starting Soon!!</p>
         </div>
         {/* <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
           <div className="space-y-4">
+          
           
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
