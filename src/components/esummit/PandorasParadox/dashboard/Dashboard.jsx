@@ -242,7 +242,7 @@ const Dashboard = () => {
         className={`relative z-20 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto flex flex-col items-center transition-all duration-700 ease-in-out ${
           action === "idle"
             ? "mt-[50vh]"
-            : "mt-30 md:mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
+            : "mt-30 md:mt-24 sm:mt-32 xl:mt-40 pt-8 sm:pt-12"
         }`}
       >
         {/* Join / Create buttons */}
@@ -308,7 +308,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleJoinTeamChange("yourName", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="ENTER YOUR NAME"
                   />
                 </div>
@@ -322,7 +322,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleJoinTeamChange("yourEid", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="Enter UID"
                   />
                 </div>
@@ -336,7 +336,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleJoinTeamChange("teamName", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="Enter team name"
                   />
                 </div>
@@ -350,7 +350,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleJoinTeamChange("teamId", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="Enter Team ID"
                   />
                 </div>
@@ -397,7 +397,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleCreateTeamChange("yourName", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="ENTER YOUR NAME"
                   />
                 </div>
@@ -411,7 +411,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleCreateTeamChange("yourElixer", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="ENTER YOUR UID"
                   />
                 </div>
@@ -425,7 +425,7 @@ const Dashboard = () => {
                     onChange={(e) =>
                       handleCreateTeamChange("teamName", e.target.value)
                     }
-                    className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                    className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="ENTER TEAM NAME"
                   />
                 </div>
@@ -490,7 +490,7 @@ const Dashboard = () => {
                     Add Members to your team
                   </h3>
                   <p className="text-white/80 font-mono text-sm mt-2">
-                    FILL UP THE DETAILS
+                    A minimum of 3 players are requied to register your team
                   </p>
                 </div>
 
@@ -503,7 +503,7 @@ const Dashboard = () => {
                       type="text"
                       value={newTeammateName}
                       onChange={(e) => setNewTeammateName(e.target.value)}
-                      className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                      className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                       placeholder="ENTER TEAMMATE'S NAME"
                       disabled={isAddingMember}
                     />
@@ -517,7 +517,7 @@ const Dashboard = () => {
                       type="text"
                       value={newTeammateId}
                       onChange={(e) => setNewTeammateId(e.target.value)}
-                      className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                      className="placeholder-gray-700 w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                       placeholder="ENTER YOUR TEAMMATE'S UID"
                       disabled={isAddingMember}
                     />
@@ -588,6 +588,22 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Register Button */}
+      {action === "details" && (
+        <div className="pt-8 left-1/2 transform  z-30">
+          <button
+            disabled={members.filter(member => member.name !== "-").length < 2}
+            className={`px-8 py-3 rounded-full font-mono font-bold text-lg transition-all duration-300 ${
+              members.filter(member => member.name !== "-").length >= 2
+                ? "bg-green-600/90 hover:bg-green-500 border-2 border-green-400/60 text-white shadow-lg hover:shadow-xl"
+                : "bg-gray-600/50 border-2 border-gray-500/50 text-gray-400 cursor-not-allowed"
+            }`}
+          >
+            REGISTER TEAM
+          </button>
+        </div>
+      )}
 
       {/* Small helper text showing selected track */}
       <div className="absolute md:bottom-20 right-4 sm:right-8 text-lg sm:text-2xl md:text-3xl text-right text-green-400/70 font-mono z-20">
