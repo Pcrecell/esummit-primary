@@ -7,6 +7,7 @@ import AuthLayout from "@/components/esummit/auth/AuthLayout";
 import { getCookie } from "@/lib/utils/getCookie";
 import { useAuth } from "@/lib/context/AuthContext";
 import { auth } from "@/lib/utils/firebase/firebase"; // <-- use your initialized auth
+import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Register() {
@@ -173,7 +174,7 @@ if ( loading) {
         phone: phone,
         uid: user.uid,
       };
-      window.location.href = "/"; // or any route that uses the navbar
+      router.push("/") // or any route that uses the navbar
       // navigate.push("/payment", { state: Data });
       setLoading(false);
     } catch (err) {
