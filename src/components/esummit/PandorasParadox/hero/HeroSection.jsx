@@ -5,13 +5,32 @@ import heroBg from "../../../../../public/images/hackathon/kiitecell-hero-bg.png
 import Image from "next/image";
 import heroRegisterButton from "../../../../../public/images/hackathon/hero-register-button.png";
 import { Poppins } from "next/font/google";
-
+import { useAuth } from "@/lib/context/AuthContext";
+import { useRouter } from "next/navigation";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
 });
 const HeroSection = () => {
+  const router = useRouter();
+  const { userData,profile } = useAuth();
   const [deviceType, setDeviceType] = useState("desktop");
+  const paymentDone = profile?.payment;
+  console.log("Payment status from profile:", paymentDone);
+  useEffect(() => {
+    if (!userData) {
+      router.replace("/login");
+    }
+  }, [userData, router]);
+  
+  const handleRegisterClick = () => {
+  if (paymentDone) {
+    router.push("/pandoras-paradox/dashboard"); // Change to your event route
+  } else {
+    alert("Complete your payment to proceed!");
+    
+  }
+};
 
   useEffect(() => {
     // Guard against SSR: only access window on client
@@ -70,7 +89,7 @@ const HeroSection = () => {
 
         {/* Register Now Button */}
         <div className="w-full flex justify-center">
-          <a href="#register" className="inline-block group">
+          <button onClick={handleRegisterClick} type="button" className="inline-block group">
             {/* Outer glow that blooms on hover */}
             <div className="relative">
               <div className="absolute -inset-6 rounded-full bg-amber-300/0 blur-2xl transition duration-500 group-hover:bg-amber-300/25" />
@@ -93,7 +112,7 @@ const HeroSection = () => {
                 </div>
               </div>
             </div>
-          </a>
+          </button>
         </div>
       </div>
     </section>

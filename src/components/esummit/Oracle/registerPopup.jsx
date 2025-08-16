@@ -19,11 +19,11 @@ const RegisterPopup = ({ onClose }) => {
   }, [onClose]);
 
   const handleJoinTeam = () => {
-    setShowJoinPopup(true);
+    setShowJoinPopup(false);
   };
 
   const handleCreateTeam = () => {
-    setShowCreatePopup(true);
+    setShowCreatePopup(false);
   };
 
   const handleCloseJoinPopup = () => {

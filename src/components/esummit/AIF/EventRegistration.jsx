@@ -162,9 +162,12 @@ const EventRegistration = () => {
         </div>
 
         {/* Form container */}
-        <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
+        <div className="relative z-10 flex justify-center h-full translate-y-24 items-center w-full max-w-md mx-auto px-8 py-12 pt-48">
+          <p className="text-3xl">Registration Starting Soon!!</p>
+        </div>
+        {/* <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
           <div className="space-y-4">
-            {/* First Row */}
+          
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <input
@@ -214,7 +217,7 @@ const EventRegistration = () => {
               </div>
             </div>
 
-            {/* Second Row */}
+            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <input
@@ -263,7 +266,7 @@ const EventRegistration = () => {
               </div>
             </div>
 
-            {/* Terms */}
+            
             <div className="flex items-start space-x-3 mt-12">
               <input
                 type="checkbox"
@@ -289,7 +292,7 @@ const EventRegistration = () => {
               </p>
             )}
 
-            {/* Submit Button */}
+          
             <div className="flex justify-center mt-2">
               <button
                 type="button"
@@ -317,7 +320,7 @@ const EventRegistration = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Mobile Layout */}
@@ -337,10 +340,13 @@ const EventRegistration = () => {
 
         {/* Mobile Form */}
         <div className="bg-gradient-to-b from-gray-900/50 to-black/80 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30 shadow-2xl">
-          <div className="space-y-4">
-            {/* Form Fields */}
+          <div>
+            <p className="flex justify-center items-center">Registration Starting Soon!</p>
+          </div>
+          {/* <div className="space-y-4">
+
             <div className="space-y-4">
-              {/* Full Name */}
+  
               <div>
                 <input
                   type="text"
@@ -364,7 +370,7 @@ const EventRegistration = () => {
                 )}
               </div>
 
-              {/* Contact Number */}
+  
               <div>
                 <input
                   type="tel"
@@ -389,7 +395,6 @@ const EventRegistration = () => {
                 )}
               </div>
 
-              {/* Email */}
               <div>
                 <input
                   type="email"
@@ -413,7 +418,6 @@ const EventRegistration = () => {
                 )}
               </div>
 
-              {/* Elixir ID */}
               <div>
                 <input
                   type="text"
@@ -438,7 +442,6 @@ const EventRegistration = () => {
               </div>
             </div>
 
-            {/* Terms */}
             <div className="flex items-start space-x-3 mt-6">
               <input
                 type="checkbox"
@@ -464,7 +467,6 @@ const EventRegistration = () => {
               </p>
             )}
 
-            {/* Mobile Submit Button */}
             <div className="flex justify-center mt-8">
               <button
                 type="button"
@@ -480,7 +482,7 @@ const EventRegistration = () => {
                 SUBMIT
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

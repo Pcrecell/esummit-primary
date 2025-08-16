@@ -10,6 +10,9 @@ import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
 import { authAPI } from "@/lib/services/api"; // make sure you have this
 import { useAuth } from "@/lib/context/AuthContext";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -17,6 +20,9 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const EventsPage = () => {
   const desktopScrollRef = useRef(null);
   const mobileScrollRef = useRef(null);
+  const desktopLayoutRef = useRef(null);
+  const leftSectionRef = useRef(null);
+  const cardRefs = useRef([]);
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -121,10 +127,6 @@ const EventsPage = () => {
   const handleDateSelect = (date) => {
     setSelectedDate(date);
     setCurrentCardIndex(0); // Reset to first card when date changes
-  };
-  const handleKnowMore = (route) => {
-    if (!route) return;
-    router.push(route);
   };
 
   // Smoothly scroll desktop carousel to a specific index (RAF-based)
@@ -345,7 +347,6 @@ const EventsPage = () => {
 
   const handleKnowMore = (route) => {
     // Check login status before navigating
-    
       if (route && userData) router.push(route);
      else {
       // Redirect to login page if not logged in

@@ -28,8 +28,6 @@ const EsummitDashBoard = () => {
       if (!userData) {
         router.replace("/login");
       }
-      console.log("userData:", userData);
-      console.log("profile:", profile);
     }
   }, [userData, profile, loading, router]);
 

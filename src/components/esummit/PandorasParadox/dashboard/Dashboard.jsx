@@ -1,114 +1,153 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
-
+import { useAuth } from "@/lib/context/AuthContext";
+import { useRouter } from "next/navigation";
 const Dashboard = () => {
+  const router = useRouter();
+  const { userData, profile } = useAuth();
+  const paymentDone = profile?.payment;
   const [action, setAction] = useState("idle");
   const [selectedTrack, setSelectedTrack] = useState("beginner");
 
-  const [joinTeamData, setJoinTeamData] = useState({
-    yourName: "",
+  useEffect(() => {
+    console.log("User not logged in, redirecting to login page");
+    if (userData && !paymentDone) {
+      router.replace("/dashboard");
+    }
+  }, [userData, profile, router]);
+
+  const [formData, setFormData] = useState({
+    name: "",
     yourEid: "",
     teamName: "",
-    teamId: "",
+    teamId: ""
   });
 
-  const [createTeamData, setCreateTeamData] = useState({
-    yourName: "",
-    yourElixer: "",
+  
+    const [teamInfo, setTeamInfo] = useState({
     teamName: "",
+    teamId: "",
+    track: "",
+    leaderId: "",
+    members: [],
+    role: "" // "leader" or "member"
   });
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+// CREATE TEAM
+  const handleSubmitCreate = async () => {
+    console.log("Creating team with data:", formData);
+    if (
+      !formData.name.trim() ||
+      !formData.yourEid.trim() ||
+      !formData.teamName.trim()
+    ) {
+      alert("Please fill out all fields to create a team.");
+      return;
+    }
+    try {
+      console.log("Submitting create team request with data:", formData);
+      const res = await fetch("http://localhost:5000/api/auth/hackathon_registration", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name: formData.name.trim(),
+                elixirId: formData.yourEid.trim(),
+                track: selectedTrack,
+                mode: "create_team",
+                teamName: formData.teamName.trim(),
+              }),
+            });
 
-  const [teammate1Name, setTeammate1Name] = useState("-");
-  const [teammate1Id, setTeammate1Id] = useState("");
-  const [teammate2Name, setTeammate2Name] = useState("-");
-  const [teammate2Id, setTeammate2Id] = useState("");
-  const [teammate3Name, setTeammate3Name] = useState("-");
-  const [teammate3Id, setTeammate3Id] = useState("");
-  const [teammate4Name, setTeammate4Name] = useState("-");
-  const [teammate4Id, setTeammate4Id] = useState("");
-  const [newTeammateName, setNewTeammateName] = useState("");
-  const [newTeammateId, setNewTeammateId] = useState("");
-  const [isAddingMember, setIsAddingMember] = useState(false);
-
-  const [teamInfo, setTeamInfo] = useState({
-    teamName: "Team",
-    teamId: "Random Team ID",
-    registered: false,
-  });
-
-  const members = [
-    { name: teammate1Name, id: teammate1Id },
-    { name: teammate2Name, id: teammate2Id },
-    { name: teammate3Name, id: teammate3Id },
-    { name: teammate4Name, id: teammate4Id },
-  ];
+            // If you need the response as JSON
+            const data = await res.json();
+            console.log("Create team response:", data);
+      alert(`✅ ${data.message} Your Team ID: `);
+      setTeamInfo({
+        teamName: formData.teamName.trim(),
+        teamId: res.data.teamId,
+        track: selectedTrack,
+        leaderId: formData.yourEid.trim(),
+        role: "leader",
+        members: [{ name: formData.name.trim(), elixirId: formData.yourEid.trim() }]
+      });
+      setAction("details");
+    } catch (err) {
+      console.error(err);
+      alert(`❌ ${err.response?.data?.message || "Error creating team"}`);
+    }
+  };
 
   const handleJoinTeamChange = (field, value) => {
-    setJoinTeamData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleCreateTeamChange = (field, value) => {
-    setCreateTeamData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleBackToInitial = () => {
     setAction("idle");
   };
 
-  const handleSubmitJoin = () => {
-    // Validation for joining a team
+  const handleSubmitJoin = async () => {
     if (
-      !joinTeamData.yourName.trim() ||
-      !joinTeamData.yourEid.trim() ||
-      !joinTeamData.teamName.trim() ||
-      !joinTeamData.teamId.trim()
+      !formData.name.trim() ||
+      !formData.yourEid.trim() ||
+      !formData.teamId.trim()
     ) {
       alert("Please fill out all fields to join a team.");
-      return; // Stop execution if validation fails
+      return;
     }
+    try {
+      console.log("Joining team with data:", formData);
+      
+        const res = await fetch("http://localhost:5000/api/auth/hackathon_registration", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            elixirId: formData.yourEid.trim(),
+            track: selectedTrack,
+            mode: "join_team",
+            teamId: formData.teamId.trim()
+          })
+            });
 
-    setTeamInfo((prev) => ({
-      ...prev,
-      teamName: joinTeamData.teamName || prev.teamName,
-      teamId: joinTeamData.teamId || prev.teamId,
-      registered: false,
-    }));
+          const data = await res.json();
 
-    // if (joinTeamData.yourName && joinTeamData.yourEid) {
-    //   setTeammate1Name(joinTeamData.yourName);
-    //   setTeammate1Id(joinTeamData.yourEid);
-    // }
+          if (!res.ok) {
+            throw new Error(data.message || "Error joining team");
+          }
 
-    setAction("details");
-  };
+          alert(`✅ ${data.message} Joined Team ID: ${data.teamId}`);
 
-  const handleSubmitCreate = () => {
-    // Validation for creating a team
-    if (
-      !createTeamData.yourName.trim() ||
-      !createTeamData.yourElixer.trim() ||
-      !createTeamData.teamName.trim()
-    ) {
-      alert("Please fill out all fields to create a team.");
-      return; // Stop execution if validation fails
-    }
+        setTeamInfo(prev => ({
+        ...prev,
+        teamId: res.data.teamId,
+        track: selectedTrack,
+        role: "member"
+      }));
+      setAction("details");
+    } catch (err) {
+      console.error(err);
+      alert(`❌ ${err.response?.data?.message || "Error joining team"}`);
+    };
 
-    setTeamInfo((prev) => ({
-      ...prev,
-      teamName: createTeamData.teamName || prev.teamName,
-      teamId: prev.teamId,
-      registered: false,
-    }));
 
-    // Don't automatically add the team creator as a teammate
-    // The teammates list will remain empty initially
 
-    setAction("details");
-  };
+ const [newTeammateName, setNewTeammateName] = useState("");
+  const [newTeammateId, setNewTeammateId] = useState("");
+  const [isAddingMember, setIsAddingMember] = useState(false);
 
   const handleAddMemberButton = async () => {
     if (!newTeammateName.trim() || !newTeammateId.trim()) {
@@ -116,70 +155,55 @@ const Dashboard = () => {
       return;
     }
 
-    // Check if team is full
-    const filledSlots = members.filter((member) => member.name !== "-").length;
-    if (filledSlots >= 4) {
-      alert("Team is full! Maximum 4 members allowed.");
-      return;
-    }
-
     setIsAddingMember(true);
 
     try {
-      // Prepare data for API call
-      const memberData = {
+      const res = await axios.post("/api/hackathon/add-member", {
+        leaderElixirId: userData.elixirId,
         name: newTeammateName.trim(),
-        elixirId: newTeammateId.trim(),
-        teamName: teamInfo.teamName,
-        teamId: teamInfo.teamId,
-      };
-
-      // Make API call
-      const response = await axios.post("/users/add-member", memberData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        elixirId: newTeammateId.trim()
       });
 
-      console.log("Member added successfully:", response.data);
+      alert(`✅ ${res.data.message}`);
 
-      // Find the first empty slot and add the new teammate
-      if (teammate1Name === "-") {
-        setTeammate1Name(newTeammateName);
-        setTeammate1Id(newTeammateId);
-      } else if (teammate2Name === "-") {
-        setTeammate2Name(newTeammateName);
-        setTeammate2Id(newTeammateId);
-      } else if (teammate3Name === "-") {
-        setTeammate3Name(newTeammateName);
-        setTeammate3Id(newTeammateId);
-      } else if (teammate4Name === "-") {
-        setTeammate4Name(newTeammateName);
-        setTeammate4Id(newTeammateId);
-      }
+      // Update frontend state
+      setTeamInfo(prev => ({
+        ...prev,
+        members: [...prev.members, { name: newTeammateName, elixirId: newTeammateId }]
+      }));
 
-      // Clear the form fields
       setNewTeammateName("");
       setNewTeammateId("");
-
-      // Show success message (optional)
-      alert("Member added successfully!");
     } catch (error) {
       console.error("Error adding member:", error);
-
-      // Handle different types of errors
-      if (error.response) {
-        // Server responded with error status
-        alert(`Error: ${error.response.data.message || "Failed to add member"}`);
-      } else if (error.request) {
-        // Request was made but no response received
-        alert("Network error: Please check your connection and try again");
-      } else {
-        // Something else happened
-        alert("An unexpected error occurred. Please try again.");
-      }
+      alert(`❌ ${error.response?.data?.message || "Error adding member"}`);
     } finally {
       setIsAddingMember(false);
+    }
+  };
+
+ 
+  const handleRemoveMember = async (memberElixirId) => {
+    if (memberElixirId === userData.elixirId) {
+      alert("Leader cannot remove themselves.");
+      return;
+    }
+    try {
+      const res = await axios.post("/api/hackathon/remove-member", {
+        leaderElixirId: userData.elixirId,
+        memberElixirId
+      });
+
+      alert(`✅ ${res.data.message}`);
+
+      // Update frontend state
+      setTeamInfo(prev => ({
+        ...prev,
+        members: prev.members.filter(m => m.elixirId !== memberElixirId)
+      }));
+    } catch (error) {
+      console.error("Error removing member:", error);
+      alert(`❌ ${error.response?.data?.message || "Error removing member"}`);
     }
   };
 
@@ -208,7 +232,7 @@ const Dashboard = () => {
       <div className="absolute top-16 sm:top-20 left-4 sm:left-6 md:left-20 z-20 select-none">
         <div className="text-sm sm:text-base md:text-2xl font-mono text-white/90">Hey,</div>
         <div className="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-mono font-extrabold text-green-400 drop-shadow">
-          Saksham
+          {profile?.firstname || "Participant"}
         </div>
       </div>
 
@@ -305,9 +329,9 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={joinTeamData.yourName}
+                    value={formData.name}
                     onChange={(e) =>
-                      handleJoinTeamChange("yourName", e.target.value)
+                      handleJoinTeamChange("name", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="Enter your name"
@@ -319,7 +343,7 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={joinTeamData.yourEid}
+                    value={formData.yourEid}
                     onChange={(e) =>
                       handleJoinTeamChange("yourEid", e.target.value)
                     }
@@ -333,7 +357,7 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={joinTeamData.teamName}
+                    value={formData.teamName}
                     onChange={(e) =>
                       handleJoinTeamChange("teamName", e.target.value)
                     }
@@ -347,7 +371,7 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={joinTeamData.teamId}
+                    value={formData.teamId}
                     onChange={(e) =>
                       handleJoinTeamChange("teamId", e.target.value)
                     }
@@ -394,9 +418,9 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={createTeamData.yourName}
+                    value={formData.name}
                     onChange={(e) =>
-                      handleCreateTeamChange("yourName", e.target.value)
+                      handleCreateTeamChange("name", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="Enter your name"
@@ -408,9 +432,9 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={createTeamData.yourElixer}
+                    value={formData.yourElixer}
                     onChange={(e) =>
-                      handleCreateTeamChange("yourElixer", e.target.value)
+                      handleCreateTeamChange("yourEid", e.target.value)
                     }
                     className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
                     placeholder="Enter your elixer"
@@ -422,7 +446,7 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={createTeamData.teamName}
+                    value={formData.teamName}
                     onChange={(e) =>
                       handleCreateTeamChange("teamName", e.target.value)
                     }
@@ -615,6 +639,7 @@ const Dashboard = () => {
       `}</style>
     </section>
   );
+}
 };
 
 export default Dashboard;
