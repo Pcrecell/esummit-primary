@@ -7,7 +7,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 const PaymentChoice = () => {
   const router = useRouter();
   const modalRef = useRef(null);
-  const { userData, profile, loading } = useAuth();
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
   useEffect(() => {
     if (!loading) {
@@ -61,6 +61,7 @@ const PaymentChoice = () => {
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Price: Rs.249
             </p>
+            {/* DONT USE THE FOLLOWING BILLING LINK IN PRODUCTION - USE A DIFFERENT LINK 17796 - Testing, 17972 - Production */}
             <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972" >            
             <div
               className="group relative w-40 cursor-pointer"
