@@ -27,7 +27,7 @@ export default function FounderlandCard() {
         {/* Desktop Scroll Overlay - As overlay on the left side of the card */}
         <div className="hidden lg:block absolute left-4 top-1/2 -translate-y-1/2 h-[400px] w-[420px] z-20 pointer-events-none">
           <Image
-            src="https://i.ibb.co/HDp97W96/Spell-Scroll-2-removebg-preview-2.png"
+            src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Spell-Scroll-2-removebg-preview-2%20(1).webp?updatedAt=1755288296888"
             alt="Scroll"
             width={700}
             height={700}
