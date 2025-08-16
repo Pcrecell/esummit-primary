@@ -699,9 +699,9 @@ code {
   z-index: -1; 
 
   /*background-image: url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%201000002385%20(2).webp");*/
-  background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
+  /* background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
   background-position: calc(50% + 30px) top;
-  background-size: cover;
+  background-size: cover; */
 
   transform: rotate(180deg);
   filter: blur(1px);
@@ -713,12 +713,12 @@ code {
   height: 100%;
 }
 
-.hero-container{
+/* .hero-container{
 background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
   background-position: calc(50% + 100px) center;
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 /* src/auth/ForgotPassword.css */
 .forgot-password-page {
   display: flex;
