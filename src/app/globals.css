@@ -73,6 +73,32 @@ body {
   0% { transform: translateY(-50%); }
   100% { transform: translateY(0); }
 }
+
+@keyframes shine {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes textShine {
+  0% { 
+    background-position: -200% center;
+  }
+  100% { 
+    background-position: 200% center;
+  }
+}
 @keyframes scrollLeft {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -949,4 +975,22 @@ background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_2025080
     font-size: 0.9rem;
     margin-top: 1.5rem;
   }
+}
+
+/* Mobile text shine effect */
+.mobile-shine-text {
+  background: linear-gradient(
+    90deg,
+    #CDAF5B 0%,
+    #CDAF5B 40%,
+    rgba(255, 223, 186, 0.9) 50%,
+    #CDAF5B 60%,
+    #CDAF5B 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: textShine 3s ease-in-out infinite;
 }

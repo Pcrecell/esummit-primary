@@ -85,8 +85,8 @@ const HeroSection = () => {
                 />
                 
                 <div className="absolute inset-0 z-30 flex items-center justify-center">
-                  <span className={`${poppins.className} text-white font-semibold text-xs sm:text-xs md:text-base lg:text-base transition-all duration-500 group-hover:scale-102 group-hover:-translate-y-0.5 group-hover:bg-amber-300/25 px-4 py-2 rounded-full tracking-wide pointer-events-none select-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]`} style={{background: 'transparent'}}>
-                    Registrations Starting Soon
+                  <span className={`${poppins.className} text-white font-semibold text-xs sm:text-xs md:text-base lg:text-xl transition-all duration-500 group-hover:scale-102 group-hover:-translate-y-0.5 group-hover:bg-amber-300/25 px-4 py-2 rounded-full tracking-wide pointer-events-none select-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]`} style={{background: 'transparent'}}>
+                    Register
                   </span>
                 </div>
               </div>
