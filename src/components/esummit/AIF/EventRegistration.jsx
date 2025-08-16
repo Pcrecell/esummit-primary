@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const EventRegistration = () => {
+const EventRegistration = ({ onRegistrationSuccess }) => {
   const [formData, setFormData] = useState({
     fullName: "",
     contactNumber: "",
@@ -112,7 +112,9 @@ const EventRegistration = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      alert("Registration submitted successfully!");
+      // Here you would typically submit the data to your backend
+      // For now, we'll just simulate successful registration
+      
       // Reset form after successful submission
       setFormData({
         fullName: "",
@@ -122,6 +124,11 @@ const EventRegistration = () => {
         agreeTerms: false,
       });
       setErrors({});
+      
+      // Call the success callback
+      if (onRegistrationSuccess) {
+        onRegistrationSuccess(formData);
+      }
     }
   };
 
@@ -163,10 +170,7 @@ const EventRegistration = () => {
         </div>
 
         {/* Form container */}
-        <div className="relative z-10 flex justify-center h-full items-center w-full max-w-md mx-auto px-8 py-0 pt-0">
-              <p className="relative text-3xl flex justify-center top-6 items-center">Registration Starting Soon!!</p>
-        </div>
-        {/* <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
+        <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
           <div className="space-y-4">
           
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -294,7 +298,7 @@ const EventRegistration = () => {
             )}
 
           
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center -translate-y-10">
               <button
                 type="button"
                 onClick={handleSubmit}
@@ -321,7 +325,7 @@ const EventRegistration = () => {
               </button>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Mobile Layout */}
@@ -341,10 +345,7 @@ const EventRegistration = () => {
 
         {/* Mobile Form */}
         <div className="bg-gradient-to-b from-gray-900/50 to-black/80 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30 shadow-2xl">
-          <div>
-            <p className="flex justify-center items-center">Registration Starting Soon!</p>
-          </div>
-          {/* <div className="space-y-4">
+          <div className="space-y-4">
 
             <div className="space-y-4">
   
@@ -414,7 +415,7 @@ const EventRegistration = () => {
                 />
                 {errors.email && (
                   <p className="text-red-400 text-xs mt-1 font-medium">
-                    {errors.errors}
+                    {errors.email}
                   </p>
                 )}
               </div>
@@ -483,7 +484,7 @@ const EventRegistration = () => {
                 SUBMIT
               </button>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

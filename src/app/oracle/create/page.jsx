@@ -47,7 +47,7 @@ const CreateTeamPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40 p-2 ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/90 p-2 ">
       <div 
         className="relative w-full max-w-full sm:max-w-sm md:max-w-lg lg:max-w-xl max-h-[90vh] rounded-xl sm:rounded-2xl shadow-2xl"
       >

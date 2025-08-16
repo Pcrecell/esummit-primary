@@ -65,7 +65,7 @@ export default function Hero() {
           </p>
 
           <div className="flex justify-center mt-12">
-  <div className="group relative w-48 sm:w-72 md:w-48 items-center cursor-pointer" onClick={() => alert("Registrations Opening Soon")}>
+  <div className="group relative w-48 sm:w-72 md:w-48 items-center cursor-pointer" onClick={() => setShowPopup(true)}>
     {/* Image shown when not hovering */}
     <img
       src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"

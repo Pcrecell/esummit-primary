@@ -638,25 +638,8 @@ export default function CaseX() {
 
             {/* POPUP FORM */}
             {/* STARTING SOON POPUP */}
-            {showPopup && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="relative w-[835px] h-[494px] bg-[#1B0D00] rounded-3xl border-4 border-[#CFB43C]">
-                        <button 
-                            onClick={() => setShowPopup(false)}
-                            className="absolute top-4 right-4 text-[#CFB43C] hover:text-[#CFB43C]/80 text-2xl font-bold"
-                        >
-                            ×
-                        </button>
-                        <div className="w-full h-full flex items-center justify-center">
-                            <p className="text-6xl font-light font-leage-spartan text-[#CFB43C] text-center">
-                                Registrations Starting Soon!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
             {/* POPUP TO BE ENABLED */}
-            {showPopup && !(
+            {showPopup && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="relative w-[95vw] max-w-[835px] md:min-h-[494px] bg-[#1B0D00] rounded-3xl border-4 border-[#CFB43C] max-h-[90vh] overflow-y-auto overscroll-contain">
                         <button 
