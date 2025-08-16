@@ -54,7 +54,7 @@ const WhyUsScreen = () => {
       {/* Desktop/tablet composition */}
       <div className="hidden md:block relative z-20 w-full max-w-6xl xl:max-w-7xl mx-auto min-h-[720px]">
         {/* Heading plaque on the left */}
-        <div className="absolute left-0 top-16 bg-[#0a0f0a]/70 border border-[#D4AF37]/50 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.4)] w-[240px] xl:w-[340px] px-6 py-8 text-[#D4AF37] relative">
+        <div className=" left-0 top-16 bg-[#0a0f0a]/70 border border-[#D4AF37]/50 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.4)] w-[240px] xl:w-[340px] px-6 py-8 text-[#D4AF37] relative">
           <Image
             src={bottle}
             alt=""

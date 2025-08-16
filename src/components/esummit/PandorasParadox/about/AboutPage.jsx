@@ -11,10 +11,52 @@ const poppins = Poppins({
 
 const AboutPage = () => {
   return (
-    <section
-      id="aboutus"
-      className="relative min-h-[120vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
-    >
+    <>
+      <style jsx>{`
+        .banner-3d {
+          animation: subtleTilt 4s ease-in-out infinite;
+          transform-style: preserve-3d;
+        }
+        
+        .banner-3d-mobile {
+          animation: subtleTiltMobile 4s ease-in-out infinite;
+          transform-style: preserve-3d;
+        }
+        
+        @keyframes subtleTilt {
+          0%, 100% {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+          }
+          25% {
+            transform: perspective(1000px) rotateX(1deg) rotateY(-0.5deg);
+          }
+          50% {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0.5deg);
+          }
+          75% {
+            transform: perspective(1000px) rotateX(-1deg) rotateY(0deg);
+          }
+        }
+        
+        @keyframes subtleTiltMobile {
+          0%, 100% {
+            transform: rotate(90deg) perspective(1000px) rotateX(0deg) rotateY(0deg);
+          }
+          25% {
+            transform: rotate(90deg) perspective(1000px) rotateX(0.5deg) rotateY(-1deg);
+          }
+          50% {
+            transform: rotate(90deg) perspective(1000px) rotateX(0deg) rotateY(1deg);
+          }
+          75% {
+            transform: rotate(90deg) perspective(1000px) rotateX(-0.5deg) rotateY(0deg);
+          }
+        }
+      `}</style>
+      <section
+        id="aboutus"
+        className="relative min-h-[120vh] w-full bg-black flex flex-col lg:flex-row items-center justify-center overflow-hidden"
+      >
       
       {/* Background Image */}
       <div className="absolute inset-0 z-0 max-h-[90vh]">
@@ -53,7 +95,7 @@ const AboutPage = () => {
 
       {/* Red Banner - Top Left Corner */}
       <div className="absolute top-0 left-0 z-30">
-        <div className="hidden lg:block relative w-[500px] xl:w-[600px] h-[700px] xl:h-[850px] -ml-4 lg:-ml-8">
+        <div className="hidden lg:block relative w-[500px] xl:w-[600px] h-[700px] xl:h-[850px] -ml-4 lg:-ml-8 banner-3d">
           <Image
             src={banner}
             alt="About banner"
@@ -72,9 +114,9 @@ const AboutPage = () => {
                 }}
               >
                 ABOUT
-                <br />
+                <br /><br />
                 THE
-                <br />
+                <br /><br />
                 PARADOX
               </h1>
             </div>
@@ -84,9 +126,8 @@ const AboutPage = () => {
         {/* Mobile Banner - Rotated */}
         <div className="lg:hidden absolute top-0 left-50">
           <div
-            className="relative w-[200px] h-[400px] sm:w-[240px] sm:h-[480px]"
+            className="relative w-[200px] h-[400px] sm:w-[240px] sm:h-[480px] banner-3d-mobile"
             style={{
-              transform: "rotate(90deg)",
               transformOrigin: "100px 100px",
             }}
           >
@@ -126,7 +167,7 @@ const AboutPage = () => {
       <div className="relative z-20 w-full min-h-screen flex items-center justify-center">
         {/* Full Width Background for Content */}
         <div className="w-full py-16 lg:py-24">
-          <div className="max-w-9xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex justify-end">
+          <div className="max-w-9xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex justify-center md:justify-end">
             {/* Content Box - Right Side on Desktop, Adjusted for Mobile */}
             <div className="w-full lg:w-2/3 xl:w-1/2 max-w-2xl lg:mr-8 xl:mr-16 mt-2 sm:mt-40 lg:mt-0">
               {/* Green Border Box */}
@@ -157,6 +198,7 @@ const AboutPage = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

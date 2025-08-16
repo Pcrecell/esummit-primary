@@ -104,6 +104,9 @@ const Dashboard = () => {
       registered: false,
     }));
 
+    // Don't automatically add the team creator as a teammate
+    // The teammates list will remain empty initially
+
     setAction("details");
   };
 
@@ -138,6 +141,8 @@ const Dashboard = () => {
         },
       });
 
+
+      // Find the first empty slot and add the new teammate
       if (teammate1Name === "-") {
         setTeammate1Name(newTeammateName);
         setTeammate1Id(newTeammateId);
@@ -156,15 +161,20 @@ const Dashboard = () => {
       setNewTeammateName("");
       setNewTeammateId("");
 
+      // Show success message (optional)
       alert("Member added successfully!");
     } catch (error) {
       console.error("Error adding member:", error);
 
+      // Handle different types of errors
       if (error.response) {
+        // Server responded with error status
         alert(`Error: ${error.response.data.message || "Failed to add member"}`);
       } else if (error.request) {
+        // Request was made but no response received
         alert("Network error: Please check your connection and try again");
       } else {
+        // Something else happened
         alert("An unexpected error occurred. Please try again.");
       }
     } finally {
@@ -232,7 +242,7 @@ const Dashboard = () => {
         className={`relative z-20 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto flex flex-col items-center transition-all duration-700 ease-in-out ${
           action === "idle"
             ? "mt-[50vh]"
-            : "mt-30  sm:mt-32 md:mt-40 pt-8 sm:pt-12"
+            : "mt-30 md:mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
         }`}
       >
         {/* Join / Create buttons */}
@@ -465,37 +475,14 @@ const Dashboard = () => {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-2">
-                        {member.name !== "-" && (
-                          <button
-                            onClick={() => {
-                              // You can implement your fetch function here
-                              fetch("/api/remove-member", {
-                                method: "POST",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                  memberName: member.name,
-                                  memberId: member.id,
-                                  teamId: teamInfo.teamId,
-                                }),
-                              });
-                            }}
-                            className="bg-red-600/80 hover:bg-red-500 border border-red-400/60 text-white text-xs px-2 py-1 rounded font-mono font-bold transition-all"
-                          >
-                            REMOVE
-                          </button>
-                        )}
-                        <span className="text-white/60 text-sm">-</span>
-                      </div>
+                      <span className="text-white/60 text-sm">-</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* rght me Add teammate */}
+            {/* Right side - Add teammate form */}
             <div className="lg:w-1/2">
               <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-6 backdrop-blur-md">
                 <div className="text-center mb-6">
