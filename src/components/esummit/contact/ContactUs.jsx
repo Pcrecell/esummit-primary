@@ -283,7 +283,7 @@ function App() {
                       Phone No.
                     </label>
                     <input
-                      type="tel"
+                      type="number"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
