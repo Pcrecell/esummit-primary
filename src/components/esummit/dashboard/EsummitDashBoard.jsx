@@ -403,7 +403,7 @@ const EsummitDashBoard = () => {
               <a
                 // href="/faq"
                 onClick={() => {router.push("/faq")}}
-                className="text-white hover:text-green-400 underline font-poppins font-bold text-sm transition-colors duration-300"
+                className="text-white hover:text-green-400 cursor-pointer underline font-poppins font-bold text-sm transition-colors duration-300"
               >
                 Have questions? Check our FAQ
               </a>
