@@ -46,9 +46,9 @@ export default function HomePage() {
         <About />
       </div>
       <MoreInfo />
-      {/* <div id="registration-section">
+      <div id="registration-section">
         <Registration />
-      </div> */}
+      </div>
       <Footer />
     </div>
   );
