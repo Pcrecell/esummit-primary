@@ -253,7 +253,7 @@ export default function CaseX() {
                         <br />Think you've got what it takes?
                     </p>
                     <p className="text-white text-xl font-bold font-leage-spartan text-center mb-8">
-                        This is not a case study.  This is war.
+                        This is not a case study. This is war.
                     </p>
                     {/* Register / Manage button positioned on bottom border (mobile) */}
                     {isRegisteredCaseBattle ? (
