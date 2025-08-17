@@ -1,12 +1,10 @@
-import DashboardFetch from '@/components/esummit/PandorasParadox/Dashboard'
+import PandorasParadoxDashboard from '@/components/esummit/PandorasParadox/dashboard/Dashboard'
 import React from 'react'
 
-const page = () => {
+const PandorasParadoxDashboardPage = () => {
   return (
-    <div>
-        <DashboardFetch />
-    </div>
+    <PandorasParadoxDashboard />
   )
 }
 
-export default page
+export default PandorasParadoxDashboardPage

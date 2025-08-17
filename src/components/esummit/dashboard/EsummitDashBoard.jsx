@@ -11,7 +11,6 @@ import PaymentEnd from "./paymentEnd";
 import Particles from "./Particles";
 import Image from "next/image";
 import { useAuth } from "@/lib/context/AuthContext";
-import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL

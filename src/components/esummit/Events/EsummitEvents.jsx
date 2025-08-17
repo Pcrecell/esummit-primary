@@ -354,14 +354,14 @@ const EventsPage = () => {
     cardRefs.current = cardRefs.current.slice(0, currentEvents.length);
   }, [currentEvents]);
 
-  const handleKnowMore = (route) => {
-    // Check login status before navigating
-      if (route && userData) router.push(route);
-     else {
-      // Redirect to login page if not logged in
-      router.push("/login");
-    }
-  };
+  // const handleKnowMore = (route) => {
+  //   // Check login status before navigating
+  //     if (route && userData) router.push(route);
+  //    else {
+  //     // Redirect to login page if not logged in
+  //     router.push("/login");
+  //   }
+  // };
 
   return (
     <div className="w-full">

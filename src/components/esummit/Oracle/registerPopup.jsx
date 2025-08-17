@@ -17,19 +17,13 @@ const RegisterPopup = ({ onClose }) => {
   }, [onClose]);
 
   const handleJoinTeam = () => {
-    setShowJoinPopup(false);
+    router.push('/oracle/join'); // Redirect to join team page
+    onClose(); // Close the popup
   };
 
   const handleCreateTeam = () => {
-    setShowCreatePopup(false);
-  };
-
-  const handleCloseJoinPopup = () => {
-    setShowJoinPopup(false);
-  };
-  
-  const handleCloseCreatePopup = () => {
-    setShowCreatePopup(false);
+    router.push('/oracle/create'); // Redirect to create team page
+    onClose(); // Close the popup
   };
 
   return (

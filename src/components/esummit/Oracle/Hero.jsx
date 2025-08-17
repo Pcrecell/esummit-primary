@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import { Cormorant_Garamond, Rakkas } from "next/font/google";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/lib/context/AuthContext";
 import RegisterPopup from "./registerPopup";
 import {
   MapPinIcon,
@@ -20,7 +21,43 @@ const rakkas = Rakkas({
 });
 
 export default function Hero() {
+  // ✅ hooks must be inside the component
+  const { userData, profile, loading } = useAuth();
+
+  const [teamInfo, setTeamInfo] = useState({
+    teamName: "",
+    teamId: "",
+    leaderId: "",
+    members: [],
+    role: "", // "leader" or "member"
+  });
   const [showPopup, setShowPopup] = useState(false);
+
+  const fetchTeamInfo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/oracle/team-info/${profile.elixir}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Fetched team info:", data);
+      setTeamInfo(data);
+    } catch (error) {
+      console.error("Error fetching team info:", error);
+      alert("Failed to load team information. Please try again later.");
+    }
+  };
+
+  useEffect(() => {
+    if (profile?.elixir) {
+      fetchTeamInfo();
+    }
+  }, [profile]);
+
 
   return (
     <div

@@ -11,39 +11,63 @@ const cormorantGaramond = Cormorant_Garamond({
 const CreateTeamPage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    name: '',
-    UId: '',
-    teamName: ''
+    name: "",
+    yourEid: "",
+    teamName: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const validateForm = () => {
     let newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.UId.trim()) newErrors.UId = "UID is required";
+    if (!formData.yourEid.trim()) newErrors.yourEid = "UID is required";
     if (!formData.teamName.trim()) newErrors.teamName = "Team name is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleCreateTeam = (e) => {
+  const handleCreateTeam = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return; 
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      console.log("Submitting create team request with data:", formData);
+
+      const res = await fetch("http://localhost:5000/api/oracle/oracle_registration", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          elixir: formData.yourEid.trim(),
+          mode: "create_team",
+          teamName: formData.teamName.trim(),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Error creating team");
+      }
+
+      alert(`✅ ${data.message} Your Team ID: ${data.teamId}`);
+
+      // after successful create, move to oracle page
+      router.push("/oracle");
+    } catch (err) {
+      console.error(err);
+      alert(`❌ ${err.message || "Error creating team"}`);
+    } finally {
       setIsSubmitting(false);
-      router.push('/oracle'); 
-    }, 1000);
+    }
   };
 
   return (
@@ -72,7 +96,7 @@ const CreateTeamPage = () => {
                   type="text"
                   name="name"
                   value={formData.name}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleChange("name", e.target.value)}
                   className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
                   disabled={isSubmitting}
                 />
@@ -88,8 +112,8 @@ const CreateTeamPage = () => {
                 <input
                   type="text"
                   name="UId"
-                  value={formData.UId}
-                  onChange={handleInputChange}
+                  value={formData.yourEid}
+                  onChange={(e) => handleChange("yourEid", e.target.value)}
                   className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
                   disabled={isSubmitting}
                 />
@@ -106,7 +130,7 @@ const CreateTeamPage = () => {
                   type="text"
                   name="teamName"
                   value={formData.teamName}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleChange("teamName", e.target.value)}
                   className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
                   disabled={isSubmitting}
                 />

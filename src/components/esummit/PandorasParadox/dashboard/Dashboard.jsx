@@ -6,29 +6,21 @@ import axios from "axios";
 import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
-const Dashboard = () => {
+const PandorasParadoxDashboard = () => {
   const router = useRouter();
-  const { userData, profile } = useAuth();
+  const { userData, profile, loading } = useAuth();
   const paymentDone = profile?.payment;
+  
+  // All useState hooks must be at the top
   const [action, setAction] = useState("idle");
   const [selectedTrack, setSelectedTrack] = useState("beginner");
-
-  useEffect(() => {
-    console.log("User not logged in, redirecting to login page");
-    if (userData && !paymentDone) {
-      router.replace("/dashboard");
-    }
-  }, [userData, profile, router]);
-
   const [formData, setFormData] = useState({
     name: "",
     yourEid: "",
     teamName: "",
     teamId: ""
   });
-
-  
-    const [teamInfo, setTeamInfo] = useState({
+  const [teamInfo, setTeamInfo] = useState({
     teamName: "",
     teamId: "",
     track: "",
@@ -36,6 +28,61 @@ const Dashboard = () => {
     members: [],
     role: "" // "leader" or "member"
   });
+  const [newTeammateName, setNewTeammateName] = useState("");
+  const [newTeammateId, setNewTeammateId] = useState("");
+  const [isAddingMember, setIsAddingMember] = useState(false);
+  const fetchTeamInfo = async () => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/hackathon/team-info/${profile.elixir}`);
+    
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    setTeamInfo(data);
+  } catch (error) {
+    console.error("Error fetching team info:", error);
+    alert("Failed to load team information. Please try again later.");
+  }
+};
+
+useEffect(() => {
+  if (profile?.elixir) {
+    fetchTeamInfo();
+  }
+}, [profile]);
+
+
+  useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+        return;
+      }
+      if (!paymentDone) {
+        router.replace("/dashboard");
+        return;
+      }
+    }
+    if (userData && paymentDone) {
+      if (profile?.elixir) {
+    fetchTeamInfo();
+  }
+    }
+  }, [userData, paymentDone, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!userData || !paymentDone) {
+    return null;
+  }
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
@@ -52,33 +99,38 @@ const Dashboard = () => {
     }
     try {
       console.log("Submitting create team request with data:", formData);
-      const res = await fetch("http://localhost:5000/api/auth/hackathon_registration", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                name: formData.name.trim(),
-                elixirId: formData.yourEid.trim(),
-                track: selectedTrack,
-                mode: "create_team",
-                teamName: formData.teamName.trim(),
-              }),
-            });
+const res = await fetch("http://localhost:5000/api/hackathon/hackathon_registration", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: formData.name.trim(),
+    elixir: formData.yourEid.trim(),
+    track: selectedTrack,
+    mode: "create_team",
+    teamName: formData.teamName.trim(),
+  }),
+});
 
-            // If you need the response as JSON
-            const data = await res.json();
-            console.log("Create team response:", data);
-      alert(`✅ ${data.message} Your Team ID: `);
-      setTeamInfo({
-        teamName: formData.teamName.trim(),
-        teamId: res.data.teamId,
-        track: selectedTrack,
-        leaderId: formData.yourEid.trim(),
-        role: "leader",
-        members: [{ name: formData.name.trim(), elixirId: formData.yourEid.trim() }]
-      });
-      setAction("details");
+const data = await res.json();
+
+if (!res.ok) {
+  throw new Error(data.message || "Error creating team");
+}
+
+alert(`✅ ${data.message} Your Team ID: ${data.teamId}`);
+
+setTeamInfo({
+  teamName: formData.teamName.trim(),
+  teamId: data.teamId, // ✅ use data not res.data
+  track: selectedTrack,
+  leaderId: formData.yourEid.trim(),
+  role: "leader",
+  members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
+});
+setAction("details");
+
     } catch (err) {
       console.error(err);
       alert(`❌ ${err.response?.data?.message || "Error creating team"}`);
@@ -109,14 +161,14 @@ const Dashboard = () => {
     try {
       console.log("Joining team with data:", formData);
       
-        const res = await fetch("http://localhost:5000/api/auth/hackathon_registration", {
+        const res = await fetch("http://localhost:5000/api/hackathon/hackathon_registration", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
             name: formData.name.trim(),
-            elixirId: formData.yourEid.trim(),
+            elixir: formData.yourEid.trim(),
             track: selectedTrack,
             mode: "join_team",
             teamId: formData.teamId.trim()
@@ -141,13 +193,8 @@ const Dashboard = () => {
     } catch (err) {
       console.error(err);
       alert(`❌ ${err.response?.data?.message || "Error joining team"}`);
-    };
-
-
-
- const [newTeammateName, setNewTeammateName] = useState("");
-  const [newTeammateId, setNewTeammateId] = useState("");
-  const [isAddingMember, setIsAddingMember] = useState(false);
+    }
+  };
 
   const handleAddMemberButton = async () => {
     if (!newTeammateName.trim() || !newTeammateId.trim()) {
@@ -158,10 +205,10 @@ const Dashboard = () => {
     setIsAddingMember(true);
 
     try {
-      const res = await axios.post("/api/hackathon/add-member", {
-        leaderElixirId: userData.elixirId,
+      const res = await axios.post("http://localhost:5000/api/hackathon/add-member", {
+        leaderelixir: profile.elixir,
         name: newTeammateName.trim(),
-        elixirId: newTeammateId.trim()
+        elixir: newTeammateId.trim()
       });
 
       alert(`✅ ${res.data.message}`);
@@ -169,7 +216,7 @@ const Dashboard = () => {
       // Update frontend state
       setTeamInfo(prev => ({
         ...prev,
-        members: [...prev.members, { name: newTeammateName, elixirId: newTeammateId }]
+        members: [...prev.members, { name: newTeammateName, elixir: newTeammateId }]
       }));
 
       setNewTeammateName("");
@@ -185,29 +232,44 @@ const Dashboard = () => {
   };
 
  
-  const handleRemoveMember = async (memberElixirId) => {
-    if (memberElixirId === userData.elixirId) {
-      alert("Leader cannot remove themselves.");
-      return;
-    }
-    try {
-      const res = await axios.post("/api/hackathon/remove-member", {
-        leaderElixirId: userData.elixirId,
-        memberElixirId
-      });
+const handleRemoveMember = async (memberelixir) => {
+  if (memberelixir === profile.elixir) {
+    alert("Leader cannot remove themselves.");
+    return;
+  }
 
-      alert(`✅ ${res.data.message}`);
+  try {
+    const res = await fetch("http://localhost:5000/api/hackathon/remove-member", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        leaderelixir: profile.elixir,
+        memberelixir,
+      }),
+    });
 
-      // Update frontend state
-      setTeamInfo(prev => ({
-        ...prev,
-        members: prev.members.filter(m => m.elixirId !== memberElixirId)
-      }));
-    } catch (error) {
-      console.error("Error removing member:", error);
-      alert(`❌ ${error.response?.data?.message || "Error removing member"}`);
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Error removing member");
     }
-  };
+
+    const data = await res.json();
+
+    alert(`✅ ${data.message}`);
+
+    // Update frontend state
+    setTeamInfo((prev) => ({
+      ...prev,
+      members: prev.members.filter((m) => m.elixir !== memberelixir),
+    }));
+  } catch (error) {
+    console.error("Error removing member:", error);
+    alert(`❌ ${error.message}`);
+  }
+};
+
 
   return (
     <section
@@ -268,8 +330,8 @@ const Dashboard = () => {
       <div
         className={`relative z-20 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto flex flex-col items-center transition-all duration-700 ease-in-out ${
           action === "idle"
-            ? "mt-[50vh]"
-            : "mt-30  sm:mt-32 md:mt-40 pt-8 sm:pt-12"
+            ? "mt-32 sm:mt-40 md:mt-48"
+            : "mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
         }`}
       >
         {/* Join / Create buttons */}
@@ -434,7 +496,7 @@ const Dashboard = () => {
                   </label>
                   <input
                     type="text"
-                    value={formData.yourElixer}
+                    value={formData.yourEid}
                     onChange={(e) =>
                       handleCreateTeamChange("yourEid", e.target.value)
                     }
@@ -487,7 +549,7 @@ const Dashboard = () => {
                 </h3>
 
                 <div className="space-y-3">
-                  {members.map((member, idx) => (
+                  {teamInfo.members.map((member, idx) => (
                     <div
                       key={idx}
                       className="flex items-center justify-between text-white font-mono"
@@ -505,20 +567,7 @@ const Dashboard = () => {
                       <div className="flex items-center gap-2">
                         {member.name !== "-" && (
                           <button
-                            onClick={() => {
-                              // You can implement your fetch function here
-                              fetch("/api/remove-member", {
-                                method: "POST",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                  memberName: member.name,
-                                  memberId: member.id,
-                                  teamId: teamInfo.teamId,
-                                }),
-                              });
-                            }}
+                            onClick={() => handleRemoveMember(member.elixir)}
                             className="bg-red-600/80 hover:bg-red-500 border border-red-400/60 text-white text-xs px-2 py-1 rounded font-mono font-bold transition-all"
                           >
                             REMOVE
@@ -664,7 +713,6 @@ const Dashboard = () => {
       `}</style>
     </section>
   );
-}
 };
 
-export default Dashboard;
+export default PandorasParadoxDashboard;

@@ -1,202 +1,257 @@
 "use client";
-import React, { useState, useRef } from "react";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
 
 export default function CaseX() {
-    const [showPopup, setShowPopup] = useState(false);
-    const [activeTab, setActiveTab] = useState('join'); // 'join' or 'create'
-    // Registration flags - replace with real user data integration as needed
-    const [isRegisteredCaseBattle, setIsRegisteredCaseBattle] = useState(false);
-    const [isRegisteredOtherEvent, setIsRegisteredOtherEvent] = useState(false);
-    // Carousel state for mobile evaluation criteria (multi-card, snap, drag)
-    const [evalIndex, setEvalIndex] = useState(0);
-    const [animating, setAnimating] = useState(false);
-    const [direction, setDirection] = useState(0); // -1 for left, 1 for right
-    const [dragX, setDragX] = useState(0); // current drag offset
-    const [isDragging, setIsDragging] = useState(false);
-    const touchStartX = useRef(null);
-    const slidesRef = useRef(null);
+  const router = useRouter();
+  const { userData, profile, loading } = useAuth();
+  const paymentDone = profile?.payment;
 
-    // Team management state (used when user is registered to Case Battle)
-    const [teammates, setTeammates] = useState([
-        // example data (replace with server data)
-        { id: 1, name: 'Suvansh Agarwal', elixirId: '12345', isLead: true },
-        { id: 2, name: 'Rohit Kumar', elixirId: '67890', isLead: false },
-    ]);
-    const [teamInfo, setTeamInfo] = useState({
-        teamName: 'Alpha Warriors',
-        teamId: 'TM001'
-    });
-    const [currentUser, setCurrentUser] = useState({
-        id: 1, // This should match the lead's id in teammates array
-        name: 'Suvansh Agarwal',
-        elixirId: '12345'
-    });
-    const [newMemberName, setNewMemberName] = useState('');
-    const [newMemberElixir, setNewMemberElixir] = useState('');
-    const [addMemberError, setAddMemberError] = useState('');
+  // Popup & tab UI state
+  const [showPopup, setShowPopup] = useState(false);
+  const [activeTab, setActiveTab] = useState("join"); // 'join' or 'create'
 
-    // Create team form state
-    const [createFirstName, setCreateFirstName] = useState('');
-    const [createElixirId, setCreateElixirId] = useState('');
-    const [createTeamName, setCreateTeamName] = useState('');
+  // Registration flags
+  const [isRegisteredCaseBattle, setIsRegisteredCaseBattle] = useState(false);
+  const [isRegisteredOtherEvent, setIsRegisteredOtherEvent] = useState(false);
 
-    // Join team form state
-    const [joinFirstName, setJoinFirstName] = useState('');
-    const [joinElixirId, setJoinElixirId] = useState('');
-    const [joinTeamName, setJoinTeamName] = useState('');
-    const [joinTeamId, setJoinTeamId] = useState('');
-    const [joinError, setJoinError] = useState('');
+  // Carousel state
+  const [evalIndex, setEvalIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [direction, setDirection] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartX = useRef(null);
+  const slidesRef = useRef(null);
 
-    // Mock teams database (in real app, this would come from backend)
-    const [existingTeams] = useState([
+  // Team management state (REAL data from backend)
+  const [action, setAction] = useState("idle");
+  const [selectedTrack, setSelectedTrack] = useState("beginner");
+  const [formData, setFormData] = useState({
+    name: "",
+    yourEid: "",
+    teamName: "",
+    teamId: "",
+  });
+  const [teamInfo, setTeamInfo] = useState({
+    teamName: "",
+    teamId: "",
+    track: "",
+    leaderId: "",
+    members: [],
+    role: "",
+  });
+
+  const [newTeammateName, setNewTeammateName] = useState("");
+  const [newTeammateId, setNewTeammateId] = useState("");
+  const [isAddingMember, setIsAddingMember] = useState(false);
+  const [joinError, setJoinError] = useState("");
+
+  // Fetch team info by Elixir
+  const fetchTeamInfo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/oracle/team-info/${profile.elixir}`
+      );
+      if (!response.ok) throw new Error(`Error ${response.status}`);
+      const data = await response.json();
+      setTeamInfo(data);
+    } catch (err) {
+      console.error("Error fetching team info:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (profile?.elixir) fetchTeamInfo();
+  }, [profile]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+        return;
+      }
+      if (!paymentDone) {
+        router.replace("/dashboard");
+        return;
+      }
+    }
+    if (userData && paymentDone && profile?.elixir) {
+      fetchTeamInfo();
+    }
+  }, [userData, paymentDone, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black text-white">
+        Loading...
+      </div>
+    );
+  }
+  if (!userData || !paymentDone) return null;
+
+  // ---- Team Actions ----
+  const handleChange = (field, value) =>
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
+  const handleSubmitCreate = async () => {
+    if (!formData.name || !formData.yourEid || !formData.teamName) {
+      alert("Fill all fields to create a team");
+      return;
+    }
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/hackathon/hackathon_registration",
         {
-            teamId: 'TM001',
-            teamName: 'Alpha Warriors',
-            members: [
-                { id: 1, name: 'Suvansh Agarwal', elixirId: '12345', isLead: true },
-                { id: 2, name: 'Rohit Kumar', elixirId: '67890', isLead: false },
-            ]
-        },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            elixir: formData.yourEid.trim(),
+            track: selectedTrack,
+            mode: "create_team",
+            teamName: formData.teamName.trim(),
+          }),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      setTeamInfo({
+        teamName: formData.teamName.trim(),
+        teamId: data.teamId,
+        track: selectedTrack,
+        leaderId: formData.yourEid.trim(),
+        role: "leader",
+        members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
+      });
+      setAction("details");
+    } catch (err) {
+      alert(err.message || "Error creating team");
+    }
+  };
+
+  const handleSubmitJoin = async () => {
+    if (!formData.name || !formData.yourEid || !formData.teamId) {
+      setJoinError("Fill all fields to join a team");
+      return;
+    }
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/hackathon/hackathon_registration",
         {
-            teamId: 'TM002', 
-            teamName: 'Beta Coders',
-            members: [
-                { id: 3, name: 'Amit Singh', elixirId: '11111', isLead: true },
-                { id: 4, name: 'Priya Sharma', elixirId: '22222', isLead: false },
-                { id: 5, name: 'Raj Patel', elixirId: '33333', isLead: false },
-                { id: 6, name: 'Raj Patel', elixirId: '33333', isLead: false },
-            ]
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            elixir: formData.yourEid.trim(),
+            track: selectedTrack,
+            mode: "join_team",
+            teamId: formData.teamId.trim(),
+          }),
         }
-    ]);
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
 
-    // Helper function to check if current user is team lead
-    const isCurrentUserLead = () => {
-        const currentUserInTeam = teammates.find(member => member.id === currentUser.id);
-        return currentUserInTeam?.isLead || false;
-    };
+      setTeamInfo((prev) => ({
+        ...prev,
+        teamId: data.teamId,
+        track: selectedTrack,
+        role: "member",
+      }));
+      setAction("details");
+    } catch (err) {
+      setJoinError(err.message || "Error joining team");
+    }
+  };
 
-    // Function to validate and join a team
-    const joinExistingTeam = (FirstName, elixirId, teamName, teamId) => {
-        setJoinError('');
-        
-        // Find the team by ID
-        const targetTeam = existingTeams.find(team => team.teamId === teamId);
-        
-        if (!targetTeam) {
-            setJoinError('Team ID not found!');
-            return false;
-        }
-        
-        // Verify team name matches
-        if (targetTeam.teamName.toLowerCase() !== teamName.toLowerCase()) {
-            setJoinError('Team name does not match the Team ID!');
-            return false;
-        }
-        
-        // Local state check: already in current team (covers cases where existingTeams isn't updated)
-        if (teammates.some(m => m.elixirId === elixirId)) {
-            setJoinError('You are already a member of this team!');
-            return false;
-        }
+  const handleAddMemberButton = async () => {
+    if (!newTeammateName || !newTeammateId) return;
+    setIsAddingMember(true);
+    try {
+      const res = await axios.post("http://localhost:5000/api/hackathon/add-member", {
+        leaderelixir: profile.elixir,
+        name: newTeammateName.trim(),
+        elixir: newTeammateId.trim(),
+      });
+      setTeamInfo((prev) => ({
+        ...prev,
+        members: [...prev.members, { name: newTeammateName, elixir: newTeammateId }],
+      }));
+      setNewTeammateName("");
+      setNewTeammateId("");
+    } catch (err) {
+      alert("Error adding member");
+    } finally {
+      setIsAddingMember(false);
+    }
+  };
 
-        // Global uniqueness: elixirId should not exist in any team (primary key across teams)
-        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === elixirId));
-        if (teamWithThisElixir) {
-            if (teamWithThisElixir.teamId === teamId) {
-                setJoinError('You are already a member of this team!');
-            } else {
-                setJoinError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
-            }
-            return false;
-        }
+  const handleRemoveMember = async (memberelixir) => {
+    if (memberelixir === profile.elixir) {
+      alert("Leader cannot remove themselves.");
+      return;
+    }
+    try {
+      const res = await fetch("http://localhost:5000/api/hackathon/remove-member", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leaderelixir: profile.elixir, memberelixir }),
+      });
+      if (!res.ok) throw new Error("Error removing member");
+      setTeamInfo((prev) => ({
+        ...prev,
+        members: prev.members.filter((m) => m.elixir !== memberelixir),
+      }));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
-        // Check if team is full
-        if (targetTeam.members.length >= 4) {
-            setJoinError('Team is full (maximum 4 members)!');
-            return false;
-        }
-        
-        // All validations passed - add user to team
-        const newUserId = Date.now();
-        const newMember = { id: newUserId, name: FirstName, elixirId: elixirId, isLead: false };
-        
-        // Update team data
-        setTeammates([...targetTeam.members, newMember]);
-        setTeamInfo({ teamName: targetTeam.teamName, teamId: targetTeam.teamId });
-        setCurrentUser({ id: newUserId, name: FirstName, elixirId: elixirId });
-        
-        return true;
-    };
+  // ---- Carousel Logic (unchanged) ----
+  const evalCriteria = [
+    { label: "Strategic\nThinking", img: "/criteria1.png" },
+    { label: "Data-Driven\nInsights", img: "/criteria2.png" },
+    { label: "Innovation &\nFeasibility", img: "/criteria3.png" },
+    { label: "Delivery and\nTeam\nThinking", img: "/criteria4.png" },
+  ];
 
-    const evalCriteria = [
-        {
-            label: "Strategic\nThinking",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-        {
-            label: "Data-Driven\nInsights",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-        {
-            label: "Innovation &\nFeasibility",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-        {
-            label: "Delivery and\nTeam\nThinking",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-    ];
+  const goTo = (newIdx, dir) => {
+    if (animating || newIdx === evalIndex) return;
+    setDirection(dir);
+    setAnimating(true);
+    setTimeout(() => {
+      setEvalIndex(newIdx);
+      setAnimating(false);
+      setDragX(0);
+    }, 300);
+  };
 
-    // Carousel navigation with animation
-    const goTo = (newIdx, dir) => {
-        if (animating || newIdx === evalIndex) return;
-        setDirection(dir);
-        setAnimating(true);
-        setTimeout(() => {
-            setEvalIndex(newIdx);
-            setAnimating(false);
-            setDragX(0);
-        }, 300); // match transition duration
-    };
+  const snapToNearest = () => {
+    const cardWidth = slidesRef.current ? slidesRef.current.offsetWidth * 0.8 : 0;
+    if (Math.abs(dragX) > cardWidth * 0.2) {
+      if (dragX < 0 && evalIndex < evalCriteria.length - 1) goTo(evalIndex + 1, 1);
+      else if (dragX > 0 && evalIndex > 0) goTo(evalIndex - 1, -1);
+    }
+    setAnimating(false);
+    setDragX(0);
+  };
 
-    // Snap to nearest card after drag
-    const snapToNearest = () => {
-        const cardWidth = slidesRef.current ? slidesRef.current.offsetWidth * 0.8 : 0;
-        if (Math.abs(dragX) > cardWidth * 0.2) {
-            if (dragX < 0 && evalIndex < evalCriteria.length - 1) {
-                goTo(evalIndex + 1, 1);
-            } else if (dragX > 0 && evalIndex > 0) {
-                goTo(evalIndex - 1, -1);
-            } else {
-                setAnimating(true);
-                setTimeout(() => {
-                    setAnimating(false);
-                    setDragX(0);
-                }, 200);
-            }
-        } else {
-            setAnimating(true);
-            setTimeout(() => {
-                setAnimating(false);
-                setDragX(0);
-            }, 200);
-        }
-    };
-
-    // Touch/drag handlers for mobile carousel
-    const handleTouchStart = (e) => {
-        setIsDragging(true);
-        touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
-    };
-    const handleTouchMove = (e) => {
-        if (!isDragging) return;
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        setDragX(clientX - touchStartX.current);
-    };
-    const handleTouchEnd = () => {
-        setIsDragging(false);
-        snapToNearest();
-    };
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
+  };
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    setDragX(clientX - touchStartX.current);
+  };
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    snapToNearest();
+  };
 
     return (
         <div className="bg-[#000C00] relative">
