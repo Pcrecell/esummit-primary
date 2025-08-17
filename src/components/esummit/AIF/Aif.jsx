@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Cinzel_Decorative, Cinzel } from "next/font/google";
 import FlippableRounds from "./Rounds";
 import TimeVenue from "./TimeVenue";
@@ -8,6 +8,8 @@ import Rules from "./Rules";
 import About from "./About";
 import EventRegistration from "./EventRegistration";
 import RegistrationSuccess from "./RegistrationSuccess";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
 
 // Configure fonts
 const cinzelDecorative = Cinzel_Decorative({
@@ -29,10 +31,34 @@ export default function Aif() {
   const [isPaymentDone, setIsPaymentDone] = useState(false);
   const [showSuccessPage, setShowSuccessPage] = useState(false);
   const [registeredUserData, setRegisteredUserData] = useState(null);
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+  const router = useRouter();
+
+    useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+      }
+    }
+  }, [userData, profile, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+   }
 
   const openRegistration = () => {
-    setIsRegistrationPopupOpen(true);
-    setShowSuccessPage(false); // Reset success page when opening registration
+    // Check if user has made payment
+    if (profile?.payment === true) {
+      setIsRegistrationPopupOpen(true);
+      setShowSuccessPage(false); 
+    } else {
+      // Redirect to dashboard if payment is not done
+      router.push("/dashboard");
+    }
   };
 
   const closeRegistration = () => {
@@ -162,6 +188,8 @@ export default function Aif() {
       <FlippableRounds />
       <WhatsIt />
       <Rules />
+
+      {/* If profile?.payment == true then only open the popup or else redriect using route.push("/dashboard") */}
 
       {/* Registration Popup Modal */}
       {isRegistrationPopupOpen && (

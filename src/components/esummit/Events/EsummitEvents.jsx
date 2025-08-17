@@ -67,7 +67,7 @@ const EventsPage = () => {
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
         image: "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
-        route: "/AIF",
+        route: "/aif",
       },
       {
         title: "EXPO",
