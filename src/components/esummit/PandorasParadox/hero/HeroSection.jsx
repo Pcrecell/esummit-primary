@@ -5,8 +5,8 @@ import heroBg from "../../../../../public/images/hackathon/kiitecell-hero-bg.png
 import Image from "next/image";
 import heroRegisterButton from "../../../../../public/images/hackathon/hero-register-button.png";
 import { Poppins } from "next/font/google";
-import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],

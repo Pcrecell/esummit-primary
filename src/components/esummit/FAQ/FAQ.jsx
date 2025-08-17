@@ -51,6 +51,10 @@ const FAQ = () => {
       answer: "You can register by logging into your dashboard, selecting the events you want to attend, and completing the payment process. Once payment is successful, you'll receive a confirmation email with your registration details."
     },
     {
+      question: "How do I register for specific events?",
+      answer: "You must be registered and paid for E-Summit to access event-specific registration forms. Once your payment is confirmed, you can fill out the individual registration forms for events like Oracle, Pandora Paradox, Case X, and AIF through your dashboard."
+    },
+    {
       question: "What events are included in the registration?",
       answer: "Your registration includes access to keynote speeches, panel discussions, startup pitches, workshops, networking sessions, exhibition areas, and other entrepreneurship-focused activities scheduled during the summit."
     },
@@ -90,7 +94,7 @@ const FAQ = () => {
             <li>Pandora Paradox - 22nd-24th August (Campus - 25)</li>
             <li>Case X - 24th August (Campus - 17)</li>
             <li>AIF - 23rd August (Campus - 17)</li>
-           
+            <li>Founder's Arena - 23rd August (Campus - 6 -Banquet Hall)</li>
           </ul>
         </div>
       )

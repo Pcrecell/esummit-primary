@@ -284,7 +284,7 @@ export default function CaseX() {
                     {/* Register / Manage button positioned on bottom border (mobile) */}
                     {isRegisteredCaseBattle ? (
                         <button
-                            onClick={() => setShowPopup(true)}
+                            onClick={handlePopupOpen}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -295,7 +295,7 @@ export default function CaseX() {
                         </button>
                     ) : isRegisteredOtherEvent ? null : (
                         <button
-                            onClick={() => setShowPopup(true)}
+                            onClick={handlePopupOpen}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -333,7 +333,7 @@ export default function CaseX() {
                         <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
                                 {/* Conditional register/manage buttons based on registration status */}
                                 {isRegisteredCaseBattle ? (
-                                    <button onClick={() => setShowPopup(true)}>
+                                    <button onClick={handlePopupOpen}>
                                         <img
                                             src="https://ik.imagekit.io/wlknxcf5m/Group%2015.png?updatedAt=1755336258984"
                                             alt="Manage Team"
@@ -344,7 +344,7 @@ export default function CaseX() {
                                     // registered to another event -> show nothing
                                     null
                                 ) : (
-                                    <button onClick={() => setShowPopup(true)}>
+                                    <button onClick={handlePopupOpen}>
                                         <img
                                             src="https://ik.imagekit.io/wlknxcf5m/CaseXRegisterbutton%20(1).png"
                                             alt="Register"
@@ -492,7 +492,7 @@ export default function CaseX() {
                         <img src="https://ik.imagekit.io/wlknxcf5m/clock.png" alt="Clock" className="w-[40vw] md:w-[15vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
                         <div>
                             <p className="text-2xl md:text-3xl font-leage-spartan text-white">24 August 2025</p>
-                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">9:00 AM - 4:00 PM</p>
+                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">10:00 AM - 4:00 PM</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-4 text-center">

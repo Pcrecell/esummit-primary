@@ -3,7 +3,7 @@ import React from "react";
 const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
   const handleJoinDiscord = () => {
     // Replace with your actual Discord invite link
-    const discordInviteLink = "https://discord.gg/your-server-invite";
+    const discordInviteLink = "https://discord.gg/ZFRdAcxay8";
     window.open(discordInviteLink, "_blank", "noopener,noreferrer");
     if (onJoinDiscord) onJoinDiscord();
   };
@@ -69,10 +69,10 @@ const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
           {/* Discord join section */}
           <div className="mb-8">
             <p
-              className="text-white/80 text-sm mb-4"
+              className="text-white/80 text-sm mb-4 font-bold"
               style={{ fontFamily: "Inria Serif, serif" }}
             >
-              Join our community for updates, networking, and exclusive content!
+              Join our discord server to participate in the event.
             </p>
 
             {/* Discord button */}

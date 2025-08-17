@@ -62,7 +62,7 @@ const PaymentChoice = () => {
               Price: Rs.249
             </p>
             {/* DONT USE THE FOLLOWING BILLING LINK IN PRODUCTION - USE A DIFFERENT LINK 17796 - Testing, 17972 - Production */}
-            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796" target="_blank" >            
+            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972" target="_blank" >            
             <div
               className="group relative w-40 cursor-pointer"
             >

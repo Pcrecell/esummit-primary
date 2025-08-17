@@ -50,7 +50,7 @@ const EventsPage = () => {
       {
         title: "EXPO",
         time: "11:00AM - 4:30PM",
-        venue: "CAMPUS-06",
+        venue: "CAMPUS-06 BANQUET HALL",
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
@@ -62,7 +62,7 @@ const EventsPage = () => {
       {
         title: "ORACLE",
         time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-17",
+        venue: "CAMPUS-6",
         coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
@@ -72,17 +72,17 @@ const EventsPage = () => {
       {
         title: "ALICE IN FOUNDERLAND",
         time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-05",
+        venue: "CAMPUS-17",
         coordinates: [20.352904448394906, 85.81402616826391],
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
         image: "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
-        route: "/AIF",
+        route: "/aif",
       },
       {
         title: "EXPO",
         time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-06",
+        venue: "CAMPUS-06 BANQUET HALL",
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
@@ -103,9 +103,9 @@ const EventsPage = () => {
     24: [
       {
         title: "CASEX",
-        time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-07",
-        coordinates: [20.350485952792063, 85.82069263354178],
+        time: "10:00AM - 4:00PM",
+        venue: "CAMPUS-17",
+        coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
         image: "https://ik.imagekit.io/1bsukh3d7/casex-r.webp?updatedAt=1755242215640",

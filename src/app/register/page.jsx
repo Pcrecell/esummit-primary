@@ -173,7 +173,7 @@ if ( loading) {
         phone: phone,
         uid: user.uid,
       };
-      window.location.href = "/"; // or any route that uses the navbar
+      router.push("/") // or any route that uses the navbar
       // navigate.push("/payment", { state: Data });
       setLoading(false);
     } catch (err) {
