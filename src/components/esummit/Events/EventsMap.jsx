@@ -30,25 +30,26 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
             mapInstanceRef.current = null;
         }
 
-        // Clear any existing Leaflet resources
-        const existingCSS = document.getElementById("leaflet-css");
-        const existingScript = document.getElementById("leaflet-script");
-        
-        if (existingCSS) existingCSS.remove();
-        if (existingScript) existingScript.remove();
+        // Only add Leaflet resources if they don't already exist
+        let leafletCSS = document.getElementById("leaflet-css");
+        if (!leafletCSS) {
+            leafletCSS = document.createElement("link");
+            leafletCSS.rel = "stylesheet";
+            leafletCSS.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+            leafletCSS.id = "leaflet-css";
+            document.head.appendChild(leafletCSS);
+        }
 
-        const leafletCSS = document.createElement("link");
-        leafletCSS.rel = "stylesheet";
-        leafletCSS.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        leafletCSS.id = "leaflet-css";
-        document.head.appendChild(leafletCSS);
-
-        const leafletScript = document.createElement("script");
-        leafletScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-        leafletScript.async = true;
-        leafletScript.id = "leaflet-script";
+        let leafletScript = document.getElementById("leaflet-script");
+        if (!leafletScript) {
+            leafletScript = document.createElement("script");
+            leafletScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+            leafletScript.async = true;
+            leafletScript.id = "leaflet-script";
+            document.body.appendChild(leafletScript);
+        }
         
-        leafletScript.onload = () => {
+        const initializeMap = () => {
             const L = window.L;
             if (!L || !mapRef.current) {
                 console.error("Leaflet not loaded or map ref not available");
@@ -104,7 +105,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
                 });
                 
                 L.marker(coordinates, { icon: pinpointIcon }).addTo(map)
-                    .bindPopup(`${label}<br>${campus}`);
+                    .bindPopup(`<a href="https://www.google.com/maps/place/${coordinates[0]},${coordinates[1]}">${label}<br>${campus}</a>`);
 
                 // Hide unwanted markers
                 setTimeout(() => {
@@ -122,11 +123,15 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
             }
         };
         
-        leafletScript.onerror = () => {
-            console.error("Failed to load Leaflet script");
-        };
-        
-        document.body.appendChild(leafletScript);
+        // If Leaflet is already loaded, initialize immediately
+        if (window.L) {
+            initializeMap();
+        } else {
+            leafletScript.onload = initializeMap;
+            leafletScript.onerror = () => {
+                console.error("Failed to load Leaflet script");
+            };
+        }
 
         return () => {
             if (mapInstanceRef.current) {

@@ -4,7 +4,7 @@ const Registration = () => {
   const [form, setForm] = useState({
     companyName: "",
     teamLeadName: "",
-    elixir: "",
+    exliriz: "",
     phoneNumber: "",
     yourIdea: "",
     teammates: ["", ""], // Initial two teammate fields
@@ -29,11 +29,11 @@ const Registration = () => {
     setForm({ ...form, teammates: [...form.teammates, ""] });
   };
 
-  const checkelixirAndName = async (elixir, name) => {
+  const checkUniqueIdAndName = async (uniqueId, name) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/expo/verifyForm?elixir=${encodeURIComponent(
-          elixir
+        `${process.env.NEXT_PUBLIC_API_URL}/expo/verifyForm?uniqueId=${encodeURIComponent(
+          uniqueId
         )}&name=${encodeURIComponent(name)}`
       );
       const data = await res.json();
@@ -58,8 +58,8 @@ const Registration = () => {
     setIsSubmitting(true);
 
     // Check lead unique ID and name
-    const leadCheck = await checkelixirAndName(
-      form.elixir,
+    const leadCheck = await checkUniqueIdAndName(
+      form.uniqueId,
       form.teamLeadName
     );
 
@@ -72,18 +72,18 @@ const Registration = () => {
       return;
     }
 
-    // Check teammate unique IDs and names (if teammates have elixir structure)
+    // Check teammate unique IDs and names (if teammates have uniqueId structure)
     for (let i = 0; i < form.teammates.length; i++) {
       const teammate = form.teammates[i];
       if (teammate && teammate.trim()) {
-        // If teammates are just names, you might want to add elixir fields for them too
+        // If teammates are just names, you might want to add uniqueId fields for them too
         // For now, just logging teammate names
         console.log(`Teammate ${i + 1}: ${teammate}`);
       }
     }
 
-    // Generate elixir from elixir (first 8 characters)
-    const elixir = form.elixir ? form.elixir.slice(0, 8) : "";
+    // Generate elixir from uniqueId (first 8 characters)
+    const elixir = form.uniqueId ? form.uniqueId.slice(0, 8) : "";
 
     // Remove empty teammates
     const filteredTeammates = form.teammates.filter(
@@ -93,7 +93,7 @@ const Registration = () => {
     const registrationData = {
       companyName: form.companyName,
       name: form.teamLeadName,
-      elixir: form.elixir,
+      uniqueId: form.uniqueId,
       idea: form.yourIdea,
       phone: form.phoneNumber,
       teammates: filteredTeammates,
@@ -119,7 +119,7 @@ const Registration = () => {
         setForm({
           companyName: "",
           teamLeadName: "",
-          elixir: "",
+          uniqueId: "",
           phoneNumber: "",
           yourIdea: "",
           teammates: ["", ""],
@@ -220,8 +220,8 @@ const Registration = () => {
               <div className="relative">
                 <input
                   type="text"
-                  name="elixir"
-                  value={form.elixir}
+                  name="uniqueId"
+                  value={form.uniqueId}
                   onChange={handleChange}
                   placeholder="number"
                   className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 pr-6 sm:pr-8 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"

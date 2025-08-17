@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Cormorant_Garamond, Rakkas } from "next/font/google";
 import { useState } from "react";
 import RegisterPopup from "./registerPopup";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useRouter } from "next/navigation";
 import {
   MapPinIcon,
   CalendarIcon,
@@ -20,8 +22,16 @@ const rakkas = Rakkas({
 });
 
 export default function Hero() {
+  const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
-
+  const { profile } = useAuth();
+  const handleRegister = () => {
+    if (profile?.payment) {
+      setShowPopup(true);
+    } else {
+      router.push("/dashboard");
+    }
+  };
   return (
     <div
       className="relative h-[100vh] rounded-2xl overflow-hidden shadow-xl"
@@ -65,29 +75,31 @@ export default function Hero() {
           </p>
 
           <div className="flex justify-center mt-12">
-  <div className="group relative w-48 sm:w-72 md:w-48 items-center cursor-pointer" onClick={() => setShowPopup(true)}>
-    {/* Image shown when not hovering */}
-    <img
-      src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
-      alt="Pay Now"
-      className="w-full z-0 hidden group-hover:block"
-    />
+            <div
+              className="group relative w-48 sm:w-72 md:w-48 items-center cursor-pointer"
+              onClick={handleRegister}
+            >
+              {/* Image shown when not hovering */}
+              <img
+                src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
+                alt="Pay Now"
+                className="w-full z-0 hidden group-hover:block"
+              />
 
-    {/* Image shown on hover */}
-    <img
-      src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
-      alt="Pay Now Hover"
-      className="w-full z-0 group-hover:hidden"
-    />
+              {/* Image shown on hover */}
+              <img
+                src="https://i.postimg.cc/3x4chbmh/KIITESUMMIT-POPUP-PAYButtoon2.png"
+                alt="Pay Now Hover"
+                className="w-full z-0 group-hover:hidden"
+              />
 
-    <span
-      className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-sm sm:text-base md:text-xl ${cormorantGaramond.className}`}
-    >
-      REGISTER NOW
-    </span>
-  </div>
-</div>
-
+              <span
+                className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-sm sm:text-base md:text-xl ${cormorantGaramond.className}`}
+              >
+                REGISTER NOW
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Darker black fading layer at the bottom */}

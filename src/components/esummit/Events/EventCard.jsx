@@ -30,7 +30,7 @@ const EventCard = ({ eventData, left }) => {
                         ${left ? 'text-left' : 'text-right'}
                     `}>
                         <h2 className={`
-                            text-[0.76rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-72
+                            text-[0.72rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl max-w-72
                             font-bold font-cormorant-infant mb-1 sm:mb-2 text-black
                             sm:max-w-full
                         `}>
@@ -41,7 +41,7 @@ const EventCard = ({ eventData, left }) => {
                                 {eventData.time} | {eventData.venue}
                             </p>
                         </div>
-                        <div className='block sm:hidden font-cormorant-infant text-black text-xs'>
+                        <div className='block sm:hidden font-cormorant-infant text-black text-[0.6rem]'>
                             <p>{eventData.time}</p> 
                             <p>{eventData.venue}</p>
                         </div>

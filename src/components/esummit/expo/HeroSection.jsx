@@ -57,7 +57,7 @@ const HeroSection = () => {
         </div>
 
         <div className='relative lg:absolute -right-32 lg: top-6 lg:top-[17.5rem]'>
-          <p className='font-[Bayon] text-2xl lg:text-5xl lg:rotate-[10deg]'>23 24<br/>AUGUST</p>
+          <p className='font-[Bayon] text-2xl lg:text-5xl lg:rotate-[10deg]'>23<br/>AUGUST</p>
         </div>
         
         {/* Action Buttons */}

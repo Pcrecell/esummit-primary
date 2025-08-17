@@ -5,28 +5,15 @@ import Image from "next/image";
 import axios from "axios";
 import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
 import { useAuth } from "@/lib/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
+  const router = useRouter();
+  const { userData, setUserData, profile, setProfile, loading } = useAuth();
+
+  // All useState hooks must be at the top, before any conditional logic
   const [action, setAction] = useState("idle");
   const [selectedTrack, setSelectedTrack] = useState("beginner");
-
-  const { userData, setUserData, profile, setProfile, loading} = useAuth();
-
-  useEffect(() => {
-      if (!loading) {
-        if (!userData) {
-          router.replace("/login");
-        }
-      }
-  }, [userData, profile, loading, router]);
-  
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
-        Loading...
-      </div>
-    );
-  }
 
   const [joinTeamData, setJoinTeamData] = useState({
     yourName: "",
@@ -58,6 +45,25 @@ const Dashboard = () => {
     teamId: "Random Team ID",
     registered: false,
   });
+
+  useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+      }
+      if (!profile.payment) {
+        router.replace("/dashboard");
+      }
+    }
+  }, [userData, profile, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+  }
 
   const members = [
     { name: teammate1Name, id: teammate1Id },
@@ -160,7 +166,6 @@ const Dashboard = () => {
         },
       });
 
-
       // Find the first empty slot and add the new teammate
       if (teammate1Name === "-") {
         setTeammate1Name(newTeammateName);
@@ -188,7 +193,9 @@ const Dashboard = () => {
       // Handle different types of errors
       if (error.response) {
         // Server responded with error status
-        alert(`Error: ${error.response.data.message || "Failed to add member"}`);
+        alert(
+          `Error: ${error.response.data.message || "Failed to add member"}`
+        );
       } else if (error.request) {
         // Request was made but no response received
         alert("Network error: Please check your connection and try again");
@@ -200,7 +207,10 @@ const Dashboard = () => {
       setIsAddingMember(false);
     }
   };
-
+  if (!profile?.payment) {
+    router.push("/dashboard");
+    return null;
+  }
   return (
     <section
       id="dashboard"
@@ -224,7 +234,9 @@ const Dashboard = () => {
 
       {/* Greeting (top-left) */}
       <div className="absolute top-16 sm:top-20 left-4 sm:left-6 md:left-20 z-20 select-none">
-        <div className="text-sm sm:text-base md:text-2xl font-mono text-white/90">Hey,</div>
+        <div className="text-sm sm:text-base md:text-2xl font-mono text-white/90">
+          Hey,
+        </div>
         <div className="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-mono font-extrabold text-green-400 drop-shadow">
           Saksham
         </div>
@@ -600,8 +612,8 @@ const Dashboard = () => {
               </button>
             </div>
             <p className="font-mono text-white text-xs sm:text-sm leading-relaxed">
-              Your team <span className="font-bold">{teamInfo.teamName}</span> is
-              successfully registered. Team ID:{" "}
+              Your team <span className="font-bold">{teamInfo.teamName}</span>{" "}
+              is successfully registered. Team ID:{" "}
               <span className="font-bold">{teamInfo.teamId}</span>
             </p>
           </div>
@@ -612,9 +624,11 @@ const Dashboard = () => {
       {action === "details" && (
         <div className="pt-8 left-1/2 transform  z-30">
           <button
-            disabled={members.filter(member => member.name !== "-").length < 2}
+            disabled={
+              members.filter((member) => member.name !== "-").length < 2
+            }
             className={`px-8 py-3 rounded-full font-mono font-bold text-lg transition-all duration-300 ${
-              members.filter(member => member.name !== "-").length >= 2
+              members.filter((member) => member.name !== "-").length >= 2
                 ? "bg-green-600/90 hover:bg-green-500 border-2 border-green-400/60 text-white shadow-lg hover:shadow-xl"
                 : "bg-gray-600/50 border-2 border-gray-500/50 text-gray-400 cursor-not-allowed"
             }`}
