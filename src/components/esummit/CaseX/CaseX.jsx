@@ -431,6 +431,7 @@ export default function CaseX() {
                         className="h-16"
                     />
                 </div>
+            </div>
 
 
                 {/* ABOUT SECTION */}
@@ -1008,6 +1009,5 @@ export default function CaseX() {
                     onClose={hideToast}
                 />
             </div>
-        </div>
     );
 }
