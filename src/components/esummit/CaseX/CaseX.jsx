@@ -30,7 +30,6 @@ export default function CaseX() {
 
   // Team management state (REAL data from backend)
   const [action, setAction] = useState("idle");
-  const [selectedTrack, setSelectedTrack] = useState("beginner");
   const [formData, setFormData] = useState({
     name: "",
     yourEid: "",
@@ -40,7 +39,6 @@ export default function CaseX() {
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
     teamId: "",
-    track: "",
     leaderId: "",
     members: [],
     role: "",
@@ -50,6 +48,11 @@ export default function CaseX() {
   const [newTeammateId, setNewTeammateId] = useState("");
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [joinError, setJoinError] = useState("");
+    const [addMemberError, setAddMemberError] = useState("");
+
+    // Helper: is current user the team lead?
+    const isCurrentUserLead = () =>
+        Boolean(profile?.elixir && teamInfo?.leaderId && profile.elixir === teamInfo.leaderId);
 
   // Handle popup opening
   const handlePopupOpen = () => setShowPopup(true);
@@ -63,6 +66,7 @@ export default function CaseX() {
       if (!response.ok) throw new Error(`Error ${response.status}`);
       const data = await response.json();
       setTeamInfo(data);
+    setIsRegisteredCaseBattle(Boolean(data?.teamId));
     } catch (err) {
       console.error("Error fetching team info:", err);
     }
@@ -115,7 +119,6 @@ export default function CaseX() {
           body: JSON.stringify({
             name: formData.name.trim(),
             elixir: formData.yourEid.trim(),
-            track: selectedTrack,
             mode: "create_team",
             teamName: formData.teamName.trim(),
           }),
@@ -127,11 +130,12 @@ export default function CaseX() {
       setTeamInfo({
         teamName: formData.teamName.trim(),
         teamId: data.teamId,
-        track: selectedTrack,
         leaderId: formData.yourEid.trim(),
         role: "leader",
         members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
       });
+    setIsRegisteredCaseBattle(true);
+    showSuccess("Team created successfully");
       setAction("details");
     } catch (err) {
       showError(err.message || "Error creating team");
@@ -152,7 +156,6 @@ export default function CaseX() {
           body: JSON.stringify({
             name: formData.name.trim(),
             elixir: formData.yourEid.trim(),
-            track: selectedTrack,
             mode: "join_team",
             teamId: formData.teamId.trim(),
           }),
@@ -164,9 +167,10 @@ export default function CaseX() {
       setTeamInfo((prev) => ({
         ...prev,
         teamId: data.teamId,
-        track: selectedTrack,
         role: "member",
       }));
+            setIsRegisteredCaseBattle(true);
+            showSuccess("Joined team successfully");
       setAction("details");
     } catch (err) {
       setJoinError(err.message || "Error joining team");
@@ -174,25 +178,41 @@ export default function CaseX() {
   };
 
   const handleAddMemberButton = async () => {
-    if (!newTeammateName || !newTeammateId) return;
-    setIsAddingMember(true);
-    try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/case-x/add-member`, {
-        leaderelixir: profile.elixir,
-        name: newTeammateName.trim(),
-        elixir: newTeammateId.trim(),
-      });
-      setTeamInfo((prev) => ({
-        ...prev,
-        members: [...prev.members, { name: newTeammateName, elixir: newTeammateId }],
-      }));
-      setNewTeammateName("");
-      setNewTeammateId("");
-    } catch (err) {
-      showError("Error adding member");
-    } finally {
-      setIsAddingMember(false);
-    }
+        // Validate inputs
+        if (!newTeammateName.trim() || !newTeammateId.trim()) {
+            setAddMemberError("Please fill both fields.");
+            return;
+        }
+        if ((teamInfo.members?.length || 0) >= 4) {
+            setAddMemberError("Team is full (maximum 4 members).");
+            return;
+        }
+        setAddMemberError("");
+        setIsAddingMember(true);
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/case-x/add-member`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    leaderelixir: profile.elixir,
+                    name: newTeammateName.trim(),
+                    elixir: newTeammateId.trim(),
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data?.message || "Error adding member");
+            setTeamInfo((prev) => ({
+                ...prev,
+                members: [...(prev.members || []), { name: newTeammateName.trim(), elixir: newTeammateId.trim() }],
+            }));
+            setNewTeammateName("");
+            setNewTeammateId("");
+            showSuccess("Member added");
+        } catch (err) {
+            showError(err.message || "Error adding member");
+        } finally {
+            setIsAddingMember(false);
+        }
   };
 
   const handleRemoveMember = async (memberelixir) => {
@@ -218,10 +238,10 @@ export default function CaseX() {
 
   // ---- Carousel Logic (unchanged) ----
   const evalCriteria = [
-    { label: "Strategic\nThinking", img: "/criteria1.png" },
-    { label: "Data-Driven\nInsights", img: "/criteria2.png" },
-    { label: "Innovation &\nFeasibility", img: "/criteria3.png" },
-    { label: "Delivery and\nTeam\nThinking", img: "/criteria4.png" },
+    { label: "Strategic\nThinking", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+    { label: "Data-Driven\nInsights", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+    { label: "Innovation &\nFeasibility", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+    { label: "Delivery and\nTeam\nThinking", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
   ];
 
   const goTo = (newIdx, dir) => {
@@ -922,28 +942,8 @@ export default function CaseX() {
                                     )}
 
                                     <div className="flex justify-center mt-8 mb-6">
-                                        <button 
-                                            onClick={() => {
-                                                if (activeTab === 'create') {
-                                                    if (!formData.name || !formData.yourEid || !formData.teamName) return;
-                                                    // Create new team with user as lead
-                                                    const newUserId = Date.now();
-                                                    // setTeammates([{ id: formData.teamId, name: formData.name, elixirId: formData.yourEid, isLead: true }]);
-                                                    setTeamInfo({ teamName: formData.name, teamId: formData.teamId });
-                                                    // setCurrentUser({ id: formData.teamId, name: formData.name, elixirId: formData.yourEid });
-                                                    setIsRegisteredCaseBattle(true);
-                                                    setShowPopup(false);
-                                                } else if (activeTab === 'join') {
-                                                    if (!joinFirstName || !joinElixirId || !joinTeamName || !joinTeamId) return;
-                                                    // Validate and join existing team
-                                                    const success = joinExistingTeam(joinFirstName, joinElixirId, joinTeamName, joinTeamId);
-                                                    if (success) {
-                                                        setIsRegisteredCaseBattle(true);
-                                                        setShowPopup(false);
-                                                    }
-                                                    // If failed, popup stays open to show error
-                                                }
-                                            }}
+                                        <button
+                                            onClick={() => (activeTab === 'create' ? handleSubmitCreate() : handleSubmitJoin())}
                                             className="hover:scale-105 transition-transform cursor-pointer"
                                         >
                                             <img
