@@ -86,7 +86,7 @@ const Registration = () => {
         }
       }
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       setRegistrationError("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);

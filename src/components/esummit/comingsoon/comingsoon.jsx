@@ -20,7 +20,9 @@ export default function ComingSoon() {
       const handleCanPlay = () => {
         video.play().catch(error => {
           video.muted = true;
-          video.play().catch(e => console.error("Cant Play Video: ", e));
+          video.play().catch(e => {
+            // console.error("Cant Play Video: ", e)
+          });
         });
         setVideoLoaded(true);
       };

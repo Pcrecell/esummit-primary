@@ -228,7 +228,7 @@ setAction("details");
 
 
     } catch (error) {
-      console.error("Error adding member:", error);
+      // console.error("Error adding member:", error);
       showError(`${error.response?.data?.message || "Error adding member"}`);
     } finally {
       setIsAddingMember(false);

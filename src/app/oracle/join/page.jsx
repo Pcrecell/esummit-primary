@@ -64,7 +64,7 @@ const JoinTeamPage = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    console.log("Joining team:", formData);
+    // console.log("Joining team:", formData);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
@@ -89,7 +89,7 @@ const JoinTeamPage = () => {
       showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
       router.push("/success");
     } catch (err) {
-      console.error("Error joining team:", err);
+      // console.error("Error joining team:", err);
       showError(err.message);
     }
   };

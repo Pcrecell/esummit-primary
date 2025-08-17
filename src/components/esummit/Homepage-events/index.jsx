@@ -13,7 +13,7 @@ async function getBase64(url, fallbackUrl) {
     const base64 = Buffer.from(buffer).toString('base64');
     return `data:image/webp;base64,${base64}`;
   } catch (error) {
-    console.warn(`Failed to fetch tiny URL ${url}, falling back to original image`, error);
+    // console.warn(`Failed to fetch tiny URL ${url}, falling back to original image`, error);
     try {
       const fallbackRes = await fetch(fallbackUrl);
       if (!fallbackRes.ok) throw new Error(`HTTP ${fallbackRes.status}`);
@@ -21,7 +21,7 @@ async function getBase64(url, fallbackUrl) {
       const fallbackBase64 = Buffer.from(fallbackBuffer).toString('base64');
       return `data:image/webp;base64,${fallbackBase64}`;
     } catch (fallbackError) {
-      console.error(`Failed to fetch both tiny and original URLs for ${fallbackUrl}`, fallbackError);
+      // console.error(`Failed to fetch both tiny and original URLs for ${fallbackUrl}`, fallbackError);
       return null;
     }
   }
@@ -43,7 +43,7 @@ async function addBlurDataUrls(events) {
           blurDataURL
         };
       } catch (error) {
-        console.error(`Failed to generate blur URL for ${event.title}:`, error);
+        // console.error(`Failed to generate blur URL for ${event.title}:`, error);
         return {
           ...event,
           blurDataURL: null
@@ -109,7 +109,7 @@ export const Event = () => {
         const eventsWithBlur = await addBlurDataUrls(initialEvents);
         setEvents(eventsWithBlur);
       } catch (error) {
-        console.error('Failed to initialize blur URLs:', error);
+        // console.error('Failed to initialize blur URLs:', error);
         setEvents(initialEvents); // Fallback to original events
       } finally {
         setIsLoading(false);

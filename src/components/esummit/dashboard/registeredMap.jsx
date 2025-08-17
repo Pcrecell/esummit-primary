@@ -118,7 +118,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
                     .bindPopup(`<a href="https://www.google.com/maps/place/${coordinates[0]},${coordinates[1]}">${label}</a>`);
                     
             } catch (error) {
-                console.error("Error initializing map:", error);
+                // console.error("Error initializing map:", error);
             }
         };
         
@@ -145,7 +145,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
                 try {
                     mapInstanceRef.current.remove();
                 } catch (error) {
-                    console.warn("Error removing map:", error);
+                    // console.warn("Error removing map:", error);
                 }
                 mapInstanceRef.current = null;
             }

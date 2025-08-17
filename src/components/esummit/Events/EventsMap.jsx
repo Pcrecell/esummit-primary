@@ -25,7 +25,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
             try {
                 mapInstanceRef.current.remove();
             } catch (error) {
-                console.warn("Error removing existing map:", error);
+                // console.warn("Error removing existing map:", error);
             }
             mapInstanceRef.current = null;
         }
@@ -52,7 +52,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
         const initializeMap = () => {
             const L = window.L;
             if (!L || !mapRef.current) {
-                console.error("Leaflet not loaded or map ref not available");
+                // console.error("Leaflet not loaded or map ref not available");
                 return;
             }
 
@@ -119,7 +119,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
                 }, 500);
                     
             } catch (error) {
-                console.error("Error initializing map:", error);
+                // console.error("Error initializing map:", error);
             }
         };
         
@@ -129,7 +129,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
         } else {
             leafletScript.onload = initializeMap;
             leafletScript.onerror = () => {
-                console.error("Failed to load Leaflet script");
+                // console.error("Failed to load Leaflet script");
             };
         }
 
@@ -138,7 +138,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location",
                 try {
                     mapInstanceRef.current.remove();
                 } catch (error) {
-                    console.warn("Error cleaning up map:", error);
+                    // console.warn("Error cleaning up map:", error);
                 }
                 mapInstanceRef.current = null;
             }
