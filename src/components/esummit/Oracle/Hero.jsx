@@ -36,7 +36,6 @@ export default function Hero() {
   });
   const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
-  const { profile } = useAuth();
   const handleRegister = () => {
     if (profile?.payment) {
       setShowPopup(true);
