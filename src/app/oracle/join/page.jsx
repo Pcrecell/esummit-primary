@@ -39,7 +39,7 @@ const JoinTeamPage = () => {
     console.log("Joining team:", formData);
 
     try {
-      const res = await fetch("http://localhost:5000/api/oracle/oracle_registration", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

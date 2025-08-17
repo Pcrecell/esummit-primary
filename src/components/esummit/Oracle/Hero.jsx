@@ -36,7 +36,7 @@ export default function Hero() {
   const fetchTeamInfo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/oracle/team-info/${profile.elixir}`
+        `${process.env.NEXT_PUBLIC_API_URL}/oracle/team-info/${profile.elixir}`
       );
 
       if (!response.ok) {

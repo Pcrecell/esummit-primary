@@ -52,7 +52,7 @@ export default function CaseX() {
   const fetchTeamInfo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/oracle/team-info/${profile.elixir}`
+        `${process.env.NEXT_PUBLIC_API_URL}/case-x/team-info/${profile.elixir}`
       );
       if (!response.ok) throw new Error(`Error ${response.status}`);
       const data = await response.json();
@@ -102,7 +102,7 @@ export default function CaseX() {
     }
     try {
       const res = await fetch(
-        "http://localhost:5000/api/hackathon/hackathon_registration",
+        `${process.env.NEXT_PUBLIC_API_URL}/case-x/case-x_registration`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -139,7 +139,7 @@ export default function CaseX() {
     }
     try {
       const res = await fetch(
-        "http://localhost:5000/api/hackathon/hackathon_registration",
+        `${process.env.NEXT_PUBLIC_API_URL}/case-x/case-x_registration`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -171,7 +171,7 @@ export default function CaseX() {
     if (!newTeammateName || !newTeammateId) return;
     setIsAddingMember(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/hackathon/add-member", {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/case-x/add-member`, {
         leaderelixir: profile.elixir,
         name: newTeammateName.trim(),
         elixir: newTeammateId.trim(),
@@ -195,7 +195,7 @@ export default function CaseX() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/api/hackathon/remove-member", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/case-x/remove-member`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ leaderelixir: profile.elixir, memberelixir }),
@@ -733,15 +733,15 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="First Name"
-                                                    value={newMemberName}
-                                                    onChange={e => setNewMemberName(e.target.value)}
+                                                    value={formData.name}
+                                                    onChange={(e) => handleChange("name", e.target.value)}
                                                     className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                                 <input
                                                     type="text"
                                                     placeholder="Elixir ID"
-                                                    value={newMemberElixir}
-                                                    onChange={e => setNewMemberElixir(e.target.value)}
+                                                    value={formData.yourEid}
+                                                    onChange={(e) => handleChange("yourEid", e.target.value)}
                                                     className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                                 <button
@@ -864,8 +864,8 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="First Name"
-                                                    value={createFirstName}
-                                                    onChange={e => setCreateFirstName(e.target.value)}
+                                                    value={formData.name}
+                                                    onChange={(e) => handleChange("teamName", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -873,8 +873,8 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="Elixir ID"
-                                                    value={createElixirId}
-                                                    onChange={e => setCreateElixirId(e.target.value)}
+                                                    value={formData.yourEid}
+                                                    onChange={(e) => handleChange("yourEid", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -882,8 +882,8 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="Team Name"
-                                                    value={createTeamName}
-                                                    onChange={e => setCreateTeamName(e.target.value)}
+                                                    value={formData.teamName}
+                                                    onChange={(e) => handleChange("teamName", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -895,8 +895,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="First Name"
-                                                        value={joinFirstName}
-                                                        onChange={e => setJoinFirstName(e.target.value)}
+                                                        value={formData.name}
+                                                        onChange={(e) => handleChange("name", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -904,8 +904,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="Team Name" 
-                                                        value={joinTeamName}
-                                                        onChange={e => setJoinTeamName(e.target.value)}
+                                                        value={formData.teamName}
+                                                        onChange={(e) => handleChange("teamName", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -916,8 +916,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="Elixir ID"
-                                                        value={joinElixirId}
-                                                        onChange={e => setJoinElixirId(e.target.value)}
+                                                        value={formData.yourEid}
+                                                        onChange={(e) => handleChange("yourEid", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -925,8 +925,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="Team ID"
-                                                        value={joinTeamId}
-                                                        onChange={e => setJoinTeamId(e.target.value)}
+                                                        value={formData.teamId}
+                                                        onChange={(e) => handleChange("teamId", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -947,12 +947,12 @@ export default function CaseX() {
                                         <button 
                                             onClick={() => {
                                                 if (activeTab === 'create') {
-                                                    if (!createFirstName || !createElixirId || !createTeamName) return;
+                                                    if (!formData.name || !formData.yourEid || !formData.teamName) return;
                                                     // Create new team with user as lead
                                                     const newUserId = Date.now();
-                                                    setTeammates([{ id: newUserId, name: createFirstName, elixirId: createElixirId, isLead: true }]);
-                                                    setTeamInfo({ teamName: createTeamName, teamId: `TM${Date.now()}` });
-                                                    setCurrentUser({ id: newUserId, name: createFirstName, elixirId: createElixirId });
+                                                    // setTeammates([{ id: formData.teamId, name: formData.name, elixirId: formData.yourEid, isLead: true }]);
+                                                    setTeamInfo({ teamName: formData.name, teamId: formData.teamId });
+                                                    // setCurrentUser({ id: formData.teamId, name: formData.name, elixirId: formData.yourEid });
                                                     setIsRegisteredCaseBattle(true);
                                                     setShowPopup(false);
                                                 } else if (activeTab === 'join') {

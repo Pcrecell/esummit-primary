@@ -33,7 +33,7 @@ const PandorasParadoxDashboard = () => {
   const [isAddingMember, setIsAddingMember] = useState(false);
   const fetchTeamInfo = async () => {
   try {
-    const response = await fetch(`http://localhost:5000/api/hackathon/team-info/${profile.elixir}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/team-info/${profile.elixir}`);
     
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -99,7 +99,7 @@ useEffect(() => {
     }
     try {
       console.log("Submitting create team request with data:", formData);
-const res = await fetch("http://localhost:5000/api/hackathon/hackathon_registration", {
+const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/hackathon_registration`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -161,7 +161,7 @@ setAction("details");
     try {
       console.log("Joining team with data:", formData);
       
-        const res = await fetch("http://localhost:5000/api/hackathon/hackathon_registration", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/hackathon_registration`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -205,7 +205,7 @@ setAction("details");
     setIsAddingMember(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/hackathon/add-member", {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/add-member`, {
         leaderelixir: profile.elixir,
         name: newTeammateName.trim(),
         elixir: newTeammateId.trim()
@@ -239,7 +239,7 @@ const handleRemoveMember = async (memberelixir) => {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/hackathon/remove-member", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/remove-member`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
