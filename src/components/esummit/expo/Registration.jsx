@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useAuth } from "@/lib/context/AuthContext";
-import Toast from "@/components/ui/Toast";
-import { useToast } from "@/hooks/useToast";
 
 const Registration = () => {
   const { userData, profile, loading } = useAuth();
-  const { showError, showSuccess } = useToast();
   const [form, setForm] = useState({
     companyName: "",
     teamLeadName: "",
-    uniqueId: "",
+    elixir: "",
     phoneNumber: "",
     yourIdea: "",
-    teammates: ["", ""], // Initial two teammate fields
+    teammates: [
+      { name: "", elixir: "" },
+      { name: "", elixir: "" },
+    ], // Initial two teammate fields as objects
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,67 +26,116 @@ const Registration = () => {
   };
 
   // Teammate change handler
-  const handleTeammateChange = (index, value) => {
+  const handleTeammateChange = (index, field, value) => {
     const newTeammates = [...form.teammates];
-    newTeammates[index] = value;
+    newTeammates[index][field] = value;
     setForm({ ...form, teammates: newTeammates });
   };
 
   // Add teammate field
   const addTeammate = () => {
-    setForm({ ...form, teammates: [...form.teammates, ""] });
+    setForm({
+      ...form,
+      teammates: [...form.teammates, { name: "", elixir: "" }],
+    });
+  };
+
+  const checkElixirAndName = async (elixir, name) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/expo/verifyForm?elixir=${encodeURIComponent(
+          elixir
+        )}&name=${encodeURIComponent(name)}`
+      );
+      const data = await res.json();
+
+      if (res.ok) {
+        return { exists: data.exists, nameMatch: data.nameMatch, payment: data.payment };
+      } else {
+        return { exists: false, nameMatch: false, payment: false };
+      }
+    } catch (error) {
+      return { exists: false, nameMatch: false, payment: false };
+    }
   };
 
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!agreedToTerms) {
-      showError("Please agree to terms & conditions");
+    setIsSubmitting(true);
+
+    // Check lead elixir and name
+    const leadCheck = await checkElixirAndName(form.elixir, form.teamLeadName);
+    if (!leadCheck.exists || !leadCheck.nameMatch || !leadCheck.payment) {
+      let message = "users not exists or not paid";
+      alert(message);
+      setIsSubmitting(false);
       return;
     }
 
-    // Reset error states
-    setIsAlreadyRegistered(false);
-    setRegistrationError("");
-    setIsSubmitting(true);
+    // Check teammate unique IDs and names
+    for (let i = 0; i < form.teammates.length; i++) {
+      const teammate = form.teammates[i];
+      if (teammate.elixir && teammate.name) {
+        const teammateCheck = await checkElixirAndName(
+          teammate.elixir,
+          teammate.name
+        );
+        if (!teammateCheck.exists || !teammateCheck.nameMatch || !teammateCheck.payment) {
+          alert(
+            `Teammate ${i + 1} not exists or not paid`
+          );
+          setIsSubmitting(false);
+          return;
+        }
+      }
+    }
+
+    // Remove empty teammates
+    const filteredTeammates = form.teammates.filter(
+      (tm) => tm.name.trim() !== "" && tm.elixir.trim() !== ""
+    );
+
+    const registrationData = {
+      companyName: form.companyName,
+      name: form.teamLeadName,
+      elixir: form.elixir,
+      idea: form.yourIdea,
+      phone: form.phoneNumber,
+      teammates: filteredTeammates,
+    };
 
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/expo/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(registrationData),
+        }
+      );
 
-      const data = await response.json();
+      const result = await response.json();
 
-      if (response.ok) {
-        showSuccess("Registration successful!");
-        // Reset form
+      if (response.ok && result.success) {
+        alert("Registration successful!");
         setForm({
           companyName: "",
           teamLeadName: "",
-          uniqueId: "",
+          elixir: "",
           phoneNumber: "",
           yourIdea: "",
-          teammates: ["", ""],
+          teammates: [
+            { name: "", elixir: "" },
+            { name: "", elixir: "" },
+          ],
         });
-        setAgreedToTerms(false);
       } else {
-        // Check if user is already registered
-        if (
-          response.status === 409 ||
-          data.message?.toLowerCase().includes("already registered")
-        ) {
-          setIsAlreadyRegistered(true);
-          setRegistrationError("You are already registered for this event!");
-        } else {
-          setRegistrationError(
-            data.message || "Registration failed. Please try again."
-          );
-        }
+        alert(result.error || "Registration failed. Please try again.");
       }
+      setIsSubmitting(false);
     } catch (error) {
-      // console.error("Error:", error);
+      console.error("Error:", error);
       setRegistrationError("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -271,8 +320,8 @@ const Registration = () => {
               <div className="relative">
                 <input
                   type="text"
-                  name="uniqueId"
-                  value={form.uniqueId}
+                  name="elixir"
+                  value={form.elixir}
                   onChange={handleChange}
                   className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 pr-6 sm:pr-8 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
                   required
@@ -332,16 +381,26 @@ const Registration = () => {
               </label>
               <div className="space-y-3 mb-4">
                 {form.teammates.map((teammate, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={teammate}
-                    onChange={(e) =>
-                      handleTeammateChange(index, e.target.value)
-                    }
-                    placeholder=""
-                    className="w-full bg-transparent border border-gray-400 rounded-md text-white placeholder-gray-400 py-2 sm:py-3 px-3 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
-                  />
+                  <div key={index} className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={teammate.name}
+                      onChange={(e) =>
+                        handleTeammateChange(index, "name", e.target.value)
+                      }
+                      placeholder={`Teammate ${index + 1} Name`}
+                      className="w-1/2 bg-transparent border border-gray-400 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-white transition-colors text-sm"
+                    />
+                    <input
+                      type="text"
+                      value={teammate.elixir}
+                      onChange={(e) =>
+                        handleTeammateChange(index, "elixir", e.target.value)
+                      }
+                      placeholder={`Teammate ${index + 1} Unique ID`}
+                      className="w-1/2 bg-transparent border border-gray-400 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-white transition-colors text-sm"
+                    />
+                  </div>
                 ))}
               </div>
               {form.teammates.length < 5 && (
@@ -379,7 +438,6 @@ const Registration = () => {
           <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-t from-black to-transparent"></div>
         </div>
       </div>
-      <Toast />
     </div>
   );
 };

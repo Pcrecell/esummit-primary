@@ -30,7 +30,6 @@ export default function CaseX() {
 
   // Team management state (REAL data from backend)
   const [action, setAction] = useState("idle");
-  const [selectedTrack, setSelectedTrack] = useState("beginner");
   const [formData, setFormData] = useState({
     name: "",
     yourEid: "",
@@ -40,7 +39,6 @@ export default function CaseX() {
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
     teamId: "",
-    track: "",
     leaderId: "",
     members: [],
     role: "",
@@ -50,6 +48,11 @@ export default function CaseX() {
   const [newTeammateId, setNewTeammateId] = useState("");
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [joinError, setJoinError] = useState("");
+    const [addMemberError, setAddMemberError] = useState("");
+
+    // Helper: is current user the team lead?
+    const isCurrentUserLead = () =>
+        Boolean(profile?.elixir && teamInfo?.leaderId && profile.elixir === teamInfo.leaderId);
 
   // Handle popup opening
   const handlePopupOpen = () => setShowPopup(true);
@@ -63,6 +66,7 @@ export default function CaseX() {
       if (!response.ok) throw new Error(`Error ${response.status}`);
       const data = await response.json();
       setTeamInfo(data);
+    setIsRegisteredCaseBattle(Boolean(data?.teamId));
     } catch (err) {
       console.error("Error fetching team info:", err);
     }
@@ -115,7 +119,6 @@ export default function CaseX() {
           body: JSON.stringify({
             name: formData.name.trim(),
             elixir: formData.yourEid.trim(),
-            track: selectedTrack,
             mode: "create_team",
             teamName: formData.teamName.trim(),
           }),
@@ -127,11 +130,12 @@ export default function CaseX() {
       setTeamInfo({
         teamName: formData.teamName.trim(),
         teamId: data.teamId,
-        track: selectedTrack,
         leaderId: formData.yourEid.trim(),
         role: "leader",
         members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
       });
+    setIsRegisteredCaseBattle(true);
+    showSuccess("Team created successfully");
       setAction("details");
     } catch (err) {
       showError(err.message || "Error creating team");
@@ -152,7 +156,6 @@ export default function CaseX() {
           body: JSON.stringify({
             name: formData.name.trim(),
             elixir: formData.yourEid.trim(),
-            track: selectedTrack,
             mode: "join_team",
             teamId: formData.teamId.trim(),
           }),
@@ -164,9 +167,10 @@ export default function CaseX() {
       setTeamInfo((prev) => ({
         ...prev,
         teamId: data.teamId,
-        track: selectedTrack,
         role: "member",
       }));
+            setIsRegisteredCaseBattle(true);
+            showSuccess("Joined team successfully");
       setAction("details");
     } catch (err) {
       setJoinError(err.message || "Error joining team");
@@ -174,25 +178,41 @@ export default function CaseX() {
   };
 
   const handleAddMemberButton = async () => {
-    if (!newTeammateName || !newTeammateId) return;
-    setIsAddingMember(true);
-    try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/case-x/add-member`, {
-        leaderelixir: profile.elixir,
-        name: newTeammateName.trim(),
-        elixir: newTeammateId.trim(),
-      });
-      setTeamInfo((prev) => ({
-        ...prev,
-        members: [...prev.members, { name: newTeammateName, elixir: newTeammateId }],
-      }));
-      setNewTeammateName("");
-      setNewTeammateId("");
-    } catch (err) {
-      showError("Error adding member");
-    } finally {
-      setIsAddingMember(false);
-    }
+        // Validate inputs
+        if (!newTeammateName.trim() || !newTeammateId.trim()) {
+            setAddMemberError("Please fill both fields.");
+            return;
+        }
+        if ((teamInfo.members?.length || 0) >= 4) {
+            setAddMemberError("Team is full (maximum 4 members).");
+            return;
+        }
+        setAddMemberError("");
+        setIsAddingMember(true);
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/case-x/add-member`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    leaderelixir: profile.elixir,
+                    name: newTeammateName.trim(),
+                    elixir: newTeammateId.trim(),
+                }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data?.message || "Error adding member");
+            setTeamInfo((prev) => ({
+                ...prev,
+                members: [...(prev.members || []), { name: newTeammateName.trim(), elixir: newTeammateId.trim() }],
+            }));
+            setNewTeammateName("");
+            setNewTeammateId("");
+            showSuccess("Member added");
+        } catch (err) {
+            showError(err.message || "Error adding member");
+        } finally {
+            setIsAddingMember(false);
+        }
   };
 
   const handleRemoveMember = async (memberelixir) => {
@@ -218,10 +238,10 @@ export default function CaseX() {
 
   // ---- Carousel Logic (unchanged) ----
   const evalCriteria = [
-    { label: "Strategic\nThinking", img: "/criteria1.png" },
-    { label: "Data-Driven\nInsights", img: "/criteria2.png" },
-    { label: "Innovation &\nFeasibility", img: "/criteria3.png" },
-    { label: "Delivery and\nTeam\nThinking", img: "/criteria4.png" },
+    { label: "Strategic\nThinking", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+    { label: "Data-Driven\nInsights", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+    { label: "Innovation &\nFeasibility", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+    { label: "Delivery and\nTeam\nThinking", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
   ];
 
   const goTo = (newIdx, dir) => {
@@ -290,7 +310,7 @@ export default function CaseX() {
                     {/* Register / Manage button positioned on bottom border (mobile) */}
                     {isRegisteredCaseBattle ? (
                         <button
-                            onClick={handlePopupOpen}
+                            onClick={() => setShowPopup(true)}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -301,7 +321,7 @@ export default function CaseX() {
                         </button>
                     ) : isRegisteredOtherEvent ? null : (
                         <button
-                            onClick={handlePopupOpen}
+                            onClick={() => setShowPopup(true)}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -328,37 +348,37 @@ export default function CaseX() {
                         }}
                     />
                     <div className="w-[90vw] h-[70vh] bg-lime-950/20 rounded-r-2xl border-b-1 border-[#D6C466] flex items-center justify-start z-10 relative">
-                        
+
                         <img
-                                src="https://ik.imagekit.io/wlknxcf5m/Group%2014.png"
-                                alt="Book"
-                                className="absolute left-[2vw] max-w-[35vw] h-auto z-12"
-                                style={{ pointerEvents: "none" }}
+                            src="https://ik.imagekit.io/wlknxcf5m/Group%2014.png"
+                            alt="Book"
+                            className="absolute left-[2vw] max-w-[35vw] h-auto z-12"
+                            style={{ pointerEvents: "none" }}
                         />
-                        <div className="w-[85vw] pl-[35vw] text-center justify-start"><span class="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">Got sharp ideas? Love cracking real-world problems?<br/><br/></span><span class="text-white text-[2vw] lg:text-2xl font-light font-leage-spartan">Case-X is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br/>Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br/>Think you've got what it takes?<br/><br/></span><span class="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">This is not a case study. This is war.</span></div>
+                        <div className="w-[85vw] pl-[35vw] text-center justify-start"><span className="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">Got sharp ideas? Love cracking real-world problems?<br /><br /></span><span className="text-white text-[2vw] lg:text-2xl font-light font-leage-spartan">Case-X is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br />Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br />Think you've got what it takes?<br /><br /></span><span className="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">This is not a case study. This is war.</span></div>
                         <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
-                                {/* Conditional register/manage buttons based on registration status */}
-                                {isRegisteredCaseBattle ? (
-                                    <button onClick={handlePopupOpen}>
-                                        <img
-                                            src="https://ik.imagekit.io/wlknxcf5m/Group%2015.png?updatedAt=1755336258984"
-                                            alt="Manage Team"
-                                            className="w-48 h-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
-                                        />
-                                    </button>
-                                ) : isRegisteredOtherEvent ? (
-                                    // registered to another event -> show nothing
-                                    null
-                                ) : (
-                                    <button onClick={handlePopupOpen}>
-                                        <img
-                                            src="https://ik.imagekit.io/wlknxcf5m/CaseXRegisterbutton%20(1).png"
-                                            alt="Register"
-                                            className="w-48 h-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
-                                        />
-                                    </button>
-                                )}
-                            </div>
+                            {/* Conditional register/manage buttons based on registration status */}
+                            {isRegisteredCaseBattle ? (
+                                <button onClick={() => setShowPopup(true)}>
+                                    <img
+                                        src="https://ik.imagekit.io/wlknxcf5m/Group%2015.png?updatedAt=1755336258984"
+                                        alt="Manage Team"
+                                        className="w-48 h-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
+                                    />
+                                </button>
+                            ) : isRegisteredOtherEvent ? (
+                                // registered to another event -> show nothing
+                                null
+                            ) : (
+                                <button onClick={() => setShowPopup(true)}>
+                                    <img
+                                        src="https://ik.imagekit.io/wlknxcf5m/CaseXRegisterbutton%20(1).png"
+                                        alt="Register"
+                                        className="w-48 h-auto hover:scale-105 transition-transform duration-300 cursor-pointer"
+                                    />
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -369,9 +389,9 @@ export default function CaseX() {
                     className="h-16"
                 />
             </div>
-            
 
-{/* ABOUT SECTION */}
+
+            {/* ABOUT SECTION */}
             <section id="about" className="w-full max-w-[1200px] mx-auto px-6 md:px-8 mt-10 md:mt-16">
                 <h2 className="text-4xl md:text-6xl font-normal font-girassol text-[#1D8301] mb-16 text-center">About Us</h2>
                 <div className="flex justify-center">
@@ -481,7 +501,7 @@ export default function CaseX() {
                     </div>
                 </div>
             </section>
-                        
+
             <div className="w-full flex justify-center mt-24">
                 <img
                     src="https://ik.imagekit.io/wlknxcf5m/WhatsApp_Image_2025-08-12_at_01.07.11_040c8e40-removebg-preview__1__cleanup-removebg-preview%201.png"
@@ -498,7 +518,7 @@ export default function CaseX() {
                         <img src="https://ik.imagekit.io/wlknxcf5m/clock.png" alt="Clock" className="w-[40vw] md:w-[15vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
                         <div>
                             <p className="text-2xl md:text-3xl font-leage-spartan text-white">24 August 2025</p>
-                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">10:00 AM - 4:00 PM</p>
+                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">9:00 AM - 4:00 PM</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-4 text-center">
@@ -510,7 +530,7 @@ export default function CaseX() {
                     </div>
                 </div>
             </section>
-            
+
             <div className="w-full flex justify-center mt-24">
                 <img
                     src="https://ik.imagekit.io/wlknxcf5m/WhatsApp_Image_2025-08-12_at_01.07.11_040c8e40-removebg-preview__1__cleanup-removebg-preview%201.png"
@@ -520,8 +540,8 @@ export default function CaseX() {
             </div>
 
             {/* EVALUATION CRITERIA */}
-            <section 
-                id="evaluation" 
+            <section
+                id="evaluation"
                 className="w-full mt-14 md:mt-20 bg-cover bg-center py-16 md:py-20 relative"
                 style={{ backgroundImage: "url('https://ik.imagekit.io/wlknxcf5m/EvalCriteriaHero.png')" }}
             >
@@ -627,7 +647,7 @@ export default function CaseX() {
                 </div>
             </section>
 
-            
+
             <div className="w-full flex justify-center mt-8">
                 <img
                     src="https://ik.imagekit.io/wlknxcf5m/WhatsApp_Image_2025-08-12_at_01.07.11_040c8e40-removebg-preview__1__cleanup-removebg-preview%201.png"
@@ -640,9 +660,9 @@ export default function CaseX() {
                 className="w-full mt-14 md:mt-20 bg-cover bg-center py-10 sm:py-14 md:py-20 relative flex items-start justify-center px-4"
                 style={{
                     backgroundImage:
-                    "url('https://ik.imagekit.io/wlknxcf5m/WhatsApp%20Image%202025-08-12%20at%2001.07.11_ac122249%201%20(1).png')",
+                        "url('https://ik.imagekit.io/wlknxcf5m/WhatsApp%20Image%202025-08-12%20at%2001.07.11_ac122249%201%20(1).png')",
                 }}
-                >
+            >
                 <div className="absolute inset-0 bg-gradient-to-b from-[#000C00] via-transparent to-[#000C00] pointer-events-none" />
                 <img
                     src="https://ik.imagekit.io/wlknxcf5m/Group%207%20(1).png"
@@ -661,12 +681,12 @@ export default function CaseX() {
                     With India’s product industry booming and global demand rising, there’s no
                     better time to explore the path of ideation, design, and delivery.
                 </div>
-                </section>
+            </section>
 
-                <div className="w-full mt-12 sm:mt-16 md:mt-20 bg-cover py-10 sm:py-14 md:py-20 flex items-center justify-center relative px-4">
+            <div className="w-full mt-12 sm:mt-16 md:mt-20 bg-cover py-10 sm:py-14 md:py-20 flex items-center justify-center relative px-4">
                 <div className="w-[90%] md:w-[60vw] text-center text-white text-sm sm:text-base md:text-2xl font-light font-leage-spartan z-15">
                     <span className="text-white text-2xl sm:text-3xl md:text-6xl font-girassol">
-                    Be Ready to Learn from<br /> Industry Experts
+                        Be Ready to Learn from<br /> Industry Experts
                     </span>
                     <br /><br /><br />
                     Get insights straight from a Head of Product, who brings real-world product
@@ -677,16 +697,16 @@ export default function CaseX() {
                     you through:
                     <br /><br />
                     <span className="text-white text-lg sm:text-xl md:text-2xl font-bold font-leage-spartan">
-                    How to think like a product manager?<br /> What top companies really look
-                    for?<br /><br />
+                        How to think like a product manager?<br /> What top companies really look
+                        for?<br /><br />
                     </span>
                     <span className="text-white text-sm sm:text-base md:text-2xl font-light font-leage-spartan">
-                    And why college is the perfect place to start your product journey.
+                        And why college is the perfect place to start your product journey.
                     </span>
                 </div>
-                </div>
+            </div>
 
-            
+
             <section className="w-full mt-14 md:mt-32 border-t bg-black border-[#D6C466]">
                 <div className="w-[82vw] mx-auto py-10">
                     <h3 className="text-xl text-center font-bold font-['Cinzel_Decorative']">Event POC</h3>
@@ -695,7 +715,7 @@ export default function CaseX() {
                         <p>aarish.kiitecell@gmail.com</p>
                     </div>
                 </div>
-            </section>            
+            </section>
 
             {/* POPUP FORM */}
             {/* STARTING SOON POPUP */}
@@ -703,13 +723,13 @@ export default function CaseX() {
             {showPopup && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="relative w-[95vw] max-w-[835px] md:min-h-[494px] bg-[#1B0D00] rounded-3xl border-4 border-[#CFB43C] max-h-[90vh] overflow-y-auto overscroll-contain">
-                        <button 
+                        <button
                             onClick={() => setShowPopup(false)}
                             className="absolute top-4 right-4 text-[#CFB43C] hover:text-[#CFB43C]/80 text-2xl font-bold"
                         >
                             ×
                         </button>
-                        
+
                         {isRegisteredCaseBattle ? (
                             // Manage Team UI for registered users
                             <>
@@ -717,7 +737,7 @@ export default function CaseX() {
                                     <p className="text-2xl md:text-3xl font-light font-leage-spartan text-[#CFB43C] text-center mb-4">
                                         Manage Team
                                     </p>
-                                    
+
                                     {/* Team Info Section */}
                                     <div className="w-full">
                                         <div className="bg-[#786C34]/20 border border-[#786C34] rounded-2xl p-3 md:p-4 mb-6">
@@ -726,11 +746,11 @@ export default function CaseX() {
                                                     <p className="text-[#CFB43C] text-lg md:text-xl font-leage-spartan font-bold">{teamInfo.teamName}</p>
                                                     <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">Team ID: {teamInfo.teamId}</p>
                                                 </div>
-                                                <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">{teammates.length}/4 members</p>
+                                                <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">{teamInfo.members?.length || 0}/4 members</p>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     {/* Add Teammate Section - Only for team leads */}
                                     {isCurrentUserLead() && (
                                         <div className="w-full mb-6">
@@ -739,52 +759,24 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="First Name"
-                                                    value={formData.name}
-                                                    onChange={(e) => handleChange("name", e.target.value)}
+                                                    value={newTeammateName}
+                                                    onChange={(e) => setNewTeammateName(e.target.value)}
                                                     className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                                 <input
                                                     type="text"
                                                     placeholder="Elixir ID"
-                                                    value={formData.yourEid}
-                                                    onChange={(e) => handleChange("yourEid", e.target.value)}
+                                                    value={newTeammateId}
+                                                    onChange={(e) => setNewTeammateId(e.target.value)}
                                                     className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                                 <button
-                                                    onClick={() => {
-                                                        setAddMemberError('');
-                                                        if (!newMemberName || !newMemberElixir) {
-                                                            setAddMemberError('Please fill both fields.');
-                                                            return;
-                                                        }
-                                                        if (teammates.length >= 4) {
-                                                            setAddMemberError('Team is full (maximum 4 members).');
-                                                            return;
-                                                        }
-                                                        // Global uniqueness check across all teams
-                                                        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === newMemberElixir));
-                                                        if (teamWithThisElixir) {
-                                                            if (teamWithThisElixir.teamId === teamInfo.teamId) {
-                                                                setAddMemberError('This Elixir ID is already in your team.');
-                                                            } else {
-                                                                setAddMemberError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
-                                                            }
-                                                            return;
-                                                        }
-                                                        const newMember = { id: Date.now(), name: newMemberName, elixirId: newMemberElixir, isLead: false };
-                                                        setTeammates(prev => [...prev, newMember]);
-                                                        setNewMemberName('');
-                                                        setNewMemberElixir('');
-                                                    }}
+                                                    onClick={handleAddMemberButton}
                                                     className="self-center sm:self-auto w-12 h-12 md:w-14 md:h-14 bg-[#786C34] rounded-2xl text-[#1B0D00] text-xl md:text-2xl font-bold hover:bg-[#CFB43C]/90"
                                                 >
                                                     +
                                                 </button>
                                             </div>
-                                            { /* Local duplicate check for current UI team state */ }
-                                            {teammates.some(m => m.elixirId === newMemberElixir) && !addMemberError && newMemberElixir && (
-                                                <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">This Elixir ID is already in your team.</p>
-                                            )}
                                             {addMemberError && (
                                                 <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">{addMemberError}</p>
                                             )}
@@ -794,10 +786,10 @@ export default function CaseX() {
                                     <div className="w-full">
                                         <p className="text-xl md:text-2xl font-light font-leage-spartan text-[#CFB43C] mb-4">Manage Teammates:</p>
                                         <div className="space-y-3">
-                                            {teammates.map((member) => (
-                                                <div key={member.id} className="flex items-center justify-between rounded-lg px-1 md:px-3">
+                                            {teamInfo.members?.map((member) => (
+                                                <div key={member.elixir} className="flex items-center justify-between rounded-lg px-1 md:px-3">
                                                     <div className="flex items-center min-w-0 gap-2 md:gap-4">
-                                                        {member.isLead && (
+                                                        {member.elixir === teamInfo.leaderId && (
                                                             <span className="bg-[#786C34] text-[#1B0D00] px-2 py-1 rounded text-xs md:text-sm font-bold md:w-12 text-center">
                                                                 Lead
                                                             </span>
@@ -807,13 +799,13 @@ export default function CaseX() {
                                                                 {member.name}
                                                             </span>
                                                             <span className="text-[#CFB43C]/80 text-sm md:text-lg font-leage-spartan block">
-                                                                {member.elixirId}
+                                                                {member.elixir}
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    {!member.isLead && isCurrentUserLead() && (
+                                                    {member.elixir !== teamInfo.leaderId && isCurrentUserLead() && (
                                                         <button
-                                                            onClick={() => setTeammates(prev => prev.filter(x => x.id !== member.id))}
+                                                            onClick={() => handleRemoveMember(member.elixir)}
                                                             className="text-[#CFB43C] hover:text-red-400 text-xl md:text-2xl font-bold pl-2"
                                                         >
                                                             -
@@ -822,7 +814,7 @@ export default function CaseX() {
                                                 </div>
                                             ))}
                                         </div>
-                                        {teammates.length >= 4 && (
+                                        {(teamInfo.members?.length || 0) >= 4 && (
                                             <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan mt-2">
                                                 Maximum team size reached (4 members)
                                             </p>
@@ -834,7 +826,7 @@ export default function CaseX() {
                             // Registration UI for new users
                             <>
                                 <div className="flex flex-col sm:flex-row justify-center mt-6 md:mt-8 gap-4 sm:gap-12 px-4 md:px-16">
-                                    <button 
+                                    <button
                                         onClick={() => {
                                             setActiveTab('join');
                                             setJoinError('');
@@ -843,7 +835,7 @@ export default function CaseX() {
                                     >
                                         Join a Team
                                     </button>
-                                    <button 
+                                    <button
                                         onClick={() => {
                                             setActiveTab('create');
                                             setJoinError('');
@@ -863,16 +855,16 @@ export default function CaseX() {
                                     )}
                                 </div>
 
-                <div className="px-4 md:px-16 mt-6 md:mt-8">
+                                <div className="px-4 md:px-16 mt-6 md:mt-8">
                                     {activeTab === 'create' ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                                             <div className="relative">
                                                 <input
                                                     type="text"
                                                     placeholder="First Name"
                                                     value={formData.name}
-                                                    onChange={(e) => handleChange("teamName", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                    onChange={(e) => handleChange("name", e.target.value)}
+                                                    className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
                                             <div className="relative">
@@ -881,50 +873,50 @@ export default function CaseX() {
                                                     placeholder="Elixir ID"
                                                     value={formData.yourEid}
                                                     onChange={(e) => handleChange("yourEid", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                    className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
-                        <div className="relative md:col-span-2">
+                                            <div className="relative md:col-span-2">
                                                 <input
                                                     type="text"
                                                     placeholder="Team Name"
                                                     value={formData.teamName}
                                                     onChange={(e) => handleChange("teamName", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                    className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
                                         </div>
                                     ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                        <div className="space-y-4 md:space-y-6">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                                            <div className="space-y-4 md:space-y-6">
                                                 <div className="relative">
                                                     <input
                                                         type="text"
                                                         placeholder="First Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleChange("name", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                                 <div className="relative">
                                                     <input
                                                         type="text"
-                                                        placeholder="Team Name" 
+                                                        placeholder="Team Name"
                                                         value={formData.teamName}
                                                         onChange={(e) => handleChange("teamName", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                             </div>
 
-                        <div className="space-y-4 md:space-y-6">
+                                            <div className="space-y-4 md:space-y-6">
                                                 <div className="relative">
                                                     <input
                                                         type="text"
                                                         placeholder="Elixir ID"
                                                         value={formData.yourEid}
                                                         onChange={(e) => handleChange("yourEid", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                                 <div className="relative">
@@ -933,7 +925,7 @@ export default function CaseX() {
                                                         placeholder="Team ID"
                                                         value={formData.teamId}
                                                         onChange={(e) => handleChange("teamId", e.target.value)}
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                             </div>
@@ -950,28 +942,8 @@ export default function CaseX() {
                                     )}
 
                                     <div className="flex justify-center mt-8 mb-6">
-                                        <button 
-                                            onClick={() => {
-                                                if (activeTab === 'create') {
-                                                    if (!formData.name || !formData.yourEid || !formData.teamName) return;
-                                                    // Create new team with user as lead
-                                                    const newUserId = Date.now();
-                                                    // setTeammates([{ id: formData.teamId, name: formData.name, elixirId: formData.yourEid, isLead: true }]);
-                                                    setTeamInfo({ teamName: formData.name, teamId: formData.teamId });
-                                                    // setCurrentUser({ id: formData.teamId, name: formData.name, elixirId: formData.yourEid });
-                                                    setIsRegisteredCaseBattle(true);
-                                                    setShowPopup(false);
-                                                } else if (activeTab === 'join') {
-                                                    if (!joinFirstName || !joinElixirId || !joinTeamName || !joinTeamId) return;
-                                                    // Validate and join existing team
-                                                    const success = joinExistingTeam(joinFirstName, joinElixirId, joinTeamName, joinTeamId);
-                                                    if (success) {
-                                                        setIsRegisteredCaseBattle(true);
-                                                        setShowPopup(false);
-                                                    }
-                                                    // If failed, popup stays open to show error
-                                                }
-                                            }}
+                                        <button
+                                            onClick={() => (activeTab === 'create' ? handleSubmitCreate() : handleSubmitJoin())}
                                             className="hover:scale-105 transition-transform cursor-pointer"
                                         >
                                             <img

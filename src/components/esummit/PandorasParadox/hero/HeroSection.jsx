@@ -17,7 +17,7 @@ const HeroSection = () => {
   const { userData,profile } = useAuth();
   const [deviceType, setDeviceType] = useState("desktop");
   const paymentDone = profile?.payment;
-  console.log("Payment status from profile:", paymentDone);
+  // console.log("Payment status from profile:", paymentDone);
   useEffect(() => {
     if (!userData) {
       router.replace("/login");
