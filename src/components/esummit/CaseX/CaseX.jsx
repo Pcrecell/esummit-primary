@@ -6,9 +6,6 @@ import { useRouter } from "next/navigation";
 export default function CaseX() {
     const [showPopup, setShowPopup] = useState(false);
     const [activeTab, setActiveTab] = useState('join'); // 'join' or 'create'
-    // Registration flags - replace with real user data integration as needed
-    const [isRegisteredCaseBattle, setIsRegisteredCaseBattle] = useState(false);
-    const [isRegisteredOtherEvent, setIsRegisteredOtherEvent] = useState(false);
     // Carousel state for mobile evaluation criteria (multi-card, snap, drag)
     const [evalIndex, setEvalIndex] = useState(0);
     const [animating, setAnimating] = useState(false);
@@ -16,58 +13,26 @@ export default function CaseX() {
     const [dragX, setDragX] = useState(0); // current drag offset
     const [isDragging, setIsDragging] = useState(false);
     
-    // Team management state (used when user is registered to Case Battle)
-    const [teammates, setTeammates] = useState([
-        // example data (replace with server data)
-        { id: 1, name: 'Suvansh Agarwal', elixirId: '12345', isLead: true },
-        { id: 2, name: 'Rohit Kumar', elixirId: '67890', isLead: false },
-    ]);
+    // Team management state (API-ready)
     const [teamInfo, setTeamInfo] = useState({
-        teamName: 'Alpha Warriors',
-        teamId: 'TM001'
-    });
-    const [currentUser, setCurrentUser] = useState({
-        id: 1, // This should match the lead's id in teammates array
-        name: 'Suvansh Agarwal',
-        elixirId: '12345'
+        teamName: '',
+        teamId: '',
+        leaderId: '', // elixir of leader
+        members: [], // [{ name, elixir }]
+        role: '' // optional: 'leader' | 'member'
     });
     const [newMemberName, setNewMemberName] = useState('');
     const [newMemberElixir, setNewMemberElixir] = useState('');
     const [addMemberError, setAddMemberError] = useState('');
 
-    // Create team form state
-    const [createFirstName, setCreateFirstName] = useState('');
-    const [createElixirId, setCreateElixirId] = useState('');
-    const [createTeamName, setCreateTeamName] = useState('');
-    
-    // Join team form state
-    const [joinFirstName, setJoinFirstName] = useState('');
-    const [joinElixirId, setJoinElixirId] = useState('');
-    const [joinTeamName, setJoinTeamName] = useState('');
-    const [joinTeamId, setJoinTeamId] = useState('');
+    // Unified form data (API-ready)
+    const [formData, setFormData] = useState({
+        name: '',
+        yourEid: '', // elixir id
+        teamName: '',
+        teamId: ''
+    });
     const [joinError, setJoinError] = useState('');
-
-    // Mock teams database (in real app, this would come from backend)
-    const [existingTeams] = useState([
-        {
-            teamId: 'TM001',
-            teamName: 'Alpha Warriors',
-            members: [
-                { id: 1, name: 'Suvansh Agarwal', elixirId: '12345', isLead: true },
-                { id: 2, name: 'Rohit Kumar', elixirId: '67890', isLead: false },
-            ]
-        },
-        {
-            teamId: 'TM002', 
-            teamName: 'Beta Coders',
-            members: [
-                { id: 3, name: 'Amit Singh', elixirId: '11111', isLead: true },
-                { id: 4, name: 'Priya Sharma', elixirId: '22222', isLead: false },
-                { id: 5, name: 'Raj Patel', elixirId: '33333', isLead: false },
-                { id: 6, name: 'Raj Patel', elixirId: '33333', isLead: false },
-            ]
-        }
-    ]);
 
     const touchStartX = useRef(null);
     const slidesRef = useRef(null);
@@ -100,60 +65,25 @@ export default function CaseX() {
 
     // Helper function to check if current user is team lead
     const isCurrentUserLead = () => {
-        const currentUserInTeam = teammates.find(member => member.id === currentUser.id);
-        return currentUserInTeam?.isLead || false;
+        if (!profile?.elixir) return false;
+        return teamInfo.leaderId && profile.elixir === teamInfo.leaderId;
     };
 
     // Function to validate and join a team
-    const joinExistingTeam = (FirstName, elixirId, teamName, teamId) => {
+    const joinExistingTeam = (FirstName, elixir, teamName, teamId) => {
         setJoinError('');
-        
-        // Find the team by ID
-        const targetTeam = existingTeams.find(team => team.teamId === teamId);
-        
-        if (!targetTeam) {
-            setJoinError('Team ID not found!');
+        // API-connected flow should validate on backend. Here we only format state.
+        if (!FirstName || !elixir || !teamName || !teamId) {
+            setJoinError('Please fill all the fields.');
             return false;
         }
-        
-        // Verify team name matches
-        if (targetTeam.teamName.toLowerCase() !== teamName.toLowerCase()) {
-            setJoinError('Team name does not match the Team ID!');
-            return false;
-        }
-        
-        // Local state check: already in current team (covers cases where existingTeams isn't updated)
-        if (teammates.some(m => m.elixirId === elixirId)) {
-            setJoinError('You are already a member of this team!');
-            return false;
-        }
-
-        // Global uniqueness: elixirId should not exist in any team (primary key across teams)
-        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === elixirId));
-        if (teamWithThisElixir) {
-            if (teamWithThisElixir.teamId === teamId) {
-                setJoinError('You are already a member of this team!');
-            } else {
-                setJoinError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
-            }
-            return false;
-        }
-
-        // Check if team is full
-        if (targetTeam.members.length >= 4) {
-            setJoinError('Team is full (maximum 4 members)!');
-            return false;
-        }
-        
-        // All validations passed - add user to team
-        const newUserId = Date.now();
-        const newMember = { id: newUserId, name: FirstName, elixirId: elixirId, isLead: false };
-        
-        // Update team data
-        setTeammates([...targetTeam.members, newMember]);
-        setTeamInfo({ teamName: targetTeam.teamName, teamId: targetTeam.teamId });
-        setCurrentUser({ id: newUserId, name: FirstName, elixirId: elixirId });
-        
+        setTeamInfo({
+            teamName: teamName,
+            teamId: teamId,
+            leaderId: '', // unknown until fetched from API
+            members: [{ name: FirstName, elixir }],
+            role: 'member'
+        });
         return true;
     };
 
@@ -226,6 +156,10 @@ export default function CaseX() {
         setIsDragging(false);
         snapToNearest();
     };
+
+    // Derived flags
+    const isRegisteredCaseBattle = Boolean(teamInfo.teamId);
+    const isRegisteredOtherEvent = false; // to be sourced from API if needed
 
     return (
         <div className="bg-[#000C00] relative">
@@ -694,7 +628,7 @@ export default function CaseX() {
                                                     <p className="text-[#CFB43C] text-lg md:text-xl font-leage-spartan font-bold">{teamInfo.teamName}</p>
                                                     <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">Team ID: {teamInfo.teamId}</p>
                                                 </div>
-                                                <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">{teammates.length}/4 members</p>
+                                                <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">{teamInfo.members?.length || 0}/4 members</p>
                                             </div>
                                         </div>
                                     </div>
@@ -725,22 +659,21 @@ export default function CaseX() {
                                                             setAddMemberError('Please fill both fields.');
                                                             return;
                                                         }
-                                                        if (teammates.length >= 4) {
+                                                        if ((teamInfo.members?.length || 0) >= 4) {
                                                             setAddMemberError('Team is full (maximum 4 members).');
                                                             return;
                                                         }
-                                                        // Global uniqueness check across all teams
-                                                        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === newMemberElixir));
-                                                        if (teamWithThisElixir) {
-                                                            if (teamWithThisElixir.teamId === teamInfo.teamId) {
-                                                                setAddMemberError('This Elixir ID is already in your team.');
-                                                            } else {
-                                                                setAddMemberError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
-                                                            }
+                                                        // Add locally; backend should validate uniqueness
+                                                        const existsInLocal = (teamInfo.members || []).some(m => m.elixir === newMemberElixir);
+                                                        if (existsInLocal) {
+                                                            setAddMemberError('This Elixir ID is already in your team.');
                                                             return;
                                                         }
-                                                        const newMember = { id: Date.now(), name: newMemberName, elixirId: newMemberElixir, isLead: false };
-                                                        setTeammates(prev => [...prev, newMember]);
+                                                        const newMember = { name: newMemberName, elixir: newMemberElixir };
+                                                        setTeamInfo(prev => ({
+                                                            ...prev,
+                                                            members: [...(prev.members || []), newMember]
+                                                        }));
                                                         setNewMemberName('');
                                                         setNewMemberElixir('');
                                                     }}
@@ -750,7 +683,7 @@ export default function CaseX() {
                                                 </button>
                                             </div>
                                             { /* Local duplicate check for current UI team state */ }
-                                            {teammates.some(m => m.elixirId === newMemberElixir) && !addMemberError && newMemberElixir && (
+                                            {teamInfo.members && teamInfo.members.some(m => m.elixir === newMemberElixir) && !addMemberError && newMemberElixir && (
                                                 <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">This Elixir ID is already in your team.</p>
                                             )}
                                             {addMemberError && (
@@ -762,10 +695,10 @@ export default function CaseX() {
                                     <div className="w-full">
                                         <p className="text-xl md:text-2xl font-light font-leage-spartan text-[#CFB43C] mb-4">Manage Teammates:</p>
                                         <div className="space-y-3">
-                                            {teammates.map((member) => (
-                                                <div key={member.id} className="flex items-center justify-between rounded-lg px-1 md:px-3">
+                                            {(teamInfo.members || []).map((member) => (
+                                                <div key={member.elixir} className="flex items-center justify-between rounded-lg px-1 md:px-3">
                                                     <div className="flex items-center min-w-0 gap-2 md:gap-4">
-                                                        {member.isLead && (
+                                                        {teamInfo.leaderId && member.elixir === teamInfo.leaderId && (
                                                             <span className="bg-[#786C34] text-[#1B0D00] px-2 py-1 rounded text-xs md:text-sm font-bold md:w-12 text-center">
                                                                 Lead
                                                             </span>
@@ -775,13 +708,16 @@ export default function CaseX() {
                                                                 {member.name}
                                                             </span>
                                                             <span className="text-[#CFB43C]/80 text-sm md:text-lg font-leage-spartan block">
-                                                                {member.elixirId}
+                                                                {member.elixir}
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    {!member.isLead && isCurrentUserLead() && (
+                                                    {member.elixir !== teamInfo.leaderId && isCurrentUserLead() && (
                                                         <button
-                                                            onClick={() => setTeammates(prev => prev.filter(x => x.id !== member.id))}
+                                                            onClick={() => setTeamInfo(prev => ({
+                                                                ...prev,
+                                                                members: (prev.members || []).filter(x => x.elixir !== member.elixir)
+                                                            }))}
                                                             className="text-[#CFB43C] hover:text-red-400 text-xl md:text-2xl font-bold pl-2"
                                                         >
                                                             -
@@ -790,7 +726,7 @@ export default function CaseX() {
                                                 </div>
                                             ))}
                                         </div>
-                                        {teammates.length >= 4 && (
+                                        {(teamInfo.members?.length || 0) >= 4 && (
                                             <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan mt-2">
                                                 Maximum team size reached (4 members)
                                             </p>
@@ -838,8 +774,8 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="First Name"
-                                                    value={createFirstName}
-                                                    onChange={e => setCreateFirstName(e.target.value)}
+                                                    value={formData.name}
+                                                    onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -847,8 +783,8 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="Elixir ID"
-                                                    value={createElixirId}
-                                                    onChange={e => setCreateElixirId(e.target.value)}
+                                                    value={formData.yourEid}
+                                                    onChange={e => setFormData(prev => ({ ...prev, yourEid: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -856,8 +792,8 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="Team Name"
-                                                    value={createTeamName}
-                                                    onChange={e => setCreateTeamName(e.target.value)}
+                                                    value={formData.teamName}
+                                                    onChange={e => setFormData(prev => ({ ...prev, teamName: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -869,8 +805,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="First Name"
-                                                        value={joinFirstName}
-                                                        onChange={e => setJoinFirstName(e.target.value)}
+                                                        value={formData.name}
+                                                        onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -878,8 +814,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="Team Name" 
-                                                        value={joinTeamName}
-                                                        onChange={e => setJoinTeamName(e.target.value)}
+                                                        value={formData.teamName}
+                                                        onChange={e => setFormData(prev => ({ ...prev, teamName: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -890,8 +826,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="Elixir ID"
-                                                        value={joinElixirId}
-                                                        onChange={e => setJoinElixirId(e.target.value)}
+                                                        value={formData.yourEid}
+                                                        onChange={e => setFormData(prev => ({ ...prev, yourEid: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -899,8 +835,8 @@ export default function CaseX() {
                                                     <input
                                                         type="text"
                                                         placeholder="Team ID"
-                                                        value={joinTeamId}
-                                                        onChange={e => setJoinTeamId(e.target.value)}
+                                                        value={formData.teamId}
+                                                        onChange={e => setFormData(prev => ({ ...prev, teamId: e.target.value }))}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -921,23 +857,22 @@ export default function CaseX() {
                                         <button 
                                             onClick={() => {
                                                 if (activeTab === 'create') {
-                                                    if (!createFirstName || !createElixirId || !createTeamName) return;
-                                                    // Create new team with user as lead
-                                                    const newUserId = Date.now();
-                                                    setTeammates([{ id: newUserId, name: createFirstName, elixirId: createElixirId, isLead: true }]);
-                                                    setTeamInfo({ teamName: createTeamName, teamId: `TM${Date.now()}` });
-                                                    setCurrentUser({ id: newUserId, name: createFirstName, elixirId: createElixirId });
-                                                    setIsRegisteredCaseBattle(true);
+                                                    if (!formData.name || !formData.yourEid || !formData.teamName) return;
+                                                    // API-ready: create team locally formatted
+                                                    setTeamInfo({
+                                                        teamName: formData.teamName,
+                                                        teamId: `TM${Date.now()}`,
+                                                        leaderId: formData.yourEid,
+                                                        members: [{ name: formData.name, elixir: formData.yourEid }],
+                                                        role: 'leader'
+                                                    });
                                                     setShowPopup(false);
                                                 } else if (activeTab === 'join') {
-                                                    if (!joinFirstName || !joinElixirId || !joinTeamName || !joinTeamId) return;
-                                                    // Validate and join existing team
-                                                    const success = joinExistingTeam(joinFirstName, joinElixirId, joinTeamName, joinTeamId);
+                                                    if (!formData.name || !formData.yourEid || !formData.teamName || !formData.teamId) return;
+                                                    const success = joinExistingTeam(formData.name, formData.yourEid, formData.teamName, formData.teamId);
                                                     if (success) {
-                                                        setIsRegisteredCaseBattle(true);
                                                         setShowPopup(false);
                                                     }
-                                                    // If failed, popup stays open to show error
                                                 }
                                             }}
                                             className="hover:scale-105 transition-transform cursor-pointer"
