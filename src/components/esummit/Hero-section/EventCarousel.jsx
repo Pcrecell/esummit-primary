@@ -123,8 +123,7 @@ const EventCarousel = () => {
               date={events[activeIndex].date}
               title={events[activeIndex].title}
               subtitle={events[activeIndex].subtitle}
-              onKnowMore={() =>
-                console.log("Clicked event", events[activeIndex].id)
+              onKnowMore={()=>{}
               }
             />
           </div>

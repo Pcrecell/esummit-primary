@@ -54,7 +54,7 @@ export default function Hero() {
       }
 
       const data = await response.json();
-      console.log("Fetched team info:", data);
+      // console.log("Fetched team info:", data);
       setTeamInfo(data);
     } catch (error) {
       console.error("Error fetching team info:", error);
