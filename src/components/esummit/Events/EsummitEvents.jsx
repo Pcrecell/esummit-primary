@@ -40,7 +40,7 @@ const EventsPage = () => {
       {
         title: "EXPO",
         time: "11:00AM - 4:30PM",
-        venue: "CAMPUS-06",
+        venue: "CAMPUS-06 BANQUET HALL",
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
@@ -52,7 +52,7 @@ const EventsPage = () => {
       {
         title: "ORACLE",
         time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-17",
+        venue: "CAMPUS-6",
         coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
@@ -62,7 +62,7 @@ const EventsPage = () => {
       {
         title: "ALICE IN FOUNDERLAND",
         time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-05",
+        venue: "CAMPUS-17",
         coordinates: [20.352904448394906, 85.81402616826391],
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
@@ -72,7 +72,7 @@ const EventsPage = () => {
       {
         title: "EXPO",
         time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-06",
+        venue: "CAMPUS-06 BANQUET HALL",
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
