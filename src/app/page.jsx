@@ -19,6 +19,6 @@ export default function HomePage() {
       </div> 
       <PastSpeakers/>
       <PastSponser/>
-    </main>
+    </main> 
   )
 }
