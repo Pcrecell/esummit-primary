@@ -6,6 +6,7 @@ import Image from "next/image";
 import heroRegisterButton from "../../../../../public/images/hackathon/hero-register-button.png";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,7 +28,11 @@ const HeroSection = () => {
   if (paymentDone) {
     router.push("/pandoras-paradox/dashboard"); // Change to your event route
   } else {
-    alert("Complete your payment to proceed!");
+    <Toast>
+      <div className="bg-red-500 text-white p-4 rounded-md">
+        <p className="text-sm">Please complete your payment to register for the event.</p>
+      </div>
+    </Toast>
     
   }
 };

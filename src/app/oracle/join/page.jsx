@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Cormorant_Garamond } from "next/font/google";
 import { useAuth } from "@/lib/context/AuthContext";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -12,6 +14,7 @@ const cormorantGaramond = Cormorant_Garamond({
 
 const JoinTeamPage = () => {
   const router = useRouter();
+  const { showSuccess, showError } = useToast();
 
   // ✅ align with pandoras logic -> use formData instead of multiple states
   const [formData, setFormData] = useState({
@@ -83,11 +86,11 @@ const JoinTeamPage = () => {
         throw new Error(data.message || "Error joining team");
       }
 
-      alert(`✅ ${data.message} Joined Team ID: ${data.teamId}`);
+      showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
       router.push("/success");
     } catch (err) {
       console.error("Error joining team:", err);
-      alert(`❌ ${err.message}`);
+      showError(err.message);
     }
   };
 
@@ -191,6 +194,7 @@ const JoinTeamPage = () => {
           </form>
         </div>
       </div>
+      <Toast />
     </div>
   );
 };

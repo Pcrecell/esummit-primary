@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Cormorant_Garamond } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -12,6 +14,7 @@ const cormorantGaramond = Cormorant_Garamond({
 
 const CreateTeamPage = () => {
   const router = useRouter();
+  const { showSuccess, showError } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     yourEid: "",
@@ -83,13 +86,13 @@ const CreateTeamPage = () => {
         throw new Error(data.message || "Error creating team");
       }
 
-      alert(`✅ ${data.message} Your Team ID: ${data.teamId}`);
+      showSuccess(`${data.message} Your Team ID: ${data.teamId}`);
 
       // after successful create, move to oracle page
       router.push("/oracle");
     } catch (err) {
       console.error(err);
-      alert(`❌ ${err.message || "Error creating team"}`);
+      showError(err.message || "Error creating team");
     } finally {
       setIsSubmitting(false);
     }
@@ -182,6 +185,7 @@ const CreateTeamPage = () => {
           </div>
         </div>
       </div>
+      <Toast />
     </div>
   );
 };

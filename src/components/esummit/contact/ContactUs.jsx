@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 const Map = dynamic(() => import("./ContactMap"), {
   ssr: false,
@@ -12,39 +14,7 @@ const Map = dynamic(() => import("./ContactMap"), {
   ),
 });
 
-// Toast Component
-const Toast = ({ message, type, isVisible, onClose }) => {
-  if (!isVisible) return null;
 
-  const bgColor =
-    type === "success"
-      ? "bg-green-600"
-      : type === "error"
-        ? "bg-red-600"
-        : "bg-blue-600";
-  const borderColor =
-    type === "success"
-      ? "border-green-500"
-      : type === "error"
-        ? "border-red-500"
-        : "border-blue-500";
-
-  return (
-    <div
-      className={`fixed top-20 left-4 z-50 ${bgColor} ${borderColor} border text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out ${isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
-    >
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">{message}</span>
-        <button
-          onClick={onClose}
-          className="ml-3 text-white hover:text-gray-200 transition-colors"
-        >
-          ×
-        </button>
-      </div>
-    </div>
-  );
-};
 
 function App() {
   const [formData, setFormData] = useState({
@@ -61,27 +31,8 @@ function App() {
     success: false,
   });
 
-  // Toast state
-  const [toast, setToast] = useState({
-    message: "",
-    type: "", // 'success', 'error', 'loading'
-    isVisible: false,
-  });
-
-  const showToast = (message, type) => {
-    setToast({ message, type, isVisible: true });
-
-    // Auto hide toast after 4 seconds for success/error messages
-    if (type !== "loading") {
-      setTimeout(() => {
-        setToast((prev) => ({ ...prev, isVisible: false }));
-      }, 4000);
-    }
-  };
-
-  const hideToast = () => {
-    setToast((prev) => ({ ...prev, isVisible: false }));
-  };
+  // Use centralized toast system
+  const { toast, showSuccess, showError, showLoading, hideToast } = useToast();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -109,26 +60,26 @@ function App() {
       !formData.phone.trim() ||
       !formData.message.trim()
     ) {
-      showToast("Please fill in all fields", "error");
+      showError("Please fill in all fields");
       return;
     }
 
     // Email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(formData.email)) {
-      showToast("Please enter a valid email address", "error");
+      showError("Please enter a valid email address");
       return;
     }
 
     // Phone validation (basic)
     if (formData.phone.length < 10) {
-      showToast("Phone number must be at least 10 digits", "error");
+      showError("Phone number must be at least 10 digits");
       return;
     }
 
     // Set loading state and show loading toast
     setFormStatus({ loading: true, error: null, success: false });
-    showToast("Sending your message...", "loading");
+    showLoading("Sending your message...");
 
     try {
       const response = await fetch(
@@ -158,10 +109,7 @@ function App() {
         });
         setFormData({ name: "", email: "", phone: "", message: "" });
         hideToast(); // Hide loading toast
-        showToast(
-          "Message sent successfully! We'll get back to you soon.",
-          "success"
-        );
+        showSuccess("Message sent successfully! We'll get back to you soon.");
       } else {
         setFormStatus({
           loading: false,
@@ -169,10 +117,7 @@ function App() {
           success: false,
         });
         hideToast(); // Hide loading toast
-        showToast(
-          result.error || "Failed to send message. Please try again.",
-          "error"
-        );
+        showError(result.error || "Failed to send message. Please try again.");
       }
     } catch (err) {
       setFormStatus({
@@ -182,10 +127,7 @@ function App() {
         success: false,
       });
       hideToast(); // Hide loading toast
-      showToast(
-        "Something went wrong. Please check your connection and try again.",
-        "error"
-      );
+      showError("Something went wrong. Please check your connection and try again.");
     }
   };
 

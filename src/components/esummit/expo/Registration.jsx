@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "@/lib/context/AuthContext";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 const Registration = () => {
   const { userData, profile, loading } = useAuth();
+  const { showError, showSuccess } = useToast();
   const [form, setForm] = useState({
     companyName: "",
     teamLeadName: "",
@@ -38,7 +41,7 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!agreedToTerms) {
-      alert("Please agree to terms & conditions");
+      showError("Please agree to terms & conditions");
       return;
     }
     
@@ -57,7 +60,7 @@ const Registration = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Registration successful!");
+        showSuccess("Registration successful!");
         // Reset form
         setForm({
           companyName: "",
@@ -336,6 +339,7 @@ const Registration = () => {
         <div className="absolute bottom-0 left-0 w-full h-50 bg-gradient-to-t from-black to-transparent"></div>
       </div>
       </div>
+      <Toast />
     </div>
   );
 };

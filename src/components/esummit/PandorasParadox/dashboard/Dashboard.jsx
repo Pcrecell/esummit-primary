@@ -6,6 +6,8 @@ import axios from "axios";
 import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 const PandorasParadoxDashboard = () => {
   const router = useRouter();
   const { userData, profile, loading } = useAuth();
@@ -31,6 +33,8 @@ const PandorasParadoxDashboard = () => {
   const [newTeammateName, setNewTeammateName] = useState("");
   const [newTeammateId, setNewTeammateId] = useState("");
   const [isAddingMember, setIsAddingMember] = useState(false);
+  
+  const { toast, showSuccess, showError, hideToast } = useToast();
   const fetchTeamInfo = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/team-info/${profile.elixir}`);
@@ -43,7 +47,7 @@ const PandorasParadoxDashboard = () => {
     setTeamInfo(data);
   } catch (error) {
     console.error("Error fetching team info:", error);
-    alert("Failed to load team information. Please try again later.");
+    return;
   }
 };
 
@@ -94,7 +98,7 @@ useEffect(() => {
       !formData.yourEid.trim() ||
       !formData.teamName.trim()
     ) {
-      alert("Please fill out all fields to create a team.");
+      showError("Please fill out all fields to create a team.");
       return;
     }
     try {
@@ -119,7 +123,7 @@ if (!res.ok) {
   throw new Error(data.message || "Error creating team");
 }
 
-alert(`✅ ${data.message} Your Team ID: ${data.teamId}`);
+showSuccess(`${data.message} Your Team ID: ${data.teamId}`);
 
 setTeamInfo({
   teamName: formData.teamName.trim(),
@@ -133,7 +137,7 @@ setAction("details");
 
     } catch (err) {
       console.error(err);
-      alert(`❌ ${err.response?.data?.message || "Error creating team"}`);
+      showError(`${err.response?.data?.message || "Error creating team"}`);
     }
   };
 
@@ -155,7 +159,7 @@ setAction("details");
       !formData.yourEid.trim() ||
       !formData.teamId.trim()
     ) {
-      alert("Please fill out all fields to join a team.");
+      showError("Please fill out all fields to join a team.");
       return;
     }
     try {
@@ -181,7 +185,7 @@ setAction("details");
             throw new Error(data.message || "Error joining team");
           }
 
-          alert(`✅ ${data.message} Joined Team ID: ${data.teamId}`);
+          showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
 
         setTeamInfo(prev => ({
         ...prev,
@@ -192,13 +196,13 @@ setAction("details");
       setAction("details");
     } catch (err) {
       console.error(err);
-      alert(`❌ ${err.response?.data?.message || "Error joining team"}`);
+      showError(`${err.response?.data?.message || "Error joining team"}`);
     }
   };
 
   const handleAddMemberButton = async () => {
     if (!newTeammateName.trim() || !newTeammateId.trim()) {
-      alert("Please fill in both name and ID fields");
+      showError("Please fill in both name and ID fields");
       return;
     }
 
@@ -211,7 +215,7 @@ setAction("details");
         elixir: newTeammateId.trim()
       });
 
-      alert(`✅ ${res.data.message}`);
+      showSuccess(`${res.data.message}`);
 
       // Update frontend state
       setTeamInfo(prev => ({
@@ -222,10 +226,10 @@ setAction("details");
       setNewTeammateName("");
       setNewTeammateId("");
 
-      alert("Member added successfully!");
+
     } catch (error) {
       console.error("Error adding member:", error);
-      alert(`❌ ${error.response?.data?.message || "Error adding member"}`);
+      showError(`${error.response?.data?.message || "Error adding member"}`);
     } finally {
       setIsAddingMember(false);
     }
@@ -234,7 +238,7 @@ setAction("details");
  
 const handleRemoveMember = async (memberelixir) => {
   if (memberelixir === profile.elixir) {
-    alert("Leader cannot remove themselves.");
+    showError("Leader cannot remove themselves.");
     return;
   }
 
@@ -257,7 +261,7 @@ const handleRemoveMember = async (memberelixir) => {
 
     const data = await res.json();
 
-    alert(`✅ ${data.message}`);
+    showSuccess(`${data.message}`);
 
     // Update frontend state
     setTeamInfo((prev) => ({
@@ -266,7 +270,7 @@ const handleRemoveMember = async (memberelixir) => {
     }));
   } catch (error) {
     console.error("Error removing member:", error);
-    alert(`❌ ${error.message}`);
+    showError(`${error.message}`);
   }
 };
 
@@ -711,6 +715,8 @@ const handleRemoveMember = async (memberelixir) => {
           animation: matrixRain 3s infinite linear;
         }
       `}</style>
+      
+      {toast && <Toast />}
     </section>
   );
 };

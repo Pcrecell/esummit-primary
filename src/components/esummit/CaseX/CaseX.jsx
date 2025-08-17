@@ -2,10 +2,13 @@
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import Toast from "@/components/ui/Toast";
+import { useToast } from "@/hooks/useToast";
 
 export default function CaseX() {
   const router = useRouter();
   const { userData, profile, loading } = useAuth();
+  const { showSuccess, showError } = useToast();
   const paymentDone = profile?.payment;
 
   // Popup & tab UI state
@@ -47,6 +50,9 @@ export default function CaseX() {
   const [newTeammateId, setNewTeammateId] = useState("");
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [joinError, setJoinError] = useState("");
+
+  // Handle popup opening
+  const handlePopupOpen = () => setShowPopup(true);
 
   // Fetch team info by Elixir
   const fetchTeamInfo = async () => {
@@ -97,7 +103,7 @@ export default function CaseX() {
 
   const handleSubmitCreate = async () => {
     if (!formData.name || !formData.yourEid || !formData.teamName) {
-      alert("Fill all fields to create a team");
+      showError("Fill all fields to create a team");
       return;
     }
     try {
@@ -128,7 +134,7 @@ export default function CaseX() {
       });
       setAction("details");
     } catch (err) {
-      alert(err.message || "Error creating team");
+      showError(err.message || "Error creating team");
     }
   };
 
@@ -183,7 +189,7 @@ export default function CaseX() {
       setNewTeammateName("");
       setNewTeammateId("");
     } catch (err) {
-      alert("Error adding member");
+      showError("Error adding member");
     } finally {
       setIsAddingMember(false);
     }
@@ -191,7 +197,7 @@ export default function CaseX() {
 
   const handleRemoveMember = async (memberelixir) => {
     if (memberelixir === profile.elixir) {
-      alert("Leader cannot remove themselves.");
+      showError("Leader cannot remove themselves.");
       return;
     }
     try {
@@ -206,7 +212,7 @@ export default function CaseX() {
         members: prev.members.filter((m) => m.elixir !== memberelixir),
       }));
     } catch (err) {
-      alert(err.message);
+      showError(err.message);
     }
   };
 
@@ -981,6 +987,7 @@ export default function CaseX() {
                     </div>
                 </div>
             )}
+            <Toast />
         </div>
     );
 }
