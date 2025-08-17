@@ -115,7 +115,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
                 });
                 
                 L.marker(coordinates, { icon: pinpointIcon }).addTo(map)
-                    .bindPopup(`${label}<br>`, { offset: [0, -20] });
+                    .bindPopup(`<a href="https://www.google.com/maps/place/${coordinates[0]},${coordinates[1]}">${label}</a>`);
                     
             } catch (error) {
                 console.error("Error initializing map:", error);
