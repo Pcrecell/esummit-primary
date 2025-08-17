@@ -1,15 +1,23 @@
 import { useState } from "react";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const Registration = () => {
+  const { userData, profile, loading } = useAuth();
   const [form, setForm] = useState({
     companyName: "",
     teamLeadName: "",
-    exliriz: "",
+    elixir: "",
     phoneNumber: "",
     yourIdea: "",
-    teammates: ["", ""], // Initial two teammate fields
+    teammates: [
+      { name: "", elixir: "" },
+      { name: "", elixir: "" },
+    ], // Initial two teammate fields as objects
   });
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false);
+  const [registrationError, setRegistrationError] = useState("");
 
   // Form field change handler
   const handleChange = (e) => {
@@ -18,88 +26,84 @@ const Registration = () => {
   };
 
   // Teammate change handler
-  const handleTeammateChange = (index, value) => {
+  const handleTeammateChange = (index, field, value) => {
     const newTeammates = [...form.teammates];
-    newTeammates[index] = value;
+    newTeammates[index][field] = value;
     setForm({ ...form, teammates: newTeammates });
   };
 
   // Add teammate field
   const addTeammate = () => {
-    setForm({ ...form, teammates: [...form.teammates, ""] });
+    setForm({
+      ...form,
+      teammates: [...form.teammates, { name: "", elixir: "" }],
+    });
   };
 
-  const checkUniqueIdAndName = async (uniqueId, name) => {
+  const checkElixirAndName = async (elixir, name) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/expo/verifyForm?uniqueId=${encodeURIComponent(
-          uniqueId
+        `${process.env.NEXT_PUBLIC_API_URL}/expo/verifyForm?elixir=${encodeURIComponent(
+          elixir
         )}&name=${encodeURIComponent(name)}`
       );
       const data = await res.json();
 
       if (res.ok) {
-        console.log("Unique ID and Name Check Response:", data);
-        return { exists: data.exists, nameMatch: data.nameMatch };
+        return { exists: data.exists, nameMatch: data.nameMatch, payment: data.payment };
       } else {
-        console.log("Verification failed:", data.error);
-        return { exists: false, nameMatch: false, error: data.error };
+        return { exists: false, nameMatch: false, payment: false };
       }
     } catch (error) {
-      console.error("Error checking unique ID and name:", error);
-      return { exists: false, nameMatch: false, error: "Network error" };
+      return { exists: false, nameMatch: false, payment: false };
     }
   };
 
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting registration:", form);
     setIsSubmitting(true);
 
-    // Check lead unique ID and name
-    const leadCheck = await checkUniqueIdAndName(
-      form.uniqueId,
-      form.teamLeadName
-    );
-
-    if (!leadCheck.exists) {
-      alert(
-        leadCheck.error ||
-          "Team Lead not found in database or payment not completed. Please check your ID and ensure payment is done."
-      );
+    // Check lead elixir and name
+    const leadCheck = await checkElixirAndName(form.elixir, form.teamLeadName);
+    if (!leadCheck.exists || !leadCheck.nameMatch || !leadCheck.payment) {
+      let message = "users not exists or not paid";
+      alert(message);
       setIsSubmitting(false);
       return;
     }
 
-    // Check teammate unique IDs and names (if teammates have uniqueId structure)
+    // Check teammate unique IDs and names
     for (let i = 0; i < form.teammates.length; i++) {
       const teammate = form.teammates[i];
-      if (teammate && teammate.trim()) {
-        // If teammates are just names, you might want to add uniqueId fields for them too
-        // For now, just logging teammate names
-        console.log(`Teammate ${i + 1}: ${teammate}`);
+      if (teammate.elixir && teammate.name) {
+        const teammateCheck = await checkElixirAndName(
+          teammate.elixir,
+          teammate.name
+        );
+        if (!teammateCheck.exists || !teammateCheck.nameMatch || !teammateCheck.payment) {
+          alert(
+            `Teammate ${i + 1} not exists or not paid`
+          );
+          setIsSubmitting(false);
+          return;
+        }
       }
     }
 
-    // Generate elixir from uniqueId (first 8 characters)
-    const elixir = form.uniqueId ? form.uniqueId.slice(0, 8) : "";
-
     // Remove empty teammates
     const filteredTeammates = form.teammates.filter(
-      (tm) => tm && tm.trim() !== ""
+      (tm) => tm.name.trim() !== "" && tm.elixir.trim() !== ""
     );
 
     const registrationData = {
       companyName: form.companyName,
       name: form.teamLeadName,
-      uniqueId: form.uniqueId,
+      elixir: form.elixir,
       idea: form.yourIdea,
       phone: form.phoneNumber,
       teammates: filteredTeammates,
     };
-
-    console.log("Registration data:", registrationData);
 
     try {
       const response = await fetch(
@@ -115,25 +119,110 @@ const Registration = () => {
 
       if (response.ok && result.success) {
         alert("Registration successful!");
-        // Reset form
         setForm({
           companyName: "",
           teamLeadName: "",
-          uniqueId: "",
+          elixir: "",
           phoneNumber: "",
           yourIdea: "",
-          teammates: ["", ""],
+          teammates: [
+            { name: "", elixir: "" },
+            { name: "", elixir: "" },
+          ],
         });
       } else {
         alert(result.error || "Registration failed. Please try again.");
       }
       setIsSubmitting(false);
     } catch (error) {
-      console.error("Error:", error);
       alert("An error occurred. Please try again.");
       setIsSubmitting(false);
     }
   };
+
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="relative min-h-[60vh] w-full">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+          style={{
+            backgroundImage:
+              "url('https://ik.imagekit.io/admr8uj75/Frame%20258.png?tr=w-1920,q-100,fo-auto&updatedAt=1755023127771')",
+          }}
+        ></div>
+        <div className="relative flex items-center justify-center min-h-screen">
+          <div className="text-white text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if user is authenticated
+  if (!userData) {
+    return (
+      <div className="relative min-h-[60vh] w-full">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+          style={{
+            backgroundImage:
+              "url('https://ik.imagekit.io/admr8uj75/Frame%20258.png?tr=w-1920,q-100,fo-auto&updatedAt=1755023127771')",
+          }}
+        ></div>
+        <div className="relative flex items-center justify-center min-h-screen px-4">
+          <div className="text-center bg-red-900/30 border border-red-500 rounded-lg p-6 max-w-md">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Authentication Required
+            </h2>
+            <p className="text-red-400 mb-4">
+              Please log in to access the registration form.
+            </p>
+            <a
+              href="/login"
+              className="inline-block bg-gradient-to-r from-[#06671C] to-[#B7AD97] text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Go to Login
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if user has payment status (assuming it's stored in profile.paymentStatus or profile.isPaid)
+  if (!profile?.payment) {
+    return (
+      <div className="relative min-h-[60vh] w-full">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+          style={{
+            backgroundImage:
+              "url('https://ik.imagekit.io/admr8uj75/Frame%20258.png?tr=w-1920,q-100,fo-auto&updatedAt=1755023127771')",
+          }}
+        ></div>
+        <div className="relative flex items-center justify-center min-h-screen px-4">
+          <div className="text-center bg-yellow-900/30 border border-yellow-500 rounded-lg p-6 max-w-md">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Payment Required
+            </h2>
+            <p className="text-yellow-400 mb-4">
+              You need to complete your payment before accessing the expo
+              registration.
+            </p>
+            <a
+              href="/dashboard"
+              className="inline-block bg-gradient-to-r from-[#06671C] to-[#B7AD97] text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Go to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-[60vh] w-full">
@@ -174,6 +263,17 @@ const Registration = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
               Register
             </h1>
+
+            {/* Error Message */}
+            {(isAlreadyRegistered || registrationError) && (
+              <div className="mt-3 p-3 bg-red-900/30 border border-red-500 rounded-lg">
+                <p className="text-red-400 text-sm sm:text-base font-medium">
+                  {isAlreadyRegistered
+                    ? "You are already registered!"
+                    : registrationError}
+                </p>
+              </div>
+            )}
           </div>
 
           <form
@@ -190,7 +290,6 @@ const Registration = () => {
                 name="companyName"
                 value={form.companyName}
                 onChange={handleChange}
-                placeholder="xyz"
                 className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
                 required
               />
@@ -206,7 +305,6 @@ const Registration = () => {
                 name="teamLeadName"
                 value={form.teamLeadName}
                 onChange={handleChange}
-                placeholder="xyz"
                 className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
                 required
               />
@@ -220,10 +318,9 @@ const Registration = () => {
               <div className="relative">
                 <input
                   type="text"
-                  name="uniqueId"
-                  value={form.uniqueId}
+                  name="elixir"
+                  value={form.elixir}
                   onChange={handleChange}
-                  placeholder="number"
                   className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 pr-6 sm:pr-8 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
                   required
                 />
@@ -282,25 +379,37 @@ const Registration = () => {
               </label>
               <div className="space-y-3 mb-4">
                 {form.teammates.map((teammate, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    value={teammate}
-                    onChange={(e) =>
-                      handleTeammateChange(index, e.target.value)
-                    }
-                    placeholder=""
-                    className="w-full bg-transparent border border-gray-400 rounded-md text-white placeholder-gray-400 py-2 sm:py-3 px-3 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
-                  />
+                  <div key={index} className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={teammate.name}
+                      onChange={(e) =>
+                        handleTeammateChange(index, "name", e.target.value)
+                      }
+                      placeholder={`Teammate ${index + 1} Name`}
+                      className="w-1/2 bg-transparent border border-gray-400 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-white transition-colors text-sm"
+                    />
+                    <input
+                      type="text"
+                      value={teammate.elixir}
+                      onChange={(e) =>
+                        handleTeammateChange(index, "elixir", e.target.value)
+                      }
+                      placeholder={`Teammate ${index + 1} Unique ID`}
+                      className="w-1/2 bg-transparent border border-gray-400 rounded-md text-white placeholder-gray-400 py-2 px-3 focus:outline-none focus:border-white transition-colors text-sm"
+                    />
+                  </div>
                 ))}
               </div>
-              <button
-                type="button"
-                onClick={addTeammate}
-                className="text-white text-sm sm:text-base hover:text-green-300 transition-colors"
-              >
-                +Add Teammate
-              </button>
+              {form.teammates.length < 5 && (
+                <button
+                  type="button"
+                  onClick={addTeammate}
+                  className="text-white text-sm sm:text-base hover:text-green-300 transition-colors"
+                >
+                  +Add Teammate
+                </button>
+              )}
             </div>
 
             {/* Register Button */}
@@ -312,22 +421,14 @@ const Registration = () => {
                   ? "bg-gray-600 cursor-not-allowed"
                   : "bg-gradient-to-r from-[#06671C] to-[#B7AD97] hover:from-[#06671C] hover:to-[#8e8a7a] shadow-lg hover:shadow-xl"
               }`}
+              style={{
+                backgroundImage: isSubmitting
+                  ? undefined
+                  : "linear-gradient(to right, #06671C, #B7AD97)",
+              }}
             >
               {isSubmitting ? "Registering..." : "Register"}
             </button>
-
-            {/* Sign up link */}
-            <div className="text-center mt-3 sm:mt-4">
-              <p className="text-white text-xs sm:text-sm">
-                Don't have an account?
-                <a
-                  href="/signup"
-                  className="text-white hover:text-green-300 ml-1"
-                >
-                  Sign up
-                </a>
-              </p>
-            </div>
           </form>
         </div>
         <div className="pointer-events-none absolute inset-0 z-30">

@@ -124,7 +124,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
         console.log("Submitting registration:", registrationData);
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/events/aifRegistration`,
+          `${process.env.NEXT_PUBLIC_API_URL}/aif/aif_registration`,
           {
             method: "POST",
             headers: {
