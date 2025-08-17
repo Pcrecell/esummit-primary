@@ -41,8 +41,6 @@ export default function CaseX() {
         role: "",
     });
 
-    console.log("Team Info:", teamInfo);
-
     const [newTeammateName, setNewTeammateName] = useState("");
     const [newTeammateId, setNewTeammateId] = useState("");
     const [isAddingMember, setIsAddingMember] = useState(false);
