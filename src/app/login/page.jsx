@@ -45,7 +45,7 @@ export default function Login() {
       }
 
       const idToken = await response.user.getIdToken();
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/Login`, {
+      await fetch(`/api/auth/Login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

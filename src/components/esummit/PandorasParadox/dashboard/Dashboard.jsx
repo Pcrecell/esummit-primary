@@ -298,7 +298,9 @@ const handleRemoveMember = async (memberelixir) => {
 
       {/* Greeting (top-left) */}
       <div className="absolute top-16 sm:top-20 left-4 sm:left-6 md:left-20 z-20 select-none">
-        <div className="text-sm sm:text-base md:text-2xl font-mono text-white/90">Hey,</div>
+        <div className="text-sm sm:text-base md:text-2xl font-mono text-white/90">
+          Hey,
+        </div>
         <div className="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-mono font-extrabold text-green-400 drop-shadow">
           {profile?.firstname || "Participant"}
         </div>
@@ -684,13 +686,31 @@ const handleRemoveMember = async (memberelixir) => {
               </button>
             </div>
             <p className="font-mono text-white text-xs sm:text-sm leading-relaxed">
-              Your team <span className="font-bold">{teamInfo.teamName}</span> is
-              successfully registered. Team ID:{" "}
+              Your team <span className="font-bold">{teamInfo.teamName}</span>{" "}
+              is successfully registered. Team ID:{" "}
               <span className="font-bold">{teamInfo.teamId}</span>
             </p>
           </div>
         )}
       </div>
+
+      {/* Register Button */}
+      {action === "details" && (
+        <div className="pt-8 left-1/2 transform  z-30">
+          <button
+            disabled={
+              members.filter((member) => member.name !== "-").length < 2
+            }
+            className={`px-8 py-3 rounded-full font-mono font-bold text-lg transition-all duration-300 ${
+              members.filter((member) => member.name !== "-").length >= 2
+                ? "bg-green-600/90 hover:bg-green-500 border-2 border-green-400/60 text-white shadow-lg hover:shadow-xl"
+                : "bg-gray-600/50 border-2 border-gray-500/50 text-gray-400 cursor-not-allowed"
+            }`}
+          >
+            REGISTER TEAM
+          </button>
+        </div>
+      )}
 
       {/* Small helper text showing selected track */}
       <div className="absolute md:bottom-20 right-4 sm:right-8 text-lg sm:text-2xl md:text-3xl text-right text-green-400/70 font-mono z-20">
