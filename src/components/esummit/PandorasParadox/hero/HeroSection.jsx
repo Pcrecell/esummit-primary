@@ -5,6 +5,7 @@ import heroBg from "../../../../../public/images/hackathon/kiitecell-hero-bg.png
 import Image from "next/image";
 import heroRegisterButton from "../../../../../public/images/hackathon/hero-register-button.png";
 import { Poppins } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -12,6 +13,10 @@ const poppins = Poppins({
 });
 const HeroSection = () => {
   const [deviceType, setDeviceType] = useState("desktop");
+  const router = useRouter();
+   const RouteToDashboard = () => {
+    router.push("/pandoras-paradox/dashboard");
+  }
 
   useEffect(() => {
     // Guard against SSR: only access window on client
@@ -70,7 +75,7 @@ const HeroSection = () => {
 
         {/* Register Now Button */}
         <div className="w-full flex justify-center">
-          <a href="#register" className="inline-block group">
+          <a onClick={RouteToDashboard} className="inline-block group">
             {/* Outer glow that blooms on hover */}
             <div className="relative">
               <div className="absolute -inset-6 rounded-full bg-amber-300/0 blur-2xl transition duration-500 group-hover:bg-amber-300/25" />
