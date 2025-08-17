@@ -144,12 +144,17 @@ const Popup = () => {
             
             {/* Popup Content */}
             <motion.div
-              className="relative z-[9999] bg-white rounded-lg shadow-2xl overflow-hidden py-24"
-              style={{ width: popupWidth, maxWidth: popupMaxWidth,
+              className="relative z-[9999] bg-white rounded-lg overflow-hidden py-24"
+              style={{ 
+                width: popupWidth, 
+                maxWidth: popupMaxWidth,
                 backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/founderarena.webp?updatedAt=1755413558055')",
-                backgroundSize: isMobile ? "230%" : "cover",
+                backgroundSize: "cover",
                 backgroundPosition: "center center",
-                backgroundColor: "black"
+                backgroundRepeat: "no-repeat",
+                backgroundColor: "black",
+                minHeight: isMobile ? "400px" : "500px",
+                boxShadow: "0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), 0 0 100px rgba(34, 197, 94, 0.1)"
                }}
                initial={{ opacity: 0, scale: 0.8, y: 50 }}
                animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -160,69 +165,61 @@ const Popup = () => {
                  opacity: { duration: 0.3 }
                 }}
                 >
+              {/* Modern Close Button - Top Right */}
+              <motion.button
+                onClick={handleClose}
+                className="absolute top-4 right-4 z-[80] w-10 h-10 bg-black/20 hover:bg-black/40 backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center group transition-all duration-300 hover:scale-110"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <svg 
+                  className="w-5 h-5 text-white group-hover:text-white transition-colors duration-200" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    d="M6 18L18 6M6 6l12 12" 
+                  />
+                </svg>
+              </motion.button>
+
               {/* Black Overlay */}
               <div className="absolute top-0 left-0 bg-gradient-to-b from-black/60 to-transparent z-[60] w-full h-full"/>
               
               {/* Success Icon */}
               <div className="relative z-[70] flex justify-center pt-8 pb-4">
                 <motion.div
-                  className="w-48 h-auto rounded-full flex items-center justify-center"
+                  className="w-52 sm:w-56 md:w-60 lg:w-64 xl:w-72 h-auto rounded-full flex items-center justify-center"
                   // initial={{ scale: 0, rotate: -180 }}
                   // animate={{ scale: 1, rotate: 0 }}
                   // transition={{ delay: 0.2, duration: 0.5, ease: [0.68, -0.55, 0.265, 1.55] }}
                 >
-                  {/* <svg 
-                    className="w-8 h-8 text-white" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <motion.path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M5 13l4 4L19 7"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ delay: 0.5, duration: 0.6 }}
-                    />
-                  </svg> */}
-                  <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/logo.png?updatedAt=1755075880371" alt="" />
+                  <img 
+                    src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/logo.png?updatedAt=1755075880371" 
+                    alt="E-Summit Logo" 
+                    className="w-full h-auto object-contain"
+                  />
                 </motion.div>
               </div>
 
               {/* Content */}
               <motion.div
-                className="relative z-[70] px-6 pb-6 text-center"
+                className="relative z-[70] px-6 pb-6 pt-8 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
-                <h2 className="text-2xl font-semibold text-white mb-4">
-                  ORIENTATION CEREMONY
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 mt-12 leading-tight">
+                  Payment is Live !!
                 </h2>
-                <p className="text-gray-200 text-sm leading-relaxed mb-6 px-2">
-                  Tune in to the live stream and be part of the historic kickoff of E-Summit 2025.
-                </p>
-                <h2 className="text-2xl text-white mb-4">
-                  Date: <span className = "font-semibold">17th August 2025</span>
-                </h2>
-                <h2 className="text-2xl text-white mb-4">
-                  Venue: <span className= "font-semibold">Campus 6</span>
-                </h2>
-                
-                {/* Close Button */}
-                <motion.button
-                  onClick={handleClose}
-                  className="w-full bg-green-500 max-w-md translate-y-12 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-md transition-colors duration-200 text-sm"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4, duration: 0.3 }}
-                >
-                  Close
-                </motion.button>
               </motion.div>
             </motion.div>
           </motion.div>
