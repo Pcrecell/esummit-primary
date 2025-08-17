@@ -7,6 +7,8 @@ import heroRegisterButton from "../../../../../public/images/hackathon/hero-regi
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
+import { useToast } from "@/hooks/useToast";
+import Toast from "@/components/ui/Toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,7 +16,8 @@ const poppins = Poppins({
 });
 const HeroSection = () => {
   const router = useRouter();
-  const { userData,profile } = useAuth();
+  const { userData, profile } = useAuth();
+  const { toast, showSuccess, showError, hideToast } = useToast();
   const [deviceType, setDeviceType] = useState("desktop");
   const paymentDone = profile?.payment;
   // console.log("Payment status from profile:", paymentDone);
@@ -25,17 +28,13 @@ const HeroSection = () => {
   }, [userData, router]);
   
   const handleRegisterClick = () => {
-  if (paymentDone) {
-    router.push("/pandoras-paradox/dashboard"); // Change to your event route
-  } else {
-    <Toast>
-      <div className="bg-red-500 text-white p-4 rounded-md">
-        <p className="text-sm">Please complete your payment to register for the event.</p>
-      </div>
-    </Toast>
-    
-  }
-};
+    if (!paymentDone) {
+      showError("Please complete your payment to register for the event.");
+      setTimeout(() => router.replace("/dashboard"), 2000);
+      return;
+    }
+    router.push("/pandoras-paradox/dashboard");
+  };
 
   useEffect(() => {
     // Guard against SSR: only access window on client
@@ -118,6 +117,12 @@ const HeroSection = () => {
           </button>
         </div>
       </div>
+      <Toast 
+        message={toast.message} 
+        type={toast.type} 
+        isVisible={toast.isVisible} 
+        onClose={hideToast} 
+      />
     </section>
   );
 };

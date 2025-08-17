@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Cormorant_Garamond, Rakkas } from "next/font/google";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
 import RegisterPopup from "./registerPopup";
 import Toast from "@/components/ui/Toast";
@@ -25,7 +26,8 @@ const rakkas = Rakkas({
 export default function Hero() {
   // ✅ hooks must be inside the component
   const { userData, profile, loading } = useAuth();
-  const { showError } = useToast();
+  const { toast, showSuccess, showError, hideToast } = useToast();
+  const router = useRouter();
 
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
@@ -34,14 +36,16 @@ export default function Hero() {
     members: [],
     role: "", // "leader" or "member"
   });
-  const router = useRouter();
   const [showPopup, setShowPopup] = useState(false);
+  const paymentDone = profile?.payment;
+
   const handleRegister = () => {
-    if (profile?.payment) {
-      setShowPopup(true);
-    } else {
-      router.push("/dashboard");
+    if (!paymentDone) {
+      showError("Please complete your payment to register for the event.");
+      setTimeout(() => router.replace("/dashboard"), 2000);
+      return;
     }
+    setShowPopup(true);
   };
   const fetchTeamInfo = async () => {
     try {
@@ -58,7 +62,7 @@ export default function Hero() {
       setTeamInfo(data);
     } catch (error) {
       console.error("Error fetching team info:", error);
-      showError("Failed to load team information. Please try again later.");
+      //showError("Failed to load team information. Please try again later.");
     }
   };
 
@@ -184,7 +188,7 @@ export default function Hero() {
 
       {/* Render Popup */}
       {showPopup && <RegisterPopup onClose={() => setShowPopup(false)} />}
-      <Toast />
+      <Toast message={toast.message} type={toast.type} isVisible={toast.isVisible} onClose={hideToast} />
     </div>
   );
 }

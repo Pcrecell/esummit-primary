@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/useToast";
 export default function CaseX() {
     const router = useRouter();
     const { userData, profile, loading } = useAuth();
-    const { showSuccess, showError } = useToast();
+    const { toast, showSuccess, showError, hideToast } = useToast();
     const paymentDone = profile?.payment;
 
     // Popup & tab UI state
@@ -316,7 +316,14 @@ export default function CaseX() {
                     {/* Register / Manage button positioned on bottom border (mobile) */}
                     {profile.isEventRegistered ? (
                         <button
-                            onClick={() => setShowPopup(true)}
+                            onClick={() => {
+                                if (!paymentDone) {
+                                    showError("Please complete your payment to manage your team.");
+                                    setTimeout(() => router.replace("/dashboard"), 2000);
+                                    return;
+                                }
+                                setShowPopup(true);
+                            }}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -327,7 +334,14 @@ export default function CaseX() {
                         </button>
                     ) : (
                         <button
-                            onClick={() => setShowPopup(true)}
+                            onClick={() => {
+                                if (!paymentDone) {
+                                    showError("Please complete your payment to register for the event.");
+                                    setTimeout(() => router.replace("/dashboard"), 2000);
+                                    return;
+                                }
+                                setShowPopup(true);
+                            }}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -368,7 +382,8 @@ export default function CaseX() {
                                 <button
                                     onClick={() => {
                                         if (!paymentDone) {
-                                            router.replace("/dashboard");
+                                            showError("Please complete your payment to manage your team.");
+                                            setTimeout(() => router.replace("/dashboard"), 2000);
                                             return;
                                         }
                                         setShowPopup(true);
@@ -384,7 +399,8 @@ export default function CaseX() {
                                 <button
                                     onClick={() => {
                                         if (!paymentDone) {
-                                            router.replace("/dashboard");
+                                            showError("Please complete your payment to register for the event.");
+                                            setTimeout(() => router.replace("/dashboard"), 2000);
                                             return;
                                         }
                                         setShowPopup(true);
@@ -977,7 +993,12 @@ export default function CaseX() {
                         </div>
                     </div>
                 )}
-                <Toast />
+                <Toast 
+                    message={toast.message}
+                    type={toast.type}
+                    isVisible={toast.isVisible}
+                    onClose={hideToast}
+                />
             </div>
         </div>
     );
