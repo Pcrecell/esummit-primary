@@ -111,6 +111,10 @@ export default function CaseX() {
             showError("Fill all fields to create a team");
             return;
         }
+        if (!(formData.name === profile.name) && !(formData.yourEid === profile.elixir)) {
+            showError("You can only create team for yourself");
+            return;
+        }
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/case-x/case-x_registration`,
@@ -136,8 +140,7 @@ export default function CaseX() {
                 members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
             });
             showSuccess("Team created successfully");
-            setShowPopup(false);
-            router.replace("/dashboard");
+            setTimeout(() => router.replace('/dashboard'), 2000);
             setAction("details");
         } catch (err) {
             showError(err.message || "Error creating team");
@@ -147,6 +150,10 @@ export default function CaseX() {
     const handleSubmitJoin = async () => {
         if (!formData.name || !formData.yourEid || !formData.teamId) {
             setJoinError("Fill all fields to join a team");
+            return;
+        }
+        if (!(formData.name === profile.name) && !(formData.yourEid === profile.elixir)) {
+            showError("You can only join team for yourself");
             return;
         }
         try {
@@ -172,6 +179,7 @@ export default function CaseX() {
                 role: "member",
             }));
             showSuccess("Joined team successfully");
+            setTimeout(() => router.replace('/dashboard'), 2000);
             setAction("details");
         } catch (err) {
             setJoinError(err.message || "Error joining team");
