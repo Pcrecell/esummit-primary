@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Cormorant_Garamond } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
+
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
@@ -17,6 +19,29 @@ const CreateTeamPage = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+        return; // Exit early to prevent further checks
+      }
+      
+      if (!profile?.payment) {
+        router.replace("/dashboard");
+        return;
+      }
+    }
+  }, [userData, profile, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+   }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
