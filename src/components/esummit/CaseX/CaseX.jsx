@@ -1,165 +1,257 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
 
 export default function CaseX() {
-    const [showPopup, setShowPopup] = useState(false);
-    const [activeTab, setActiveTab] = useState('join'); // 'join' or 'create'
-    // Carousel state for mobile evaluation criteria (multi-card, snap, drag)
-    const [evalIndex, setEvalIndex] = useState(0);
-    const [animating, setAnimating] = useState(false);
-    const [direction, setDirection] = useState(0); // -1 for left, 1 for right
-    const [dragX, setDragX] = useState(0); // current drag offset
-    const [isDragging, setIsDragging] = useState(false);
-    
-    // Team management state (API-ready)
-    const [teamInfo, setTeamInfo] = useState({
-        teamName: '',
-        teamId: '',
-        leaderId: '', // elixir of leader
-        members: [], // [{ name, elixir }]
-        role: '' // optional: 'leader' | 'member'
-    });
-    const [newMemberName, setNewMemberName] = useState('');
-    const [newMemberElixir, setNewMemberElixir] = useState('');
-    const [addMemberError, setAddMemberError] = useState('');
+  const router = useRouter();
+  const { userData, profile, loading } = useAuth();
+  const paymentDone = profile?.payment;
 
-    // Unified form data (API-ready)
-    const [formData, setFormData] = useState({
-        name: '',
-        yourEid: '', // elixir id
-        teamName: '',
-        teamId: ''
-    });
-    const [joinError, setJoinError] = useState('');
+  // Popup & tab UI state
+  const [showPopup, setShowPopup] = useState(false);
+  const [activeTab, setActiveTab] = useState("join"); // 'join' or 'create'
 
-    const touchStartX = useRef(null);
-    const slidesRef = useRef(null);
-    const { userData, setUserData, profile, setProfile, loading} = useAuth();
-    const router = useRouter();
+  // Registration flags
+  const [isRegisteredCaseBattle, setIsRegisteredCaseBattle] = useState(false);
+  const [isRegisteredOtherEvent, setIsRegisteredOtherEvent] = useState(false);
 
-    useEffect(() => {
-        if (!loading) {
-          if (!userData) {
-            router.replace("/login");
-          }
-        }
-      }, [userData, profile, loading, router]);
-    
-      if (loading) {
-        return (
-          <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
-            Loading...
-          </div>
-        );
-       }
+  // Carousel state
+  const [evalIndex, setEvalIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [direction, setDirection] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const touchStartX = useRef(null);
+  const slidesRef = useRef(null);
 
-    const handlePopupOpen = () => {
-        if (profile?.payment === true) {
-            setShowPopup(true);
-        } else {
-            router.push("/dashboard");
-        }
-    };
+  // Team management state (REAL data from backend)
+  const [action, setAction] = useState("idle");
+  const [selectedTrack, setSelectedTrack] = useState("beginner");
+  const [formData, setFormData] = useState({
+    name: "",
+    yourEid: "",
+    teamName: "",
+    teamId: "",
+  });
+  const [teamInfo, setTeamInfo] = useState({
+    teamName: "",
+    teamId: "",
+    track: "",
+    leaderId: "",
+    members: [],
+    role: "",
+  });
 
-    // Helper function to check if current user is team lead
-    const isCurrentUserLead = () => {
-        if (!profile?.elixir) return false;
-        return teamInfo.leaderId && profile.elixir === teamInfo.leaderId;
-    };
+  const [newTeammateName, setNewTeammateName] = useState("");
+  const [newTeammateId, setNewTeammateId] = useState("");
+  const [isAddingMember, setIsAddingMember] = useState(false);
+  const [joinError, setJoinError] = useState("");
 
-    // Function to validate and join a team
-    const joinExistingTeam = (FirstName, elixir, teamName, teamId) => {
-        setJoinError('');
-        // API-connected flow should validate on backend. Here we only format state.
-        if (!FirstName || !elixir || !teamName || !teamId) {
-            setJoinError('Please fill all the fields.');
-            return false;
-        }
-        setTeamInfo({
-            teamName: teamName,
-            teamId: teamId,
-            leaderId: '', // unknown until fetched from API
-            members: [{ name: FirstName, elixir }],
-            role: 'member'
-        });
-        return true;
-    };
+  // Fetch team info by Elixir
+  const fetchTeamInfo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/case-x/team-info/${profile.elixir}`
+      );
+      if (!response.ok) throw new Error(`Error ${response.status}`);
+      const data = await response.json();
+      setTeamInfo(data);
+    } catch (err) {
+      console.error("Error fetching team info:", err);
+    }
+  };
 
-    const evalCriteria = [
+  useEffect(() => {
+    if (profile?.elixir) fetchTeamInfo();
+  }, [profile]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (!userData) {
+        router.replace("/login");
+        return;
+      }
+      if (!paymentDone) {
+        router.replace("/dashboard");
+        return;
+      }
+    }
+    if (userData && paymentDone && profile?.elixir) {
+      fetchTeamInfo();
+    }
+  }, [userData, paymentDone, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-black text-white">
+        Loading...
+      </div>
+    );
+  }
+  if (!userData || !paymentDone) return null;
+
+  // ---- Team Actions ----
+  const handleChange = (field, value) =>
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
+  const handleSubmitCreate = async () => {
+    if (!formData.name || !formData.yourEid || !formData.teamName) {
+      alert("Fill all fields to create a team");
+      return;
+    }
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/case-x/case-x_registration",
         {
-            label: "Strategic\nThinking",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-        {
-            label: "Data-Driven\nInsights",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-        {
-            label: "Innovation &\nFeasibility",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-        {
-            label: "Delivery and\nTeam\nThinking",
-            img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png"
-        },
-    ];
-
-    // Carousel navigation with animation
-    const goTo = (newIdx, dir) => {
-        if (animating || newIdx === evalIndex) return;
-        setDirection(dir);
-        setAnimating(true);
-        setTimeout(() => {
-            setEvalIndex(newIdx);
-            setAnimating(false);
-            setDragX(0);
-        }, 300); // match transition duration
-    };
-
-    // Snap to nearest card after drag
-    const snapToNearest = () => {
-        const cardWidth = slidesRef.current ? slidesRef.current.offsetWidth * 0.8 : 0;
-        if (Math.abs(dragX) > cardWidth * 0.2) {
-            if (dragX < 0 && evalIndex < evalCriteria.length - 1) {
-                goTo(evalIndex + 1, 1);
-            } else if (dragX > 0 && evalIndex > 0) {
-                goTo(evalIndex - 1, -1);
-            } else {
-                setAnimating(true);
-                setTimeout(() => {
-                    setAnimating(false);
-                    setDragX(0);
-                }, 200);
-            }
-        } else {
-            setAnimating(true);
-            setTimeout(() => {
-                setAnimating(false);
-                setDragX(0);
-            }, 200);
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            elixir: formData.yourEid.trim(),
+            track: selectedTrack,
+            mode: "create_team",
+            teamName: formData.teamName.trim(),
+          }),
         }
-    };
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
 
-    // Touch/drag handlers for mobile carousel
-    const handleTouchStart = (e) => {
-        setIsDragging(true);
-        touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
-    };
-    const handleTouchMove = (e) => {
-        if (!isDragging) return;
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        setDragX(clientX - touchStartX.current);
-    };
-    const handleTouchEnd = () => {
-        setIsDragging(false);
-        snapToNearest();
-    };
+      setTeamInfo({
+        teamName: formData.teamName.trim(),
+        teamId: data.teamId,
+        track: selectedTrack,
+        leaderId: formData.yourEid.trim(),
+        role: "leader",
+        members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
+      });
+      setAction("details");
+    } catch (err) {
+      alert(err.message || "Error creating team");
+    }
+  };
 
-    // Derived flags
-    const isRegisteredCaseBattle = Boolean(teamInfo.teamId);
-    const isRegisteredOtherEvent = false; // to be sourced from API if needed
+  const handleSubmitJoin = async () => {
+    if (!formData.name || !formData.yourEid || !formData.teamId) {
+      setJoinError("Fill all fields to join a team");
+      return;
+    }
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/case-x/case-x_registration",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            elixir: formData.yourEid.trim(),
+            track: selectedTrack,
+            mode: "join_team",
+            teamId: formData.teamId.trim(),
+          }),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      setTeamInfo((prev) => ({
+        ...prev,
+        teamId: data.teamId,
+        track: selectedTrack,
+        role: "member",
+      }));
+      setAction("details");
+    } catch (err) {
+      setJoinError(err.message || "Error joining team");
+    }
+  };
+
+  const handleAddMemberButton = async () => {
+    if (!newTeammateName || !newTeammateId) return;
+    setIsAddingMember(true);
+    try {
+      const res = await axios.post("http://localhost:5000/api/hackathon/add-member", {
+        leaderelixir: profile.elixir,
+        name: newTeammateName.trim(),
+        elixir: newTeammateId.trim(),
+      });
+      setTeamInfo((prev) => ({
+        ...prev,
+        members: [...prev.members, { name: newTeammateName, elixir: newTeammateId }],
+      }));
+      setNewTeammateName("");
+      setNewTeammateId("");
+    } catch (err) {
+      alert("Error adding member");
+    } finally {
+      setIsAddingMember(false);
+    }
+  };
+
+  const handleRemoveMember = async (memberelixir) => {
+    if (memberelixir === profile.elixir) {
+      alert("Leader cannot remove themselves.");
+      return;
+    }
+    try {
+      const res = await fetch("http://localhost:5000/api/hackathon/remove-member", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ leaderelixir: profile.elixir, memberelixir }),
+      });
+      if (!res.ok) throw new Error("Error removing member");
+      setTeamInfo((prev) => ({
+        ...prev,
+        members: prev.members.filter((m) => m.elixir !== memberelixir),
+      }));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // ---- Carousel Logic (unchanged) ----
+  const evalCriteria = [
+    { label: "Strategic\nThinking", img: "/criteria1.png" },
+    { label: "Data-Driven\nInsights", img: "/criteria2.png" },
+    { label: "Innovation &\nFeasibility", img: "/criteria3.png" },
+    { label: "Delivery and\nTeam\nThinking", img: "/criteria4.png" },
+  ];
+
+  const goTo = (newIdx, dir) => {
+    if (animating || newIdx === evalIndex) return;
+    setDirection(dir);
+    setAnimating(true);
+    setTimeout(() => {
+      setEvalIndex(newIdx);
+      setAnimating(false);
+      setDragX(0);
+    }, 300);
+  };
+
+  const snapToNearest = () => {
+    const cardWidth = slidesRef.current ? slidesRef.current.offsetWidth * 0.8 : 0;
+    if (Math.abs(dragX) > cardWidth * 0.2) {
+      if (dragX < 0 && evalIndex < evalCriteria.length - 1) goTo(evalIndex + 1, 1);
+      else if (dragX > 0 && evalIndex > 0) goTo(evalIndex - 1, -1);
+    }
+    setAnimating(false);
+    setDragX(0);
+  };
+
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    touchStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
+  };
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    setDragX(clientX - touchStartX.current);
+  };
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    snapToNearest();
+  };
 
     return (
         <div className="bg-[#000C00] relative">
@@ -192,7 +284,7 @@ export default function CaseX() {
                     {/* Register / Manage button positioned on bottom border (mobile) */}
                     {isRegisteredCaseBattle ? (
                         <button
-                            onClick={handlePopupOpen}
+                            onClick={() => setShowPopup(true)}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -203,7 +295,7 @@ export default function CaseX() {
                         </button>
                     ) : isRegisteredOtherEvent ? null : (
                         <button
-                            onClick={handlePopupOpen}
+                            onClick={() => setShowPopup(true)}
                             className="absolute left-1/2 -translate-x-1/2 -bottom-8 z-30"
                         >
                             <img
@@ -241,7 +333,7 @@ export default function CaseX() {
                         <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
                                 {/* Conditional register/manage buttons based on registration status */}
                                 {isRegisteredCaseBattle ? (
-                                    <button onClick={handlePopupOpen}>
+                                    <button onClick={() => setShowPopup(true)}>
                                         <img
                                             src="https://ik.imagekit.io/wlknxcf5m/Group%2015.png?updatedAt=1755336258984"
                                             alt="Manage Team"
@@ -252,7 +344,7 @@ export default function CaseX() {
                                     // registered to another event -> show nothing
                                     null
                                 ) : (
-                                    <button onClick={handlePopupOpen}>
+                                    <button onClick={() => setShowPopup(true)}>
                                         <img
                                             src="https://ik.imagekit.io/wlknxcf5m/CaseXRegisterbutton%20(1).png"
                                             alt="Register"
@@ -400,7 +492,7 @@ export default function CaseX() {
                         <img src="https://ik.imagekit.io/wlknxcf5m/clock.png" alt="Clock" className="w-[40vw] md:w-[15vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
                         <div>
                             <p className="text-2xl md:text-3xl font-leage-spartan text-white">24 August 2025</p>
-                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">10:00 AM - 4:00 PM</p>
+                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">9:00 AM - 4:00 PM</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-4 text-center">
@@ -602,7 +694,7 @@ export default function CaseX() {
             {/* POPUP FORM */}
             {/* STARTING SOON POPUP */}
             {/* POPUP TO BE ENABLED */}
-            {showPopup && (
+            {showPopup && !(
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="relative w-[95vw] max-w-[835px] md:min-h-[494px] bg-[#1B0D00] rounded-3xl border-4 border-[#CFB43C] max-h-[90vh] overflow-y-auto overscroll-contain">
                         <button 
@@ -628,7 +720,7 @@ export default function CaseX() {
                                                     <p className="text-[#CFB43C] text-lg md:text-xl font-leage-spartan font-bold">{teamInfo.teamName}</p>
                                                     <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">Team ID: {teamInfo.teamId}</p>
                                                 </div>
-                                                <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">{teamInfo.members?.length || 0}/4 members</p>
+                                                <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">{teammates.length}/4 members</p>
                                             </div>
                                         </div>
                                     </div>
@@ -641,15 +733,15 @@ export default function CaseX() {
                                                 <input
                                                     type="text"
                                                     placeholder="First Name"
-                                                    value={newMemberName}
-                                                    onChange={e => setNewMemberName(e.target.value)}
+                                                    value={formData.name}
+                                                    onChange={(e) => handleChange("name", e.target.value)}
                                                     className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                                 <input
                                                     type="text"
                                                     placeholder="Elixir ID"
-                                                    value={newMemberElixir}
-                                                    onChange={e => setNewMemberElixir(e.target.value)}
+                                                    value={formData.yourEid}
+                                                    onChange={(e) => handleChange("yourEid", e.target.value)}
                                                     className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                                 <button
@@ -659,21 +751,22 @@ export default function CaseX() {
                                                             setAddMemberError('Please fill both fields.');
                                                             return;
                                                         }
-                                                        if ((teamInfo.members?.length || 0) >= 4) {
+                                                        if (teammates.length >= 4) {
                                                             setAddMemberError('Team is full (maximum 4 members).');
                                                             return;
                                                         }
-                                                        // Add locally; backend should validate uniqueness
-                                                        const existsInLocal = (teamInfo.members || []).some(m => m.elixir === newMemberElixir);
-                                                        if (existsInLocal) {
-                                                            setAddMemberError('This Elixir ID is already in your team.');
+                                                        // Global uniqueness check across all teams
+                                                        const teamWithThisElixir = existingTeams.find(t => t.members.some(m => m.elixirId === newMemberElixir));
+                                                        if (teamWithThisElixir) {
+                                                            if (teamWithThisElixir.teamId === teamInfo.teamId) {
+                                                                setAddMemberError('This Elixir ID is already in your team.');
+                                                            } else {
+                                                                setAddMemberError(`This Elixir ID is already in another team (Team ID: ${teamWithThisElixir.teamId}).`);
+                                                            }
                                                             return;
                                                         }
-                                                        const newMember = { name: newMemberName, elixir: newMemberElixir };
-                                                        setTeamInfo(prev => ({
-                                                            ...prev,
-                                                            members: [...(prev.members || []), newMember]
-                                                        }));
+                                                        const newMember = { id: Date.now(), name: newMemberName, elixirId: newMemberElixir, isLead: false };
+                                                        setTeammates(prev => [...prev, newMember]);
                                                         setNewMemberName('');
                                                         setNewMemberElixir('');
                                                     }}
@@ -683,7 +776,7 @@ export default function CaseX() {
                                                 </button>
                                             </div>
                                             { /* Local duplicate check for current UI team state */ }
-                                            {teamInfo.members && teamInfo.members.some(m => m.elixir === newMemberElixir) && !addMemberError && newMemberElixir && (
+                                            {teammates.some(m => m.elixirId === newMemberElixir) && !addMemberError && newMemberElixir && (
                                                 <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">This Elixir ID is already in your team.</p>
                                             )}
                                             {addMemberError && (
@@ -695,10 +788,10 @@ export default function CaseX() {
                                     <div className="w-full">
                                         <p className="text-xl md:text-2xl font-light font-leage-spartan text-[#CFB43C] mb-4">Manage Teammates:</p>
                                         <div className="space-y-3">
-                                            {(teamInfo.members || []).map((member) => (
-                                                <div key={member.elixir} className="flex items-center justify-between rounded-lg px-1 md:px-3">
+                                            {teammates.map((member) => (
+                                                <div key={member.id} className="flex items-center justify-between rounded-lg px-1 md:px-3">
                                                     <div className="flex items-center min-w-0 gap-2 md:gap-4">
-                                                        {teamInfo.leaderId && member.elixir === teamInfo.leaderId && (
+                                                        {member.isLead && (
                                                             <span className="bg-[#786C34] text-[#1B0D00] px-2 py-1 rounded text-xs md:text-sm font-bold md:w-12 text-center">
                                                                 Lead
                                                             </span>
@@ -708,16 +801,13 @@ export default function CaseX() {
                                                                 {member.name}
                                                             </span>
                                                             <span className="text-[#CFB43C]/80 text-sm md:text-lg font-leage-spartan block">
-                                                                {member.elixir}
+                                                                {member.elixirId}
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    {member.elixir !== teamInfo.leaderId && isCurrentUserLead() && (
+                                                    {!member.isLead && isCurrentUserLead() && (
                                                         <button
-                                                            onClick={() => setTeamInfo(prev => ({
-                                                                ...prev,
-                                                                members: (prev.members || []).filter(x => x.elixir !== member.elixir)
-                                                            }))}
+                                                            onClick={() => setTeammates(prev => prev.filter(x => x.id !== member.id))}
                                                             className="text-[#CFB43C] hover:text-red-400 text-xl md:text-2xl font-bold pl-2"
                                                         >
                                                             -
@@ -726,7 +816,7 @@ export default function CaseX() {
                                                 </div>
                                             ))}
                                         </div>
-                                        {(teamInfo.members?.length || 0) >= 4 && (
+                                        {teammates.length >= 4 && (
                                             <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan mt-2">
                                                 Maximum team size reached (4 members)
                                             </p>
@@ -775,7 +865,7 @@ export default function CaseX() {
                                                     type="text"
                                                     placeholder="First Name"
                                                     value={formData.name}
-                                                    onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                                                    onChange={(e) => handleChange("teamName", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -784,7 +874,7 @@ export default function CaseX() {
                                                     type="text"
                                                     placeholder="Elixir ID"
                                                     value={formData.yourEid}
-                                                    onChange={e => setFormData(prev => ({ ...prev, yourEid: e.target.value }))}
+                                                    onChange={(e) => handleChange("yourEid", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -793,7 +883,7 @@ export default function CaseX() {
                                                     type="text"
                                                     placeholder="Team Name"
                                                     value={formData.teamName}
-                                                    onChange={e => setFormData(prev => ({ ...prev, teamName: e.target.value }))}
+                                                    onChange={(e) => handleChange("teamName", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                 />
                                             </div>
@@ -806,7 +896,7 @@ export default function CaseX() {
                                                         type="text"
                                                         placeholder="First Name"
                                                         value={formData.name}
-                                                        onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                                                        onChange={(e) => handleChange("name", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -815,7 +905,7 @@ export default function CaseX() {
                                                         type="text"
                                                         placeholder="Team Name" 
                                                         value={formData.teamName}
-                                                        onChange={e => setFormData(prev => ({ ...prev, teamName: e.target.value }))}
+                                                        onChange={(e) => handleChange("teamName", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -827,7 +917,7 @@ export default function CaseX() {
                                                         type="text"
                                                         placeholder="Elixir ID"
                                                         value={formData.yourEid}
-                                                        onChange={e => setFormData(prev => ({ ...prev, yourEid: e.target.value }))}
+                                                        onChange={(e) => handleChange("yourEid", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -836,7 +926,7 @@ export default function CaseX() {
                                                         type="text"
                                                         placeholder="Team ID"
                                                         value={formData.teamId}
-                                                        onChange={e => setFormData(prev => ({ ...prev, teamId: e.target.value }))}
+                                                        onChange={(e) => handleChange("teamId", e.target.value)}
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
@@ -857,22 +947,23 @@ export default function CaseX() {
                                         <button 
                                             onClick={() => {
                                                 if (activeTab === 'create') {
-                                                    if (!formData.name || !formData.yourEid || !formData.teamName) return;
-                                                    // API-ready: create team locally formatted
-                                                    setTeamInfo({
-                                                        teamName: formData.teamName,
-                                                        teamId: `TM${Date.now()}`,
-                                                        leaderId: formData.yourEid,
-                                                        members: [{ name: formData.name, elixir: formData.yourEid }],
-                                                        role: 'leader'
-                                                    });
+                                                    if (!createFirstName || !createElixirId || !createTeamName) return;
+                                                    // Create new team with user as lead
+                                                    const newUserId = Date.now();
+                                                    setTeammates([{ id: newUserId, name: createFirstName, elixirId: createElixirId, isLead: true }]);
+                                                    setTeamInfo({ teamName: createTeamName, teamId: `TM${Date.now()}` });
+                                                    setCurrentUser({ id: newUserId, name: createFirstName, elixirId: createElixirId });
+                                                    setIsRegisteredCaseBattle(true);
                                                     setShowPopup(false);
                                                 } else if (activeTab === 'join') {
-                                                    if (!formData.name || !formData.yourEid || !formData.teamName || !formData.teamId) return;
-                                                    const success = joinExistingTeam(formData.name, formData.yourEid, formData.teamName, formData.teamId);
+                                                    if (!joinFirstName || !joinElixirId || !joinTeamName || !joinTeamId) return;
+                                                    // Validate and join existing team
+                                                    const success = joinExistingTeam(joinFirstName, joinElixirId, joinTeamName, joinTeamId);
                                                     if (success) {
+                                                        setIsRegisteredCaseBattle(true);
                                                         setShowPopup(false);
                                                     }
+                                                    // If failed, popup stays open to show error
                                                 }
                                             }}
                                             className="hover:scale-105 transition-transform cursor-pointer"
