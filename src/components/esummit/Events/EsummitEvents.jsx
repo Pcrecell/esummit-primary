@@ -90,8 +90,8 @@ const EventsPage = () => {
     ],
     24: [
       {
-        title: "CASEX",
-        time: "9:00AM - 3:00PM",
+        title: "CASE-X",
+        time: "10:00AM - 4:00PM",
         venue: "CAMPUS-07",
         coordinates: [20.350485952792063, 85.82069263354178],
         description:
