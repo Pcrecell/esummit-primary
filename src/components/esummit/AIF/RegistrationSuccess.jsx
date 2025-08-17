@@ -3,7 +3,7 @@ import React from "react";
 const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
   const handleJoinDiscord = () => {
     // Replace with your actual Discord invite link
-    const discordInviteLink = "https://discord.gg/your-server-invite";
+    const discordInviteLink = "https://discord.gg/ZFRdAcxay8";
     window.open(discordInviteLink, "_blank", "noopener,noreferrer");
     if (onJoinDiscord) onJoinDiscord();
   };
