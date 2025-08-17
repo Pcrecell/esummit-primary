@@ -86,7 +86,7 @@ const PastSpeakers = () => {
         className="absolute inset-0 z-0"
         style={{
           backgroundImage:
-            "url('https://i.postimg.cc/TwjnpCk3/download-13-3-1-1.png')",
+            "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-13-3-1-1.webp?updatedAt=1755291651464')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

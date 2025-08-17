@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthLayout from "@/components/esummit/auth/AuthLayout";
 import { getCookie } from "@/lib/utils/getCookie";
+import { useAuth } from "@/lib/context/AuthContext";
 import { auth } from "@/lib/utils/firebase/firebase"; // <-- use your initialized auth
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -16,23 +17,34 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [hostelType, setHostelType] = useState(null);
   const [hostelEmail, setHostelEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [Loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useRouter();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+
+useEffect(() => {
+  if (userData) {
+    router.replace("/dashboard");
+    return;
+  }
+
+}, [userData, profile,,loading, router]);
+
+if ( loading) {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+      Loading...
+    </div>
+  );
+}
+
 
   const gmailRegex = /@(gmail|googlemail)\.com$/i;
   const nameRegex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/;
   const collegeNameRegex = /^[a-zA-Z\s]*$/;
 
   // Restrict phone input to digits and max 10 chars
-
-  useEffect(() => {
-    // Check if user is already logged in
-    if (localStorage.getItem("login") === "true") {
-      window.location.href = "/dashboard"; // Redirect to home or dashboard if already logged in
-    }
-  }, [navigate]);
 
   const handlePhoneChange = (e) => {
     let input = e.target.value.replace(/\D/g, "");
@@ -134,8 +146,6 @@ export default function Register() {
       };
       const csrfToken = getCookie("csrfToken");
 
-      console.log("Registration data", userData);
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         {
@@ -150,7 +160,6 @@ export default function Register() {
       );
 
       const result = await response.json();
-      console.log("Registration response:", result);
 
       if (!response.ok) {
         setError(result.error || "Registration failed.");
@@ -158,15 +167,13 @@ export default function Register() {
         return;
       }
 
-      localStorage.setItem("login", "true");
-
       const Data = {
         name: `${firstname} ${lastname}`,
         email: email,
         phone: phone,
         uid: user.uid,
       };
-      window.location.href = "/"; // or any route that uses the navbar
+      router.push("/") // or any route that uses the navbar
       // navigate.push("/payment", { state: Data });
       setLoading(false);
     } catch (err) {
@@ -330,12 +337,12 @@ export default function Register() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={Loading}
           className={`mt-3 w-full py-2 rounded bg-green-600 text-white font-semibold ${
-            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-700"
+            Loading ? "opacity-50 cursor-not-allowed" : "hover:bg-green-700"
           }`}
         >
-          {loading ? "Creating Account..." : "SIGN UP"}
+          {Loading ? "Creating Account..." : "SIGN UP"}
         </button>
 
         <div className="flex justify-center">

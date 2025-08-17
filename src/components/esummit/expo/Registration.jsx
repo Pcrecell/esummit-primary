@@ -37,7 +37,6 @@ const Registration = () => {
       alert("Please agree to terms & conditions");
       return;
     }
-    console.log("Submitting registration:", form);
     setIsSubmitting(true);
 
     try {

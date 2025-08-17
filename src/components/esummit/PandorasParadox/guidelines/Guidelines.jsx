@@ -23,8 +23,18 @@ const Guidelines = () => {
       <div className="relative z-10 hidden md:flex items-center justify-between h-screen px-8 md:px-2 lg:px-12">
         {/* Single yellowish background panel behind the left text (desktop only) */}
         <div
-          className="absolute left-0 top-1/2 -translate-y-1/2 h-[82vh] w-[65vw] max-w-[1300px] -ml-20 rounded-r-[999px] bg-[#9E8851]/14 border border-[#9E8851]/35 pointer-events-none select-none z-0"
-        />
+          className="absolute left-0 top-1/2 -translate-y-1/2 h-[82vh] w-[65vw] max-w-[1300px] -ml-20 rounded-r-[999px] bg-[#9E8851]/14 border border-[#9E8851]/35 pointer-events-none select-none z-0 overflow-hidden"
+        >
+          {/* Shine effect */}
+          <div
+            className="absolute inset-0 opacity-0 animate-shine"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(158, 136, 81, 0.08), transparent)',
+              animation: 'shine 3s ease-in-out infinite',
+              transform: 'translateX(-100%)'
+            }}
+          />
+        </div>
 
         {/* Bottom black gradient overlay */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
@@ -108,8 +118,8 @@ const Guidelines = () => {
         </h1>
 
         {/* Mobile Guidelines Text */}
-        <div className="space-y-4 text-[#CDAF5B]">
-          <ul className="space-y-4 text-sm sm:text-base font-medium leading-normal sm:leading-relaxed tracking-wide">
+        <div className="space-y-4">
+          <ul className="space-y-4 text-sm sm:text-base font-medium leading-normal sm:leading-relaxed tracking-wide mobile-shine-text">
             <li className="flex items-start">
               <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#31B34D] mt-1.5 mr-4 flex-shrink-0" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
                 <polygon points="0,5 10,0 10,10" />

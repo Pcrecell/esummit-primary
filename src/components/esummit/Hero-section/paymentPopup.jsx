@@ -31,14 +31,14 @@ const Popup = ({ imageUrl, onClose, children }) => {
   className="relative w-[90%] max-w-md rounded-2xl shadow-lg flex items-center justify-center"
   style={{
     height: "400px", // add height so image is fully visible
-    backgroundImage: `url("https://i.postimg.cc/N0tMvzMp/Asset-3.png")`,
+    backgroundImage: `url("https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Asset-3-1.webp?updatedAt=1755290968760")`,
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   }}
 >
      <img
-          src={"https://i.postimg.cc/9QghJg9D/Asset-2.png"} 
+          src={"https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Asset-2.webp?updatedAt=1755290968998"} 
           alt="Close"
           className="absolute top-12 -right-4 w-16 h-16 cursor-pointer"
           onClick={onClose}

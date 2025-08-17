@@ -33,9 +33,9 @@ const Timeline = () => {
       {/* Top black gradient overlay */}
      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-black/80 to-transparent z-10" /> 
 
-      <div className="relative z-[9999] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center">
+      <div className="relative z-[99] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col items-center justify-center">
         {/* Title */}
-        <h1 className={`text-6xl md:text-7xl lg:text-8xl font-bold text-yellow-600 text-center mb-16 tracking-wider drop-shadow-2xl`}>
+        <h1 className={`text-6xl md:text-7xl lg:text-8xl font-bold text-[#D4AF37] text-center mb-16 tracking-wider drop-shadow-2xl`}>
           TIMELINE
         </h1>
 
@@ -43,13 +43,13 @@ const Timeline = () => {
         <div className="flex flex-col lg:flex-row items-center md:items-center justify-between w-full max-w-6xl gap-12 lg:gap-8">
           
           {/* Hourglass with Timeline Entries */}
-          <div className="flex-shrink-0 relative z-[100]">
+          <div className="flex-shrink-0 relative z-[100] -translate-x-23 md:-translate-x-0">
             <Image
               src={hourglassImage}
               alt="Timeline Hourglass"
               width={200}
               height={300}
-              className="relative z-[100] w-48 h-72 md:w-56 md:h-80 lg:w-64 lg:h-96 object-contain drop-shadow-2xl"
+              className="relative z-[100] w-39 h-75  md:w-56 md:h-80 lg:w-64 lg:h-96 object-contain drop-shadow-2xl"
             />
             
             {/* Timeline Entries placed precisely within the three hourglass blocks */}
@@ -57,10 +57,10 @@ const Timeline = () => {
               {/* Top block */}
               
               <div
-                className="absolute flex items-center z-1 justify-center text-center px-[2%]"
-                style={{ top: '16%', left: '56%', width: '50%', height: '18%', left: "90%", zIndex: 3 }}
+              className="absolute flex items-center z-1 justify-center text-center px-[2%] hover:scale-105 transition-transform duration-300 pointer-events-auto"
+              style={{ top: '16%', left: '56%', width: '50%', height: '18%', left: "90%", zIndex: 3 }}
               >
-                <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#9E8851]"></div>
+              <div className = "h-20 md:h-25 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#7D6B3A]"></div>
                 <div className="w-full">
                   <p className={`${poppins.className} text-xs sm:text-sm md:text-base font-bold text-amber-100 drop-shadow-2xl leading-tight`}>22 August</p>
                   <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>9:00 AM - 4:00 PM</p>
@@ -69,10 +69,10 @@ const Timeline = () => {
 
               {/* Middle block */}
               <div
-                className="absolute flex z-2 items-center justify-center text-center px-[2%]"
-                style={{ top: '43%', left: '56%', width: '50%', height: '14%', left: "90%", zIndex: 2 }}
+              className="absolute flex z-2 items-center justify-center text-center px-[2%] hover:scale-105 transition-transform duration-300 pointer-events-auto"
+              style={{ top: '43%', left: '56%', width: '50%', height: '14%', left: "90%", zIndex: 2 }}
               >
-                <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#3E3620]"></div>
+              <div className = "h-20 md:h-25 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#3E3620]"></div>
                 <div className="w-full">
                   <p className={`${poppins.className} text-xs sm:text-sm md:text-base font-bold text-amber-100 drop-shadow-2xl leading-tight`}>23 August</p>
                   <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>9:00 AM - 4:00 PM</p>
@@ -81,13 +81,13 @@ const Timeline = () => {
 
               {/* Bottom block */}
               <div
-                className="absolute flex z-3 items-center justify-center text-center px-[2%]"
-                style={{ top: '67%', left: '56%', width: '50%', height: '18%', left: "90%", zIndex: 1 }}
+              className="absolute flex z-3 items-center justify-center text-center px-[2%] hover:scale-105 transition-transform duration-300 pointer-events-auto"
+              style={{ top: '67%', left: '56%', width: '50%', height: '18%', left: "90%", zIndex: 1 }}
               >
-                <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#9E8851]"></div>
+              <div className = "h-20 md:h-25 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#7D6B3A]"></div>
                 <div className="w-full">
                   <p className={`${poppins.className} text-xs sm:text-sm md:text-base font-bold text-amber-100 drop-shadow-2xl leading-tight`}>24 August</p>
-                  <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>9:00 AM - 4:00 PM</p>
+                  <p className={`${poppins.className} text-[10px] sm:text-xs md:text-sm text-amber-200 opacity-90 drop-shadow-xl leading-tight`}>10:00 AM - 3:00 PM</p>
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@ const Timeline = () => {
               alt="Location Sign"
               width={200}
               height={280}
-              className="relative z-[2] ml-32 md:ml-56 lg:ml-48 w-48 h-64 md:w-56 md:h-72 lg:w-84 lg:h-100 object-contain drop-shadow-2xl"
+              className="relative z-[2] ml-40 -translate-y-2 md:ml-56 lg:ml-48 w-48 h-64 md:w-56 md:h-72 lg:w-84 lg:h-100 object-contain drop-shadow-2xl"
             />
             <div className="absolute inset-0 z-[1] flex flex-col items-center justify-center px-[6%] py-[12%]">
             <div className = "h-20 w-60 absolute rounded-3xl md:opacity-[0.7] bg-[#3E3620]"></div>

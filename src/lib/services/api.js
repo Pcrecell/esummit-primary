@@ -1,3 +1,6 @@
+import {auth} from '@/lib/utils/firebase/firebase';
+import { signOut } from 'firebase/auth';
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 const getAuthHeader = () => {
@@ -39,6 +42,7 @@ export const authAPI = {
   },
 
   logout: async () => {
+    await signOut(auth);
     const response = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
       credentials: 'include',

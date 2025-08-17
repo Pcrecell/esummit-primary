@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { authAPI } from "@/lib/services/api.js";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const images = [
     "https://ik.imagekit.io/kiitecell/Emerald_Desc.png",
@@ -36,17 +37,9 @@ const ScrollOne = () => {
 
 
      const [isAuthenticated, setIsAuthenticated] = useState(false);
+     const { userData, setUserData, profile, setProfile, loading} = useAuth();
+     const router = useRouter();
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await authAPI.verifyToken();
-                setIsAuthenticated(res.success);
-            } catch {
-                setIsAuthenticated(false);
-            }
-        })();
-    }, []);
 
     useEffect(() => {
         currentRef.current = current;
@@ -182,10 +175,10 @@ const ScrollOne = () => {
                 </div>
                 
                 {/* Register button */}
-               {!isAuthenticated && (
+               {!userData && (
   <div className="w-full flex justify-center pt-2">
-      <a
-          href="#register"
+      <button
+          onClick={() => router.replace('/register')}
           className="inline-block rounded-full font-bold transition-transform transform hover:scale-105 hover:shadow-xl"
           style={{
               padding: '12px 24px',
@@ -198,7 +191,7 @@ const ScrollOne = () => {
           }}
       >
           Register Now
-      </a>
+      </button>
   </div>
 )}
 
@@ -226,10 +219,10 @@ const ScrollOne = () => {
                     />
                 </div>
             </div>
-           {!isAuthenticated && (
+           {!userData && (
   <div className="w-full flex justify-center pt-4">
-      <a
-          href="/register"
+      <button
+          onClick={() => router.push("/register")}
           className="inline-block rounded-full font-bold transition-transform transform hover:scale-105 hover:shadow-xl"
           style={{
               padding: '18px 40px',
@@ -244,7 +237,7 @@ const ScrollOne = () => {
           }}
       >
           Register Now
-      </a>
+      </button>
   </div>
 )}
 

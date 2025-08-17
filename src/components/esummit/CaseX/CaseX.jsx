@@ -437,7 +437,7 @@ export default function CaseX() {
                         <img src="https://ik.imagekit.io/wlknxcf5m/clock.png" alt="Clock" className="w-[40vw] md:w-[15vw] h-auto drop-shadow-[0_4px_24px_rgba(214,196,102,0.4)]" />
                         <div>
                             <p className="text-2xl md:text-3xl font-leage-spartan text-white">24 August 2025</p>
-                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">10:00 AM - 4:00 PM</p>
+                            <p className="text-lg md:text-xl font-leage-spartan text-white opacity-90">9:00 AM - 4:00 PM</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-center gap-4 text-center">
@@ -638,23 +638,6 @@ export default function CaseX() {
 
             {/* POPUP FORM */}
             {/* STARTING SOON POPUP */}
-            {showPopup && !(
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                    <div className="relative w-[835px] h-[494px] bg-[#1B0D00] rounded-3xl border-4 border-[#CFB43C]">
-                        <button 
-                            onClick={() => setShowPopup(false)}
-                            className="absolute top-4 right-4 text-[#CFB43C] hover:text-[#CFB43C]/80 text-2xl font-bold"
-                        >
-                            ×
-                        </button>
-                        <div className="w-full h-full flex items-center justify-center">
-                            <p className="text-6xl font-light font-leage-spartan text-[#CFB43C] text-center">
-                                Registrations Starting Soon!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
             {/* POPUP TO BE ENABLED */}
             {showPopup && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">

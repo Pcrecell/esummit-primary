@@ -4,22 +4,16 @@ import React, {useState, useEffect} from "react";
 import Carousel from "./EventCarousel";
 import { esummit_hero } from "../../../../public/images/image-links";
 import { authAPI } from "@/lib/services/api.js";
+import { useRouter } from "next/navigation";
 import Popup from "./paymentPopup";
+import { useAuth } from "@/lib/context/AuthContext";
+
 function Hero() {
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-     const [showPopup, setShowPopup] = useState(false);
-
-    useEffect(() => {
-        (async () => {
-            try {
-            const res = await authAPI.verifyToken();
-            setIsAuthenticated(res.success);
-            } catch {
-            setIsAuthenticated(false);
-            }
-        })();
-    }, []);
+    const [showPopup, setShowPopup] = useState(false);
+    const { userData, setUserData, profile, setProfile, loading} = useAuth();
+    const router = useRouter();
 
 
   return (
@@ -50,7 +44,7 @@ function Hero() {
 
           <button
 
-            onClick={() => (isAuthenticated ? setShowPopup(true) : window.location.href = "/login")}
+            onClick={() => (userData ? router.push("/dashboard") : router.push("/login"))}
             className="bg-white text-black py-2 px-4 cursor-pointer rounded-[20px] border border-none hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
           >
             Get your ticket ↗

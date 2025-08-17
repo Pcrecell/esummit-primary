@@ -11,7 +11,7 @@ const Rules = () => {
       <div
         className="relative w-full h-full p-4"
         style={{
-          backgroundImage: `url('https://i.ibb.co/Y7LJ8NCb/image-11.png')`,
+          backgroundImage: `url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/image-11.webp?updatedAt=1755288296671')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -27,11 +27,11 @@ const Rules = () => {
         />
 
         {/* Content Container */}
-        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center">
+        <div className="relative z-10 w-full h-full flex   flex-col justify-center items-center">
           {/* Image with Content Overlay */}
           <div className="relative flex justify-center items-center">
             <img
-              src="https://i.ibb.co/9kZY4Q54/Group-15-1.png"
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Group-15-1.webp?updatedAt=1755288297737"
               alt="Rules and Regulations"
               className="w-auto h-auto max-w-xl object-contain drop-shadow-lg"
               style={{

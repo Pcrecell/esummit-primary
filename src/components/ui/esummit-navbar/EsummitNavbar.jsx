@@ -12,23 +12,14 @@ import {
 import { useState, useEffect } from "react";
 import { authAPI } from "@/lib/services/api.js";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/context/AuthContext";
 
 export default function EsummitNavbar() {
+  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check session on mount
-    (async () => {
-      try {
-        const res = await authAPI.verifyToken();
-        setIsAuthenticated(res.success);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    })();
-  }, []);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
   const leftItems = [
     { name: "Home", link: "/" },
@@ -39,15 +30,18 @@ export default function EsummitNavbar() {
     { name: "Theme", link: "/theme" },
   ];
 
-  const navRight = [{ name: "Contact", link: "/contact" }];
+  const navRight = [
+    { name: "Contact", link: "/contact" },
+    { name: "FAQ", link: "/faq" }
+  ];
 
   const handleLogout = async () => {
     try {
       const response = await authAPI.logout();
       if (response.success) {
-        setIsAuthenticated(false);
-        localStorage.removeItem("login");
-        window.location.href = "/";
+        setUserData(null)
+        setProfile(null)
+        router.push("/")
       }
     } catch (error) {
       console.error("Logout error:", error);
@@ -70,7 +64,7 @@ export default function EsummitNavbar() {
                 rightItems={navRight}
                 visible={visible}
               >
-                {isAuthenticated ? (
+                {userData ? (
                   <div className="relative group">
                     <div className="cursor-pointer">
                       <img
@@ -80,27 +74,26 @@ export default function EsummitNavbar() {
                       />
                     </div>
                     <div className="absolute backdrop-blur-3xl bg-black/40 rounded-xl right-0 mt-3 w-32 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                      <a
-                        href="/dashboard"
-                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] hover:text-white rounded"
+                      <button
+                        onClick={() => userData ? router.push("/dashboard") : router.push("/login")}
+                        className="px-4 py-2 text-white cursor-pointer hover:bg-[#2EB24C] w-full flex items-center hover:text-white rounded"
                       >
                         Dashboard
-                      </a>
-                      <a
-                        href=""
+                      </button>
+                      <button
                         onClick={handleLogout}
-                        className="block px-4 py-2 text-white hover:bg-[#2EB24C] rounded"
+                        className="px-4 py-2 text-white cursor-pointer hover:bg-[#2EB24C] w-full flex items-center rounded"
                       >
                         Logout
-                      </a>
+                      </button>
                     </div>
                   </div>
                 ) : (
                   <>
-                    <a href="/login">
+                    <a onClick={() => {router.push("/login")}}>
                       <NavbarButton variant="secondary">Login</NavbarButton>
                     </a>
-                    <a href="/register">
+                    <a onClick={() => {router.push("/register")}}>
                       <NavbarButton variant="primary">Register</NavbarButton>
                     </a>
                   </>
@@ -126,17 +119,20 @@ export default function EsummitNavbar() {
                   {[...leftItems, ...navRight].map((item, idx) => (
                     <div key={idx}>
                       {item.link ? (
-                        <a
-                          href={item.link}
-                          onClick={() => setIsMobileMenuOpen(false)}
+                        <button
+                          // href={item.link}
+
+                          // onClick={() => setIsMobileMenuOpen(false)}
+                          onClick={() => {router.push(item.link); setIsMobileMenuOpen(false)}}
                           className="text-neutral-200 dark:text-neutral-300"
                         >
                           {item.name}
-                        </a>
+                        </button>
                       ) : item.dropdown ? (
                         <div>
                           <button
-                            onClick={() => handleToggleDropdown(idx)}
+                            // onClick={() => handleToggleDropdown(idx)}
+                            onClick={() => {router.push(item.link); handleToggleDropdown(idx)}}
                             className="text-neutral-300 font-bold w-full text-left"
                           >
                             {item.name}
@@ -144,14 +140,14 @@ export default function EsummitNavbar() {
                           {expandedIndex === idx && (
                             <div className="ml-4 mt-1 flex flex-col gap-1">
                               {item.dropdown.map((subItem, subIdx) => (
-                                <a
+                                <button
                                   key={subIdx}
-                                  href={subItem.link}
-                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  // href={subItem.link}
+                                  onClick={() => {router.push(subItem.link); setIsMobileMenuOpen(false)}}
                                   className="text-neutral-200 dark:text-neutral-400"
                                 >
                                   {subItem.name}
-                                </a>
+                                </button>
                               ))}
                             </div>
                           )}
@@ -159,26 +155,17 @@ export default function EsummitNavbar() {
                       ) : null}
                     </div>
                   ))}
-                  {isAuthenticated ? (
+                  {userData ? (
                     <>
-                      <a
-                        href="/dashboard"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="text-neutral-200 dark:text-neutral-300"
+                      <button
+                        onClick={() => {router.push("/dashboard"); setIsMobileMenuOpen(false)}}
+                        className="text-neutral-200 dark:text-neutral-300 w-full flex items-start"
                       >
                         Dashboard
-                      </a>
+                      </button>
                       <button
-                        onClick={async () => {
-                          const response = await authAPI.logout();
-                          if (response.success) {
-                            setIsAuthenticated(false);
-                            // Redirect to home or login page
-                            window.location.href = "/";
-                          }
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="text-left text-neutral-200"
+                        onClick={handleLogout}
+                        className="text-left text-neutral-200 w-full flex items-start"
                       >
                         Logout
                       </button>
@@ -186,16 +173,14 @@ export default function EsummitNavbar() {
                   ) : (
                     <>
                       <a
-                        href="/login"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => {router.push("/login"); setIsMobileMenuOpen(false)}}
                       >
                         <NavbarButton variant="primary" className="w-full">
                           Login
                         </NavbarButton>
                       </a>
                       <a
-                        href="/register"
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={() => {router.push("/register"); setIsMobileMenuOpen(false)}}
                       >
                         <NavbarButton variant="secondary" className="w-full">
                           Register

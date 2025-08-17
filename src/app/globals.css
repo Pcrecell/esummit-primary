@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Milker:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Girassol&family=League+Spartan:wght@100..900&display=swap');  
 @import "tailwindcss";
 
+/* User-provided Google Fonts links converted to @import (added per request) */
 
 /* @import url('https://fonts.googleapis.com/css2?family=Tourney:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
@@ -19,6 +22,13 @@
   cursor: pointer !important;
 }
 
+.font-leage-spartan {
+  font-family: 'League Spartan', sans-serif;
+}
+
+.font-girassol {
+  font-family: 'Girassol', sans-serif;
+}
 
 * { 
   user-select: none;
@@ -63,14 +73,50 @@ body {
   0% { transform: translateY(-50%); }
   100% { transform: translateY(0); }
 }
+
+@keyframes shine {
+  0% { 
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes textShine {
+  0% { 
+    background-position: -200% center;
+  }
+  100% { 
+    background-position: 200% center;
+  }
+}
 @keyframes scrollLeft {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
 .scroll-left {
   display: flex;
   animation: scrollLeft 10s linear infinite;
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+  display: flex;
 }
 .fade-mask {
   mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, black);
@@ -689,9 +735,9 @@ code {
   z-index: -1; 
 
   /*background-image: url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Group%201000002385%20(2).webp");*/
-  background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
+  /* background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
   background-position: calc(50% + 30px) top;
-  background-size: cover;
+  background-size: cover; */
 
   transform: rotate(180deg);
   filter: blur(1px);
@@ -703,12 +749,12 @@ code {
   height: 100%;
 }
 
-.hero-container{
+/* .hero-container{
 background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_202508071556_3lawj.mp4?updatedAt=1754566979113");
   background-position: calc(50% + 100px) center;
   background-size: cover;
   background-repeat: no-repeat;
-}
+} */
 /* src/auth/ForgotPassword.css */
 .forgot-password-page {
   display: flex;
@@ -929,4 +975,22 @@ background-image: url("https://ik.imagekit.io/tm5te9cjl/Animate_only_the_2025080
     font-size: 0.9rem;
     margin-top: 1.5rem;
   }
+}
+
+/* Mobile text shine effect */
+.mobile-shine-text {
+  background: linear-gradient(
+    90deg,
+    #CDAF5B 0%,
+    #CDAF5B 40%,
+    rgba(255, 223, 186, 0.9) 50%,
+    #CDAF5B 60%,
+    #CDAF5B 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: textShine 3s ease-in-out infinite;
 }

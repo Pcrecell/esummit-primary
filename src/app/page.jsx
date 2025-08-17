@@ -4,17 +4,19 @@ import WhyEsummit from "@/components/esummit/why-esummit/WhyEsummit";
 import {Event} from "@/components/esummit/Homepage-events/index"
 import PastSpeakers from "@/components/esummit/past-speakers/PastSpeakers";
 import PastSponser from "@/components/esummit/past-sponsors/PastSponserWithCarousel";
+import Popup from "@/components/esummit/InaugrationPopup/Popup";
 
 
 export default function HomePage() {
   return (
     <main>
       <Hero />
+      <Popup />
       <WhyEsummit/>
       {/* <Support /> */}
       <div className="lg:hidden">
-        <Event />
-      </div>
+        <Event /> {/* For Large Screen Devices Events Page Is Being Loaded in WhyE-Summit Component To Achieve The Parallax Effecr*/}
+      </div> 
       <PastSpeakers/>
       <PastSponser/>
     </main>

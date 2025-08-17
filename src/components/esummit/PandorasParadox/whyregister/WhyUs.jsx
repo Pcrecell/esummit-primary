@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import bgImage from "../../../../../public/images/hackathon/why-us-bg.png";
 import bottle from "../../../../../public/images/hackathon/bottle.png";
+import BegVsAdvPage from "./BegVsAdvPage";
 
 const Circle = ({ className = "", children, style = {} }) => (
   <div
@@ -22,6 +23,8 @@ const Circle = ({ className = "", children, style = {} }) => (
 
 const WhyUsScreen = () => {
   return (
+    <div>
+      <BegVsAdvPage />
     <section
       id="whyus"
       className="relative min-h-[110vh] bg-black flex flex-col items-center justify-center"
@@ -51,7 +54,7 @@ const WhyUsScreen = () => {
       {/* Desktop/tablet composition */}
       <div className="hidden md:block relative z-20 w-full max-w-6xl xl:max-w-7xl mx-auto min-h-[720px]">
         {/* Heading plaque on the left */}
-        <div className="absolute left-0 top-16 bg-[#0a0f0a]/70 border border-[#D4AF37]/50 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.4)] w-[240px] xl:w-[340px] px-6 py-8 text-[#D4AF37] relative">
+        <div className=" left-0 top-16 bg-[#0a0f0a]/70 border border-[#D4AF37]/50 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.4)] w-[240px] xl:w-[340px] px-6 py-8 text-[#D4AF37] relative">
           <Image
             src={bottle}
             alt=""
@@ -190,6 +193,7 @@ const WhyUsScreen = () => {
         .animate-bubble-5 { animation: bubbleFloat5 9s ease-in-out infinite; animation-delay: 0.6s; }
       `}</style>
     </section>
+    </div>
   );
 };
 
