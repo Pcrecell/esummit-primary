@@ -81,6 +81,9 @@ const EventsPage = () => {
         image:
           "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
         route: "/aif",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
+        route: "/aif",
       },
       {
         title: "EXPO",
