@@ -2,11 +2,26 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+// import { Poppins } from "next/font/google";
 
+
+// const poppins = Poppins({
+//   weight: 400,
+  
+// })
 const Popup = () => {
-  const [closed, setClosed] = useState(false);
+  const [closed, setClosed] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+  const [hasShown, setHasShown] = useState(false);
+
+  useEffect(() => {
+    // Check if popup has been shown before
+    const popupShown = localStorage.getItem('orientationPopupShown');
+    if (!popupShown) {
+      setClosed(false);
+    }
+  }, []);
 
   useEffect(() => {
     const checkDevice = () => {
@@ -95,14 +110,16 @@ const Popup = () => {
 
   const handleClose = () => {
     setClosed(true);
+    setHasShown(true);
+    localStorage.setItem('orientationPopupShown', 'true');
   };
 
   const handleReopen = () => {
     setClosed(false);
   };
 
-  const popupWidth = isMobile ? "90vw" : isTablet ? "70vw" : "400px";
-  const popupMaxWidth = isMobile ? "350px" : isTablet ? "450px" : "400px";
+  const popupWidth = isMobile ? "90vw" : isTablet ? "90vw" : "800px";
+  const popupMaxWidth = isMobile ? "350px" : isTablet ? "600px" : "800px";
 
   return (
     <>
@@ -117,7 +134,7 @@ const Popup = () => {
           >
             {/* Backdrop */}
             <motion.div
-              className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm"
+              className="absolute inset-0  bg-black backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -127,26 +144,34 @@ const Popup = () => {
             
             {/* Popup Content */}
             <motion.div
-              className="relative z-[9999] bg-white rounded-lg shadow-2xl overflow-hidden"
-              style={{ width: popupWidth, maxWidth: popupMaxWidth }}
-              initial={{ opacity: 0, scale: 0.8, y: 50 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.8, y: 50 }}
-              transition={{ 
-                duration: 0.4, 
-                ease: [0.25, 0.46, 0.45, 0.94],
-                opacity: { duration: 0.3 }
-              }}
-            >
-              {/* Success Icon */}
-              <div className="flex justify-center pt-8 pb-4">
-                <motion.div
-                  className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5, ease: [0.68, -0.55, 0.265, 1.55] }}
+              className="relative z-[9999] bg-white rounded-lg shadow-2xl overflow-hidden py-24"
+              style={{ width: popupWidth, maxWidth: popupMaxWidth,
+                backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/founderarena.webp?updatedAt=1755413558055')",
+                backgroundSize: isMobile ? "230%" : "cover",
+                backgroundPosition: "center center",
+                backgroundColor: "black"
+               }}
+               initial={{ opacity: 0, scale: 0.8, y: 50 }}
+               animate={{ opacity: 1, scale: 1, y: 0 }}
+               exit={{ opacity: 0, scale: 0.8, y: 50 }}
+               transition={{ 
+                 duration: 0.4, 
+                 ease: [0.25, 0.46, 0.45, 0.94],
+                 opacity: { duration: 0.3 }
+                }}
                 >
-                  <svg 
+              {/* Black Overlay */}
+              <div className="absolute top-0 left-0 bg-gradient-to-b from-black/60 to-transparent z-[60] w-full h-full"/>
+              
+              {/* Success Icon */}
+              <div className="relative z-[70] flex justify-center pt-8 pb-4">
+                <motion.div
+                  className="w-48 h-auto rounded-full flex items-center justify-center"
+                  // initial={{ scale: 0, rotate: -180 }}
+                  // animate={{ scale: 1, rotate: 0 }}
+                  // transition={{ delay: 0.2, duration: 0.5, ease: [0.68, -0.55, 0.265, 1.55] }}
+                >
+                  {/* <svg 
                     className="w-8 h-8 text-white" 
                     fill="none" 
                     stroke="currentColor" 
@@ -161,28 +186,35 @@ const Popup = () => {
                       animate={{ pathLength: 1 }}
                       transition={{ delay: 0.5, duration: 0.6 }}
                     />
-                  </svg>
+                  </svg> */}
+                  <img src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/logo.png?updatedAt=1755075880371" alt="" />
                 </motion.div>
               </div>
 
               {/* Content */}
               <motion.div
-                className="px-6 pb-6 text-center"
+                className="relative z-[70] px-6 pb-6 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                  Inauguration
+                <h2 className="text-2xl font-semibold text-white mb-4">
+                  ORIENTATION CEREMONY
                 </h2>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 px-2">
+                <p className="text-gray-200 text-sm leading-relaxed mb-6 px-2">
                   Tune in to the live stream and be part of the historic kickoff of E-Summit 2025.
                 </p>
+                <h2 className="text-2xl text-white mb-4">
+                  Date: <span className = "font-semibold">17th August 2025</span>
+                </h2>
+                <h2 className="text-2xl text-white mb-4">
+                  Venue: <span className= "font-semibold">Campus 6</span>
+                </h2>
                 
                 {/* Close Button */}
                 <motion.button
                   onClick={handleClose}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-md transition-colors duration-200 text-sm"
+                  className="w-full bg-green-500 max-w-md translate-y-12 hover:bg-green-600 text-white font-medium py-3 px-6 rounded-md transition-colors duration-200 text-sm"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   initial={{ opacity: 0 }}
