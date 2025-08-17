@@ -12,7 +12,7 @@ const CreateTeamPage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
-    elixirId: '',
+    UId: '',
     teamName: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,7 +29,7 @@ const CreateTeamPage = () => {
   const validateForm = () => {
     let newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.elixirId.trim()) newErrors.elixirId = "Elixir ID is required";
+    if (!formData.UId.trim()) newErrors.UId = "UID is required";
     if (!formData.teamName.trim()) newErrors.teamName = "Team name is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -37,17 +37,17 @@ const CreateTeamPage = () => {
 
   const handleCreateTeam = (e) => {
     e.preventDefault();
-    if (!validateForm()) return; // Stop if form is invalid
+    if (!validateForm()) return; 
 
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
-      router.push('/oracle'); // Change to your desired route
+      router.push('/oracle'); 
     }, 1000);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40 p-2 ">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/90 p-2 ">
       <div 
         className="relative w-full max-w-full sm:max-w-sm md:max-w-lg lg:max-w-xl max-h-[90vh] rounded-xl sm:rounded-2xl shadow-2xl"
       >
@@ -62,10 +62,10 @@ const CreateTeamPage = () => {
             Create a Team
           </h2>
 
-          <div className="flex flex-col gap-2 md:gap-4 items-center">
-            <div className="flex flex-col w-full">
+          <div className="flex flex-col gap-2 md:gap-4">
+            <div className="flex items-center md:w-full">
               <div className="flex items-center gap-2 md:gap-4">
-                <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
+                <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Your Name:
                 </label>
                 <input
@@ -82,24 +82,24 @@ const CreateTeamPage = () => {
 
             <div className="flex flex-col w-full">
               <div className="flex items-center gap-2 md:gap-4">
-                <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
-                  Your Elixir ID:
+                <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
+                  Your UID:
                 </label>
                 <input
                   type="text"
-                  name="elixirId"
-                  value={formData.elixirId}
+                  name="UId"
+                  value={formData.UId}
                   onChange={handleInputChange}
                   className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
                   disabled={isSubmitting}
                 />
               </div>
-              {errors.elixirId && <p className="text-red-500 text-xs">{errors.elixirId}</p>}
+              {errors.UId && <p className="text-red-500 text-xs">{errors.UId}</p>}
             </div>
 
             <div className="flex flex-col w-full">
               <div className="flex items-center gap-2 md:gap-4">
-                <label className={`${cormorantGaramond.className} font-semibold text-white w-auto`}>
+                <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Team Name:
                 </label>
                 <input

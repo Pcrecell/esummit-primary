@@ -7,7 +7,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 const PaymentChoice = () => {
   const router = useRouter();
   const modalRef = useRef(null);
-  const { userData, profile, loading } = useAuth();
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
   useEffect(() => {
     if (!loading) {
@@ -43,7 +43,7 @@ const PaymentChoice = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/40">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black">
       <div
         ref={modalRef}
         className="relative w-full max-w-md rounded-2xl shadow-2xl"
@@ -54,14 +54,15 @@ const PaymentChoice = () => {
             backgroundImage: `url('https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAY.webp?updatedAt=1755353166962')`,
           }}
         >
-          <div className="flex flex-col gap-y-2 items-center">
+          <div className="flex flex-col md:gap-y-2 items-center">
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Secure your spot at E-Summit <br />– but don’t miss out!
             </p>
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Price: Rs.249
             </p>
-            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972" >            
+            {/* DONT USE THE FOLLOWING BILLING LINK IN PRODUCTION - USE A DIFFERENT LINK 17796 - Testing, 17972 - Production */}
+            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796" target="_blank" >            
             <div
               className="group relative w-40 cursor-pointer"
             >

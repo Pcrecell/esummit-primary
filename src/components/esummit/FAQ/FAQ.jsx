@@ -73,20 +73,12 @@ const FAQ = () => {
       )
     },
     {
-      question: "Can I get a refund if I can't attend?",
-      answer: "Refund policies depend on the timing of your cancellation request. Please contact our support team at least 7 days before the event for refund considerations. Processing fees may apply."
-    },
-    {
       question: "What should I bring to the event?",
       answer: "Bring a valid photo ID, your registration confirmation (digital or printed), business cards if you have them, a notebook for taking notes, and comfortable attire suitable for a professional networking environment."
     },
      {
       "question": "Do you offer certificates or participation proofs?",
       "answer": "Yes, all participants will receive E-Summit participation certificates. Winners and finalists will receive special recognition certificates and prizes."
-    },
-    {
-      question: "Is there parking available at the venue?",
-      answer: "Yes, parking facilities are available at the venue. However, spaces are limited, so we recommend arriving early or considering public transportation options for convenience."
     },
     {
       question: "When and where will E-Summit 2025 take place?",
@@ -102,10 +94,6 @@ const FAQ = () => {
           </ul>
         </div>
       )
-    },
-    {
-      question: "Will there be food and refreshments?",
-      answer: "Yes, lunch and refreshments will be provided during the summit. We'll accommodate common dietary restrictions - please mention any specific requirements during registration or contact us in advance."
     },
     {
       "question": "Is there a prize pool or awards?",

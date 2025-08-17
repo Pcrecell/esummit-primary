@@ -1,13 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const Dashboard = () => {
   const [action, setAction] = useState("idle");
   const [selectedTrack, setSelectedTrack] = useState("beginner");
+
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+
+  useEffect(() => {
+      if (!loading) {
+        if (!userData) {
+          router.replace("/login");
+        }
+      }
+  }, [userData, profile, loading, router]);
+  
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+  }
 
   const [joinTeamData, setJoinTeamData] = useState({
     yourName: "",
