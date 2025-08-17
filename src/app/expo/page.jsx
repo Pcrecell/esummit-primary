@@ -7,7 +7,6 @@ import HeroSection from "@/components/esummit/expo/HeroSection";
 import About from "@/components/esummit/expo/About";
 import MoreInfo from "@/components/esummit/expo/MoreInfo";
 import Registration from "@/components/esummit/expo/Registration";
-import Query from "@/components/esummit/expo/Query";
 import { useRouter } from 'next/navigation'
 import { useAuth } from "@/lib/context/AuthContext";
 
