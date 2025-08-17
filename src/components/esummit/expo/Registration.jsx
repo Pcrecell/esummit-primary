@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useAuth } from "@/lib/context/AuthContext";
 
 const Registration = () => {
+  const { userData, profile, loading } = useAuth();
   const [form, setForm] = useState({
     companyName: "",
     teamLeadName: "",
@@ -11,6 +13,8 @@ const Registration = () => {
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false);
+  const [registrationError, setRegistrationError] = useState("");
 
   // Form field change handler
   const handleChange = (e) => {
@@ -37,6 +41,10 @@ const Registration = () => {
       alert("Please agree to terms & conditions");
       return;
     }
+    
+    // Reset error states
+    setIsAlreadyRegistered(false);
+    setRegistrationError("");
     setIsSubmitting(true);
 
     try {
@@ -45,6 +53,8 @@ const Registration = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+
+      const data = await response.json();
 
       if (response.ok) {
         alert("Registration successful!");
@@ -59,15 +69,90 @@ const Registration = () => {
         });
         setAgreedToTerms(false);
       } else {
-        alert("Registration failed. Please try again.");
+        // Check if user is already registered
+        if (response.status === 409 || data.message?.toLowerCase().includes("already registered")) {
+          setIsAlreadyRegistered(true);
+          setRegistrationError("You are already registered for this event!");
+        } else {
+          setRegistrationError(data.message || "Registration failed. Please try again.");
+        }
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred. Please try again.");
+      setRegistrationError("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="relative min-h-[60vh] w-full">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+          style={{
+            backgroundImage: "url('https://ik.imagekit.io/admr8uj75/Frame%20258.png?tr=w-1920,q-100,fo-auto&updatedAt=1755023127771')",
+          }}
+        ></div>
+        <div className="relative flex items-center justify-center min-h-screen">
+          <div className="text-white text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if user is authenticated
+  if (!userData) {
+    return (
+      <div className="relative min-h-[60vh] w-full">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+          style={{
+            backgroundImage: "url('https://ik.imagekit.io/admr8uj75/Frame%20258.png?tr=w-1920,q-100,fo-auto&updatedAt=1755023127771')",
+          }}
+        ></div>
+        <div className="relative flex items-center justify-center min-h-screen px-4">
+          <div className="text-center bg-red-900/30 border border-red-500 rounded-lg p-6 max-w-md">
+            <h2 className="text-2xl font-bold text-white mb-4">Authentication Required</h2>
+            <p className="text-red-400 mb-4">Please log in to access the registration form.</p>
+            <a 
+              href="/login" 
+              className="inline-block bg-gradient-to-r from-[#06671C] to-[#B7AD97] text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Go to Login
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if user has payment status (assuming it's stored in profile.paymentStatus or profile.isPaid)
+  if (!profile?.paymentStatus && !profile?.isPaid) {
+    return (
+      <div className="relative min-h-[60vh] w-full">
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+          style={{
+            backgroundImage: "url('https://ik.imagekit.io/admr8uj75/Frame%20258.png?tr=w-1920,q-100,fo-auto&updatedAt=1755023127771')",
+          }}
+        ></div>
+        <div className="relative flex items-center justify-center min-h-screen px-4">
+          <div className="text-center bg-yellow-900/30 border border-yellow-500 rounded-lg p-6 max-w-md">
+            <h2 className="text-2xl font-bold text-white mb-4">Payment Required</h2>
+            <p className="text-yellow-400 mb-4">You need to complete your payment before accessing the expo registration.</p>
+            <a 
+              href="/dashboard" 
+              className="inline-block bg-gradient-to-r from-[#06671C] to-[#B7AD97] text-white px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              Go to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-[60vh] w-full">
@@ -103,6 +188,15 @@ const Registration = () => {
         <div className="relative z-50 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto">
           <div className="text-center mb-4 sm:mb-6 md:mb-8">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">Register</h1>
+            
+            {/* Error Message */}
+            {(isAlreadyRegistered || registrationError) && (
+              <div className="mt-3 p-3 bg-red-900/30 border border-red-500 rounded-lg">
+                <p className="text-red-400 text-sm sm:text-base font-medium">
+                  {isAlreadyRegistered ? "You are already registered!" : registrationError}
+                </p>
+              </div>
+            )}
           </div>
         
         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-6">
@@ -116,7 +210,6 @@ const Registration = () => {
               name="companyName"
               value={form.companyName}
               onChange={handleChange}
-              placeholder="xyz"
               className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
               required
             />
@@ -132,7 +225,6 @@ const Registration = () => {
               name="teamLeadName"
               value={form.teamLeadName}
               onChange={handleChange}
-              placeholder="xyz"
               className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
               required
             />
@@ -149,7 +241,6 @@ const Registration = () => {
                 name="uniqueId"
                 value={form.uniqueId}
                 onChange={handleChange}
-                placeholder="number"
                 className="w-full bg-transparent border-b-2 border-gray-400 text-white placeholder-gray-400 py-1.5 sm:py-2 px-0 pr-6 sm:pr-8 focus:outline-none focus:border-white transition-colors text-sm sm:text-base"
                 required
               />
@@ -210,13 +301,15 @@ const Registration = () => {
                 />
               ))}
             </div>
-            <button
-              type="button"
-              onClick={addTeammate}
-              className="text-white text-sm sm:text-base hover:text-green-300 transition-colors"
-            >
-              +Add Teammate
-            </button>
+            {form.teammates.length < 5 && (
+              <button
+                type="button"
+                onClick={addTeammate}
+                className="text-white text-sm sm:text-base hover:text-green-300 transition-colors"
+              >
+                +Add Teammate
+              </button>
+            )}
           </div>
 
           {/* Register Button */}
@@ -232,18 +325,10 @@ const Registration = () => {
             }`}
             style={{ backgroundImage: isSubmitting ? undefined : 'linear-gradient(to right, #06671C, #B7AD97)' }}
           >
-            {isSubmitting ? "Registering..." : "Registration Starting Soon..."}
+            {isSubmitting ? "Registering..." : "Register"}
           </button>
 
-          {/* Sign up link */}
-          <div className="text-center mt-3 sm:mt-4">
-            <p className="text-white text-xs sm:text-sm">
-              Don't have an account? 
-              <a href="/signup" className="text-white hover:text-green-300 ml-1">
-                Sign up
-              </a>
-            </p>
-          </div>
+          
         </form>
         </div>
         <div className="pointer-events-none absolute inset-0 z-30">

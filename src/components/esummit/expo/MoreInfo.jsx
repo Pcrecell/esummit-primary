@@ -257,74 +257,8 @@ const MoreInfo = () => {
           </h1>
         </div>
 
-        {/* Day 1 Section */}
-        <div className="mb-12 sm:mb-16 lg:mb-20">
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-8 text-center" style={{ color: '#FFD289' }}>
-            DAY 1: INAUGURATION & NETWORKING
-          </h2>
-          
-          {/* Day 1 Timeline Table */}
-          <div className="p-3 sm:p-6 lg:p-10">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
-                {/* Activity Column */}
-                <div>
-                  <h3 className="text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">
-                    ACTIVITY
-                  </h3>
-                  <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
-                      PARTICIPANT REPORTING
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
-                      OFFICIAL INAUGURATION CEREMONY
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
-                      EXPO OPEN FOR VISITORS
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
-                      NETWORKING OVER LUNCH
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
-                      JUDGEMENT ROUND
-                    </div>
-                  </div>
-                </div>
-
-                {/* Timing Column */}
-                <div>
-                  <h3 className="text-sm sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">
-                    TIMING
-                  </h3>
-                  <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      9:00 AM
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      10:30 AM
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      11:00 AM - 5:00 PM
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      1:30 PM - 2:30 PM
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      5:30 PM
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Day 2 Section */}
         <div>
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-16 text-center" style={{ color: '#FFD289' }}>
-            DAY 2: SHOWCASE & CLOSING
-          </h2>
-          
           {/* Day 2 Timeline Table */}
           <div className="p-3 sm:p-6 lg:p-10">
             <div className="max-w-4xl mx-auto">
@@ -347,9 +281,6 @@ const MoreInfo = () => {
                     <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
                       JUDGEMENT ROUND
                     </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl font-medium text-center">
-                      WIND-UP & CLOSURE
-                    </div>
                   </div>
                 </div>
 
@@ -363,16 +294,13 @@ const MoreInfo = () => {
                       8:30 AM
                     </div>
                     <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      9:00 AM - 4:00 PM
+                      9:00 AM - 3:30 PM
                     </div>
                     <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
                       1:00 PM - 2:00 PM
                     </div>
                     <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      4:30 PM
-                    </div>
-                    <div className="text-white text-xs sm:text-base md:text-lg lg:text-xl text-center">
-                      BY 5:00 PM
+                      4:00 PM
                     </div>
                   </div>
                 </div>
