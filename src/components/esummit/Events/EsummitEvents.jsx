@@ -55,7 +55,7 @@ const EventsPage = () => {
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
         image: "https://ik.imagekit.io/1bsukh3d7/expo-l.webp?updatedAt=1755242215588",
-        route: "/expo",
+        route: "/EXPO",
       },
     ],
     23: [
@@ -77,7 +77,7 @@ const EventsPage = () => {
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
         image: "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
-        route: "/aif",
+        route: "/AIF",
       },
       {
         title: "EXPO",
