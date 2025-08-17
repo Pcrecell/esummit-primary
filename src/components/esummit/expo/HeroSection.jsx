@@ -20,9 +20,9 @@ const HeroSection = () => {
       regSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  // Navigate to contact page
+  // Navigate to expo contact page
   const handleContactClick = () => {
-    router.push('/contact');
+    router.push('/expo/contact');
   };
   return (
     <div

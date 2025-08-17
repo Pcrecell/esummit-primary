@@ -65,7 +65,7 @@ export default function Login() {
       } else {
         setError("Failed to Log In. Please try again.");
       }
-      console.error("Login error:", err);
+      // console.error("Login error:", err);
       setLoading(false);
     }
 

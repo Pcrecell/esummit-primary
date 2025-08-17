@@ -89,7 +89,7 @@ const JoinTeamPage = () => {
       showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
       router.push("/success");
     } catch (err) {
-      console.error("Error joining team:", err);
+      // console.error("Error joining team:", err);
       showError(err.message);
     }
   };

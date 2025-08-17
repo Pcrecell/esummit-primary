@@ -185,7 +185,7 @@ if ( loading) {
       else {
         setError("Failed to register. Please try again.");
       }
-      console.error("Registration error:", err);
+      // console.error("Registration error:", err);
     }
 
     setLoading(false);

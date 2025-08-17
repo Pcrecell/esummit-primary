@@ -56,7 +56,7 @@ function ResetPasswordForm() {
         router.push('/login?message=Password reset successful! Please log in.');
       }, 3000);
     } catch (error) {
-      console.error("Password Reset Error:", error);
+      // console.error("Password Reset Error:", error);
       if (error.code === 'auth/expired-action-code') {
         setError('The password reset link has expired. Please request a new one.');
       } else if (error.code === 'auth/invalid-action-code') {

@@ -49,7 +49,7 @@ export default function ForgotPassword() {
       }
     } catch (err) {
       setError("Failed to send reset email. Please try again.");
-      console.error("Error sending reset email:", err);
+      // console.error("Error sending reset email:", err);
     } finally {
       setLoading(false);
     }

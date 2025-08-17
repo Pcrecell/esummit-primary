@@ -40,7 +40,7 @@ const EsummitDashBoard = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy text: ", err);
+      // console.error("Failed to copy text: ", err);
     }
   };
 
@@ -59,7 +59,7 @@ const EsummitDashBoard = () => {
               body: JSON.stringify({ email, elixir }),
             });
           } catch (err) {
-            console.error("Payment callback failed:", err);
+            // console.error("Payment callback failed:", err);
           }
         }
       }
