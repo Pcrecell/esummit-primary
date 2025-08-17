@@ -110,24 +110,55 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateForm()) {
-      // Here you would typically submit the data to your backend
-      // For now, we'll just simulate successful registration
-      
-      // Reset form after successful submission
-      setFormData({
-        fullName: "",
-        contactNumber: "",
-        email: "",
-        elixirId: "",
-        agreeTerms: false,
-      });
-      setErrors({});
-      
-      // Call the success callback
-      if (onRegistrationSuccess) {
-        onRegistrationSuccess(formData);
+      try {
+        // Prepare data for API call
+        const registrationData = {
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.contactNumber,
+          elixir: formData.elixirId,
+        };
+
+        console.log("Submitting registration:", registrationData);
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/events/aifRegistration`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(registrationData),
+          }
+        );
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("Registration successful!");
+
+          // Reset form
+          setFormData({
+            fullName: "",
+            contactNumber: "",
+            email: "",
+            elixirId: "",
+            agreeTerms: false,
+          });
+          setErrors({});
+
+          // Call the success callback
+          if (onRegistrationSuccess) {
+            onRegistrationSuccess(formData);
+          }
+        } else {
+          alert(result.message || "Registration failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Registration error:", error);
+        alert("An error occurred. Please try again.");
       }
     }
   };
@@ -148,9 +179,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
   };
 
   return (
-    <div className="relative flex items-center justify-center w-full bg-black/0 "
-
-    >
+    <div className="relative flex items-center justify-center w-full bg-black/0 ">
       {/* Image container */}
       <div className="relative max-w-2xl w-full hidden md:flex items-center justify-center md:min-h-[600px] bg-transparent">
         <img
@@ -172,7 +201,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
         {/* Form container */}
         <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
           <div className="space-y-4">
-          
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <input
@@ -222,7 +250,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
               </div>
             </div>
 
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <input
@@ -271,7 +298,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
               </div>
             </div>
 
-            
             <div className="flex items-start space-x-3 mt-12">
               <input
                 type="checkbox"
@@ -297,7 +323,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
               </p>
             )}
 
-          
             <div className="flex justify-center -translate-y-10">
               <button
                 type="button"
@@ -346,9 +371,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
         {/* Mobile Form */}
         <div className="bg-gradient-to-b from-gray-900/50 to-black/80 backdrop-blur-sm rounded-2xl p-6 border border-yellow-500/30 shadow-2xl">
           <div className="space-y-4">
-
             <div className="space-y-4">
-  
               <div>
                 <input
                   type="text"
@@ -372,7 +395,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                 )}
               </div>
 
-  
               <div>
                 <input
                   type="tel"

@@ -7,30 +7,30 @@ const Query = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Query submitted:", { name, email, query });
-    // fetch("http://localhost:5000/api/users/submit-query", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ name, email, query }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.success) {
-    //       alert("Query submitted successfully!");
-    //       resetForm();
-    //     } else {
-    //       alert("Failed to submit query. Please try again.");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error submitting query:", error);
-    //     alert("An error occurred while submitting your query.");
-    //   });
-    // setQuery("");
-    // setName("");
-    // setEmail("");
+    console.log("Query submitted:", { name, email, query });
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/expo/submit-query`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, query }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Query submitted successfully!");
+          resetForm();
+        } else {
+          alert("Failed to submit query. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting query:", error);
+        alert("An error occurred while submitting your query.");
+      });
+    setQuery("");
+    setName("");
+    setEmail("");
   };
 
   return (
