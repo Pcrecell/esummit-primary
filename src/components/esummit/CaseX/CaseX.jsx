@@ -807,7 +807,7 @@ export default function CaseX() {
                                                     />
                                                     <input
                                                         type="text"
-                                                        placeholder="Elixir ID"
+                                                        placeholder="UID"
                                                         value={newTeammateId}
                                                         onChange={(e) => setNewTeammateId(e.target.value)}
                                                         className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
@@ -912,7 +912,7 @@ export default function CaseX() {
                                                 <div className="relative">
                                                     <input
                                                         type="text"
-                                                        placeholder="Elixir ID"
+                                                        placeholder="UID"
                                                         value={formData.yourEid}
                                                         onChange={(e) => handleChange("yourEid", e.target.value)}
                                                         className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
@@ -955,7 +955,7 @@ export default function CaseX() {
                                                     <div className="relative">
                                                         <input
                                                             type="text"
-                                                            placeholder="Elixir ID"
+                                                            placeholder="UID"
                                                             value={formData.yourEid}
                                                             onChange={(e) => handleChange("yourEid", e.target.value)}
                                                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"

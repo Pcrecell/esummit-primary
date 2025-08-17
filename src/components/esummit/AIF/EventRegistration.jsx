@@ -45,9 +45,9 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
 
       case "elixirId":
         if (!value.trim()) {
-          error = "Elixir ID is required";
+          error = "UID is required";
         } else if (value.trim().length < 3) {
-          error = "Elixir ID must be at least 3 characters";
+          error = "1 must be at least 3 characters";
         }
         break;
     }
@@ -278,7 +278,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                 <input
                   type="text"
                   name="elixirId"
-                  placeholder="Elixir ID"
+                  placeholder="UID"
                   value={formData.elixirId}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
@@ -446,7 +446,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                 <input
                   type="text"
                   name="elixirId"
-                  placeholder="Elixir ID"
+                  placeholder="UID"
                   value={formData.elixirId}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
