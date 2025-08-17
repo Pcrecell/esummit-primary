@@ -55,6 +55,9 @@ const Dashboard = () => {
         if (!userData) {
           router.replace("/login");
         }
+        if(!profile.payment){
+          router.replace("/dashboard");
+        }
       }
   }, [userData, profile, loading, router]);
   
