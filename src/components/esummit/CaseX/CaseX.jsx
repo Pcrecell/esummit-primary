@@ -56,7 +56,7 @@ export default function CaseX() {
     const fetchTeamInfo = async () => {
         try {
             const response = await fetch(
-                `http://localhost:5000/api/case-x/team-info/${profile.elixir}`
+                `http://tech.kiitecell.org/api/case-x/team-info/${profile.elixir}`
             );
             if (!response.ok) throw new Error(`Error ${response.status}`);
             const data = await response.json();
@@ -107,7 +107,7 @@ export default function CaseX() {
         }
         try {
             const res = await fetch(
-                "http://localhost:5000/api/case-x/case-x_registration",
+                "http://tech.kiitecell.org/api/case-x/case-x_registration",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -145,7 +145,7 @@ export default function CaseX() {
         }
         try {
             const res = await fetch(
-                "http://localhost:5000/api/case-x/case-x_registration",
+                "http://tech.kiitecell.org/api/case-x/case-x_registration",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -181,12 +181,12 @@ export default function CaseX() {
         }
         if ((teamInfo.members?.length || 0) >= 4) {
             setAddMemberError("Team is full (maximum 4 members).");
-            return;
+            return; 
         }
         setAddMemberError("");
         setIsAddingMember(true);
         try {
-            const res = await fetch("http://localhost:5000/api/hackathon/add-member", {
+            const res = await fetch("http://tech.kiitecell.org/api/case-x/add-member", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -216,7 +216,7 @@ export default function CaseX() {
             return;
         }
         try {
-            const res = await fetch("http://localhost:5000/api/hackathon/remove-member", {
+            const res = await fetch("http://tech.kiitecell.org/api/case-x/remove-member", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ leaderelixir: profile.elixir, memberelixir }),
@@ -233,10 +233,10 @@ export default function CaseX() {
 
     // ---- Carousel Logic (unchanged) ----
     const evalCriteria = [
-        { label: "Strategic\nThinking", img: "/criteria1.png" },
-        { label: "Data-Driven\nInsights", img: "/criteria2.png" },
-        { label: "Innovation &\nFeasibility", img: "/criteria3.png" },
-        { label: "Delivery and\nTeam\nThinking", img: "/criteria4.png" },
+        { label: "Strategic\nThinking", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+        { label: "Data-Driven\nInsights", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+        { label: "Innovation &\nFeasibility", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
+        { label: "Delivery and\nTeam\nThinking", img: "https://ik.imagekit.io/wlknxcf5m/Group%206.png?updatedAt=1755024969106" },
     ];
 
     const goTo = (newIdx, dir) => {
@@ -350,7 +350,7 @@ export default function CaseX() {
                             className="absolute left-[2vw] max-w-[35vw] h-auto z-12"
                             style={{ pointerEvents: "none" }}
                         />
-                        <div className="w-[85vw] pl-[35vw] text-center justify-start"><span class="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">Got sharp ideas? Love cracking real-world problems?<br /><br /></span><span class="text-white text-[2vw] lg:text-2xl font-light font-leage-spartan">Case-X is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br />Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br />Think you've got what it takes?<br /><br /></span><span class="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">This is not a case study. This is war.</span></div>
+                        <div className="w-[85vw] pl-[35vw] text-center justify-start"><span className="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">Got sharp ideas? Love cracking real-world problems?<br /><br /></span><span className="text-white text-[2vw] lg:text-2xl font-light font-leage-spartan">Case-X is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br />Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br />Think you've got what it takes?<br /><br /></span><span className="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">This is not a case study. This is war.</span></div>
                         <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
                             {/* Conditional register/manage buttons based on registration status */}
                             {isRegisteredCaseBattle ? (
