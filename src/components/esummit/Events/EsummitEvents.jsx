@@ -93,9 +93,9 @@ const EventsPage = () => {
     24: [
       {
         title: "CASEX",
-        time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-07",
-        coordinates: [20.350485952792063, 85.82069263354178],
+        time: "10:00AM - 4:00PM",
+        venue: "CAMPUS-17",
+        coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
         image: "https://ik.imagekit.io/1bsukh3d7/casex-r.webp?updatedAt=1755242215640",
