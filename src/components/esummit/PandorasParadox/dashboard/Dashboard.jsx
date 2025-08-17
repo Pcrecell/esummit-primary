@@ -92,7 +92,7 @@ useEffect(() => {
   };
 // CREATE TEAM
   const handleSubmitCreate = async () => {
-    console.log("Creating team with data:", formData);
+    // console.log("Creating team with data:", formData);
     if (
       !formData.name.trim() ||
       !formData.yourEid.trim() ||
@@ -102,7 +102,7 @@ useEffect(() => {
       return;
     }
     try {
-      console.log("Submitting create team request with data:", formData);
+      // console.log("Submitting create team request with data:", formData);
 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/hackathon_registration`, {
   method: "POST",
   headers: {
@@ -163,7 +163,7 @@ setAction("details");
       return;
     }
     try {
-      console.log("Joining team with data:", formData);
+      // console.log("Joining team with data:", formData);
       
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/hackathon_registration`, {
           method: "POST",

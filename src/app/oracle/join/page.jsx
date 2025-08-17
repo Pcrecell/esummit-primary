@@ -64,7 +64,7 @@ const JoinTeamPage = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    console.log("Joining team:", formData);
+    // console.log("Joining team:", formData);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {

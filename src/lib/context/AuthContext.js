@@ -15,10 +15,10 @@ export const AuthProvider = ({ children }) => {
       // console.log("Firebase User: ", firebaseUser)
       if (firebaseUser) {
         setUserData(firebaseUser);
-        console.log("Firebase user data:", firebaseUser);
+        // console.log("Firebase user data:", firebaseUser);
         // Fetch user profile from Firestore
         const userDoc = await getDoc(doc(db, 'Users', firebaseUser.uid));
-        console.log("User profile data:", userDoc.exists() ? userDoc.data() : null);
+        // console.log("User profile data:", userDoc.exists() ? userDoc.data() : null);
         setProfile(userDoc.exists() ? userDoc.data() : null);
       } else {
         setUserData(null);

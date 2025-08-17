@@ -26,8 +26,8 @@ const EsummitDashBoard = () => {
   const router = useRouter();
 
   const qrCode = profile?.qrCode || "";
-  console.log("User Data:", userData);
-  console.log("Profile Data:", profile);
+  // console.log("User Data:", userData);
+  // console.log("Profile Data:", profile);
   const paymentDone = profile?.payment || false;
   const email = profile?.email || "User";
   const elixir = profile?.elixir || "";

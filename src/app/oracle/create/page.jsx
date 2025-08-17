@@ -65,7 +65,7 @@ const CreateTeamPage = () => {
 
     setIsSubmitting(true);
     try {
-      console.log("Submitting create team request with data:", formData);
+      // console.log("Submitting create team request with data:", formData);
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
         method: "POST",
