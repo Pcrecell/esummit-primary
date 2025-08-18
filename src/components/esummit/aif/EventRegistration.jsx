@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useToast } from "@/hooks/useToast";
 import Toast from "@/components/ui/Toast";
+import { useRouter } from "next/navigation";
 
 const EventRegistration = ({ onRegistrationSuccess }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
 
 
 
+  const router = useRouter();
   const [errors, setErrors] = useState({});
   const [alreadyRegistered, setAlreadyRegistered] = useState(false);
   const [registeredData, setRegisteredData] = useState(null);
@@ -34,7 +36,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
       );
       if (res.ok) {
         const data = await res.json();
-        console.log("Registered user is true", data);
         setAlreadyRegistered(true);
         setRegisteredData(data);
         // Populate form with existing data
@@ -46,7 +47,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
           agreeTerms: false,
         });
       } else {
-        console.log("Registered user is false");
         setAlreadyRegistered(false);
         setRegisteredData(null);
         // Set elixirId from profile if available
@@ -170,11 +170,11 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-
-
-  const handleElixirBlur = (e) => {
-    handleBlur(e);
-    checkAlreadyRegistered(e.target.value.trim());
+  const handleJoinDiscord = () => {
+    // Replace with your actual Discord invite link
+    const discordInviteLink = "https://discord.gg/ZFRdAcxay8";
+    window.open(discordInviteLink, "_blank", "noopener,noreferrer");
+    if (onJoinDiscord) onJoinDiscord();
   };
 
   const handleSubmit = async () => {
@@ -233,6 +233,32 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
     }
   };
 
+  const handleDelete = async (elixirId) => {
+    if(alreadyRegistered) {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/aif/delete/${encodeURIComponent(elixirId)}`,
+          {method: "DELETE"}
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setAlreadyRegistered(false);
+          setRegisteredData(null);
+          // Populate form with existing data
+          setFormData({
+            fullName: "",
+            contactNumber: "",
+            email: "",
+            elixirId: elixirId,
+            agreeTerms: false,
+          });
+        } 
+    } catch (err) {
+      console.error("Error deleteing User:", err);
+    } 
+    }
+  }
+
   const isFormValid = () => {
     return (
       formData.fullName.trim() &&
@@ -279,7 +305,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
         />
 
         {/* Title */}
-        <div className="absolute top-28 left-0 right-0 z-20 text-center px-4">
+        <div className={`absolute ${alreadyRegistered ? "top-33" : "top-28"} left-0 right-0 z-20 text-center px-4`}>
           <h1
             className="text-2xl font-bold uppercase tracking-widest text-white drop-shadow-lg"
             style={{ fontFamily: "Cinzel, serif" }}
@@ -290,10 +316,10 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
 
         {/* Form container */}
         <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
-          <div className="space-y-4">
+          <div className="w-full h-full">
             {!alreadyRegistered ? (
               <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 space-y-6">
                   <div>
                     <input
                       type="text"
@@ -428,7 +454,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                 )}
 
                 
-                <div className="flex justify-center -translate-y-10">
+                <div className="flex justify-center -translate-y-7">
                     <button
                       type="button"
                       onClick={handleSubmit}
@@ -438,7 +464,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                       <img
                         src="https://i.ibb.co/C3kCrrPy/The-PNG-Stock-removebg-preview-1.png"
                         alt="Submit"
-                        className={`h-32 w-auto transition-all duration-300 ${
+                        className={`h-28 w-auto transition-all duration-300 ${
                           isFormValid()
                             ? "hover:brightness-110 hover:drop-shadow-2xl filter drop-shadow-lg"
                             : "opacity-50 grayscale"
@@ -457,7 +483,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
 
               </div>
               ) :
-              <div className="flex flex-col items-center justify-start -translate-y-1/2">
+              <div className="flex flex-col w-full items-center justify-start mb-24">
                 <div>
                   <b>Name:</b> {registeredData.name}
                 </div>
@@ -468,7 +494,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                   <b>Phone:</b> {registeredData.phone}
                 </div>
                 <div>
-                  <b>Elixir ID:</b> {registeredData.elixir}
+                  <b>UID:</b> {registeredData.elixir}
                 </div>
                 <div>
                   <b>Registered At:</b> {new Date(registeredData.registeredAt).toLocaleString('en-US', {
@@ -479,6 +505,36 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                                           minute: '2-digit'
                     })}
                 </div>
+                  <div className="mt-10 w-full flex flex-col gap-3 justify-center items-center">
+                    <p className="text-center">Join our Discord server to participate in the event and for any queries or support.</p>
+                    <button
+                      onClick={handleJoinDiscord}
+                      className="group transform transition-all duration-300 hover:scale-110 relative mb-6"
+                    >
+                      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 hover:from-indigo-500 hover:via-purple-500 hover:to-indigo-600 rounded-xl px-8 py-4 flex items-center space-x-3 shadow-lg hover:shadow-2xl transition-all duration-300">
+                        {/* Discord icon */}
+                        <svg
+                          className="w-6 h-6 text-white"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+                        </svg>
+                        <span
+                          className="text-white font-bold text-lg tracking-wider"
+                          style={{ fontFamily: "Cinzel, serif" }}
+                        >
+                          Join Discord
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                  <div onClick={() => {
+                    handleDelete(profile?.elixir);
+                    router.refresh()
+                  }}>
+                    <p className="text-xs text-[#e5b913] -translate-y-2 underline cursor-pointer hover:text-[#b5971b] transition-colors duration-300">Unregister from this event</p>
+                  </div>
               </div>     
             }
           </div>
@@ -644,22 +700,32 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
 
             <div className="flex justify-center mt-8">
               {alreadyRegistered ? (
-                <div className="text-center">
-                  <div className="bg-green-600/20 border border-green-500/50 rounded-xl p-4 mb-4">
-                    <p className="text-green-400 font-bold text-lg" style={{ fontFamily: "Cinzel, serif" }}>
-                      ✓ ALREADY REGISTERED
-                    </p>
-                    <p className="text-green-300 text-sm mt-2">
-                      Registration Date: {registeredData?.registeredAt ? new Date(registeredData.registeredAt).toLocaleString('en-US', {
-                                          year: 'numeric',
-                                          month: 'long', 
-                                          day: 'numeric',
-                                          hour: '2-digit',
-                                          minute: '2-digit'
-                    }) : 'N/A'}
-                    </p>
+                <div>
+                  <div className="text-center">
+                    <div className="bg-green-600/20 border border-green-500/50 rounded-xl p-4 mb-4">
+                      <p className="text-green-400 font-bold text-lg" style={{ fontFamily: "Cinzel, serif" }}>
+                        ✓ ALREADY REGISTERED
+                      </p>
+                      <p className="text-green-300 text-sm mt-2">
+                        Registration Date: {registeredData?.registeredAt ? new Date(registeredData.registeredAt).toLocaleString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long', 
+                                            day: 'numeric',
+                                            hour: '2-digit',
+                                            minute: '2-digit'
+                      }) : 'N/A'}
+                      </p>
+                    </div>
                   </div>
+                  <div onClick={() => {
+                      handleDelete(profile?.elixir);
+                      router.refresh()
+                    }}>
+                      <p className="text-xs text-[#e5b913] translate-x-22 underline cursor-pointer hover:text-[#b5971b] transition-colors duration-300">Unregister from this event</p>
+                  </div>
+
                 </div>
+                
               ) : (
                 <button
                   type="button"
