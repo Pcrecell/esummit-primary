@@ -148,12 +148,12 @@ const Popup = () => {
               style={{ 
                 width: popupWidth, 
                 maxWidth: popupMaxWidth,
-                backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/founderarena.webp?updatedAt=1755413558055')",
+                backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Instagram%20post%20-%205%20(8)%20(1).webp?updatedAt=1755501360943')",
                 backgroundSize: "cover",
                 backgroundPosition: "center center",
                 backgroundRepeat: "no-repeat",
                 backgroundColor: "black",
-                minHeight: isMobile ? "400px" : "500px",
+                minHeight: isMobile ? "400px" : "90vh",
                 boxShadow: "0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), 0 0 100px rgba(34, 197, 94, 0.1)"
                }}
                initial={{ opacity: 0, scale: 0.8, y: 50 }}
@@ -192,35 +192,7 @@ const Popup = () => {
               </motion.button>
 
               {/* Black Overlay */}
-              <div className="absolute top-0 left-0 bg-gradient-to-b from-black/60 to-transparent z-[60] w-full h-full"/>
-              
-              {/* Success Icon */}
-              <div className="relative z-[70] flex justify-center pt-8 pb-4">
-                <motion.div
-                  className="w-52 sm:w-56 md:w-60 lg:w-64 xl:w-72 h-auto rounded-full flex items-center justify-center"
-                  // initial={{ scale: 0, rotate: -180 }}
-                  // animate={{ scale: 1, rotate: 0 }}
-                  // transition={{ delay: 0.2, duration: 0.5, ease: [0.68, -0.55, 0.265, 1.55] }}
-                >
-                  <img 
-                    src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/logo.png?updatedAt=1755075880371" 
-                    alt="E-Summit Logo" 
-                    className="w-full h-auto object-contain"
-                  />
-                </motion.div>
-              </div>
-
-              {/* Content */}
-              <motion.div
-                className="relative z-[70] px-6 pb-6 pt-8 text-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-              >
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 mt-12 leading-tight">
-                  Payment is Live !!
-                </h2>
-              </motion.div>
+              {/* <div className="absolute top-0 left-0 bg-gradient-to-b from-black/60 to-transparent z-[60] w-full h-full"/> */}
             </motion.div>
           </motion.div>
         )}
