@@ -732,26 +732,27 @@ const handleRemoveMember = async (memberelixir) => {
         {isRegistered && teamInfo.teamName && (
           <div className="w-full max-w-4xl space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-5xl font-mono font-bold text-white tracking-wider mb-2">
+              <h2 className="text-3xl md:text-5xl font-mono pt-10 font-bold text-white tracking-wider mb-2">
                 {teamInfo.teamName}
               </h2>
               <p className="text-green-400 font-mono text-lg">
                 Team ID: {teamInfo.teamId} | Track: {teamInfo.track}
               </p>
             </div>
-            
-            <div className="grid md:grid-cols-2 gap-8">
+
+
+            <div className="grid justify-center pt-2 md:pt-20 gap-8">
               {/* Team Members */}
-              <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-6 backdrop-blur-md">
-                <h3 className="text-xl font-mono font-bold text-white mb-4">Team Members</h3>
-                <div className="space-y-3">
+              <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-20 backdrop-blur-md">
+                <h3 className="text-xl md:text-3xl font-mono font-bold text-white mb-10 ">Team Members</h3>
+                <div className="space-y-10">
                   {teamInfo.members.map((member, idx) => (
                     <div key={idx} className="flex items-center justify-between text-white font-mono">
-                      <div className="flex items-center gap-4">
-                        <span className="text-green-400 font-bold">
+                      <div className="flex items-center gap-4 ">
+                        <span className="text-green-400 font-bold text-xl md:text-2xl">
                           {member.name}
                         </span>
-                        <span className="text-white/80 text-sm">
+                        <span className="text-white/80 text-xl md:text-2xl">
                           {member.elixir}
                         </span>
                       </div>
