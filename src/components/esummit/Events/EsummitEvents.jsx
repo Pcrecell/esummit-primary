@@ -47,17 +47,17 @@ const EventsPage = () => {
           "https://ik.imagekit.io/1bsukh3d7/hack-r.webp?updatedAt=1755242215568",
         route: "/pandoras-paradox",
       },
-      {
-        title: "EXPO",
-        time: "11:00AM - 4:30PM",
-        venue: "CAMPUS-06 BANQUET HALL",
-        coordinates: [20.353523760924087, 85.8195440597536],
-        description:
-          "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-        image:
-          "https://ik.imagekit.io/1bsukh3d7/expo-l.webp?updatedAt=1755242215588",
-        route: "/expo",
-      },
+      // {
+      //   title: "EXPO",
+      //   time: "11:00AM - 4:30PM",
+      //   venue: "CAMPUS-06 BANQUET HALL",
+      //   coordinates: [20.353523760924087, 85.8195440597536],
+      //   description:
+      //     "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
+      //   image:
+      //     "https://ik.imagekit.io/1bsukh3d7/expo-l.webp?updatedAt=1755242215588",
+      //   route: "/expo",
+      // },
     ],
     23: [
       {
