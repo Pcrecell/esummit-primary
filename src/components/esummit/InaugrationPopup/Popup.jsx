@@ -118,8 +118,8 @@ const Popup = () => {
     setClosed(false);
   };
 
-  const popupWidth = isMobile ? "90vw" : isTablet ? "90vw" : "800px";
-  const popupMaxWidth = isMobile ? "350px" : isTablet ? "600px" : "800px";
+  const popupWidth = isMobile ? "90vw" : isTablet ? "90vw" : "400px";
+  const popupMaxWidth = isMobile ? "350px" : isTablet ? "600px" : "700px";
 
   return (
     <>
@@ -149,11 +149,11 @@ const Popup = () => {
                 width: popupWidth, 
                 maxWidth: popupMaxWidth,
                 backgroundImage: "url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Instagram%20post%20-%205%20(8)%20(1).webp?updatedAt=1755501360943')",
-                backgroundSize: "cover",
-                backgroundPosition: "center center",
+                backgroundSize: "contain", // This ensures the full image is visible
+                backgroundPosition: "center", // Centers the image
                 backgroundRepeat: "no-repeat",
-                backgroundColor: "black",
-                minHeight: isMobile ? "400px" : "90vh",
+                backgroundColor: "black", // Fallback color for areas not covered by image
+                minHeight: isMobile ? "400px" : "80vh",
                 boxShadow: "0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), 0 0 100px rgba(34, 197, 94, 0.1)"
                }}
                initial={{ opacity: 0, scale: 0.8, y: 50 }}

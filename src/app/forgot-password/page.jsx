@@ -104,9 +104,12 @@ export default function ForgotPassword() {
           <div className="flex justify-start">
             <button
               type={!successMessage ? "submit" : "button"}
-              onClick={successMessage ? handleContactSupport : undefined}
+              onClick={() => {
+                successMessage ? handleContactSupport : undefined;
+                 buttonState === "support" ? navigate.push("/contact") : ""
+              }}
               style={{ transition: 'width 0.3s ease-in-out' }}
-              className="relative inline-flex items-center justify-center gap-1 bg-[#2F8D46] hover:bg-[#256e36] text-black font-semibold rounded py-1.5 px-4 text-sm transition-colors duration-200 whitespace-nowrap overflow-hidden"
+              className="relative inline-flex items-center justify-center gap-1 py-2 w-full bg-[#2F8D46] hover:bg-[#256e36] text-black font-semibold rounded px-4 text-sm transition-colors duration-200 whitespace-nowrap overflow-hidden"
               disabled={!successMessage && loading}
             >
               <span className="invisible" aria-hidden="true">
