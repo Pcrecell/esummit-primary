@@ -30,7 +30,6 @@ function ExpoContactUs() {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
-    console.log("Query submitted:", { name, email, query });
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/expo/submit-query`, {
       method: "POST",

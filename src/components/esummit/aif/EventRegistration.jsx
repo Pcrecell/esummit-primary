@@ -193,8 +193,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
           elixir: formData.elixirId,
         };
 
-        console.log("Submitting registration:", registrationData);
-
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/aif/aif_registration`,
           {
