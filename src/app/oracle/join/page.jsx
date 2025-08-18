@@ -101,7 +101,13 @@ const JoinTeamPage = () => {
   return (
     <div className="min-h-screen backdrop-blur-sm bg-black/40 flex items-center justify-center p-4 sm:p-8">
       <div className="relative w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl 
-                     max-h-[90vh] rounded-xl sm:rounded-2xl shadow-2xl">
+                     max-h-[100vh] rounded-xl sm:rounded-2xl shadow-2xl">
+          <button
+    onClick={() => router.back()}
+    className="absolute md:top-8 md:right-12 top-24 right-8 text-white text-3xl font-bold hover:text-red-500 transition"
+  >
+    &times;
+  </button>
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain flex flex-col justify-center items-center px-8 py-6 overflow-auto rounded-xl sm:rounded-2xl"
           style={{
@@ -130,7 +136,7 @@ const JoinTeamPage = () => {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
+              <div className="flex items-center md:w-full">
                 <label className="text-white font-semibold text-sm w-32 text-left">
                   Your UID:
                 </label>
@@ -145,7 +151,7 @@ const JoinTeamPage = () => {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
+              <div className="flex items-center  md:w-full">
                 <label className="text-white font-semibold text-sm w-32 text-left">
                  Lead UID:
                 </label>
@@ -160,8 +166,8 @@ const JoinTeamPage = () => {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+              <div className="flex items-center md:w-full">
+                <label className="text-white font-semibold text-sm w-32">
                   Team ID:
                 </label>
                 <input
