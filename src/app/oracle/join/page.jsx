@@ -61,39 +61,45 @@ const JoinTeamPage = () => {
 
   // ✅ aligned submit with fetch (pandoras style)
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+  e.preventDefault();
 
-    // console.log("Joining team:", formData);
+  if (!validateForm()) {
+    showError("Please fix the highlighted errors before submitting");
+    return;
+  }
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.teamName.trim(), // using teamName as display name
-          elixir: formData.yourEid.trim(),
-          mode: "join_team",
-          teamId: formData.teamId.trim(),
-        }),
-      });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.teamName.trim(),
+        elixir: formData.yourEid.trim(),
+        mode: "join_team",
+        teamId: formData.teamId.trim(),
+      }),
+    });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Error joining team");
+    const data = await res.json();
+    if (!res.ok) {
+      if (
+        data.message?.toLowerCase().includes("already") ||
+        data.message?.toLowerCase().includes("exists")
+      ) {
+        showError("⚠️ You are already registered in a team");
+      } else {
+        showError(data.message || "Error joining team");
       }
-
-      showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
-      router.push("/success");
-    } catch (err) {
-      // console.error("Error joining team:", err);
-      showError(err.message);
+      return;
     }
-  };
-
+    showSuccess(`✅ ${data.message} | Joined Team ID: ${data.teamId}`);
+    router.push("/success");
+  } catch (err) {
+    showError(err.message || "Error joining team");
+  }
+};
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
