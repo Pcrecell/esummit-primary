@@ -28,11 +28,16 @@ const HeroSection = () => {
   }, [userData, router]);
   
   const handleRegisterClick = () => {
+    if(profile?.isEventRegistered && profile?.eventName != "Hackathon"){
+      showError("You have already registered for another event.");
+      return;
+    }
     if (!paymentDone) {
       showError("Please complete your payment to register for the event.");
       setTimeout(() => router.replace("/dashboard"), 2000);
       return;
     }
+
     router.push("/pandoras-paradox/dashboard");
   };
 

@@ -322,7 +322,7 @@ export default function CaseX() {
                         This is not a case study. This is war.
                     </p>
                     {/* Register / Manage button positioned on bottom border (mobile) */}
-                    {profile.isEventRegistered ? (
+                    {profile.isEventRegistered && profile?.eventName != "case-x" ? (
                         <button
                             onClick={() => {
                                 if (!paymentDone) {
@@ -386,7 +386,7 @@ export default function CaseX() {
                         <div className="w-[85vw] pl-[35vw] text-center justify-start"><span className="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">Got sharp ideas? Love cracking real-world problems?<br /><br /></span><span className="text-white text-[2vw] lg:text-2xl font-light font-leage-spartan">Case-X is your chance to step out of the classroom and into the boardroom. Tackle actual industry challenges, battle it out with the brightest teams, and pitch your solution live to real experts.<br />Top 10 teams make it to the finale at E-Summit 2025, where strategy, creativity, and confidence will decide who takes the crown.<br />Think you've got what it takes?<br /><br /></span><span className="text-white text-[2vw] lg:text-2xl font-bold font-leage-spartan">This is not a case study. This is war.</span></div>
                         <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
                             {/* Conditional register/manage buttons based on registration status */}
-                            {profile.isEventRegistered ? (
+                            {profile.isEventRegistered && profile?.eventName != "case-x"? (
                                 <button
                                     onClick={() => {
                                         if (!paymentDone) {
@@ -772,7 +772,7 @@ export default function CaseX() {
                                 ×
                             </button>
 
-                            {profile.isEventRegistered ? (
+                            {profile.isEventRegistered&& profile?.eventName != "case-x"? (
                                 // Manage Team UI for registered users
                                 <>
                                     <div className="w-full h-full flex flex-col items-center justify-start pt-6 md:pt-8 px-4 md:px-16">

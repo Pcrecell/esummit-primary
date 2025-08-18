@@ -40,6 +40,10 @@ export default function Hero() {
   const paymentDone = profile?.payment;
 
   const handleRegister = () => {
+    if(profile?.isEventRegistered && profile?.eventName != "oracle"){
+      showError("You have already registered for another event.");
+      return;
+    }
     if (!paymentDone) {
       showError("Please complete your payment to register for the event.");
       setTimeout(() => router.replace("/dashboard"), 2000);
@@ -118,7 +122,7 @@ export default function Hero() {
           <div className="flex justify-center mt-12">
             <div
               className="group relative w-48 sm:w-72 md:w-48 items-center cursor-pointer"
-              onClick={handleRegister}
+              onClick={() => teamInfo.teamId ? router.push('/oracle/dashboard') : handleRegister()}
             >
               {/* Image shown when not hovering */}
               <img
@@ -137,7 +141,7 @@ export default function Hero() {
               <span
                 className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-sm sm:text-base md:text-xl ${cormorantGaramond.className}`}
               >
-                REGISTER NOW
+                {teamInfo.teamId ? "GO TO DASHBOARD" : "REGISTER NOW"}
               </span>
             </div>
           </div>
