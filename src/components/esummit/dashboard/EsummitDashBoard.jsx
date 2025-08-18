@@ -16,7 +16,8 @@ import { useRouter } from "next/navigation";
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const EsummitDashBoard = () => {
-  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+  
+  // const { userData, setUserData, profile, setProfile, loading} = useAuth();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
@@ -25,14 +26,21 @@ const EsummitDashBoard = () => {
   const [registeredEventId, setRegisteredEventId] = useState(null);
   const router = useRouter();
 
+const { userData, setUserData, profile, setProfile, loading} = useAuth();
+   useEffect(() => {
+      if (!loading) {
+        if (!userData) {
+          router.replace("/login");
+        }
+      }
+    }, [userData, profile, loading, router]);
+
   const qrCode = profile?.qrCode || "";
   // console.log("User Data:", userData);
   // console.log("Profile Data:", profile);
   const paymentDone = profile?.payment || false;
   const email = profile?.email || "User";
   const elixir = profile?.elixir || "";
-
-
 
   const copyToClipboard = async (text) => {
     try {
@@ -254,7 +262,6 @@ const EsummitDashBoard = () => {
                   <div className="w-96 h-72 flex items-center justify-center">
                     <img src={qrCode} alt="QR Code" className=" w-40 h-40 mx-auto mb-4" />
                   </div>
-
 
                   {/* Name Section - Below Question Mark */}
                   <div className="relative z-40 w-64">
