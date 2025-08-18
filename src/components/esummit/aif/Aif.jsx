@@ -56,8 +56,8 @@ export default function Aif() {
 
   const openRegistration = () => {
     if (!paymentDone) {
-      showError("Please complete your payment to register for the event.");
-      setTimeout(() => router.replace("/dashboard"), 2000);
+      showError("User not found or not paid or you are already registered for event");
+      setTimeout(() => router.replace("/dashboard"), 3000);
       return;
     }
     
