@@ -41,8 +41,6 @@ export default function CaseX() {
         role: "",
     });
 
-    console.log("Team Info:", teamInfo);
-
     const [newTeammateName, setNewTeammateName] = useState("");
     const [newTeammateId, setNewTeammateId] = useState("");
     const [isAddingMember, setIsAddingMember] = useState(false);
@@ -431,6 +429,7 @@ export default function CaseX() {
                         className="h-16"
                     />
                 </div>
+            </div>
 
 
                 {/* ABOUT SECTION */}
@@ -803,14 +802,14 @@ export default function CaseX() {
                                                         placeholder="First Name"
                                                         value={newTeammateName}
                                                         onChange={(e) => setNewTeammateName(e.target.value)}
-                                                        className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                     <input
                                                         type="text"
                                                         placeholder="UID"
                                                         value={newTeammateId}
                                                         onChange={(e) => setNewTeammateId(e.target.value)}
-                                                        className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="flex-1 w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                     <button
                                                         onClick={handleAddMemberButton}
@@ -906,7 +905,7 @@ export default function CaseX() {
                                                         placeholder="First Name"
                                                         value={formData.name}
                                                         onChange={(e) => handleChange("name", e.target.value)}
-                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                                 <div className="relative">
@@ -915,7 +914,7 @@ export default function CaseX() {
                                                         placeholder="UID"
                                                         value={formData.yourEid}
                                                         onChange={(e) => handleChange("yourEid", e.target.value)}
-                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                                 <div className="relative md:col-span-2">
@@ -924,7 +923,7 @@ export default function CaseX() {
                                                         placeholder="Team Name"
                                                         value={formData.teamName}
                                                         onChange={(e) => handleChange("teamName", e.target.value)}
-                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                        className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                     />
                                                 </div>
                                             </div>
@@ -937,7 +936,7 @@ export default function CaseX() {
                                                             placeholder="First Name"
                                                             value={formData.name}
                                                             onChange={(e) => handleChange("name", e.target.value)}
-                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                         />
                                                     </div>
                                                     <div className="relative">
@@ -946,7 +945,7 @@ export default function CaseX() {
                                                             placeholder="Team Name"
                                                             value={formData.teamName}
                                                             onChange={(e) => handleChange("teamName", e.target.value)}
-                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                         />
                                                     </div>
                                                 </div>
@@ -958,7 +957,7 @@ export default function CaseX() {
                                                             placeholder="UID"
                                                             value={formData.yourEid}
                                                             onChange={(e) => handleChange("yourEid", e.target.value)}
-                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                         />
                                                     </div>
                                                     <div className="relative">
@@ -967,7 +966,7 @@ export default function CaseX() {
                                                             placeholder="Team ID"
                                                             value={formData.teamId}
                                                             onChange={(e) => handleChange("teamId", e.target.value)}
-                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                                                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                                                         />
                                                     </div>
                                                 </div>
@@ -1008,6 +1007,5 @@ export default function CaseX() {
                     onClose={hideToast}
                 />
             </div>
-        </div>
     );
 }
