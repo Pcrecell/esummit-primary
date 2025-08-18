@@ -119,10 +119,10 @@ const JoinTeamPage = () => {
             Join a Team
           </h2>
 
-          <form onSubmit={handleSubmit} className={`${cormorantGaramond.className} w-full max-w-sm md:space-y-3 space-y-1`}>
+          <form onSubmit={handleSubmit} className={`${cormorantGaramond.className}  md:space-y-3 space-y-1`}>
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+              <div className="flex items-center  md:w-full">
+                <label className="text-white font-semibold text-sm px-6 w-32 ">
                   Team Name:
                 </label>
                 <input
@@ -137,7 +137,7 @@ const JoinTeamPage = () => {
 
             <div className="flex flex-col">
               <div className="flex items-center md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+                <label className="text-white font-semibold text-sm px-6 w-32 ">
                   Your UID:
                 </label>
                 <input
@@ -152,7 +152,7 @@ const JoinTeamPage = () => {
 
             <div className="flex flex-col">
               <div className="flex items-center  md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+                <label className="text-white font-semibold text-sm px-6 w-32">
                  Lead UID:
                 </label>
                 <input
@@ -167,7 +167,7 @@ const JoinTeamPage = () => {
 
             <div className="flex flex-col">
               <div className="flex items-center md:w-full">
-                <label className="text-white font-semibold text-sm w-32">
+                <label className="text-white font-semibold px-6 text-sm w-32">
                   Team ID:
                 </label>
                 <input
