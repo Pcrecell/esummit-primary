@@ -8,12 +8,11 @@ import EventsCalendar from "./EventsCalendar";
 import EventsMap from "./EventsMap";
 import HeroSection from "./HeroSection";
 import MobileTabs from "./MobileTabs";
-import { authAPI } from "@/lib/services/api"; // make sure you have this
+// import { authAPI } from "@/lib/services/api"; // make sure you have this
 import { useAuth } from "@/lib/context/AuthContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -26,7 +25,7 @@ const EventsPage = () => {
   const router = useRouter();
   const [selectedDate, setSelectedDate] = useState(22);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+  const { userData, setUserData, profile, setProfile, loading } = useAuth();
   // note: scroll listeners are attached after events are derived
 
   const tabs = [
@@ -44,7 +43,8 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://ik.imagekit.io/1bsukh3d7/hack-r.webp?updatedAt=1755242215568",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/hack-r.webp?updatedAt=1755242215568",
         route: "/pandoras-paradox",
       },
       {
@@ -54,8 +54,9 @@ const EventsPage = () => {
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-        image: "https://ik.imagekit.io/1bsukh3d7/expo-l.webp?updatedAt=1755242215588",
-        route: "/EXPO",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/expo-l.webp?updatedAt=1755242215588",
+        route: "/expo",
       },
     ],
     23: [
@@ -66,7 +67,8 @@ const EventsPage = () => {
         coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
-        image: "https://ik.imagekit.io/1bsukh3d7/oracle-r.webp?updatedAt=1755242215530",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/oracle-r.webp?updatedAt=1755242215530",
         route: "/oracle",
       },
       {
@@ -76,7 +78,11 @@ const EventsPage = () => {
         coordinates: [20.352904448394906, 85.81402616826391],
         description:
           "Alice in Founderland is an entrepreneurial challenge where players solve real-world problems with creativity and innovation to win.",
-        image: "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
+        route: "/aif",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/aif-l.webp?updatedAt=1755242215528",
         route: "/aif",
       },
       {
@@ -86,7 +92,8 @@ const EventsPage = () => {
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
           "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
-        image: "https://ik.imagekit.io/1bsukh3d7/expo-r.webp?updatedAt=1755242215505",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/expo-r.webp?updatedAt=1755242215505",
         route: "/expo",
       },
       {
@@ -96,7 +103,8 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
         route: "/pandoras-paradox",
       },
     ],
@@ -108,7 +116,8 @@ const EventsPage = () => {
         coordinates: [20.34919541378971, 85.81945496655301],
         description:
           "Case Battle is a contest where teams solve real-world cases with innovative, practical solutions and defend them before judges.",
-        image: "https://ik.imagekit.io/1bsukh3d7/casex-r.webp?updatedAt=1755242215640",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/casex-r.webp?updatedAt=1755242215640",
         route: "/case-x",
       },
       {
@@ -118,7 +127,8 @@ const EventsPage = () => {
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
-        image: "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
+        image:
+          "https://ik.imagekit.io/1bsukh3d7/hack-l.webp?updatedAt=1755242215665",
         route: "/pandoras-paradox",
       },
     ],
@@ -131,8 +141,7 @@ const EventsPage = () => {
   const handleKnowMore = (route) => {
     if (route && userData) {
       router.push(route);
-    }
-    else {
+    } else {
       // Redirect to login page if not logged in
       router.push("/login");
     }
@@ -151,7 +160,8 @@ const EventsPage = () => {
     if (Math.abs(end - start) < 1) return;
     const duration = 450;
     const startTime = performance.now();
-    const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const ease = (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     // Temporarily disable snap so we can animate freely
     const prevSnap = el.style.scrollSnapType;
     el.style.scrollSnapType = "none";
@@ -202,7 +212,7 @@ const EventsPage = () => {
   // Reset scroll position on date change
   useEffect(() => {
     setCurrentCardIndex(0);
-  if (desktopScrollRef.current) desktopScrollRef.current.scrollTo({ top: 0 });
+    if (desktopScrollRef.current) desktopScrollRef.current.scrollTo({ top: 0 });
     if (mobileScrollRef.current) mobileScrollRef.current.scrollTo({ left: 0 });
   }, [selectedDate]);
 
@@ -371,7 +381,7 @@ const EventsPage = () => {
         className="lg:flex hidden relative"
         style={{
           backgroundImage:
-            "linear-gradient(to bottom, rgba(24, 28, 13, 1) 0%, rgba(24, 28, 13, 0.3) 70%, rgba(0, 0, 0, 1) 100%), url(\"https://ik.imagekit.io/fhervghik/E-Cell%20Website/Events_Image_Background_Desktop.png?updatedAt=1754584353201\")",
+            'linear-gradient(to bottom, rgba(24, 28, 13, 1) 0%, rgba(24, 28, 13, 0.3) 70%, rgba(0, 0, 0, 1) 100%), url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Events_Image_Background_Desktop.png?updatedAt=1754584353201")',
           backgroundSize: "100%",
         }}
       >
@@ -381,10 +391,10 @@ const EventsPage = () => {
             {/* Vertical Pagination (left side) */}
             {currentEvents.length > 1 && (
               <div className="absolute -left-1 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-20">
-        {currentEvents.map((_, index) => (
+                {currentEvents.map((_, index) => (
                   <button
                     key={`v-dot-${index}`}
-          onClick={() => scrollDesktopToIndex(index)}
+                    onClick={() => scrollDesktopToIndex(index)}
                     aria-label={`Go to event ${index + 1}`}
                     className={`w-2 h-2 rounded-full transition-all duration-200 ${
                       index === currentCardIndex
@@ -409,7 +419,7 @@ const EventsPage = () => {
                   key={`desktop-${selectedDate}-${index}`}
                   className="flex-shrink-0 flex items-center justify-center h-full snap-center"
                 >
-                    <div className="w-full max-w-4xl mx-auto">
+                  <div className="w-full max-w-4xl mx-auto">
                     <EventCard left={index % 2 === 0} eventData={eventData} />
                     <div className="w-full flex justify-center mt-4 rounded-full">
                       <button
@@ -419,31 +429,48 @@ const EventsPage = () => {
                         Know More
                       </button>
                     </div>
-                      {/* Up/Down controls (right side) */}
-                      {currentEvents.length > 1 && (
-                        <div className="hidden lg:flex flex-col gap-2 absolute -right-8 top-1/2 -translate-y-1/2 z-20">
-                          <button
-                            aria-label="Previous event"
-                            onClick={() => scrollDesktopToIndex(Math.max(0, currentCardIndex - 1))}
-                            disabled={currentCardIndex === 0}
-                            className={`w-9 h-9 rounded-full border border-[#edbd90] bg-[#edbd90] text-[140%] text-black hover:bg-transparent hover:text-[gray] transition ${
-                              currentCardIndex === 0 ? "opacity-40 cursor-not-allowed" : ""
-                            }`}
-                          >
-                            ↑
-                          </button>
-                          <button
-                            aria-label="Next event"
-                            onClick={() => scrollDesktopToIndex(Math.min(currentEvents.length - 1, currentCardIndex + 1))}
-                            disabled={currentCardIndex >= currentEvents.length - 1}
-                            className={`w-9 h-9 rounded-full border border-[#edbd90] bg-[#edbd90] text-[140%] text-black hover:bg-transparent hover:text-[gray] transition ${
-                              currentCardIndex >= currentEvents.length - 1 ? "opacity-40 cursor-not-allowed" : ""
-                            }`}
-                          >
-                            ↓
-                          </button>
-                        </div>
-                      )}
+                    {/* Up/Down controls (right side) */}
+                    {currentEvents.length > 1 && (
+                      <div className="hidden lg:flex flex-col gap-2 absolute -right-8 top-1/2 -translate-y-1/2 z-20">
+                        <button
+                          aria-label="Previous event"
+                          onClick={() =>
+                            scrollDesktopToIndex(
+                              Math.max(0, currentCardIndex - 1)
+                            )
+                          }
+                          disabled={currentCardIndex === 0}
+                          className={`w-9 h-9 rounded-full border border-[#edbd90] bg-[#edbd90] text-[140%] text-black hover:bg-transparent hover:text-[gray] transition ${
+                            currentCardIndex === 0
+                              ? "opacity-40 cursor-not-allowed"
+                              : ""
+                          }`}
+                        >
+                          ↑
+                        </button>
+                        <button
+                          aria-label="Next event"
+                          onClick={() =>
+                            scrollDesktopToIndex(
+                              Math.min(
+                                currentEvents.length - 1,
+                                currentCardIndex + 1
+                              )
+                            )
+                          }
+                          disabled={
+                            currentCardIndex >= currentEvents.length - 1
+                          }
+                          className={`w-9 h-9 rounded-full border border-[#edbd90] bg-[#edbd90] text-[140%] text-black hover:bg-transparent hover:text-[gray] transition ${
+                            currentCardIndex >= currentEvents.length - 1
+                              ? "opacity-40 cursor-not-allowed"
+                              : ""
+                          }`}
+                        >
+                          ↓
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -457,7 +484,10 @@ const EventsPage = () => {
             <h1 className="text-3xl font-cormorant-infant text-center text-[#f8d6a4] font-semibold">
               Events Calendar
             </h1>
-            <EventsCalendar selectedDate={selectedDate} onDateSelect={handleDateSelect} />
+            <EventsCalendar
+              selectedDate={selectedDate}
+              onDateSelect={handleDateSelect}
+            />
             <p className="text-[#edbd90] text-base font-cormorant-infant flex items-center justify-center">
               August {selectedDate}, 2025 - {currentEvents.length} event
               {currentEvents.length !== 1 ? "s" : ""}
@@ -481,7 +511,7 @@ const EventsPage = () => {
         className="lg:hidden"
         style={{
           backgroundImage:
-            "linear-gradient(to bottom, rgba(24, 28, 13, 1) 0%, rgba(24, 28, 13, 0.3) 70%, rgba(0, 0, 0, 1) 100%), url(\"https://ik.imagekit.io/fhervghik/E-Cell%20Website/Events_Image_Background_Mobile.png?updatedAt=1754584353312\")",
+            'linear-gradient(to bottom, rgba(24, 28, 13, 1) 0%, rgba(24, 28, 13, 0.3) 70%, rgba(0, 0, 0, 1) 100%), url("https://ik.imagekit.io/fhervghik/E-Cell%20Website/Events_Image_Background_Mobile.png?updatedAt=1754584353312")',
           backgroundSize: "100%",
           backgroundPositionY: "",
           backgroundPositionX: "",
@@ -493,7 +523,11 @@ const EventsPage = () => {
             Events Calendar
           </h2>
           <div className="">
-            <MobileTabs selectedDate={selectedDate} onDateSelect={handleDateSelect} tabs={tabs} />
+            <MobileTabs
+              selectedDate={selectedDate}
+              onDateSelect={handleDateSelect}
+              tabs={tabs}
+            />
             <p className="text-[#edbd90] text-base font-cormorant-infant text-center">
               August {selectedDate}, 2025 - {currentEvents.length} event
               {currentEvents.length !== 1 ? "s" : ""}
@@ -535,7 +569,7 @@ const EventsPage = () => {
                       >
                         Know More
                       </button>
-                    </div>  
+                    </div>
                   </div>
                 </div>
               ))}
