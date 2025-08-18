@@ -92,7 +92,11 @@ const JoinTeamPage = () => {
       } else {
         showError(data.message || "Error joining team");
       }
-      return;
+      showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
+      router.push("/oracle/dashboard");
+    } catch (err) {
+      // console.error("Error joining team:", err);
+      showError(err.message);
     }
     showSuccess(`✅ ${data.message} | Joined Team ID: ${data.teamId}`);
     router.push("/success");
@@ -127,9 +131,9 @@ const JoinTeamPage = () => {
 
           <form onSubmit={handleSubmit} className={`${cormorantGaramond.className}  md:space-y-3 space-y-1`}>
             <div className="flex flex-col">
-              <div className="flex items-center  md:w-full">
-                <label className="text-white font-semibold text-sm px-6 w-32 ">
-                  Team Name:
+              <div className="flex items-center md:w-full">
+                <label className="text-white font-semibold text-sm w-32 text-left">
+                  Your Name:
                 </label>
                 <input
                   type="text"
