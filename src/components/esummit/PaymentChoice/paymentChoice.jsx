@@ -7,16 +7,16 @@ import { useAuth } from "@/lib/context/AuthContext";
 const PaymentChoice = () => {
   const router = useRouter();
   const modalRef = useRef(null);
-  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+  const { userData, profile, loading } = useAuth();
 
+  // Redirect if not logged in
   useEffect(() => {
-    if (!loading) {
-      if (!userData) {
-        router.replace("/login");
-      }
+    if (!loading && !userData) {
+      router.replace("/login");
     }
-  }, [userData, profile, loading, router]);
+  }, [userData, loading, router]);
 
+  // Close modal if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -33,9 +33,10 @@ const PaymentChoice = () => {
         Loading...
       </div>
     );
-   }
+  }
 
-
+  // Check if payment should be disabled
+  const isPaymentDisabled = profile?.email?.startsWith("25");
 
   const handlePaymentLater = (e) => {
     e.preventDefault();
@@ -61,23 +62,34 @@ const PaymentChoice = () => {
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Price: Rs.249
             </p>
-            {/* DONT USE THE FOLLOWING BILLING LINK IN PRODUCTION - USE A DIFFERENT LINK 17796 - Testing, 17972 - Production */}
-            <a href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972" target="_blank" >            
+
+            {/* Pay Now Button */}
+            {!isPaymentDisabled ? (
+              <a
+                href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="group relative w-40 cursor-pointer">
+                  <img
+                    src="https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAYButtoon.webp?updatedAt=1755353301612"
+                    alt="Pay Now"
+                    className="w-full transition duration-300 group-hover:brightness-50 z-0"
+                  />
+                  <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
+                    PAY NOW
+                  </span>
+                </div>
+              </a>
+            ) : (
+              <div className="w-40 text-center text-red-500 font-bold">
+                Payment is disabled for first year
+              </div>
+            )}
+
+            {/* Walk Away Button */}
             <div
-              className="group relative w-40 cursor-pointer"
-            >
-                <img
-                  src="https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAYButtoon.webp?updatedAt=1755353301612"
-                  alt="Pay Now"
-                  className="w-full transition duration-300 group-hover:brightness-50 z-0"
-                />
-              <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
-                PAY NOW
-              </span>
-            </div>
-            </a>
-            <div
-              className="group relative w-40 cursor-pointer transition duration-300"
+              className="group relative w-40 cursor-pointer transition duration-300 mt-4"
               onClick={handlePaymentLater}
             >
               <img

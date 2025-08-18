@@ -46,27 +46,29 @@ const EsummitDashBoard = () => {
 
   useEffect(() => {
     const runEffect = async () => {
-      if (!loading) {
-        if (!userData) {
-          router.replace("/login");
-        } else if (paymentDone) {
-          try {
-            await fetch(`${API_URL}/payment/payment-callback`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email, elixir }),
-            });
-          } catch (err) {
-            // console.error("Payment callback failed:", err);
-          }
+      if (!loading && userData && paymentDone) {
+        try {
+          await fetch(`${API_URL}/payment/payment-callback`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, elixir }),
+          });
+        } catch (err) {
+          // console.error("Payment callback failed:", err);
         }
       }
     };
 
+    // Handle redirect synchronously
+    if (!loading && !userData) {
+      router.replace("/login");
+      return; // Prevent further execution
+    }
+
     runEffect();
-  }, [userData]); // profile, loading, router, paymentDone, email, elixir these are dependencies for the useEffect hook to ensure it runs when any of these values change.
+  }, [loading, userData, paymentDone, router, email, elixir]); // profile, loading, router, paymentDone, email, elixir these are dependencies for the useEffect hook to ensure it runs when any of these values change.
 
   if (loading) {
     return (
@@ -129,6 +131,7 @@ const EsummitDashBoard = () => {
           <source
             src="https://ik.imagekit.io/ilgcom35w/theme-bg-esummit.mp4?updatedAt=1754759044375"
             type="video/mp4"
+            className="video-dashboard-container"
           />
           Your browser does not support the video tag.
         </video>
@@ -200,7 +203,7 @@ const EsummitDashBoard = () => {
                             <span className="text-xl">
                               {profile?.elixir ||
                                 profile?.email?.substring(0, 10) ||
-                                "0123456789"}
+                                "----------"}
                             </span>
                           </p>
                         </div>
@@ -209,7 +212,7 @@ const EsummitDashBoard = () => {
                             copyToClipboard(
                               profile?.elixir ||
                                 profile?.email?.substring(0, 10) ||
-                                "0123456789"
+                                "----------"
                             )
                           }
                           className="p-2 hover:bg-green-600/20 rounded-md transition-colors duration-200 ml-2"
@@ -273,7 +276,7 @@ const EsummitDashBoard = () => {
                           <span className="text-xl">
                             {profile?.firstname
                               ? `${profile?.firstname} ${profile?.lastname || ""}`.trim()
-                              : "USER NAME"}
+                              : "------"}
                           </span>
                         </p>
                       </div>
@@ -300,7 +303,7 @@ const EsummitDashBoard = () => {
                             <span className="text-xl">
                               {profile?.elixir ||
                                 profile?.email?.substring(0, 10) ||
-                                "0123456789"}
+                                "----------"}
                             </span>
                           </p>
                         </div>
@@ -309,7 +312,7 @@ const EsummitDashBoard = () => {
                             copyToClipboard(
                               profile?.elixir ||
                                 profile?.email?.substring(0, 10) ||
-                                "0123456789"
+                                "----------"
                             )
                           }
                           className="p-2 hover:bg-green-600/20 rounded-md transition-colors duration-200 ml-2"
@@ -377,7 +380,7 @@ const EsummitDashBoard = () => {
                           <span className="text-xl">
                             {profile?.firstname
                               ? `${profile?.firstname} ${profile?.lastname || ""}`.trim()
-                              : "USER NAME"}
+                              : "------"}
                           </span>
                         </p>
                       </div>

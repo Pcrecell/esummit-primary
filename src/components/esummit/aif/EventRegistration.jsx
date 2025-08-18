@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@/lib/context/AuthContext";
+import { useToast } from "@/hooks/useToast";
+import Toast from "@/components/ui/Toast";
 
 const EventRegistration = ({ onRegistrationSuccess }) => {
   const [formData, setFormData] = useState({
@@ -9,7 +12,64 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
     agreeTerms: false,
   });
 
+
+
   const [errors, setErrors] = useState({});
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
+  const [registeredData, setRegisteredData] = useState(null);
+  const [checkingRegistration, setCheckingRegistration] = useState(true);
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+  const { toast, showError, showSuccess, hideToast } = useToast();
+
+  const checkAlreadyRegistered = async (elixirId) => {
+    if (!elixirId) {
+      setCheckingRegistration(false);
+      return;
+    }
+    
+    setCheckingRegistration(true);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/aif/${encodeURIComponent(elixirId)}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        console.log("Registered user is true", data);
+        setAlreadyRegistered(true);
+        setRegisteredData(data);
+        // Populate form with existing data
+        setFormData({
+          fullName: data.name || "",
+          contactNumber: data.phone || "",
+          email: data.email || "",
+          elixirId: data.elixir || elixirId,
+          agreeTerms: false,
+        });
+      } else {
+        console.log("Registered user is false");
+        setAlreadyRegistered(false);
+        setRegisteredData(null);
+        // Set elixirId from profile if available
+        setFormData(prev => ({
+          ...prev,
+          elixirId: elixirId
+        }));
+      }
+    } catch (err) {
+      console.error("Error checking registration:", err);
+      setAlreadyRegistered(false);
+      setRegisteredData(null);
+    } finally {
+      setCheckingRegistration(false);
+    }
+  };
+
+
+  useEffect(() => {
+    if (profile?.elixir) {
+      checkAlreadyRegistered(profile.elixir);
+    }
+  }, [profile?.elixir])
 
   const validateField = (name, value) => {
     let error = "";
@@ -45,9 +105,9 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
 
       case "elixirId":
         if (!value.trim()) {
-          error = "UID is required";
+          error = "Elixir ID is required";
         } else if (value.trim().length < 3) {
-          error = "1 must be at least 3 characters";
+          error = "Elixir ID must be at least 3 characters";
         }
         break;
     }
@@ -110,7 +170,19 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+
+
+  const handleElixirBlur = (e) => {
+    handleBlur(e);
+    checkAlreadyRegistered(e.target.value.trim());
+  };
+
   const handleSubmit = async () => {
+    if (alreadyRegistered) {
+      showError("You are already registered for this event.");
+      return;
+    }
+
     if (validateForm()) {
       try {
         // Prepare data for API call
@@ -137,8 +209,6 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
         const result = await response.json();
 
         if (response.ok) {
-          alert("Registration successful!");
-
           // Reset form
           setFormData({
             fullName: "",
@@ -149,16 +219,16 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
           });
           setErrors({});
 
-          // Call the success callback
+          // Call the success callback to show registration success popup
           if (onRegistrationSuccess) {
             onRegistrationSuccess(formData);
           }
         } else {
-          alert(result.message || "Registration failed. Please try again.");
+          showError(result.message || "Registration failed. Please try again.");
         }
       } catch (error) {
         console.error("Registration error:", error);
-        alert("An error occurred. Please try again.");
+        showError("An error occurred. Please try again.");
       }
     }
   };
@@ -178,8 +248,28 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
     );
   };
 
+  // Show loading state while checking registration
+  if (checkingRegistration) {
+    return (
+      <div className="relative flex items-center justify-center w-full bg-black/0 min-h-[400px]">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <p className="text-lg font-medium">Checking registration status...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex items-center justify-center w-full bg-black/0 ">
+      {/* Toast component */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
+      
       {/* Image container */}
       <div className="relative max-w-2xl w-full hidden md:flex items-center justify-center md:min-h-[600px] bg-transparent">
         <img
@@ -194,161 +284,203 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
             className="text-2xl font-bold uppercase tracking-widest text-white drop-shadow-lg"
             style={{ fontFamily: "Cinzel, serif" }}
           >
-            Join The Event
+            {alreadyRegistered ? "Already Registered" : "Join The Event"}
           </h1>
         </div>
 
         {/* Form container */}
         <div className="relative z-10 w-full max-w-md mx-auto px-8 py-12 pt-48">
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {!alreadyRegistered ? (
               <div>
-                <input
-                  type="text"
-                  name="fullName"
-                  placeholder="Full Name"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
-                    errors.fullName
-                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
-                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
-                  }`}
-                  style={{ fontFamily: "Inria Serif, serif" }}
-                  required
-                />
-                {errors.fullName && (
-                  <p className="text-red-400 text-xs mt-1 font-medium">
-                    {errors.fullName}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <input
+                      type="text"
+                      name="fullName"
+                      placeholder="Full Name"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      disabled={alreadyRegistered}
+                      className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
+                        alreadyRegistered 
+                          ? "opacity-60 cursor-not-allowed" 
+                          : errors.fullName
+                          ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                          : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                      }`}
+                      style={{ fontFamily: "Inria Serif, serif" }}
+                      required
+                    />
+                    {errors.fullName && (
+                      <p className="text-red-400 text-xs mt-1 font-medium">
+                        {errors.fullName}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <input
+                      type="tel"
+                      name="contactNumber"
+                      placeholder="Contact Number"
+                      value={formData.contactNumber}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      disabled={alreadyRegistered}
+                      maxLength="10"
+                      className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
+                        alreadyRegistered 
+                          ? "opacity-60 cursor-not-allowed" 
+                          : errors.contactNumber
+                          ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                          : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                      }`}
+                      style={{ fontFamily: "Inria Serif, serif" }}
+                      required
+                    />
+                    {errors.contactNumber && (
+                      <p className="text-red-400 text-xs mt-1 font-medium">
+                        {errors.contactNumber}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email ID"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      disabled={alreadyRegistered}
+                      className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
+                        alreadyRegistered 
+                          ? "opacity-60 cursor-not-allowed" 
+                          : errors.email
+                          ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                          : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                      }`}
+                      style={{ fontFamily: "Inria Serif, serif" }}
+                      required
+                    />
+                    {errors.email && (
+                      <p className="text-red-400 text-xs mt-1 font-medium">
+                        {errors.email}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <input
+                      type="text"
+                      name="elixirId"
+                      placeholder="UID"
+                      value={formData.elixirId}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      disabled={alreadyRegistered}
+                      className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
+                        alreadyRegistered 
+                          ? "opacity-60 cursor-not-allowed" 
+                          : errors.elixirId
+                          ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
+                          : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
+                      }`}
+                      style={{ fontFamily: "Inria Serif, serif" }}
+                      required
+                    />
+                    {errors.elixirId && (
+                      <p className="text-red-400 text-xs mt-1 font-medium">
+                        {errors.elixirId}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3 mt-12">
+                  <input
+                    type="checkbox"
+                    name="agreeTerms"
+                    id="agreeTerms"
+                    checked={formData.agreeTerms}
+                    onChange={handleInputChange}
+                    className="mt-1 w-4 h-4 text-yellow-500 bg-yellow-600/80 border-yellow-500/60 rounded focus:ring-yellow-400 focus:ring-1"
+                    required
+                  />
+                  <label
+                    htmlFor="agreeTerms"
+                    className="text-white text-sm leading-relaxed"
+                    style={{ fontFamily: "Inria Serif, serif" }}
+                  >
+                    I confirm that I am a KIIT student and agree to abide by the
+                    event rules and decisions.
+                  </label>
+                </div>
+                {errors.agreeTerms && (
+                  <p className="text-red-400 text-xs mt-1 font-medium pl-7">
+                    {errors.agreeTerms}
                   </p>
                 )}
+
+                
+                <div className="flex justify-center -translate-y-10">
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={!isFormValid()}
+                      className="group disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-110 disabled:hover:scale-100 disabled:hover:translate-y-0 relative"
+                    >
+                      <img
+                        src="https://i.ibb.co/C3kCrrPy/The-PNG-Stock-removebg-preview-1.png"
+                        alt="Submit"
+                        className={`h-32 w-auto transition-all duration-300 ${
+                          isFormValid()
+                            ? "hover:brightness-110 hover:drop-shadow-2xl filter drop-shadow-lg"
+                            : "opacity-50 grayscale"
+                        }`}
+                      />
+                      <span
+                        className={`absolute inset-0 flex items-center justify-center text-white font-bold text-lg tracking-wider transition-all duration-300 ${
+                          isFormValid() ? "opacity-100" : "opacity-30"
+                        }`}
+                        style={{ fontFamily: "Cinzel, serif" }}
+                      >
+                        SUBMIT
+                      </span>
+                    </button>
+                </div>
+
               </div>
-
-              <div>
-                <input
-                  type="tel"
-                  name="contactNumber"
-                  placeholder="Contact Number"
-                  value={formData.contactNumber}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  maxLength="10"
-                  className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
-                    errors.contactNumber
-                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
-                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
-                  }`}
-                  style={{ fontFamily: "Inria Serif, serif" }}
-                  required
-                />
-                {errors.contactNumber && (
-                  <p className="text-red-400 text-xs mt-1 font-medium">
-                    {errors.contactNumber}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email ID"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
-                    errors.email
-                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
-                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
-                  }`}
-                  style={{ fontFamily: "Inria Serif, serif" }}
-                  required
-                />
-                {errors.email && (
-                  <p className="text-red-400 text-xs mt-1 font-medium">
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <input
-                  type="text"
-                  name="elixirId"
-                  placeholder="UID"
-                  value={formData.elixirId}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  className={`w-full px-4 py-2 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-1 ${
-                    errors.elixirId
-                      ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
-                      : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
-                  }`}
-                  style={{ fontFamily: "Inria Serif, serif" }}
-                  required
-                />
-                {errors.elixirId && (
-                  <p className="text-red-400 text-xs mt-1 font-medium">
-                    {errors.elixirId}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-3 mt-12">
-              <input
-                type="checkbox"
-                name="agreeTerms"
-                id="agreeTerms"
-                checked={formData.agreeTerms}
-                onChange={handleInputChange}
-                className="mt-1 w-4 h-4 text-yellow-500 bg-yellow-600/80 border-yellow-500/60 rounded focus:ring-yellow-400 focus:ring-1"
-                required
-              />
-              <label
-                htmlFor="agreeTerms"
-                className="text-white text-sm leading-relaxed"
-                style={{ fontFamily: "Inria Serif, serif" }}
-              >
-                I confirm that I am a KIIT student and agree to abide by the
-                event rules and decisions.
-              </label>
-            </div>
-            {errors.agreeTerms && (
-              <p className="text-red-400 text-xs mt-1 font-medium pl-7">
-                {errors.agreeTerms}
-              </p>
-            )}
-
-            <div className="flex justify-center -translate-y-10">
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid()}
-                className="group disabled:cursor-not-allowed transform transition-all duration-300 hover:scale-110 disabled:hover:scale-100 disabled:hover:translate-y-0 relative"
-              >
-                <img
-                  src="https://i.ibb.co/C3kCrrPy/The-PNG-Stock-removebg-preview-1.png"
-                  alt="Submit"
-                  className={`h-32 w-auto transition-all duration-300 ${
-                    isFormValid()
-                      ? "hover:brightness-110 hover:drop-shadow-2xl filter drop-shadow-lg"
-                      : "opacity-50 grayscale"
-                  }`}
-                />
-                <span
-                  className={`absolute inset-0 flex items-center justify-center text-white font-bold text-lg tracking-wider transition-all duration-300 ${
-                    isFormValid() ? "opacity-100" : "opacity-30"
-                  }`}
-                  style={{ fontFamily: "Cinzel, serif" }}
-                >
-                  SUBMIT
-                </span>
-              </button>
-            </div>
+              ) :
+              <div className="flex flex-col items-center justify-start -translate-y-1/2">
+                <div>
+                  <b>Name:</b> {registeredData.name}
+                </div>
+                <div>
+                  <b>Email:</b> {registeredData.email}
+                </div>
+                <div>
+                  <b>Phone:</b> {registeredData.phone}
+                </div>
+                <div>
+                  <b>Elixir ID:</b> {registeredData.elixir}
+                </div>
+                <div>
+                  <b>Registered At:</b> {new Date(registeredData.registeredAt).toLocaleString('en-US', {
+                                          year: 'numeric',
+                                          month: 'long', 
+                                          day: 'numeric',
+                                          hour: '2-digit',
+                                          minute: '2-digit'
+                    })}
+                </div>
+              </div>     
+            }
           </div>
         </div>
       </div>
@@ -362,8 +494,13 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
               className="text-2xl font-bold uppercase tracking-widest text-white drop-shadow-lg relative z-10 py-4"
               style={{ fontFamily: "Cinzel, serif" }}
             >
-              Join The Event
+              {alreadyRegistered ? "Already Registered" : "Join The Event"}
             </h1>
+            {alreadyRegistered && (
+              <p className="text-yellow-400 text-sm mt-2 font-medium relative z-10">
+                You have already registered for this event
+              </p>
+            )}
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/20 via-yellow-500/30 to-yellow-600/20 rounded-lg blur-sm"></div>
           </div>
         </div>
@@ -380,8 +517,11 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                   value={formData.fullName}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
+                  disabled={alreadyRegistered}
                   className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
-                    errors.fullName
+                    alreadyRegistered 
+                      ? "opacity-60 cursor-not-allowed" 
+                      : errors.fullName
                       ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
                       : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
                   }`}
@@ -403,9 +543,12 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                   value={formData.contactNumber}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
+                  disabled={alreadyRegistered}
                   maxLength="10"
                   className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
-                    errors.contactNumber
+                    alreadyRegistered 
+                      ? "opacity-60 cursor-not-allowed" 
+                      : errors.contactNumber
                       ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
                       : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
                   }`}
@@ -427,8 +570,11 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                   value={formData.email}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
+                  disabled={alreadyRegistered}
                   className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
-                    errors.email
+                    alreadyRegistered 
+                      ? "opacity-60 cursor-not-allowed" 
+                      : errors.email
                       ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
                       : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
                   }`}
@@ -450,8 +596,11 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
                   value={formData.elixirId}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
+                  disabled={alreadyRegistered}
                   className={`w-full px-4 py-3 bg-[#BCA13A] text-black placeholder-black/70 rounded-lg border transition-all duration-300 font-medium text-sm focus:outline-none focus:ring-2 ${
-                    errors.elixirId
+                    alreadyRegistered 
+                      ? "opacity-60 cursor-not-allowed" 
+                      : errors.elixirId
                       ? "border-red-500 focus:border-red-400 focus:ring-red-400/50"
                       : "border-yellow-500/80 focus:border-yellow-300 focus:ring-yellow-400/50"
                   }`}
@@ -466,25 +615,27 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
               </div>
             </div>
 
-            <div className="flex items-start space-x-3 mt-6">
-              <input
-                type="checkbox"
-                name="agreeTerms"
-                id="agreeTermsMobile"
-                checked={formData.agreeTerms}
-                onChange={handleInputChange}
-                className="mt-1 w-4 h-4 text-yellow-500 bg-yellow-600/80 border-yellow-500/60 rounded focus:ring-yellow-400 focus:ring-2 flex-shrink-0"
-                required
-              />
-              <label
-                htmlFor="agreeTermsMobile"
-                className="text-white text-sm leading-relaxed"
-                style={{ fontFamily: "Inria Serif, serif" }}
-              >
-                I confirm that I am a KIIT student and agree to abide by the
-                event rules and decisions.
-              </label>
-            </div>
+            {!alreadyRegistered && (
+              <div className="flex items-start space-x-3 mt-6">
+                <input
+                  type="checkbox"
+                  name="agreeTerms"
+                  id="agreeTermsMobile"
+                  checked={formData.agreeTerms}
+                  onChange={handleInputChange}
+                  className="mt-1 w-4 h-4 text-yellow-500 bg-yellow-600/80 border-yellow-500/60 rounded focus:ring-yellow-400 focus:ring-2 flex-shrink-0"
+                  required
+                />
+                <label
+                  htmlFor="agreeTermsMobile"
+                  className="text-white text-sm leading-relaxed"
+                  style={{ fontFamily: "Inria Serif, serif" }}
+                >
+                  I confirm that I am a KIIT student and agree to abide by the
+                  event rules and decisions.
+                </label>
+              </div>
+            )}
             {errors.agreeTerms && (
               <p className="text-red-400 text-xs mt-1 font-medium pl-7">
                 {errors.agreeTerms}
@@ -492,23 +643,43 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
             )}
 
             <div className="flex justify-center mt-8">
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid()}
-                className={`px-8 py-3 rounded-full font-bold text-lg tracking-wider transition-all duration-300 transform hover:scale-105 ${
-                  isFormValid()
-                    ? "bg-gradient-to-r from-yellow-600 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-400 hover:shadow-lg hover:shadow-yellow-500/25"
-                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
-                }`}
-                style={{ fontFamily: "Cinzel, serif" }}
-              >
-                SUBMIT
-              </button>
+              {alreadyRegistered ? (
+                <div className="text-center">
+                  <div className="bg-green-600/20 border border-green-500/50 rounded-xl p-4 mb-4">
+                    <p className="text-green-400 font-bold text-lg" style={{ fontFamily: "Cinzel, serif" }}>
+                      ✓ ALREADY REGISTERED
+                    </p>
+                    <p className="text-green-300 text-sm mt-2">
+                      Registration Date: {registeredData?.registeredAt ? new Date(registeredData.registeredAt).toLocaleString('en-US', {
+                                          year: 'numeric',
+                                          month: 'long', 
+                                          day: 'numeric',
+                                          hour: '2-digit',
+                                          minute: '2-digit'
+                    }) : 'N/A'}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid()}
+                  className={`px-8 py-3 rounded-full font-bold text-lg tracking-wider transition-all duration-300 transform hover:scale-105 ${
+                    isFormValid()
+                      ? "bg-gradient-to-r from-yellow-600 to-yellow-500 text-black hover:from-yellow-500 hover:to-yellow-400 hover:shadow-lg hover:shadow-yellow-500/25"
+                      : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                  }`}
+                  style={{ fontFamily: "Cinzel, serif" }}
+                >
+                  SUBMIT
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 };
