@@ -120,7 +120,7 @@ const handleSubmit = async (e) => {
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain flex flex-col justify-center items-center px-8 py-6 overflow-auto rounded-xl sm:rounded-2xl"
           style={{
-            backgroundImage: `url('https://i.postimg.cc/vmhtZ3Tt/KIITESUMMIT-POPUP-PAY-1.png')`,
+            backgroundImage: `url('https://i.postimg.cc/xjp7pZrh/KIITESUMMIT-POPUP-PAY-1-1.png')`,
             minHeight: "400px",
           }}
         >
