@@ -44,7 +44,6 @@ const PandorasParadoxDashboard = () => {
       
       if (response.ok) {
         const data = await response.json();
-        console.log("Team info response:", data);
         if (data.teamName) {
           setTeamInfo({
             teamName: data.teamName,
@@ -55,10 +54,8 @@ const PandorasParadoxDashboard = () => {
             role: data.leaderId === (profile?.elixir || userData?.uid) ? "leader" : "member"
           });
           setIsRegistered(true);
-          console.log("Setting isRegistered to true, teamInfo:", data);
         } else {
           setIsRegistered(false);
-          console.log("No team found, setting isRegistered to false");
         }
       } else {
         setIsRegistered(false);
