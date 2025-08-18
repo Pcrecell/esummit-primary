@@ -306,7 +306,7 @@ const handleRemoveMember = async (memberelixir) => {
   return (
     <section
       id="dashboard"
-      className="relative min-h-[100vh] md:min-h-[120vh] flex flex-col items-center text-white overflow-hidden px-4 sm:px-6 lg:px-8"
+      className="relative min-h-[100vh] md:min-h-[140vh] flex flex-col items-center text-white overflow-hidden px-4 sm:px-6 lg:px-8"
     >
       <div className="absolute inset-0">
         <Image
@@ -366,7 +366,7 @@ const handleRemoveMember = async (memberelixir) => {
           isRegistered 
             ? "mt-24 sm:mt-32 md:mt-40"
             : action === "idle"
-              ? "mt-32 sm:mt-40 md:mt-48"
+              ? "mt-32 sm:mt-40 md:mt-78"
               : "mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
         }`}
       >

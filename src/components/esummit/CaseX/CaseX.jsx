@@ -113,6 +113,10 @@ export default function CaseX() {
             showError("You can only create team for yourself");
             return;
         }
+        if(profile?.isEventRegistered && profile?.eventName != "case-x"){
+      showError("You have already registered for another event.");
+      return;
+    }
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/case-x/case-x_registration`,
@@ -138,7 +142,7 @@ export default function CaseX() {
                 members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
             });
             showSuccess("Team created successfully");
-            setTimeout(() => router.replace('/dashboard'), 2000);
+            setTimeout(() => router.refresh(), 2000);
             setAction("details");
         } catch (err) {
             showError(err.message || "Error creating team");
@@ -177,7 +181,7 @@ export default function CaseX() {
                 role: "member",
             }));
             showSuccess("Joined team successfully");
-            setTimeout(() => router.replace('/dashboard'), 2000);
+            setTimeout(() => router.refresh(), 2000);
             setAction("details");
         } catch (err) {
             setJoinError(err.message || "Error joining team");
@@ -195,6 +199,12 @@ export default function CaseX() {
             setAddMemberError("Please fill both fields.");
             return;
         }
+        if(profile?.isEventRegistered && profile?.eventName != "Hackathon"){
+            console.log("Already registered for another event",profile?.eventName);
+      showError("You have already registered for another event.");
+
+      return;
+    }
         if ((teamInfo.members?.length || 0) >= 4) {
             setAddMemberError("Team is full (maximum 4 members).");
             return;
