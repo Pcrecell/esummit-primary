@@ -60,7 +60,7 @@ const JoinTeamPage = () => {
   };
 
   // ✅ aligned submit with fetch (pandoras style)
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (!validateForm()) {
@@ -83,27 +83,26 @@ const JoinTeamPage = () => {
     });
 
     const data = await res.json();
+
     if (!res.ok) {
       if (
         data.message?.toLowerCase().includes("already") ||
         data.message?.toLowerCase().includes("exists")
       ) {
-        showError("⚠️ You are already registered in a team");
+        showError("You are already registered in a team");
       } else {
         showError(data.message || "Error joining team");
       }
-      showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
+    } else {
+      showSuccess(`${data.message} | Joined Team ID: ${data.teamId}`);
       router.push("/oracle/dashboard");
-    } catch (err) {
-      // console.error("Error joining team:", err);
-      showError(err.message);
     }
-    showSuccess(`✅ ${data.message} | Joined Team ID: ${data.teamId}`);
-    router.push("/success");
   } catch (err) {
     showError(err.message || "Error joining team");
   }
 };
+  
+
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -157,7 +156,7 @@ const JoinTeamPage = () => {
                   className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
                 />
               </div>
-              {errors.yourUId && <span className="text-red-400 text-xs">{errors.yourUId}</span>}
+              {errors.yourEid && <span className="text-red-400 text-xs">{errors.yourEid}</span>}
             </div>
 
             <div className="flex flex-col">
@@ -172,7 +171,7 @@ const JoinTeamPage = () => {
                   className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
                 />
               </div>
-              {errors.teamLeadUId && <span className="text-red-400 text-xs">{errors.teamLeadUId}</span>}
+              {errors.teamLeadEid && <span className="text-red-400 text-xs">{errors.teamLeadEid}</span>}
             </div>
 
             <div className="flex flex-col">

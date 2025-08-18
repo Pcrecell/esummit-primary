@@ -93,7 +93,7 @@ const CreateTeamPage = () => {
       showError("Already registered in a team");
     } else {
       showSuccess(`${data.message} Your Team ID: ${data.teamId}`);
-      router.push("/oracle");
+      router.push("/oracle/dashboard");
     }
 
   } catch (err) {
