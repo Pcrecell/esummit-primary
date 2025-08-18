@@ -60,53 +60,64 @@ const CreateTeamPage = () => {
   };
 
   const handleCreateTeam = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+  e.preventDefault();
+  if (!validateForm()) {
+    showError("Please fix the highlighted errors before submitting");
+    return;
+  }
 
-    setIsSubmitting(true);
-    try {
-      // console.log("Submitting create team request with data:", formData);
+  setIsSubmitting(true);
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.name.trim(),
+        elixir: formData.yourEid.trim(),
+        mode: "create_team",
+        teamName: formData.teamName.trim(),
+      }),
+    });
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          elixir: formData.yourEid.trim(),
-          mode: "create_team",
-          teamName: formData.teamName.trim(),
-        }),
-      });
+    const data = await res.json();
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Error creating team");
-      }
-
-      showSuccess(`${data.message} Your Team ID: ${data.teamId}`);
-
-      // after successful create, move to oracle page
-      router.push("/oracle");
-    } catch (err) {
-      console.error(err);
-      showError(err.message || "Error creating team");
-    } finally {
-      setIsSubmitting(false);
+    if (!res.ok) {
+      showError(data.message || "Error creating team");
+      return;
     }
-  };
+
+    // ✅ Check if team already exists
+    if (data.message?.toLowerCase().includes("already")) {
+      showError("Already registered in a team");
+    } else {
+      showSuccess(`${data.message} Your Team ID: ${data.teamId}`);
+      router.push("/oracle/dashboard");
+    }
+
+  } catch (err) {
+    showError(err.message || "Error creating team");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/90 p-2 ">
       <div 
         className="relative w-full max-w-full sm:max-w-sm md:max-w-lg lg:max-w-xl max-h-[90vh] rounded-xl sm:rounded-2xl shadow-2xl"
       >
+        <button
+    onClick={() => router.back()}
+    className="absolute md:top-8 md:right-12 top-24 right-8 text-white text-3xl font-bold hover:text-red-500 transition"
+  >
+    &times;
+  </button>
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain flex flex-col justify-center items-center p-4 sm:p-6 md:p-8 overflow-auto rounded-xl sm:rounded-2xl"
           style={{
-            backgroundImage: `url('https://i.postimg.cc/vmhtZ3Tt/KIITESUMMIT-POPUP-PAY-1.png')`,
+            backgroundImage: `url('https://i.postimg.cc/xjp7pZrh/KIITESUMMIT-POPUP-PAY-1-1.png')`,
             minHeight: "400px",
           }}
         >
@@ -116,7 +127,7 @@ const CreateTeamPage = () => {
 
           <div className="flex flex-col gap-2 md:gap-4">
             <div className="flex items-center md:w-full">
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-3 md:gap-4">
                 <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Your Name:
                 </label>
@@ -133,7 +144,7 @@ const CreateTeamPage = () => {
             </div>
 
             <div className="flex flex-col w-full">
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-5 md:gap-6">
                 <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Your UID:
                 </label>
@@ -150,7 +161,7 @@ const CreateTeamPage = () => {
             </div>
 
             <div className="flex flex-col w-full">
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-2 md:gap-3">
                 <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Team Name:
                 </label>

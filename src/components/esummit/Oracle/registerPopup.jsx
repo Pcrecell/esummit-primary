@@ -33,10 +33,16 @@ const RegisterPopup = ({ onClose }) => {
         className="relative w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl 
                    max-h-[90vh] rounded-xl sm:rounded-2xl shadow-2xl"
       >
+         <button
+    onClick={() => onClose()}
+    className="absolute md:top-8 md:right-12 top-24 right-8 text-white text-3xl font-bold hover:text-red-500 transition"
+  >
+    &times;
+  </button>
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain flex flex-col justify-center items-center p-4 sm:p-6 md:p-8 overflow-auto rounded-xl sm:rounded-2xl"
           style={{
-            backgroundImage: `url('https://i.postimg.cc/vmhtZ3Tt/KIITESUMMIT-POPUP-PAY-1.png')`,
+            backgroundImage: `url('https://i.postimg.cc/xjp7pZrh/KIITESUMMIT-POPUP-PAY-1-1.png')`,
             minHeight: "400px",
           }}
         >
