@@ -22,7 +22,7 @@ const HeroSection = () => {
   };
   // Navigate to expo contact page
   const handleContactClick = () => {
-    router.push('/EXPO/contact');
+    router.push('/expo/contact');
   };
   return (
     <div
