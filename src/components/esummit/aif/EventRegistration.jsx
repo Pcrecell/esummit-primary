@@ -297,7 +297,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
       {/* Image container */}
       <div className="relative max-w-2xl w-full hidden md:flex items-center justify-center md:min-h-[600px] bg-transparent">
         <img
-          src="https://i.ibb.co/qMjzxJcd/download-70-removebg-preview-cleanup-1.png"
+          src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-70-removebg-preview-cleanup-1.webp"
           alt="Decorative Frame"
           className="absolute inset-0 w-full h-full hidden md:block object-contain pointer-events-none select-none"
         />

@@ -42,7 +42,7 @@ const RegisterPopup = ({ onClose }) => {
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain flex flex-col justify-center items-center p-4 sm:p-6 md:p-8 overflow-auto rounded-xl sm:rounded-2xl"
           style={{
-            backgroundImage: `url('https://i.postimg.cc/xjp7pZrh/KIITESUMMIT-POPUP-PAY-1-1.png')`,
+            backgroundImage: `url('https://ik.imagekit.io/ecellkiit/E-Cell%20Website/KIITESUMMIT-POPUP-PAY-1-1.webp')`,
             minHeight: "400px",
           }}
         >
@@ -67,7 +67,7 @@ const RegisterPopup = ({ onClose }) => {
               onClick={handleJoinTeam}
             >
               <img
-                src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
+                src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/KIITESUMMIT-POPUP-PAYButtoon.webp"
                 alt="Join Team"
                 className="w-full rounded-md"
               />
@@ -84,7 +84,7 @@ const RegisterPopup = ({ onClose }) => {
               onClick={handleCreateTeam}
             >
               <img
-                src="https://i.postimg.cc/4xgHwDWF/KIITESUMMIT-POPUP-PAYButtoon.png"
+                src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/KIITESUMMIT-POPUP-PAYButtoon.webp"
                 alt="Create Team"
                 className="w-full rounded-md"
               />
