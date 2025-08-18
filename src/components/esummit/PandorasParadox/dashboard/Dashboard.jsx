@@ -763,7 +763,8 @@ const PandorasParadoxDashboard = () => {
 
             <div className="grid justify-center pt-2 md:pt-20 gap-8">
               {/* Team Members */}
-              <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-20 backdrop-blur-md">
+              <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-8
+               backdrop-blur-md">
                 <h3 className="text-xl md:text-3xl font-mono font-bold text-white mb-10 ">
                   Team Members
                 </h3>
@@ -893,8 +894,17 @@ const PandorasParadoxDashboard = () => {
           animation: matrixRain 3s infinite linear;
         }
       `}</style>
+      
+      {/* {toast && <Toast />} */}
 
-      {toast && <Toast />}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+        autoClose={true}
+        duration={5000}
+      />
     </section>
   );
 };
