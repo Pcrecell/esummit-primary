@@ -192,7 +192,7 @@ setAction("details");
     try {
       // console.log("Joining team with data:", formData);
       
-        const res = await fetch("http://localhost:5000/api/auth/hackathon_registration", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/hackathon_registration`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

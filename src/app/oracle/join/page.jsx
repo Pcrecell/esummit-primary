@@ -87,7 +87,7 @@ const JoinTeamPage = () => {
       }
 
       showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
-      router.push("/success");
+      router.push("/oracle/dashboard");
     } catch (err) {
       // console.error("Error joining team:", err);
       showError(err.message);
@@ -117,7 +117,7 @@ const JoinTeamPage = () => {
             <div className="flex flex-col">
               <div className="flex items-center md:w-full">
                 <label className="text-white font-semibold text-sm w-32 text-left">
-                  Team Name:
+                  Your Name:
                 </label>
                 <input
                   type="text"
