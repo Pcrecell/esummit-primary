@@ -115,7 +115,7 @@ const JoinTeamPage = () => {
 
           <form onSubmit={handleSubmit} className={`${cormorantGaramond.className} w-full max-w-sm md:space-y-3 space-y-1`}>
             <div className="flex flex-col">
-              <div className="flex items-center md:w-full">
+              <div className="flex items-center gap-2 md:w-full">
                 <label className="text-white font-semibold text-sm w-32 text-left">
                   Team Name:
                 </label>

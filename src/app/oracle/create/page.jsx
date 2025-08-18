@@ -116,7 +116,7 @@ const CreateTeamPage = () => {
 
           <div className="flex flex-col gap-2 md:gap-4">
             <div className="flex items-center md:w-full">
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-3 md:gap-4">
                 <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Your Name:
                 </label>
@@ -133,7 +133,7 @@ const CreateTeamPage = () => {
             </div>
 
             <div className="flex flex-col w-full">
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-5 md:gap-6">
                 <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Your UID:
                 </label>
@@ -150,7 +150,7 @@ const CreateTeamPage = () => {
             </div>
 
             <div className="flex flex-col w-full">
-              <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-2 md:gap-3">
                 <label className={`${cormorantGaramond.className} text-sm font-semibold text-white w-auto`}>
                   Team Name:
                 </label>
