@@ -40,7 +40,7 @@ const PandorasParadoxDashboard = () => {
   const fetchTeamInfo = async () => {
     try {
       setIsLoadingTeamInfo(true);
-      const response = await fetch(`http://localhost:5000/api/hackathon/team-info/${profile?.elixir}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/team-info/${profile?.elixir}`);
       
       if (response.ok) {
         const data = await response.json();
