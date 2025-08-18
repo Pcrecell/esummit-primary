@@ -60,39 +60,48 @@ const JoinTeamPage = () => {
   };
 
   // ✅ aligned submit with fetch (pandoras style)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // console.log("Joining team:", formData);
+  if (!validateForm()) {
+    showError("Please fix the highlighted errors before submitting");
+    return;
+  }
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.teamName.trim(), // using teamName as display name
-          elixir: formData.yourEid.trim(),
-          mode: "join_team",
-          teamId: formData.teamId.trim(),
-        }),
-      });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/oracle_registration`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.teamName.trim(),
+        elixir: formData.yourEid.trim(),
+        mode: "join_team",
+        teamId: formData.teamId.trim(),
+      }),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Error joining team");
+    if (!res.ok) {
+      if (
+        data.message?.toLowerCase().includes("already") ||
+        data.message?.toLowerCase().includes("exists")
+      ) {
+        showError("You are already registered in a team");
+      } else {
+        showError(data.message || "Error joining team");
       }
-
-      showSuccess(`${data.message} Joined Team ID: ${data.teamId}`);
-      router.push("/success");
-    } catch (err) {
-      // console.error("Error joining team:", err);
-      showError(err.message);
+    } else {
+      showSuccess(`${data.message} | Joined Team ID: ${data.teamId}`);
+      router.push("/oracle/dashboard");
     }
-  };
+  } catch (err) {
+    showError(err.message || "Error joining team");
+  }
+};
+  
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -101,11 +110,17 @@ const JoinTeamPage = () => {
   return (
     <div className="min-h-screen backdrop-blur-sm bg-black/40 flex items-center justify-center p-4 sm:p-8">
       <div className="relative w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl 
-                     max-h-[90vh] rounded-xl sm:rounded-2xl shadow-2xl">
+                     max-h-[100vh] rounded-xl sm:rounded-2xl shadow-2xl">
+          <button
+    onClick={() => router.back()}
+    className="absolute md:top-8 md:right-12 top-24 right-8 text-white text-3xl font-bold hover:text-red-500 transition"
+  >
+    &times;
+  </button>
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain flex flex-col justify-center items-center px-8 py-6 overflow-auto rounded-xl sm:rounded-2xl"
           style={{
-            backgroundImage: `url('https://i.postimg.cc/vmhtZ3Tt/KIITESUMMIT-POPUP-PAY-1.png')`,
+            backgroundImage: `url('https://i.postimg.cc/xjp7pZrh/KIITESUMMIT-POPUP-PAY-1-1.png')`,
             minHeight: "400px",
           }}
         >
@@ -113,11 +128,11 @@ const JoinTeamPage = () => {
             Join a Team
           </h2>
 
-          <form onSubmit={handleSubmit} className={`${cormorantGaramond.className} w-full max-w-sm md:space-y-3 space-y-1`}>
+          <form onSubmit={handleSubmit} className={`${cormorantGaramond.className}  md:space-y-3 space-y-1`}>
             <div className="flex flex-col">
               <div className="flex items-center md:w-full">
                 <label className="text-white font-semibold text-sm w-32 text-left">
-                  Team Name:
+                  Your Name:
                 </label>
                 <input
                   type="text"
@@ -130,8 +145,8 @@ const JoinTeamPage = () => {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+              <div className="flex items-center md:w-full">
+                <label className="text-white font-semibold text-sm px-6 w-32 ">
                   Your UID:
                 </label>
                 <input
@@ -141,12 +156,12 @@ const JoinTeamPage = () => {
                   className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
                 />
               </div>
-              {errors.yourUId && <span className="text-red-400 text-xs">{errors.yourUId}</span>}
+              {errors.yourEid && <span className="text-red-400 text-xs">{errors.yourEid}</span>}
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+              <div className="flex items-center  md:w-full">
+                <label className="text-white font-semibold text-sm px-6 w-32">
                  Lead UID:
                 </label>
                 <input
@@ -156,12 +171,12 @@ const JoinTeamPage = () => {
                   className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
                 />
               </div>
-              {errors.teamLeadUId && <span className="text-red-400 text-xs">{errors.teamLeadUId}</span>}
+              {errors.teamLeadEid && <span className="text-red-400 text-xs">{errors.teamLeadEid}</span>}
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-2 md:w-full">
-                <label className="text-white font-semibold text-sm w-32 text-left">
+              <div className="flex items-center md:w-full">
+                <label className="text-white font-semibold px-6 text-sm w-32">
                   Team ID:
                 </label>
                 <input

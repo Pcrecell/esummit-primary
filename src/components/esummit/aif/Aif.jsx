@@ -55,6 +55,10 @@ export default function Aif() {
    }
 
   const openRegistration = () => {
+    if(profile?.isEventRegistered && profile?.eventName != "AIF"){
+      showError("You have already registered for another event.");
+      return;
+    }
     if (!paymentDone) {
       showError("User not found or not paid or you are already registered for event");
       setTimeout(() => router.replace("/dashboard"), 3000);

@@ -33,29 +33,51 @@ const PandorasParadoxDashboard = () => {
   const [newTeammateName, setNewTeammateName] = useState("");
   const [newTeammateId, setNewTeammateId] = useState("");
   const [isAddingMember, setIsAddingMember] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [isLoadingTeamInfo, setIsLoadingTeamInfo] = useState(true);
   
   const { toast, showSuccess, showError, hideToast } = useToast();
   const fetchTeamInfo = async () => {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/team-info/${profile.elixir}`);
-    
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    try {
+      setIsLoadingTeamInfo(true);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/team-info/${profile?.elixir}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Team info response:", data);
+        if (data.teamName) {
+          setTeamInfo({
+            teamName: data.teamName,
+            teamId: data.teamId || `${data.teamName}_${data.leaderId}`,
+            track: data.track,
+            leaderId: data.leaderId,
+            members: data.members || [],
+            role: data.leaderId === (profile?.elixir || userData?.uid) ? "leader" : "member"
+          });
+          setIsRegistered(true);
+          console.log("Setting isRegistered to true, teamInfo:", data);
+        } else {
+          setIsRegistered(false);
+          console.log("No team found, setting isRegistered to false");
+        }
+      } else {
+        setIsRegistered(false);
+      }
+    } catch (error) {
+      console.error("Error fetching team info:", error);
+      setIsRegistered(false);
+    } finally {
+      setIsLoadingTeamInfo(false);
     }
-
-    const data = await response.json();
-    setTeamInfo(data);
-  } catch (error) {
-    console.error("Error fetching team info:", error);
-    return;
-  }
-};
+  };
 
 useEffect(() => {
-  if (profile?.elixir) {
+  if (profile?.elixir && paymentDone) {
     fetchTeamInfo();
+  } else if (paymentDone) {
+    setIsLoadingTeamInfo(false);
   }
-}, [profile]);
+}, [profile, paymentDone]);
 
 
   useEffect(() => {
@@ -76,10 +98,10 @@ useEffect(() => {
     }
   }, [userData, paymentDone, loading, router]);
 
-  if (loading) {
+  if (loading || isLoadingTeamInfo) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
-        Loading...
+        {loading ? "Loading..." : "Checking registration status..."}
       </div>
     );
   }
@@ -99,6 +121,10 @@ useEffect(() => {
       !formData.teamName.trim()
     ) {
       showError("Please fill out all fields to create a team.");
+      return;
+    }
+    if(profile?.isEventRegistered && profile?.eventName != "Hackathon"){
+      showError("You have already registered for another event.");
       return;
     }
     try {
@@ -127,12 +153,13 @@ showSuccess(`${data.message} Your Team ID: ${data.teamId}`);
 
 setTeamInfo({
   teamName: formData.teamName.trim(),
-  teamId: data.teamId, // ✅ use data not res.data
+  teamId: data.teamId,
   track: selectedTrack,
   leaderId: formData.yourEid.trim(),
   role: "leader",
   members: [{ name: formData.name.trim(), elixir: formData.yourEid.trim() }],
 });
+setIsRegistered(true);
 setAction("details");
 
     } catch (err) {
@@ -189,10 +216,11 @@ setAction("details");
 
         setTeamInfo(prev => ({
         ...prev,
-        teamId: res.data.teamId,
+        teamId: data.teamId,
         track: selectedTrack,
         role: "member"
       }));
+      setIsRegistered(true);
       setAction("details");
     } catch (err) {
       console.error(err);
@@ -278,7 +306,7 @@ const handleRemoveMember = async (memberelixir) => {
   return (
     <section
       id="dashboard"
-      className="relative min-h-[100vh] md:min-h-[120vh] flex flex-col items-center text-white overflow-hidden px-4 sm:px-6 lg:px-8"
+      className="relative min-h-[100vh] md:min-h-[140vh] flex flex-col items-center text-white overflow-hidden px-4 sm:px-6 lg:px-8"
     >
       <div className="absolute inset-0">
         <Image
@@ -335,13 +363,17 @@ const handleRemoveMember = async (memberelixir) => {
       {/* Center actions and content */}
       <div
         className={`relative z-20 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto flex flex-col items-center transition-all duration-700 ease-in-out ${
-          action === "idle"
-            ? "mt-32 sm:mt-40 md:mt-48"
-            : "mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
+          isRegistered 
+            ? "mt-24 sm:mt-32 md:mt-40"
+            : action === "idle"
+              ? "mt-32 sm:mt-40 md:mt-78"
+              : "mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
         }`}
       >
-        {/* Join / Create buttons */}
-        <div className="flex items-center justify-center gap-4 sm:gap-6 mb-6 w-full">
+        {!isRegistered && (
+          <>
+            {/* Join / Create buttons */}
+            <div className="flex items-center justify-center gap-4 sm:gap-6 mb-6 w-full">
           <button
             onClick={() => setAction("join")}
             className={`${
@@ -692,17 +724,113 @@ const handleRemoveMember = async (memberelixir) => {
             </p>
           </div>
         )}
+        </>
+        )}
+        
+        {/* Show team info for registered users */}
+        {console.log("Debug: isRegistered:", isRegistered, "teamInfo:", teamInfo)}
+        {isRegistered && teamInfo.teamName && (
+          <div className="w-full max-w-4xl space-y-6">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-5xl font-mono pt-10 font-bold text-white tracking-wider mb-2">
+                {teamInfo.teamName}
+              </h2>
+              <p className="text-green-400 font-mono text-lg">
+                Team ID: {teamInfo.teamId} | Track: {teamInfo.track}
+              </p>
+            </div>
+
+
+            <div className="grid justify-center pt-2 md:pt-20 gap-8">
+              {/* Team Members */}
+              <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-20 backdrop-blur-md">
+                <h3 className="text-xl md:text-3xl font-mono font-bold text-white mb-10 ">Team Members</h3>
+                <div className="space-y-10">
+                  {teamInfo.members.map((member, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-white font-mono">
+                      <div className="flex items-center gap-4 ">
+                        <span className="text-green-400 font-bold text-xl md:text-2xl">
+                          {member.name}
+                        </span>
+                        <span className="text-white/80 text-xl md:text-2xl">
+                          {member.elixir}
+                        </span>
+                      </div>
+                      {teamInfo.role === "leader" && member.elixir !== teamInfo.leaderId && (
+                        <button
+                          onClick={() => handleRemoveMember(member.elixir)}
+                          className="text-red-400 hover:text-red-300 text-sm"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Add Member Form - Only for leaders */}
+              {teamInfo.role === "leader" && (
+                <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-6 backdrop-blur-md">
+                  <h3 className="text-xl font-mono font-bold text-white mb-4">Add Team Member</h3>
+                  <div className="space-y-4">
+                    <input
+                      type="text"
+                      value={newTeammateName}
+                      onChange={(e) => setNewTeammateName(e.target.value)}
+                      className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                      placeholder="Teammate Name"
+                      disabled={isAddingMember}
+                    />
+                    <input
+                      type="text"
+                      value={newTeammateId}
+                      onChange={(e) => setNewTeammateId(e.target.value)}
+                      className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-3 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                      placeholder="Teammate Elixir ID"
+                      disabled={isAddingMember}
+                    />
+                    <button
+                      onClick={handleAddMemberButton}
+                      disabled={isAddingMember}
+                      className={`w-full ${
+                        isAddingMember
+                          ? "bg-gray-600/90 cursor-not-allowed"
+                          : "bg-green-600/90 hover:bg-green-500"
+                      } border-2 border-green-400/60 py-3 rounded-md font-mono font-bold text-white transition-all`}
+                    >
+                      {isAddingMember ? "Adding..." : "Add Member"}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Back to Registration Option */}
+            {/* <div className="text-center mt-8">
+              <button
+                onClick={() => {
+                  setIsRegistered(false);
+                  setAction("idle");
+                }}
+                className="px-6 py-2 border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 rounded-md font-mono font-bold text-sm transition-all"
+              >
+                Create New Team
+              </button>
+            </div> */}
+          </div>
+        )}
       </div>
 
-      {/* Register Button */}
-      {action === "details" && (
-        <div className="pt-8 left-1/2 transform  z-30">
+      {/* Register Button - Only for unregistered users in details view */}
+      {!isRegistered && action === "details" && (
+        <div className="pt-8 left-1/2 transform z-30">
           <button
             disabled={
-              members.filter((member) => member.name !== "-").length < 2
+              teamInfo.members.filter((member) => member.name !== "-").length < 2
             }
             className={`px-8 py-3 rounded-full font-mono font-bold text-lg transition-all duration-300 ${
-              members.filter((member) => member.name !== "-").length >= 2
+              teamInfo.members.filter((member) => member.name !== "-").length >= 2
                 ? "bg-green-600/90 hover:bg-green-500 border-2 border-green-400/60 text-white shadow-lg hover:shadow-xl"
                 : "bg-gray-600/50 border-2 border-gray-500/50 text-gray-400 cursor-not-allowed"
             }`}
