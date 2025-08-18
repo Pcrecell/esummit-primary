@@ -864,7 +864,16 @@ const handleRemoveMember = async (memberelixir) => {
         }
       `}</style>
       
-      {toast && <Toast />}
+      {/* {toast && <Toast />} */}
+
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+        autoClose={true}
+        duration={5000}
+      />
     </section>
   );
 };
