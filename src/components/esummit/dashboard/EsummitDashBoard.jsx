@@ -176,7 +176,7 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
         <div className="absolute top-[120vh] sm:top-[130vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-80">
           <div className="relative">
             <div className="relative">
-              <Image src={DashBoardCard} alt="card" className="w-full" />
+              <Image src={DashBoardCard} alt="card" className="w-full priority" />
               {!profile?.payment && (
                 <div
                   className="absolute inset-0 bg-black/50 rounded-lg"

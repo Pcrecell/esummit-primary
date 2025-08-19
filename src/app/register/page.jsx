@@ -21,24 +21,26 @@ export default function Register() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+  const [isFromKiit, setIsFromKiit] = useState(true);
+  const [collegeName, setCollegeName] = useState();
+  const [collegeSelection, setCollegeSelection] = useState(""); // "KIIT", "Other", or ""
+  const [customCollege, setCustomCollege] = useState("");
+  const { userData, setUserData, profile, setProfile, loading } = useAuth();
 
-useEffect(() => {
-  if (userData) {
-    router.replace("/dashboard");
-    return;
+  useEffect(() => {
+    if (userData) {
+      router.replace("/dashboard");
+      return;
+    }
+  }, [userData, profile, , loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
   }
-
-}, [userData, profile,,loading, router]);
-
-if ( loading) {
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
-      Loading...
-    </div>
-  );
-}
-
 
   const gmailRegex = /@(gmail|googlemail)\.com$/i;
   const nameRegex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)*$/;
@@ -83,38 +85,46 @@ if ( loading) {
       return false;
     }
 
-    if (!email.endsWith(".ac.in")) {
-      setError(
-        "Students must use their KIIT/KISS/KLS/KIMS/KSOM email ID (e.g., example@kiit.ac.in)."
-      );
-      return false;
-    }
-
-    if (hostelType === null) {
-      setError("Please select whether you are a Hostelite or Dayboarder.");
-      return false;
-    }
-
-    if (hostelType === true) {
-      if (hostelEmail.trim() === "") {
-        setError("Please enter your hostel email ID.");
-        return false;
-      }
-      if (
-        !hostelEmail
-          .trim()
-          .endsWith(
-            "@kiit.ac.in" ||
-              "@kims.ac.in" ||
-              "@ksom.ac.in" ||
-              "@kls.ac.in" ||
-              "@kiss.ac.in"
-          )
-      ) {
+    // Only check for .ac.in emails if KIIT is selected
+    if (collegeSelection === "KIIT") {
+      if (!email.endsWith(".ac.in")) {
         setError(
-          "Hostel email must end with @kiit.ac.in, @kims.ac.in, @ksom.ac.in, @kls.ac.in, @kiss.ac.in"
+          "Students must use their KIIT/KISS/KLS/KIMS/KSOM email ID (e.g., example@kiit.ac.in)."
         );
         return false;
+      }
+    }
+    // For "Other" colleges, we can allow any valid email format
+    // The email input type="email" will handle basic email validation
+
+    // Only show hostel-related validation for KIIT students
+    if (collegeSelection === "KIIT") {
+      if (hostelType === null) {
+        setError("Please select whether you are a Hostelite or Dayboarder.");
+        return false;
+      }
+
+      if (hostelType === true) {
+        if (hostelEmail.trim() === "") {
+          setError("Please enter your hostel email ID.");
+          return false;
+        }
+        if (
+          !hostelEmail
+            .trim()
+            .endsWith(
+              "@kiit.ac.in" ||
+                "@kims.ac.in" ||
+                "@ksom.ac.in" ||
+                "@kls.ac.in" ||
+                "@kiss.ac.in"
+            )
+        ) {
+          setError(
+            "Hostel email must end with @kiit.ac.in, @kims.ac.in, @ksom.ac.in, @kls.ac.in, @kiss.ac.in"
+          );
+          return false;
+        }
       }
     }
 
@@ -137,11 +147,15 @@ if ( loading) {
         email,
         firstname,
         lastname,
-        isKiitCollege: true,
+        collegeName: collegeName,
+        isKiitCollege: collegeSelection === "KIIT",
         phone,
-        college: "KIIT",
-        hostelType,
-        hostelEmail,
+        college: collegeToSend,
+        hostelType: collegeSelection === "KIIT" ? hostelType : null,
+        hostelEmail:
+          collegeSelection === "KIIT" && hostelType === true
+            ? hostelEmail
+            : null,
         idToken,
       };
       const csrfToken = getCookie("csrfToken");
@@ -173,16 +187,15 @@ if ( loading) {
         phone: phone,
         uid: user.uid,
       };
-      router.push("/") // or any route that uses the navbar
+      router.push("/"); // or any route that uses the navbar
       // navigate.push("/payment", { state: Data });
       setLoading(false);
     } catch (err) {
-      if((err.toString()).includes("email-already-in-use")) {
+      if (err.toString().includes("email-already-in-use")) {
         setError("This Email is Already Registered. Please Try Again.");
-      } else if((err.toString()).includes("weak-password")) {
+      } else if (err.toString().includes("weak-password")) {
         setError("Password Must Be At Least 6 Characters.");
-      }    
-      else {
+      } else {
         setError("Failed to register. Please try again.");
       }
       // console.error("Registration error:", err);
@@ -247,53 +260,119 @@ if ( loading) {
             required
           />
         </div>
+
         <div>
           <label className="block text-gray-300 mb-0.5 text-xs pl-1">
-            Email Address
+            College Name
           </label>
-          <input
-            type="email"
-            placeholder={emailPlaceholder}
-            className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
-            value={email}
-            onChange={handleEmailChange}
+          <select
+            className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none"
+            value={collegeSelection}
+            onChange={(e) => {
+              setCollegeSelection(e.target.value);
+              if (e.target.value === "KIIT") {
+                setCollegeName("KIIT");
+                setCustomCollege("");
+              } else if (e.target.value === "Other College") {
+                setCollegeName("");
+                setCustomCollege("");
+              } else {
+                setCollegeName("");
+                setCustomCollege("");
+              }
+            }}
             required
-          />
-        </div>
+          >
+            <option value="">Select your college</option>
+            <option value="KIIT">KIIT</option>
+            <option value="Other College">Other College</option>
+          </select>
 
-        {/* ----------- Conditional hostelType field ----------- */}
-
-        <div>
-          <label className="block text-gray-300 mb-0.5 text-xs pl-1">
-            Are you a Hostelite or Dayboarder?
-          </label>
-          <div className="flex gap-4 mt-1">
-            <label className="flex items-center gap-2 text-white">
+          {/* Show text input only when "Other" is selected */}
+          {collegeSelection === "Other College" && (
+            <div className="mt-2">
               <input
-                type="radio"
-                name="hostelType"
-                value="true"
-                checked={hostelType === true}
-                onChange={() => setHostelType(true)}
+                type="text"
+                placeholder="Enter your college name"
+                className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
+                value={customCollege}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^[a-zA-Z\s]*$/.test(value)) {
+                    setCustomCollege(value);
+                    setCollegeName(value);
+                  }
+                }}
                 required
               />
-              Hostelite
-            </label>
-            <label className="flex items-center gap-2 text-white">
-              <input
-                type="radio"
-                name="hostelType"
-                value="false"
-                checked={hostelType === false}
-                onChange={() => setHostelType(false)}
-              />
-              Dayboarder
-            </label>
-          </div>
+            </div>
+          )}
         </div>
 
-        {/* ----------- Conditional hostelEmail field ----------- */}
-        {hostelType === true && (
+        {collegeSelection === "KIIT" ? (
+          <div>
+            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+              Kiit Email Address
+            </label>
+            <input
+              type="email"
+              placeholder={emailPlaceholder}
+              className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+          </div>
+        ) : (
+          <div>
+            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+              Email Address
+            </label>
+            <input
+              type="email"
+              placeholder="Enter your College mail ID"
+              className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+          </div>
+        )}
+
+        {/* ----------- Conditional hostelType field - Only for KIIT ----------- */}
+        {collegeSelection === "KIIT" && (
+          <div>
+            <label className="block text-gray-300 mb-0.5 text-xs pl-1">
+              Are you a Hostelite or Dayboarder?
+            </label>
+            <div className="flex gap-4 mt-1">
+              <label className="flex items-center gap-2 text-white">
+                <input
+                  type="radio"
+                  name="hostelType"
+                  value="true"
+                  checked={hostelType === true}
+                  onChange={() => setHostelType(true)}
+                  required
+                />
+                Hostelite
+              </label>
+              <label className="flex items-center gap-2 text-white">
+                <input
+                  type="radio"
+                  name="hostelType"
+                  value="false"
+                  checked={hostelType === false}
+                  onChange={() => setHostelType(false)}
+                />
+                Dayboarder
+              </label>
+            </div>
+          </div>
+        )}
+
+        {/* ----------- Conditional hostelEmail field - Only for KIIT Hostelites ----------- */}
+        {collegeSelection === "KIIT" && hostelType === true && (
           <div>
             <label className="block text-gray-300 mb-0.5 text-xs pl-1">
               Hostel Email ID
