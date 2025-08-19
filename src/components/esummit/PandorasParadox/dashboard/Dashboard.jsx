@@ -7,6 +7,8 @@ import bgImage from "../../../../../public/images/hackathon/dashboard-bg.png";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Toast from "@/components/ui/Toast";
+import ConfirmDialog from "@/components/shared/Confirmation";
+import TeamHeader from "@/components/shared/disbandButton";
 import { useToast } from "@/hooks/useToast";
 const PandorasParadoxDashboard = () => {
   const router = useRouter();
@@ -37,6 +39,70 @@ const PandorasParadoxDashboard = () => {
   const [isLoadingTeamInfo, setIsLoadingTeamInfo] = useState(true);
 
   const { toast, showSuccess, showError, hideToast } = useToast();
+
+  const handleDisbandTeam = async () => {
+    // Multiple validations before disbanding
+    if (!profile?.elixir) {
+      showError("Authentication required");
+      return;
+    }
+    
+    if (teamInfo.leaderId !== profile.elixir) {
+      showError("Only team leader can disband the team.");
+      return;
+    }
+
+    if (!teamInfo.teamId) {
+      showError("No team found to disband");
+      return;
+    }
+
+    <div>
+      <h1>Danger Zone</h1>
+      <ConfirmDialog
+        title="WARNING: Are you sure you want to disband the team?"
+        message={
+          "This action:\n" +
+          "- Cannot be undone\n" +
+          "- Will remove all team members\n" +
+          "- Will delete all team data\n\n" +
+          "Please confirm to proceed."
+        }
+        confirmText="Disband Team"
+        cancelText="Cancel"
+        onConfirm={() => {
+          console.log("Team disbanded!");
+        }}
+        onCancel={() => {
+          console.log("Disband cancelled.");
+        }}
+      />
+    </div>
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/disband-team`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          leaderelixir: profile.elixir,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to disband team");
+      }
+
+      showSuccess("Team disbanded successfully");
+      router.replace("/pandoras-paradox"); // Fixed: Redirect to hackathon page instead of paradox
+    } catch (error) {
+      console.error("Error disbanding team:", error);
+      showError(error.message || "Failed to disband team");
+    }
+  };
+  
   const fetchTeamInfo = async () => {
     try {
       setIsLoadingTeamInfo(true);
@@ -72,6 +138,15 @@ const PandorasParadoxDashboard = () => {
       setIsLoadingTeamInfo(false);
     }
   };
+  useEffect(() => {
+  if (profile) {
+    setFormData((prev) => ({
+      ...prev,
+      name: profile.firstname || "",
+      yourEid: profile.elixir || "",
+    }));
+  }
+}, [profile]);
 
   useEffect(() => {
     if (profile?.elixir && paymentDone) {
@@ -444,7 +519,8 @@ const PandorasParadoxDashboard = () => {
                       </label>
                       <input
                         type="text"
-                        value={formData.name}
+                        value={profile?.firstname || ""}
+                        readOnly
                         onChange={(e) =>
                           handleJoinTeamChange("name", e.target.value)
                         }
@@ -458,12 +534,10 @@ const PandorasParadoxDashboard = () => {
                       </label>
                       <input
                         type="text"
-                        value={formData.yourEid}
-                        onChange={(e) =>
-                          handleJoinTeamChange("yourEid", e.target.value)
-                        }
-                        className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                        placeholder="Enter UID"
+                        value={profile?.elixir || ""}
+                        readOnly
+                        className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 font-mono text-sm cursor-not-allowed"
+                        placeholder="UID will appear here"
                       />
                     </div>
                     <div>
@@ -533,7 +607,8 @@ const PandorasParadoxDashboard = () => {
                       </label>
                       <input
                         type="text"
-                        value={formData.name}
+                        value={profile?.firstname || ""}
+                        readOnly
                         onChange={(e) =>
                           handleCreateTeamChange("name", e.target.value)
                         }
@@ -543,16 +618,14 @@ const PandorasParadoxDashboard = () => {
                     </div>
                     <div>
                       <label className="block text-white/90 text-xs sm:text-sm font-mono mb-2">
-                        YOUR UID
+                        Your UID
                       </label>
                       <input
                         type="text"
-                        value={formData.yourEid}
-                        onChange={(e) =>
-                          handleCreateTeamChange("yourEid", e.target.value)
-                        }
-                        className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                        placeholder="ENTER YOUR UID"
+                        value={profile?.elixir || ""}
+                        readOnly
+                        className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 font-mono text-sm cursor-not-allowed"
+                        placeholder="UID will appear here"
                       />
                     </div>
                     <div>
@@ -587,11 +660,7 @@ const PandorasParadoxDashboard = () => {
                 {/* Left side - Team details */}
                 <div className="lg:w-1/2 space-y-6">
                   {/* Team Name Title */}
-                  <div className="text-left">
-                    <h2 className="text-2xl md:text-4xl font-mono font-bold text-white tracking-wider">
-                      {teamInfo.teamName}
-                    </h2>
-                  </div>
+                  <TeamIdDisplay teamId={teamInfo.teamId} />
 
                   {/* Your Teammates Section */}
                   <div className="space-y-4">
@@ -764,9 +833,11 @@ const PandorasParadoxDashboard = () => {
             <div className="grid justify-center pt-2 md:pt-20 gap-8">
               {/* Team Members */}
               <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-8 backdrop-blur-md">
-                <h3 className="text-xl md:text-3xl font-mono font-bold text-white mb-10 ">
-                  Team Members
-                </h3>
+                <TeamHeader
+                  teamInfo={teamInfo}
+                  onDisband={() => handleDisbandTeam()}
+                />
+
                 <div className="space-y-10">
                   {teamInfo.members.map((member, idx) => (
                     <div

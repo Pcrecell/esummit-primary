@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import Toast from "@/components/ui/Toast";
 import { useToast } from "@/hooks/useToast";
+import TeamHeader from "@/components/shared/disbandButton";
 
 export default function CaseX() {
   const router = useRouter();
@@ -76,9 +77,17 @@ export default function CaseX() {
 
   useEffect(() => {
     if (profile?.elixir) fetchTeamInfo();
+    if (profile) {
+    setFormData((prev) => ({
+      ...prev,
+      name: profile.firstname || "",
+      yourEid: profile.elixir || "",
+    }));
+  }
   }, [profile]);
 
   useEffect(() => {
+    
     if (!loading) {
       if (!userData) {
         router.replace("/login");
@@ -147,11 +156,54 @@ export default function CaseX() {
       });
       showSuccess("Team created successfully");
       setTimeout(() => router.refresh(), 2000);
+      router.refresh();
       setAction("details");
     } catch (err) {
       showError(err.message || "Error creating team");
     }
   };
+      const handleDisbandTeam = async () => {
+      // Multiple validations before disbanding
+      if (!profile?.elixir) {
+        showError("Authentication required");
+        return;
+      }
+      
+      if (teamInfo.leaderId !== profile.elixir) {
+        showError("Only team leader can disband the team.");
+        return;
+      }
+  
+      if (!teamInfo.teamId) {
+        showError("No team found to disband");
+        return;
+      }
+  
+
+  
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/case-x/disband-team`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            leaderelixir: profile.elixir,
+          }),
+        });
+  
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || "Failed to disband team");
+        }
+  
+        showSuccess("Team disbanded successfully");
+        router.refresh();
+      } catch (error) {
+        console.error("Error disbanding team:", error);
+        showError(error.message || "Failed to disband team");
+      }
+    };
 
   const handleSubmitJoin = async () => {
     if (!formData.name || !formData.yourEid || !formData.teamId) {
@@ -973,7 +1025,7 @@ export default function CaseX() {
                   {/* Team Info Section */}
                   <div className="w-full">
                     <div className="bg-[#786C34]/20 border border-[#786C34] rounded-2xl p-3 md:p-4 mb-6">
-                      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+                      {/* <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                         <div>
                           <p className="text-[#CFB43C] text-lg md:text-xl font-leage-spartan font-bold">
                             {teamInfo.teamName}
@@ -985,7 +1037,9 @@ export default function CaseX() {
                         <p className="text-[#CFB43C]/80 text-base md:text-lg font-leage-spartan">
                           {teamInfo.members?.length || 0}/4 members
                         </p>
-                      </div>
+
+                      </div> */}
+                  <TeamHeader teamInfo={teamInfo} onDisband={handleDisbandTeam} />
                     </div>
                   </div>
 
@@ -1113,7 +1167,8 @@ export default function CaseX() {
                           type="text"
                           placeholder="First Name"
                           value={formData.name}
-                          onChange={(e) => handleChange("name", e.target.value)}
+                          readOnly
+                        //   onChange={(e) => handleChange("name", e.target.value)}
                           className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                         />
                       </div>
@@ -1122,9 +1177,7 @@ export default function CaseX() {
                           type="text"
                           placeholder="UID"
                           value={formData.yourEid}
-                          onChange={(e) =>
-                            handleChange("yourEid", e.target.value)
-                          }
+                            readOnly
                           className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                         />
                       </div>
@@ -1148,9 +1201,7 @@ export default function CaseX() {
                             type="text"
                             placeholder="First Name"
                             value={formData.name}
-                            onChange={(e) =>
-                              handleChange("name", e.target.value)
-                            }
+                            readOnly
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                           />
                         </div>
@@ -1173,9 +1224,7 @@ export default function CaseX() {
                             type="text"
                             placeholder="UID"
                             value={formData.yourEid}
-                            onChange={(e) =>
-                              handleChange("yourEid", e.target.value)
-                            }
+                            readOnly
                             className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
                           />
                         </div>

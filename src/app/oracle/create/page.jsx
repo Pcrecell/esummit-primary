@@ -102,6 +102,15 @@ const CreateTeamPage = () => {
     setIsSubmitting(false);
   }
 };
+  useEffect(() => {
+  if (profile) {
+    setFormData((prev) => ({
+      ...prev,
+      name: profile.firstname || "",
+      yourEid: profile.elixir || "",
+    }));
+  }
+}, [profile]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/90 p-2 ">
@@ -134,7 +143,8 @@ const CreateTeamPage = () => {
                 <input
                   type="text"
                   name="name"
-                  value={formData.name}
+                  value={profile?.firstname || ""}
+                  readOnly
                   onChange={(e) => handleChange("name", e.target.value)}
                   className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
                   disabled={isSubmitting}
@@ -151,7 +161,8 @@ const CreateTeamPage = () => {
                 <input
                   type="text"
                   name="UId"
-                  value={formData.yourEid}
+                  value={profile?.elixir || ""}
+                  readOnly
                   onChange={(e) => handleChange("yourEid", e.target.value)}
                   className="flex-1 rounded md:px-3 md:py-2 bg-[#C0A869] text-black focus:outline-none"
                   disabled={isSubmitting}

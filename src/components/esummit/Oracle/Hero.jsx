@@ -40,7 +40,7 @@ export default function Hero() {
   const paymentDone = profile?.payment;
 
   const handleRegister = () => {
-    if(profile?.isEventRegistered && profile?.eventName != "oracle"){
+    if(profile?.isEventRegistered && profile?.eventName != "Oracle"){
       showError("You have already registered for another event.");
       return;
     }
@@ -141,7 +141,7 @@ export default function Hero() {
               <span
                 className={`absolute inset-0 z-10 flex items-center justify-center text-[#FFFF] font-semibold text-sm sm:text-base md:text-xl ${cormorantGaramond.className}`}
               >
-                {teamInfo.teamId ? "GO TO DASHBOARD" : "REGISTER NOW"}
+                {(profile?.isEventRegistered && profile?.eventName == "Oracle") ? "DASHBOARD" : "REGISTER NOW"}
               </span>
             </div>
           </div>
