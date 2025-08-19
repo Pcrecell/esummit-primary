@@ -30,7 +30,7 @@ const EsummitDashBoard = () => {
   const router = useRouter();
   const { toast, showSuccess, showError, hideToast } = useToast();
 
-  registeredEventId
+  // ---
 
 const { userData, setUserData, profile, setProfile, loading} = useAuth();
    useEffect(() => {
@@ -452,21 +452,20 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
         {/* <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div> */}
       </div>
-      <div>
-        {profile?.isEventRegistered ? (
-          <div>
-            <PaymentEnd eventId={profile?.eventName} />
-          </div>
-        ) : (
-          <div>
-            <PaymentStart 
-              onEventSelect={handleEventSelect}
-              paymentEnabled={paymentDone}
-              onPayNow={handlePayNowToast}
-            />
-          </div>
-        )}
-      </div>
+
+      {profile?.eventName ? (
+        <div>
+          <PaymentEnd eventId={profile?.eventName} />
+        </div>
+      ) : (
+        <div>
+          <PaymentStart 
+            onEventSelect={handleEventSelect}
+            paymentEnabled={paymentDone}
+            onPayNow={handlePayNowToast}
+          />
+        </div>
+      )}
       {/* Global toast */}
       <Toast message={toast.message} type={toast.type} isVisible={toast.isVisible} onClose={hideToast} />
         
