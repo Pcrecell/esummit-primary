@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 async function getBase64(url, fallbackUrl) {
   try {
@@ -62,6 +63,7 @@ const initialEvents = [
     time: "9.00AM-3.00PM",
     desc: " The signature blind pitching event of KIIT E-Cell that embodies adaptability and creativity.Challenges are revealed seconds before you pitch your idea, heaping a good dose of wit and confidence onto the task.Oracle is all about quick thinking and the art of persuasion, all under the pressure of collaborative performance.Everyone has a chance to win, from gutsy newbies to seasoned professionals.",
     image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002414.webp",
+  href: "/oracle",
   },
   {
     id: "2",
@@ -70,14 +72,16 @@ const initialEvents = [
     time: "9.00AM-3.00PM",
     desc: " The elite entrepreneurial survival game with combative and inventive tasks.Players face startup challenges with limited time, limited resources, and fierce competition. Every decision counts - from securing investment, outsmarting your competitors and taking a pivot when faced with uncertainty. Only the fastest thinkers will walk away as an entrepreneur.",
     image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002412.webp",
+  href: "/aif",
   },
   {
     id: "3",
     title: "CASE X",
     date: "24.08.25",
-    time: "9.00AM-3.00PM",
+    time: "10.00AM-4.00PM",
     desc: "The ultimate battleground created by KIIT E-Cell for future strategists and problem solvers.You'll wrestle with actual business challenges using critical thinking and unique strategies.In a team format, you will illustrate your teamwork, business insight, and consulting vibe in a competitive environment.Each pitch is your breakthrough in the boardroom.",
     image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002419.webp",
+  href: "/case-x",
   },
   {
     id: "4",
@@ -86,6 +90,7 @@ const initialEvents = [
     time: "9.00AM-4.30PM",
     desc: "KIIT E-Cell's flagship hackathon where ideas meet impact.In 72 hours, participants take on real-world challenges guided by experienced mentors.Our unique two-tier system makes this arena accessible to everyone - from amateurs to experts.Innovation, resources, and rewards - all on one stage.",
     image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002415.webp",
+  href: "/pandoras-paradox",
   },
   {
     id: "5",
@@ -94,6 +99,7 @@ const initialEvents = [
     time: "11.00AM-4.30PM",
     desc: "EXPO 2025 is where vision meets opportunity. This two-day powerhouse event provides a podium for student-led startups, emerging business and established companies to collectively demonstrate innovation, develop collaborative opportunities and attract investments.From mentorship to investment it's a launchpad for entrepreneurship.Here, visions become ventures.",
     image: "https://ik.imagekit.io/1bsukh3d7/Group-1000002413.webp",
+  href: "/expo",
   },
 ];
 
@@ -204,15 +210,19 @@ export const Event = () => {
 
             {/* Centered Image */}
             <div className="w-full md:w-1/3 flex justify-center items-center h-[500px] md:h-[600px] relative">
-              <Image
-                src={events[current].image}
-                alt={events[current].title}
-                className="max-h-full max-w-full object-contain"
-                width={1000}
-                height={1000}
-                placeholder="blur"
-                blurDataURL={events[current].blurDataURL}
-              />
+              <Link
+                href={events[current].href || "/"}
+              >
+                <Image
+                  src={events[current].image}
+                  alt={events[current].title}
+                  className="max-h-full max-w-full object-contain"
+                  width={1000}
+                  height={1000}
+                  placeholder="blur"
+                  blurDataURL={events[current].blurDataURL}
+                />
+              </Link>
             </div>
 
             {/* Right Description */}
