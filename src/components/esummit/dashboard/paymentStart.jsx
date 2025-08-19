@@ -1,45 +1,52 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { LayoutGroup } from "framer-motion";
 const events = [
    {
-    id:"1",
+    id:"Oracle",
     title: "ORACLE",
     date: "AUG 15",
     desc: "An opportunity for aspiring entrepreneurs jhdsbfgshdvf hgsdvfhsgdfvsndbvnbs.",
     image: "https://i.postimg.cc/Z0tk56H5/oracle.png",
+    href: "/oracle",
   },
   {
-    id:"2",
+    id:"AIF",
     title: "ALICE IN FOUNDERLAND",
     date: "AUG 15",
     desc: "An opportunity for aspiring entrepreneurs jfrjkerfjkesrdfbjesrfb nbdfjebfjebjferjhrfbehjrbjh .",
     image: "https://i.postimg.cc/Bn8WGHyd/Alice-in-founderland.png",
+    href: "/aif",
     
   },
   {
-    id:"3",
+    id:"case-x",
     title: "CASE BATTLE",
     date: "AUG 15",
     desc: "An opportunity for aspiring entrepreneurs sdbfjshdjfbjsdnbfmndb fmnmnsdbfnbfnsbfb.",
+    image: "https://ik.imagekit.io/wlknxcf5m/casex.png?updatedAt=1755594314805",
+    href: "/case-x",
   },
   {
-    id:"4",
+    id:"Hackathon",
     title: "PANDORAS PARADOX",
     date: "AUG 15",
     desc: "An opportunity for aspiring entrepreneurs dcfbhjdfjhdfdhfd vhfhdvfjdhvsdnbf nsdbfndbfbdnd.",
     image: "https://i.postimg.cc/RVcfmJyp/pandoras-paradox.png",
+    href: "/pandoras-paradox",
   
   },
   {
-    id:"5",
+    id:"EXPO",
     title: "EXPO",
     date: "AUG 15",
     desc: "An opportunity for aspiring entrepreneurs sdvfghsdvfg sbdvfnsbdvfn nbdvnbsdvnbsvc.",
     image:"https://i.postimg.cc/bvqm7L2N/Expo-1.png",
+    href: "/expo",
   },
 ];
 
-const EventCard = ({id, title, date, venue, time, desc, image, onEventSelect, paymentEnabled, onPaymentRequired }) => (
+const EventCard = ({id, title, date, venue, time, desc, image, href, onEventSelect, paymentEnabled, onPaymentRequired }) => (
   <div 
     onClick={() => {
       if (paymentEnabled && onEventSelect) {
@@ -66,7 +73,7 @@ const EventCard = ({id, title, date, venue, time, desc, image, onEventSelect, pa
         className="absolute inset-0 w-full h-full object-cover z-0 shadow-[0_0_40px_#00FF00]"
       />
 
-      <div className="relative z-10 flex h-full w-full px-3 gap-3">
+      <div className="relative z-10 flex h-full w-full px-3 gap-3 items-center justify-between">
         <div className="flex flex-col py-2 items-center leading-tight">
           <span className="text-[10px] font-bold text-white">AUG</span>
           <span className="text-[20px] font-bold text-white">15</span>
@@ -82,14 +89,9 @@ const EventCard = ({id, title, date, venue, time, desc, image, onEventSelect, pa
 );
 
 function PaymentStart({ onEventSelect, onBack, paymentEnabled = false, onPayNow }) {
-  const [showPaymentPopup, setShowPaymentPopup] = useState(false);
-
   const handlePaymentRequired = () => {
-    setShowPaymentPopup(true);
-  };
-
-  const handleClosePaymentPopup = () => {
-    setShowPaymentPopup(false);
+    // Instead of popup, trigger Pay Now toast via parent callback
+    if (onPayNow) onPayNow();
   };
 
   return (
@@ -156,46 +158,7 @@ function PaymentStart({ onEventSelect, onBack, paymentEnabled = false, onPayNow 
 </LayoutGroup>
     </div>
 
-    {/* Payment Required Popup */}
-    {showPaymentPopup && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-8 rounded-lg max-w-md mx-4">
-          <h3 className="text-xl font-bold text-black mb-4">Payment Required</h3>
-          <p className="text-gray-700 mb-6">
-            You need to complete the payment before registering for events.
-          </p>
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-4 justify-end">
-              <button 
-                onClick={handleClosePaymentPopup}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={() => {
-                  handleClosePaymentPopup();
-                  if (onPayNow) onPayNow();
-                }}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-              >
-                Pay Now
-              </button>
-            </div>
-            
-            {/* FAQ Link */}
-            <div className="text-center">
-              <a
-                href="/faq"
-                className="text-green-600 hover:text-green-700 underline text-sm transition-colors duration-300"
-              >
-                Have questions? Check our FAQ
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
+  {/* Popup removed in favor of toasts handled by parent */}
     </>
   );
 }

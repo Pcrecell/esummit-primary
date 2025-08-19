@@ -111,7 +111,7 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
                 const pinpointIcon = L.icon({
                     iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
                     iconSize: [32, 32],
-                    iconAnchor: [16, 32],
+                    iconAnchor: [16, 22],
                 });
                 
                 L.marker(coordinates, { icon: pinpointIcon }).addTo(map)
