@@ -102,17 +102,9 @@ function PaymentStart({ onEventSelect, onBack, paymentEnabled = false, onPayNow 
   {/* First (main) image */}
   <div className="relative mb-8">
     <img
-      src="https://i.postimg.cc/kg5f2ngP/Necrolord-themed-Stream-Overlay-A-Custom-Design-for-Zach-Fischer-removebg-preview-2.png"
+      src="https://ik.imagekit.io/wlknxcf5m/events.png?updatedAt=1755595944454"
       alt="Main Heading"
-      className="w-64 md:w-96 h-auto"
-    />
-  <div className="absolute top-14 md:top-24 left-1/2 transform -translate-x-1/2 z-30 text-[#0B160E] text-3xl md:text-4xl font-regular text-center font-mystery">
-      Events
-    </div>
-    <img
-      src="https://i.postimg.cc/rFypVFnN/download-49-removebg-preview-1.png"
-      alt="Overlay"
-      className="absolute top-0 left-0 w-32 md:w-auto h-auto"
+      className="w-48 md:w-72 h-auto"
     />
   </div>
   <LayoutGroup>
