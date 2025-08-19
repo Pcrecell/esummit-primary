@@ -32,10 +32,10 @@ const HeroSection = () => {
                     return (
                         <motion.span
                             key={index}
-                            className={`text-[72px] sm:text-[160px] font-bold text-center font-[Anton] text-white px-1 ${isFirstOrLast ? 'cursor-pointer' : 'cursor-default'}`}
+                            className={`text-[72px] sm:text-[160px] font-bold text- font-serif text-white px-1 ${isFirstOrLast ? 'cursor-pointer' : 'cursor-default'}`}
                             initial={{
                                 opacity: 0,
-                                y: 60,
+                                y: 60, 
                                 scale: 0.9,
                                 textShadow: "0 0 0 rgba(16, 189, 27, 0)" // Initial glow state
                             }}

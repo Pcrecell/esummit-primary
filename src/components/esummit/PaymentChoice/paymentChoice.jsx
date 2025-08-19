@@ -64,9 +64,37 @@ const PaymentChoice = () => {
             </p>
 
             {/* Pay Now Button */}
+            {/* {!isPaymentDisabled ? (
+              
+              <a                             commentng the previous logic for backup
+                href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="group relative w-40 cursor-pointer">
+                  <img
+                    src="https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAYButtoon.webp?updatedAt=1755353301612"
+                    alt="Pay Now"
+                    className="w-full transition duration-300 group-hover:brightness-50 z-0"
+                  />
+                  <span className="absolute inset-0 z-10 flex items-center justify-center text-white font-bold text-sm font-poppins">
+                    PAY NOW
+                  </span>
+                </div>
+              </a>
+            ) : (
+              <div className="w-40 text-center text-red-500 font-bold">
+                Payment is disabled for first year
+              </div>
+            )} */}
+
             {!isPaymentDisabled ? (
               <a
-                href="https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
+                href={
+                  profile.collegeName === "KIIT"
+                    ? "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
+                    : "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
               >
