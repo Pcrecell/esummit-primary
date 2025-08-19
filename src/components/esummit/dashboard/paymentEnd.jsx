@@ -122,7 +122,7 @@ function PaymentEnd({ eventId, onPaymentComplete, onBack }) {
                if (id === "expo") return "/expo";
                return "/";
              })()}
-             className="inline-block bg-[#00FF3A] text-black font-semibold px-4 py-2 rounded hover:bg-[#00e835] transition-colors"
+             className="inline-block bg-[#A7A267] text-black font-semibold px-4 py-2 rounded hover:bg-[#CFCA86] transition-colors"
            >
              Go to {event.title}
            </Link>
