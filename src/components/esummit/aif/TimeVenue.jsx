@@ -76,7 +76,7 @@ const RoundsSection = ({
               <div className="flex items-center bg-gradient-to-r from-yellow-600/20 to-yellow-500/10 backdrop-blur-sm border border-yellow-600/30 rounded-2xl p-3 md:p-4 min-w-[250px] pl-16 md:pl-20 hover:scale-105 transition-transform duration-300">
                 <div className={`text-white ${gideonRoman.className}`}>
                   <div className="text-lg md:text-xl font-semibold mb-1">
-                    Campus 5
+                    Campus 17
                   </div>
                   <div className="text-white-300 font-medium text-sm md:text-base">
                     Auditorium

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
   const handleJoinDiscord = () => {
@@ -13,9 +14,11 @@ const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
       {/* Desktop Layout */}
       <div className="relative max-w-2xl w-full hidden md:flex items-center justify-center md:min-h-[600px] bg-transparent">
         {/* Decorative frame image */}
-        <img
-          src="https://i.ibb.co/qMjzxJcd/download-70-removebg-preview-cleanup-1.png"
+        <Image
+          src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/download-70-removebg-preview-cleanup-1.webp"
           alt="Decorative Frame"
+          width={1000}
+          height={1000}
           className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
         />
 
@@ -105,7 +108,7 @@ const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
             className="group transform transition-all duration-300 hover:scale-110 relative"
           >
             <img
-              src="https://i.ibb.co/C3kCrrPy/The-PNG-Stock-removebg-preview-1.png"
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/The-PNG-Stock-removebg-preview-1.webp"
               alt="Continue"
               className="h-28 w-auto transition-all duration-300 hover:brightness-110 hover:drop-shadow-2xl filter drop-shadow-lg"
             />
@@ -172,7 +175,7 @@ const RegistrationSuccess = ({ onClose, onJoinDiscord }) => {
               className="text-white/80 text-sm mb-4"
               style={{ fontFamily: "Inria Serif, serif" }}
             >
-              Join our community for updates and networking!
+              Join our discord server to <span className="font-bold">participate</span> in our event
             </p>
 
             {/* Discord button */}
