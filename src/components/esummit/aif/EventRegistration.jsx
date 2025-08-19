@@ -248,6 +248,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
             elixirId: elixirId,
             agreeTerms: false,
           });
+          showSuccess("Successfully Unregistered.")
         }
       } catch (err) {
         console.error("Error deleteing User:", err);
