@@ -60,7 +60,10 @@ const PaymentChoice = () => {
               Secure your spot at E-Summit <br />– but don’t miss out!
             </p>
             <p className="text-md text-center max-w-md font-bold font-poppins">
-              Price: Rs.249
+              Price: {profile?.college === "KIIT"
+                ? "₹ 249"
+                : "₹ 349"
+              }
             </p>
 
             {/* Pay Now Button */}
@@ -91,7 +94,7 @@ const PaymentChoice = () => {
             {!isPaymentDisabled ? (
               <a
                 href={
-                  profile.collegeName === "KIIT"
+                  profile?.college === "KIIT"
                     ? "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
                     : "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796"
                 }

@@ -147,10 +147,9 @@ export default function Register() {
         email,
         firstname,
         lastname,
-        collegeName: collegeName,
         isKiitCollege: collegeSelection === "KIIT",
         phone,
-        college: collegeToSend,
+        college: collegeName || customCollege,
         hostelType: collegeSelection === "KIIT" ? hostelType : null,
         hostelEmail:
           collegeSelection === "KIIT" && hostelType === true
@@ -158,6 +157,7 @@ export default function Register() {
             : null,
         idToken,
       };
+      console.log(userData);
       const csrfToken = getCookie("csrfToken");
 
       const response = await fetch(
