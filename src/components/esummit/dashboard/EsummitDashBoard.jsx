@@ -450,22 +450,23 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
         <div className="relative min-h-[80vh] sm:min-h-[50vh] font-sans text-white background-container"></div>
 
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div>
+        {/* <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div> */}
       </div>
-
-      {profile.isEventRegistered ? (
-        <div>
-          <PaymentEnd eventId={profile.eventName} />
-        </div>
-      ) : (
-        <div>
-          <PaymentStart 
-            onEventSelect={handleEventSelect}
-            paymentEnabled={paymentDone}
-            onPayNow={handlePayNowToast}
-          />
-        </div>
-      )}
+      <div>
+        {profile?.isEventRegistered ? (
+          <div>
+            <PaymentEnd eventId={profile?.eventName} />
+          </div>
+        ) : (
+          <div>
+            <PaymentStart 
+              onEventSelect={handleEventSelect}
+              paymentEnabled={paymentDone}
+              onPayNow={handlePayNowToast}
+            />
+          </div>
+        )}
+      </div>
       {/* Global toast */}
       <Toast message={toast.message} type={toast.type} isVisible={toast.isVisible} onClose={hideToast} />
         

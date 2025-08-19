@@ -157,7 +157,6 @@ export default function Register() {
             : null,
         idToken,
       };
-      console.log(userData);
       const csrfToken = getCookie("csrfToken");
 
       const response = await fetch(

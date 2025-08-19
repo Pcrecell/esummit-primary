@@ -74,12 +74,13 @@ export default function EsummitNavbar() {
                       />
                     </div>
                     <div className="absolute backdrop-blur-3xl bg-black/40 rounded-xl right-0 mt-3 w-32 shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                      <button
-                        onClick={() => userData ? router.push("/dashboard") : router.push("/login")}
+                      <a
+                        // onClick={() => userData ? router.push("/dashboard") : router.push("/login")}
+                        href={userData ? "/dashboard" : "/login"}
                         className="px-4 py-2 text-white cursor-pointer hover:bg-[#2EB24C] w-full flex items-center hover:text-white rounded"
                       >
                         Dashboard
-                      </button>
+                      </a>
                       <button
                         onClick={handleLogout}
                         className="px-4 py-2 text-white cursor-pointer hover:bg-[#2EB24C] w-full flex items-center rounded"
@@ -157,12 +158,13 @@ export default function EsummitNavbar() {
                   ))}
                   {userData ? (
                     <>
-                      <button
-                        onClick={() => {router.push("/dashboard"); setIsMobileMenuOpen(false)}}
+                      <a
+                        // onClick={() => {router.push("/dashboard"); setIsMobileMenuOpen(false)}}
+                        href={userData ? "/dashboard" : "/login"}
                         className="text-neutral-200 dark:text-neutral-300 w-full flex items-start"
                       >
                         Dashboard
-                      </button>
+                      </a>
                       <button
                         onClick={handleLogout}
                         className="text-left text-neutral-200 w-full flex items-start"

@@ -66,7 +66,7 @@ const EventsPage = () => {
         venue: "CAMPUS-6",
         coordinates: [20.34919541378971, 85.81945496655301],
         description:
-          "ORACLE is a pitch event where participants present innovative, data-backed solutions to global challenges.",
+          "Oracle is a pitch event where participants present innovative, data-backed solutions to global challenges.",
         image:
           "https://ik.imagekit.io/1bsukh3d7/oracle-r.webp?updatedAt=1755242215530",
         route: "/oracle",
@@ -86,12 +86,12 @@ const EventsPage = () => {
         route: "/aif",
       },
       {
-        title: "EXPO",
+        title: "FOUNDER'S ARENA",
         time: "9:00AM - 3:00PM",
         venue: "CAMPUS-06 BANQUET HALL",
         coordinates: [20.353523760924087, 85.8195440597536],
         description:
-          "EXPO is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
+          "Founder's Arena is a showcase where innovators present projects from tech to social impact, fostering connection, collaboration, and change.",
         image:
           "https://ik.imagekit.io/1bsukh3d7/expo-r.webp?updatedAt=1755242215505",
         route: "/expo",

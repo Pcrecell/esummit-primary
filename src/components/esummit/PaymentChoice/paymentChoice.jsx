@@ -17,6 +17,7 @@ const PaymentChoice = () => {
   }, [userData, loading, router]);
 
   // Close modal if clicked outside
+  console.log(profile)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -59,10 +60,15 @@ const PaymentChoice = () => {
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Secure your spot at E-Summit <br />– but don’t miss out!
             </p>
-            <p className="text-md text-center max-w-md font-bold font-poppins">
+          {profile?.college?.toLowerCase() === "kiit" ? (
+            <p className="text-base text-center max-w-md font-bold font-poppins">
               Price: Rs.249
             </p>
-
+          ) : (
+            <p className="text-base text-center max-w-md font-bold font-poppins">
+              Price: Rs.349
+            </p>
+          )}
             {/* Pay Now Button */}
             {/* {!isPaymentDisabled ? (
               
@@ -91,7 +97,7 @@ const PaymentChoice = () => {
             {!isPaymentDisabled ? (
               <a
                 href={
-                  profile.collegeName === "KIIT"
+                  profile?.college?.toLowerCase() === "kiit"
                     ? "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
                     : "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796"
                 }
