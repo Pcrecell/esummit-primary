@@ -60,7 +60,7 @@ const PaymentChoice = () => {
               Secure your spot at E-Summit <br />– but don’t miss out!
             </p>
             <p className="text-md text-center max-w-md font-bold font-poppins">
-              Price: {profile?.college === "KIIT"
+              Price:  {profile?.college === "kiit"
                 ? "₹ 249"
                 : "₹ 349"
               }
@@ -94,7 +94,7 @@ const PaymentChoice = () => {
             {!isPaymentDisabled ? (
               <a
                 href={
-                  profile?.college === "KIIT"
+                  profile?.college === "kiit"
                     ? "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
                     : "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796"
                 }
