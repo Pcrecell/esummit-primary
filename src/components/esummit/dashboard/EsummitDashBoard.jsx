@@ -12,6 +12,9 @@ import Particles from "./Particles";
 import Image from "next/image";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { register } from "next/dist/next-devtools/userspace/pages/pages-dev-overlay-setup";
+import { useToast } from "@/hooks/useToast";
+import Toast from "@/components/ui/Toast";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -25,6 +28,9 @@ const EsummitDashBoard = () => {
   const [userDataState, setUserDataState] = useState(null);
   const [registeredEventId, setRegisteredEventId] = useState(null);
   const router = useRouter();
+  const { toast, showSuccess, showError, hideToast } = useToast();
+
+  // ---
 
 const { userData, setUserData, profile, setProfile, loading} = useAuth();
    useEffect(() => {
@@ -36,8 +42,6 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
     }, [userData, profile, loading, router]);
 
   const qrCode = profile?.qrCode || "";
-  // console.log("User Data:", userData);
-  // console.log("Profile Data:", profile);
   const paymentDone = profile?.payment || false;
   const email = profile?.email || "User";
   const elixir = profile?.elixir || "";
@@ -86,14 +90,37 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
     );
   }
 
-  const handleEventClick = (eventId) => {
-    setSelectedEventId(eventId);
-    setShowConfirmationPopup(true);
+  const idToPath = (id) => {
+    switch ((id || "").toString().toLowerCase()) {
+      case "oracle":
+        return "/oracle";
+      case "aif":
+        return "/aif";
+      case "case-x":
+        return "/case-x";
+      case "hackathon":
+        return "/pandoras-paradox";
+      case "expo":
+        return "/expo";
+      default:
+        return "/";
+    }
   };
 
-  // Handle payment action from PaymentStart popup
-  const handlePaymentFromPopup = () => {
-    setPaymentDone(true);
+  const handleEventSelect = (eventId) => {
+    const path = idToPath(eventId);
+    showSuccess("Redirecting you to the event page...");
+    setTimeout(() => {
+      router.push(path);
+    }, 600);
+  };
+
+  // Handle payment action: show toast then redirect to payment
+  const handlePayNowToast = () => {
+    showSuccess("Please complete your payment to register. Redirecting to payment...");
+    setTimeout(() => {
+      if (userData) router.replace("/payment"); else router.replace("/login");
+    }, 600);
   };
 
   // Handle registration confirmation
@@ -425,6 +452,23 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div>
       </div>
+
+      {profile?.eventName ? (
+        <div>
+          <PaymentEnd eventId={profile?.eventName} />
+        </div>
+      ) : (
+        <div>
+          <PaymentStart 
+            onEventSelect={handleEventSelect}
+            paymentEnabled={paymentDone}
+            onPayNow={handlePayNowToast}
+          />
+        </div>
+      )}
+      {/* Global toast */}
+      <Toast message={toast.message} type={toast.type} isVisible={toast.isVisible} onClose={hideToast} />
+        
     </div>
   );
 };

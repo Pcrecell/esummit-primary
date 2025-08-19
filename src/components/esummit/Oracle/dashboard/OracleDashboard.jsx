@@ -6,11 +6,55 @@ import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Toast from "@/components/ui/Toast";
 import { useToast } from "@/hooks/useToast";
+import TeamHeader from "@/components/shared/disbandButton";
 
 const OracleDashboard = () => {
   const router = useRouter();
   const { userData, profile, loading } = useAuth();
   const paymentDone = profile?.payment;
+    const handleDisbandTeam = async () => {
+      // Multiple validations before disbanding
+      if (!profile?.elixir) {
+        showError("Authentication required");
+        return;
+      }
+      
+      if (teamInfo.leaderId !== profile.elixir) {
+        showError("Only team leader can disband the team.");
+        return;
+      }
+  
+      if (!teamInfo.teamId) {
+        showError("No team found to disband");
+        return;
+      }
+  
+
+  
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/disband-team`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            leaderelixir: profile.elixir,
+          }),
+        });
+  
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || "Failed to disband team");
+        }
+  
+        showSuccess("Team disbanded successfully");
+        router.replace("/oracle"); // Redirect to Oracle page after disbanding
+      } catch (error) {
+        console.error("Error disbanding team:", error);
+        showError(error.message || "Failed to disband team");
+      }
+    };
+
 
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
@@ -73,8 +117,9 @@ const OracleDashboard = () => {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to add team member");
+      if (!response.status === 200) {
+        showError(data.message || "Failed to add team member");
+        return;
       }
 
       showSuccess(`Successfully added ${newMemberName} to the team`);
@@ -187,14 +232,11 @@ const OracleDashboard = () => {
           <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-6 backdrop-blur-md">
             <div className="space-y-6">
               {/* Team Information */}
-              <div>
-                <h2 className="text-2xl md:text-4xl font-mono font-bold text-white tracking-wider mb-4">
-                  {teamInfo.teamName}
-                </h2>
-                <p className="text-green-400 font-mono text-lg">
-                  Team ID: {teamInfo.teamId}
-                </p>
-              </div>
+              <TeamHeader
+                teamInfo={teamInfo}
+                onDisband={() => handleDisbandTeam()}
+              />
+
 
               {/* Team Members */}
               <div className="space-y-8">

@@ -18,12 +18,11 @@ const JoinTeamPage = () => {
 
   // ✅ align with pandoras logic -> use formData instead of multiple states
   const [formData, setFormData] = useState({
-    teamName: "",
+    name: "",
     yourEid: "",
-    teamLeadEid: "",
     teamId: "",
   });
-
+  
   const [errors, setErrors] = useState({});
   const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
@@ -51,9 +50,8 @@ const JoinTeamPage = () => {
 
   const validateForm = () => {
     let newErrors = {};
-    if (!formData.teamName.trim()) newErrors.teamName = "Team Name is required.";
+    if (!formData.name.trim()) newErrors.teamName = "your Name is required.";
     if (!formData.yourEid.trim()) newErrors.yourEid = "Your UID is required.";
-    if (!formData.teamLeadEid.trim()) newErrors.teamLeadEid = "Lead UID is required.";
     if (!formData.teamId.trim()) newErrors.teamId = "Team ID is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -75,7 +73,7 @@ const handleSubmit = async (e) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: formData.teamName.trim(),
+        name: formData.name.trim(),
         elixir: formData.yourEid.trim(),
         mode: "join_team",
         teamId: formData.teamId.trim(),
@@ -101,6 +99,15 @@ const handleSubmit = async (e) => {
     showError(err.message || "Error joining team");
   }
 };
+  useEffect(() => {
+  if (profile) {
+    setFormData((prev) => ({
+      ...prev,
+      name: profile.firstname || "",
+      yourEid: profile.elixir || "",
+    }));
+  }
+}, [profile]);
   
 
   const handleChange = (field, value) => {
@@ -136,7 +143,8 @@ const handleSubmit = async (e) => {
                 </label>
                 <input
                   type="text"
-                  value={formData.teamName}
+                  value={profile?.firstname || ""}
+                  readOnly
                   onChange={(e) => handleChange("teamName", e.target.value)}
                   className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800"
                 />
@@ -151,7 +159,8 @@ const handleSubmit = async (e) => {
                 </label>
                 <input
                   type="text"
-                  value={formData.yourEid}
+                  value={profile?.elixir || ""}
+                  readOnly
                   onChange={(e) => handleChange("yourEid", e.target.value)}
                   className="flex-1 md:px-2 md:py-1.5 bg-[#AA9762] rounded text-gray-800 "
                 />
@@ -159,7 +168,7 @@ const handleSubmit = async (e) => {
               {errors.yourEid && <span className="text-red-400 text-xs">{errors.yourEid}</span>}
             </div>
 
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <div className="flex items-center  md:w-full">
                 <label className="text-white font-semibold text-sm px-6 w-32">
                  Lead UID:
@@ -172,7 +181,7 @@ const handleSubmit = async (e) => {
                 />
               </div>
               {errors.teamLeadEid && <span className="text-red-400 text-xs">{errors.teamLeadEid}</span>}
-            </div>
+            </div> */}
 
             <div className="flex flex-col">
               <div className="flex items-center md:w-full">
