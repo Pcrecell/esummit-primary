@@ -931,11 +931,11 @@ const PandorasParadoxDashboard = () => {
                 </div>
                 
               )}
-              {teamInfo.members && teamInfo.members.length >= 3 ? (
+              {/* {teamInfo.members && teamInfo.members.length >= 3 ? (
               <div className = "flex justify-center"><button onClick={handleFinalSubmit} className = "bg-green-600 rounded-3xl border-green-900 border-2 text-white text-2xl px-4 md:px-10 py-2 cursor-pointer">Submit</button></div>)
               : (
               <div className = "flex justify-center"><button className = "bg-gray-700 opacity-[0.8] cursor-not-allowed rounded-3xl border-green-900 border-2 text-white text-2xl px-4 py-1">Submit</button></div>)
-              } 
+              }  */}
             </div>
 
             {/* Back to Registration Option */}
