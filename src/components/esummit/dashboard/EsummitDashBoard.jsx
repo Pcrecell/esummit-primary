@@ -19,27 +19,47 @@ import Toast from "@/components/ui/Toast";
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 const EsummitDashBoard = () => {
-  
-  // const { userData, setUserData, profile, setProfile, loading} = useAuth();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const [copied, setCopied] = useState(false);
   const [userDataState, setUserDataState] = useState(null);
   const [registeredEventId, setRegisteredEventId] = useState(null);
+  const [redirectTimeout, setRedirectTimeout] = useState(null);
   const router = useRouter();
   const { toast, showSuccess, showError, hideToast } = useToast();
 
   // ---
 
-const { userData, setUserData, profile, setProfile, loading} = useAuth();
-   useEffect(() => {
-      if (!loading) {
-        if (!userData) {
-          router.replace("/login");
-        }
+  const { userData, setUserData, profile, setProfile, loading} = useAuth();
+
+  // Enhanced redirect logic with timeout
+  useEffect(() => {
+    if (loading) return; // Wait for loading to complete
+
+    if (!userData) {
+      // Set a timeout to redirect after a brief delay
+      // This gives Firebase auth state time to fully initialize
+      const timeout = setTimeout(() => {
+        router.replace("/login");
+      }, 2000); // 2 second delay
+
+      setRedirectTimeout(timeout);
+    } else {
+      // Clear timeout if user data is found
+      if (redirectTimeout) {
+        clearTimeout(redirectTimeout);
+        setRedirectTimeout(null);
       }
-    }, [userData, profile, loading, router]);
+    }
+
+    // Cleanup timeout on unmount
+    return () => {
+      if (redirectTimeout) {
+        clearTimeout(redirectTimeout);
+      }
+    };
+  }, [userData, loading, router]);
 
   const qrCode = profile?.qrCode || "";
   const paymentDone = profile?.payment || false;
@@ -56,8 +76,9 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
     }
   };
 
+  // Payment callback effect - only run when we have valid user data
   useEffect(() => {
-    const runEffect = async () => {
+    const runPaymentCallback = async () => {
       if (!loading && userData && paymentDone) {
         try {
           await fetch(`${API_URL}/payment/payment-callback`, {
@@ -73,16 +94,20 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
       }
     };
 
-    // Handle redirect synchronously
-    if (!loading && !userData) {
-      router.replace("/login");
-      return; // Prevent further execution
-    }
+    runPaymentCallback();
+  }, [loading, userData, paymentDone, email, elixir]);
 
-    runEffect();
-  }, [loading, userData, paymentDone, router, email, elixir]); // profile, loading, router, paymentDone, email, elixir these are dependencies for the useEffect hook to ensure it runs when any of these values change.
+  // Show loading state while auth is initializing or during redirect timeout
+  if (loading || (!userData && redirectTimeout)) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
+        Loading...
+      </div>
+    );
+  }
 
-  if (loading) {
+  // If still no user data after loading and timeout, this will be handled by redirect
+  if (!userData || !profile) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-black to-green-900 text-white text-2xl font-bold tracking-widest animate-pulse">
         Loading...
@@ -450,7 +475,7 @@ const { userData, setUserData, profile, setProfile, loading} = useAuth();
 
         <div className="relative min-h-[80vh] sm:min-h-[50vh] font-sans text-white background-container"></div>
 
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div>
+        {/* <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div> */}
       </div>
 
       {profile?.eventName ? (

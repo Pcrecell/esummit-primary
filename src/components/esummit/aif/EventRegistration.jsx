@@ -220,7 +220,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
             onRegistrationSuccess(formData);
           }
         } else {
-          showError(result.message || "Registration failed. Please try again.");
+          showError(result.error || "Registration failed. Please try again.");
         }
       } catch (error) {
         console.error("Registration error:", error);
@@ -248,6 +248,7 @@ const EventRegistration = ({ onRegistrationSuccess }) => {
             elixirId: elixirId,
             agreeTerms: false,
           });
+          showSuccess("Successfully Unregistered.")
         }
       } catch (err) {
         console.error("Error deleteing User:", err);

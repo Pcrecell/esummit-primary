@@ -157,7 +157,18 @@ export default function Register() {
             : null,
         idToken,
       };
-      console.log(userData);
+      setProfile({
+        firstname,
+        lastname,
+        email,
+        phone,
+        college: collegeName,
+        hostelType: collegeSelection === "KIIT" ? hostelType : null,
+        hostelEmail:
+          collegeSelection === "KIIT" && hostelType === true
+            ? hostelEmail
+            : null,
+      });
       const csrfToken = getCookie("csrfToken");
 
       const response = await fetch(

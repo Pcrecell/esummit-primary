@@ -42,7 +42,7 @@ function Hero() {
 
           <button
 
-            onClick={() => (userData ? router.push("/dashboard") : router.push("/login"))}
+            onClick={() => (userData ? window.location.href = "/dashboard" : router.push("/login"))}
             className="bg-white text-black py-2 px-4 cursor-pointer rounded-[20px] border border-none hover:shadow-[0_0_10px_2px_rgba(255,255,255,0.8)] transition duration-300 ease-in-out"
           >
             Get your ticket ↗

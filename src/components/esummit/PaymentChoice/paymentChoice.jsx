@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
+import TeamIdDisplay from "@/components/shared/copyClipboard";
 
 const PaymentChoice = () => {
   const router = useRouter();
@@ -17,6 +18,7 @@ const PaymentChoice = () => {
   }, [userData, loading, router]);
 
   // Close modal if clicked outside
+  console.log(profile)
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -50,21 +52,33 @@ const PaymentChoice = () => {
         className="relative w-full max-w-md rounded-2xl shadow-2xl"
       >
         <div
-          className="w-full h-[700px] bg-center bg-no-repeat bg-contain text-white flex items-center justify-center"
+          className="relative aspect-[4/3] w-full h-[700px] bg-center bg-no-repeat bg-contain text-white flex items-center justify-center"
           style={{
             backgroundImage: `url('https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAY.webp?updatedAt=1755353166962')`,
           }}
         >
           <div className="flex flex-col md:gap-y-2 items-center">
             <p className="text-md text-center max-w-md font-bold font-poppins">
-              Secure your spot at E-Summit <br />– but don’t miss out!
+              Secure your spot at E-Summit <br />
             </p>
-            <p className="text-md text-center max-w-md font-bold font-poppins">
-              Price:  {profile?.college === "kiit"
-                ? "₹ 249"
-                : "₹ 349"
-              }
+          {profile?.college?.toLowerCase() === "kiit" ? (
+            <p className="text-base text-center max-w-md font-bold font-poppins">
+              Price: Rs.249
             </p>
+          ) : (
+            <p className="text-base text-center max-w-md font-bold font-poppins">
+              Price: Rs.349
+            </p>
+          )}
+            {/* Display Elixir ID with copy functionality */}
+            <div className="mb-2 flex items-center justify-center">
+              <div className="bg-black/40 px-4 py-1 rounded-lg">
+                <TeamIdDisplay 
+                  teamId={profile?.elixir} 
+                  label="Your Elixir ID"
+                />
+              </div>
+            </div>
 
             {/* Pay Now Button */}
             {/* {!isPaymentDisabled ? (
@@ -94,7 +108,7 @@ const PaymentChoice = () => {
             {!isPaymentDisabled ? (
               <a
                 href={
-                  profile?.college === "kiit"
+                  profile?.college?.toLowerCase() === "kiit"
                     ? "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17972"
                     : "https://payments.billdesk.com/bdcollect/bd/kalingainstituteofindustrialtechnology/17796"
                 }
