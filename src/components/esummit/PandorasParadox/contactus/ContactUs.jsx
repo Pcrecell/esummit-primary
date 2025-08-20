@@ -149,7 +149,10 @@ const ContactUs = () => {
       {/* Content */}
       <div
         className="relative z-20 w-full border-2 border-[#6e550f] max-w-7xl bg-[#0B1F1D] rounded-2xl overflow-hidden shadow-lg"
-        style={{ minHeight: 420 }}
+        style={{ 
+          minHeight: 420,
+          boxShadow: "0 0 50px rgba(255, 204, 0, 0.2), 0 0 100px rgba(255, 204, 0, 0.15)"
+        }}
       >
         <div className="flex flex-col md:flex-row">
           {/* Left: Form */}
