@@ -1,26 +1,19 @@
+"use client"
+
 import React, { useEffect, useRef, useState } from 'react'
 
-const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" }) => {
+const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location", campus = "Campus" }) => {
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
-            const newIsSmallScreen = window.innerWidth < 1024;
-            setIsSmallScreen(newIsSmallScreen);
-            
-            // Invalidate map size when screen size changes
-            if (mapInstanceRef.current) {
-                setTimeout(() => {
-                    mapInstanceRef.current.invalidateSize();
-                    // Adjust zoom based on screen size
-                    mapInstanceRef.current.setZoom(newIsSmallScreen ? 15 : 16);
-                }, 100);
-            }
+            setIsSmallScreen(window.innerWidth < 1024);
         };
 
-        handleResize(); // Check on mount
+        handleResize();
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
@@ -29,53 +22,58 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
     useEffect(() => {
         // Cleanup any existing map instance first
         if (mapInstanceRef.current) {
-            mapInstanceRef.current.remove();
+            try {
+                mapInstanceRef.current.remove();
+            } catch (error) {
+                // console.warn("Error removing existing map:", error);
+            }
             mapInstanceRef.current = null;
         }
 
-        const leafletCSS = document.createElement("link");
-        leafletCSS.rel = "stylesheet";
-        leafletCSS.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-        leafletCSS.id = "leaflet-css"; // Add ID for easier cleanup
-        
-        // Check if CSS is already loaded
-        if (!document.getElementById("leaflet-css")) {
+        // Only add Leaflet resources if they don't already exist
+        let leafletCSS = document.getElementById("leaflet-css");
+        if (!leafletCSS) {
+            leafletCSS = document.createElement("link");
+            leafletCSS.rel = "stylesheet";
+            leafletCSS.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+            leafletCSS.id = "leaflet-css";
             document.head.appendChild(leafletCSS);
         }
 
-        const leafletScript = document.createElement("script");
-        leafletScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-        leafletScript.async = true;
-        leafletScript.id = "leaflet-script"; // Add ID for easier cleanup
+        let leafletScript = document.getElementById("leaflet-script");
+        if (!leafletScript) {
+            leafletScript = document.createElement("script");
+            leafletScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+            leafletScript.async = true;
+            leafletScript.id = "leaflet-script";
+            document.body.appendChild(leafletScript);
+        }
         
-        leafletScript.onload = () => {
+        const initializeMap = () => {
             const L = window.L;
-            if (!L || !mapRef.current) return;
+            if (!L || !mapRef.current) {
+                // console.error("Leaflet not loaded or map ref not available");
+                return;
+            }
 
             try {
-                // Clear any existing content in the map container
+                // Clear any existing content
                 mapRef.current.innerHTML = '';
                 
+                // Create map with specific options for mobile
                 const map = L.map(mapRef.current, {
-                    zoomControl: true,
+                    zoomControl: isSmallScreen ? false : true,
                     attributionControl: false,
-                    preferCanvas: true, // Better performance
-                    maxZoom: 18,
-                    minZoom: 10
+                    scrollWheelZoom: !isSmallScreen,
+                    doubleClickZoom: true,
+                    touchZoom: isSmallScreen,
+                    dragging: true
                 });
                 
-                // Store the map instance for cleanup
                 mapInstanceRef.current = map;
                 
-                // Set initial view
+                // Set view with appropriate zoom for mobile
                 map.setView(coordinates, isSmallScreen ? 15 : 16);
-                
-                // Force resize after a short delay to ensure proper rendering
-                setTimeout(() => {
-                    if (map && mapRef.current) {
-                        map.invalidateSize();
-                    }
-                }, 100);
                 
                 // Apply background styling
                 if (mapRef.current) {
@@ -85,12 +83,31 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
                     mapRef.current.style.backgroundPosition = "center";
                 }
                 
+                // Add tile layer
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     opacity: 0.45,
                     attribution: '&copy; OpenStreetMap contributors',
                 }).addTo(map);
                 
-                // Hide unwanted markers with a timeout
+                // Force map to resize properly
+                setTimeout(() => {
+                    if (map && mapInstanceRef.current) {
+                        map.invalidateSize();
+                        setIsLoaded(true);
+                    }
+                }, 200);
+                
+                // Add custom markers
+                const pinpointIcon = L.icon({
+                    iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+                    iconSize: isSmallScreen ? [24, 24] : [32, 32],
+                    iconAnchor: isSmallScreen ? [12, 24] : [16, 22],
+                });
+                
+                L.marker(coordinates, { icon: pinpointIcon }).addTo(map)
+                    .bindPopup(`<a href="https://www.google.com/maps/place/${coordinates[0]},${coordinates[1]}">${label}<br>${campus}</a>`);
+
+                // Hide unwanted markers
                 setTimeout(() => {
                     const markerIcons = document.querySelectorAll('.leaflet-marker-icon');
                     markerIcons.forEach(icon => {
@@ -100,73 +117,37 @@ const EventsMap = ({ coordinates = [20.3534, 85.8195], label = "Event Location" 
                         }
                     });
                 }, 500);
-                
-                // Create custom icons
-                const icon = L.icon({
-                    iconUrl: "https://cdn-icons-png.flaticon.com/512/616/616494.png",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 32],
-                });
-                
-                const pinpointIcon = L.icon({
-                    iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 32],
-                });
-                
-                L.marker(coordinates, { icon: pinpointIcon }).addTo(map)
-                    .bindPopup(`<a href="https://www.google.com/maps/place/${coordinates[0]},${coordinates[1]}">${label}</a>`);
                     
             } catch (error) {
                 // console.error("Error initializing map:", error);
             }
         };
         
-        // Handle script loading
+        // If Leaflet is already loaded, initialize immediately
         if (window.L) {
-            // If Leaflet is already loaded, initialize immediately
-            leafletScript.onload();
-        } else if (!document.getElementById("leaflet-script")) {
-            document.body.appendChild(leafletScript);
+            initializeMap();
         } else {
-            // Script exists but may not be loaded yet, attach to existing script
-            const existingScript = document.getElementById("leaflet-script");
-            if (existingScript.complete || window.L) {
-                leafletScript.onload();
-            } else {
-                existingScript.addEventListener('load', leafletScript.onload);
-            }
+            leafletScript.onload = initializeMap;
+            leafletScript.onerror = () => {
+                // console.error("Failed to load Leaflet script");
+            };
         }
 
-        // Cleanup function
         return () => {
-            // Remove map instance
             if (mapInstanceRef.current) {
                 try {
                     mapInstanceRef.current.remove();
                 } catch (error) {
-                    // console.warn("Error removing map:", error);
+                    // console.warn("Error cleaning up map:", error);
                 }
                 mapInstanceRef.current = null;
             }
             
-            // Clear map container
             if (mapRef.current) {
                 mapRef.current.innerHTML = '';
             }
-            
-            // Remove scripts and styles (only if they exist and we added them)
-            const existingCSS = document.getElementById("leaflet-css");
-            const existingScript = document.getElementById("leaflet-script");
-            
-            if (existingCSS && existingCSS === leafletCSS) {
-                existingCSS.remove();
-            }
-            if (existingScript && existingScript === leafletScript) {
-                existingScript.remove();
-            }
         };
-    }, [coordinates, label]); // Re-run when coordinates or label change
+    }, [isSmallScreen, coordinates, label]);
 
     return (
         <div className="w-full h-full flex justify-center items-center relative">

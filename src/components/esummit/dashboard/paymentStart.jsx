@@ -1,45 +1,57 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { LayoutGroup } from "framer-motion";
 const events = [
    {
-    id:"1",
+    id:"Oracle",
     title: "ORACLE",
-    date: "AUG 15",
-    desc: "An opportunity for aspiring entrepreneurs jhdsbfgshdvf hgsdvfhsgdfvsndbvnbs.",
-    image: "https://i.postimg.cc/Z0tk56H5/oracle.png",
+    month: "AUG",
+    date: "23",
+    desc: "Oracle is a pitch event where participants present solutions to global challenges.",
+    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/oracle.png?updatedAt=1755628892778",
+    href: "/oracle",
   },
   {
-    id:"2",
+    id:"AIF",
     title: "ALICE IN FOUNDERLAND",
-    date: "AUG 15",
-    desc: "An opportunity for aspiring entrepreneurs jfrjkerfjkesrdfbjesrfb nbdfjebfjebjferjhrfbehjrbjh .",
-    image: "https://i.postimg.cc/Bn8WGHyd/Alice-in-founderland.png",
+    month: "AUG",
+    date: "23",
+    desc: "Alice in Founderland is an challenge where players solve real-world problems to win.",
+    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Alice-in-founderland.png?updatedAt=1755628890005",
+    href: "/aif",
     
   },
   {
-    id:"3",
-    title: "CASE BATTLE",
-    date: "AUG 15",
-    desc: "An opportunity for aspiring entrepreneurs sdbfjshdjfbjsdnbfmndb fmnmnsdbfnbfnsbfb.",
+    id:"case-x",
+    title: "CASE X",
+    month: "AUG",
+    date: "24",
+    desc: "Case Battle is a contest where teams solve real-world cases and defend them before judges.",
+    image: "https://ik.imagekit.io/wlknxcf5m/casex.png?updatedAt=1755594314805",
+    href: "/case-x",
   },
   {
-    id:"4",
+    id:"Hackathon",
     title: "PANDORAS PARADOX",
-    date: "AUG 15",
-    desc: "An opportunity for aspiring entrepreneurs dcfbhjdfjhdfdhfd vhfhdvfjdhvsdnbf nsdbfndbfbdnd.",
-    image: "https://i.postimg.cc/RVcfmJyp/pandoras-paradox.png",
+    month: "AUG",
+    date: "23-25",
+    desc: "Pandora's Paradox is a challenge where teams turn complex global problems into solutions",
+    image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/pandoras-paradox.png?updatedAt=1755628892886",
+    href: "/pandoras-paradox",
   
   },
   {
-    id:"5",
-    title: "EXPO",
-    date: "AUG 15",
-    desc: "An opportunity for aspiring entrepreneurs sdvfghsdvfg sbdvfnsbdvfn nbdvnbsdvnbsvc.",
-    image:"https://i.postimg.cc/bvqm7L2N/Expo-1.png",
+    id:"EXPO",
+    title: "FOUNDER'S ARENA",
+    month: "AUG",
+    date: "23",
+    desc: "Founder's Arena is a showcase where innovators present projects from tech to social impact.",
+    image:"https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Expo-1.png?updatedAt=1755628891663",
+    href: "/expo",
   },
 ];
 
-const EventCard = ({id, title, date, venue, time, desc, image, onEventSelect, paymentEnabled, onPaymentRequired }) => (
+const EventCard = ({id, title, month, date, venue, time, desc, image, href, onEventSelect, paymentEnabled, onPaymentRequired }) => (
   <div 
     onClick={() => {
       if (paymentEnabled && onEventSelect) {
@@ -66,10 +78,10 @@ const EventCard = ({id, title, date, venue, time, desc, image, onEventSelect, pa
         className="absolute inset-0 w-full h-full object-cover z-0 shadow-[0_0_40px_#00FF00]"
       />
 
-      <div className="relative z-10 flex h-full w-full px-3 gap-3">
+      <div className="relative z-10 flex h-full w-full px-3 gap-3 items-center justify-between">
         <div className="flex flex-col py-2 items-center leading-tight">
-          <span className="text-[10px] font-bold text-white">AUG</span>
-          <span className="text-[20px] font-bold text-white">15</span>
+          <span className="text-[10px] font-bold text-white">{month}</span>
+          <span className="text-[20px] font-bold text-white">{date}</span>
         </div>
         <div className="flex flex-col text-sm leading-tight">
           <h3 className="font-bold text-base text-[#00FF3A] pt-2">{title}</h3>
@@ -82,35 +94,22 @@ const EventCard = ({id, title, date, venue, time, desc, image, onEventSelect, pa
 );
 
 function PaymentStart({ onEventSelect, onBack, paymentEnabled = false, onPayNow }) {
-  const [showPaymentPopup, setShowPaymentPopup] = useState(false);
-
   const handlePaymentRequired = () => {
-    setShowPaymentPopup(true);
-  };
-
-  const handleClosePaymentPopup = () => {
-    setShowPaymentPopup(false);
+    // Instead of popup, trigger Pay Now toast via parent callback
+    if (onPayNow) onPayNow();
   };
 
   return (
     <>
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center px-4"
+      className="min-h-screen py-8 bg-cover bg-center bg-no-repeat flex flex-col items-center px-4"
     >
   {/* First (main) image */}
   <div className="relative mb-8">
     <img
-      src="https://i.postimg.cc/kg5f2ngP/Necrolord-themed-Stream-Overlay-A-Custom-Design-for-Zach-Fischer-removebg-preview-2.png"
+      src="https://ik.imagekit.io/wlknxcf5m/events.png?updatedAt=1755595944454"
       alt="Main Heading"
-      className="w-64 md:w-96 h-auto"
-    />
-  <div className="absolute top-14 md:top-24 left-1/2 transform -translate-x-1/2 z-30 text-[#0B160E] text-3xl md:text-4xl font-regular text-center font-mystery">
-      Events
-    </div>
-    <img
-      src="https://i.postimg.cc/rFypVFnN/download-49-removebg-preview-1.png"
-      alt="Overlay"
-      className="absolute top-0 left-0 w-32 md:w-auto h-auto"
+      className="w-48 md:w-72 h-auto"
     />
   </div>
   <LayoutGroup>
@@ -156,46 +155,7 @@ function PaymentStart({ onEventSelect, onBack, paymentEnabled = false, onPayNow 
 </LayoutGroup>
     </div>
 
-    {/* Payment Required Popup */}
-    {showPaymentPopup && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-8 rounded-lg max-w-md mx-4">
-          <h3 className="text-xl font-bold text-black mb-4">Payment Required</h3>
-          <p className="text-gray-700 mb-6">
-            You need to complete the payment before registering for events.
-          </p>
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-4 justify-end">
-              <button 
-                onClick={handleClosePaymentPopup}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={() => {
-                  handleClosePaymentPopup();
-                  if (onPayNow) onPayNow();
-                }}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-              >
-                Pay Now
-              </button>
-            </div>
-            
-            {/* FAQ Link */}
-            <div className="text-center">
-              <a
-                href="/faq"
-                className="text-green-600 hover:text-green-700 underline text-sm transition-colors duration-300"
-              >
-                Have questions? Check our FAQ
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
+  {/* Popup removed in favor of toasts handled by parent */}
     </>
   );
 }

@@ -149,7 +149,7 @@ export default function Register() {
         lastname,
         isKiitCollege: collegeSelection === "KIIT",
         phone,
-        college: collegeName,
+        college: collegeName || customCollege,
         hostelType: collegeSelection === "KIIT" ? hostelType : null,
         hostelEmail:
           collegeSelection === "KIIT" && hostelType === true
@@ -341,7 +341,7 @@ export default function Register() {
             </label>
             <input
               type="email"
-              placeholder="Enter your College mail ID"
+              placeholder="Enter your mail ID"
               className="w-full rounded px-4 py-2 bg-[#181818] text-white border border-gray-600 focus:border-green-500 outline-none placeholder-gray-500"
               value={email}
               onChange={handleEmailChange}

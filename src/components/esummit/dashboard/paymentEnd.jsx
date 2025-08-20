@@ -1,117 +1,161 @@
-import React from "react";
-import { useRouter } from "next/router";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import RegisteredMap from "./registeredMap";
+import { Amarante } from "next/font/google"
+import Link from "next/link";
+
 
 const events = [
-   {
-    id:"1",
+  {
+    id: "Oracle",
     title: "ORACLE",
-    image:"https://i.postimg.cc/pyx86WsG/oracle-1.png",
+    image:
+      "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/oracle.png?updatedAt=1755628892778",
     coordinates: [20.3534, 85.8195],
-    mapLabel: "ORACLE Event Venue"
+    mapLabel: "ORACLE - Campus 6",
   },
   {
-    id:"2",
+    id: "AIF",
     title: "ALICE IN FOUNDERLAND",
-    image: "https://i.postimg.cc/ts7FNBB9/Alice-in-founderland-1.png",
+    image:
+      "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Alice-in-founderland.png?updatedAt=1755628890005",
     coordinates: [20.3544, 85.8205],
-    mapLabel: "Alice in Founderland Arena"
+    mapLabel: "Alice in Founderland - Campus 17",
   },
   {
-    id:"3",
+    id: "case-x",
     title: "CASE BATTLE",
-    date: "AUG 15",
-    desc: "An opportunity for aspiring entrepreneurs sdbfjshdjfbjsdnbfmndb fmnmnsdbfnbfnsbfb.",
+    image: "https://ik.imagekit.io/wlknxcf5m/casex.png?updatedAt=1755594314805",
     coordinates: [20.3524, 85.8185],
-    mapLabel: "Case Battle Conference Hall"
+    mapLabel: "Case Battle - Campus 17",
   },
   {
-    id:"4",
+    id: "Hackathon",
     title: "PANDORAS PARADOX",
-    image: "https://i.postimg.cc/2LzZbGqR/pandoras-paradox-1.png",
+    image:
+      "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/pandoras-paradox.png?updatedAt=1755628892886",
     coordinates: [20.3554, 85.8215],
-    mapLabel: "Pandora's Paradox Theater"
+    mapLabel: "Pandora's Paradox - Campus 25",
   },
   {
-    id:"5",
-    title: "EXPO",
-    image:"https://i.postimg.cc/hzGqwqxJ/Expo.png",
+    id: "EXPO",
+    title: "Founder's Arena",
+    image:
+      "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Expo-1.png?updatedAt=1755628891663",
     coordinates: [20.3514, 85.8175],
-    mapLabel: "Expo Exhibition Center"
+    mapLabel: "Expo - Campus 6 Banquet Hall",
   },
 ];
 
 function PaymentEnd({ eventId, onPaymentComplete, onBack }) {
-  // Use the passed eventId or fallback to useParams for direct URL access
-  const { id: urlId } = useParams();
-  const finalEventId = eventId || urlId;
-  const event = events.find((e) => e.id === finalEventId);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Use the passed eventId or fallback to useParams for direct URL access
+  const params = useParams?.() || {};
+  const urlId =
+    typeof params === "object"
+      ? params.id || params.eventId || params.slug
+      : undefined;
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is Tailwind's md breakpoint
+    };
+
+    // Check on initial load
+    checkIsMobile();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  // Only support the five known values, with case-insensitive match
+  const inputId = eventId ?? urlId;
+  const lc = (v) => (v || "").toString().toLowerCase();
+  const finalEventId = inputId;
+  const event =
+    events.find((e) => e.id === finalEventId) ||
+    events.find((e) => lc(e.id) === lc(finalEventId));
 
   if (!event) {
-    return <div className="text-white p-10 min-h-screen bg-black flex items-center justify-center">
-      <div>Event not found. Event ID: {finalEventId}</div>
-    </div>;
+    return (
+      <div className="text-white p-10 min-h-screen bg-black flex items-center justify-center">
+        <div>
+          Event not found. Event ID:{" "}
+          {String(finalEventId || "").trim() || "(none)"}
+        </div>
+      </div>
+    );
   }
 
   return (
     <>
-     <div className="min-h-screen text-white flex flex-col items-center py-10 px-4">
-       
-       {/* Header Section */}
-       <div className="relative mb-8">
-         <img
-           src="https://i.postimg.cc/kg5f2ngP/Necrolord-themed-Stream-Overlay-A-Custom-Design-for-Zach-Fischer-removebg-preview-2.png"
-           alt="Main Heading"
-           className="w-64 md:w-96 h-auto"
-         />
-         <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-[#0B160E] text-xl md:text-2xl font-regular text-center font-mystery">
-           Your Registered Event
-         </div>
-         <img
-           src="https://i.postimg.cc/rFypVFnN/download-49-removebg-preview-1.png"
-           alt="Overlay"
-           className="absolute top-0 left-0 w-32 md:w-auto h-auto"
-         />
-       </div>
+      <div className="min-h-[40vh] text-white flex flex-col items-center py-10 px-4">
+        {/* Header Section */}
+        <div className="relative mb-8">
+          <img
+            src="https://ik.imagekit.io/wlknxcf5m/Group%2018457%20(1).png"
+            alt="Main Heading"
+            className="w-64 md:w-96 h-auto"
+          />
+        </div>
 
-       {/* Event Details Section */}
-       <div className="flex flex-col md:flex-row items-center justify-center mb-10">
-         <img
-           src="https://i.postimg.cc/L4thY3XR/Celtic-Ornament-5.png"
-           alt="Left Ornament"
-           className="w-8 h-32 md:w-10 md:h-80"
-         />
-         
-         <div className="flex flex-col md:flex-row">
-           <div className="w-56 h-60 md:w-80 md:h-80 bg-gray-800 rounded-lg overflow-hidden">
-             <img
-               src={event.image}
-               alt={event.title}
-               className="w-full h-full object-cover"
-             />
-           </div>
-           <div className="w-56 h-60 md:w-80 md:h-80 bg-gray-800 rounded-lg overflow-hidden">
-             <RegisteredMap 
-               coordinates={event.coordinates} 
-               label={event.mapLabel} 
-             />
-           </div>
-         </div>
-         
-         <img
-           src="https://i.postimg.cc/4yvCqPhG/Celtic-Ornament-4.png"
-           alt="Right Ornament"
-           className="w-8 h-32 md:w-10 md:h-80"
-         />
-       </div>
+        <div className="h-full">
+          <div className="w-full flex items-center justify-between mx-auto">
+            <img
+              src="https://ik.imagekit.io/ecellkiit/E-Cell%20Website/Celtic%20Ornament%202%20(1).webp?updatedAt=1755629651693"
+              alt="Left Ornament"
+              className="w-[70vw] md:w-[50vw]"
+              style={{
+                rotate: isMobile ? "90deg" : "0deg",
+              }}
+            />
+          </div>
+          <div className="flex flex-col -space-y-64 items-center justify-between mb-0">
+            <div className="flex flex-col md:flex-row scale-75 md:scale-90 relative bottom-64 md:bottom-94">
+              <div className="w-32 h-40 md:w-80 md:h-80 bg-gray-800 rounded-lg overflow-hidden">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="w-32 h-40 md:w-80 md:h-80 bg-gray-800 rounded-lg overflow-hidden">
+                <RegisteredMap
+                  coordinates={event.coordinates}
+                  label={event.mapLabel}
+                />
+              </div>
+            </div>
+          <div className="text-center">
+            <div className="max-w-48 md:max-w-full items-center justify-center flex">
+              <Link
+                href={(() => {
+                  const id = (finalEventId || "").toString().toLowerCase();
+                  if (id === "oracle") return "/oracle";
+                  if (id === "aif") return "/aif";
+                  if (id === "case-x") return "/case-x";
+                  if (id === "hackathon") return "/pandoras-paradox";
+                  if (id === "expo") return "/expo";
+                  return "/";
+                })()}
+                className="block bg-gradient-to-t from-[#191b19] to-[#1d5524] font-[Amarante] text-sm md:text-base text-[#ffde79] border-1 border-[#987f49] font-semibold px-4 py-2 rounded hover:scale-110 transition-all"
+              >
+                Go to {event.title}
+              </Link>
+            </div>
+          </div>
+          </div>
+        </div>
 
-       {/* Event Info */}
-       <div className="text-center">
-         <h2 className="text-2xl md:text-3xl font-bold mb-2">{event.title}</h2>
-         <p className="text-gray-300">{event.mapLabel}</p>
-       </div>
-     </div>
+        {/* Event Details Section */}
+        {/* Event Info */}
+      </div>
     </>
   );
 }
