@@ -16,7 +16,7 @@ export default function TeamIdDisplay({ teamId }) {
   return (
     <div className="flex items-center gap-2 mt-2">
       <span className="text-white/80 font-mono text-sm">
-        Team ID: {teamId}
+        UID: {teamId}
       </span>
       <button
         onClick={handleCopy}

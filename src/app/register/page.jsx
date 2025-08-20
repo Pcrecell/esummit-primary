@@ -147,10 +147,9 @@ export default function Register() {
         email,
         firstname,
         lastname,
-        collegeName: collegeName,
         isKiitCollege: collegeSelection === "KIIT",
         phone,
-        college: collegeToSend,
+        college: collegeName,
         hostelType: collegeSelection === "KIIT" ? hostelType : null,
         hostelEmail:
           collegeSelection === "KIIT" && hostelType === true
@@ -158,6 +157,18 @@ export default function Register() {
             : null,
         idToken,
       };
+      setProfile({
+        firstname,
+        lastname,
+        email,
+        phone,
+        college: collegeName,
+        hostelType: collegeSelection === "KIIT" ? hostelType : null,
+        hostelEmail:
+          collegeSelection === "KIIT" && hostelType === true
+            ? hostelEmail
+            : null,
+      });
       const csrfToken = getCookie("csrfToken");
 
       const response = await fetch(

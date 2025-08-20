@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
+import TeamIdDisplay from "@/components/shared/copyClipboard";
 
 const PaymentChoice = () => {
   const router = useRouter();
@@ -62,6 +63,16 @@ const PaymentChoice = () => {
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Price: Rs.249
             </p>
+
+            {/* Display Elixir ID with copy functionality */}
+            <div className="mb-4 flex items-center justify-center">
+              <div className="bg-black/40 px-4 py-2 rounded-lg">
+                <TeamIdDisplay 
+                  teamId={profile?.elixir} 
+                  label="Your Elixir ID"
+                />
+              </div>
+            </div>
 
             {/* Pay Now Button */}
             {/* {!isPaymentDisabled ? (

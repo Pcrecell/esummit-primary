@@ -158,7 +158,7 @@ export default function EsummitNavbar() {
                   {userData ? (
                     <>
                       <button
-                        onClick={() => {router.push("/dashboard"); setIsMobileMenuOpen(false)}}
+                        onClick={() => {window.location.href = "/dashboard";; setIsMobileMenuOpen(false)}}
                         className="text-neutral-200 dark:text-neutral-300 w-full flex items-start"
                       >
                         Dashboard
