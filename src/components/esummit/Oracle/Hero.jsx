@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 import RegisterPopup from "./registerPopup";
 import Toast from "@/components/ui/Toast";
 import { useToast } from "@/hooks/useToast";
+import SidebarIcon from "../whatsappSideBar/whatsappLinkBanner";
 import {
   MapPinIcon,
   CalendarIcon,
@@ -193,6 +194,9 @@ export default function Hero() {
       {/* Render Popup */}
       {showPopup && <RegisterPopup onClose={() => setShowPopup(false)} />}
       <Toast message={toast.message} type={toast.type} isVisible={toast.isVisible} onClose={hideToast} />
+      {/* WhatsApp Banner */}
+<SidebarIcon whatsappLink="https://chat.whatsapp.com/KVdgQ09WWqjB1s95UCsA8U?mode=ac_t" bgColor="black" />
+
     </div>
   );
 }

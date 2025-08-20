@@ -14,8 +14,8 @@ export default function TeamIdDisplay({ teamId }) {
   };
 
   return (
-    <div className="flex items-center gap-2 mt-1">
-      <span className="text-white/80 font-mono text-sm">
+    <div className="flex items-center gap-2 mt-2 relative bottom-1">
+      <span className="text-white/80 font-mono text-sm ">
         UID: {teamId}
       </span>
       <button

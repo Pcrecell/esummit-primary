@@ -16,7 +16,7 @@ export default function TeamHeader({ teamInfo, onDisband }) {
   };
 
   return (
-    <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center justify-between mb-0">
       {/* Left: Team Info */}
       <div>
         <h2 className="text-2xl md:text-4xl font-mono font-bold text-white tracking-wider mb-2">
@@ -42,12 +42,13 @@ export default function TeamHeader({ teamInfo, onDisband }) {
 
       {/* Right: Disband Team Button */}
       {
-        teamInfo?.leaderId === profile?.elixir &&  (<button
+        teamInfo?.leaderId === profile?.elixir &&  (<div className = "ml-5 md:-translate-y-4"><button
         onClick={onDisband}
-        className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition"
+        className="px-2 py-1 md:m-5 justify-center rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold transition"
       >
         Disband Team
       </button>
+      </div>
         )
       }
      

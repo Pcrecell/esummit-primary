@@ -12,27 +12,27 @@ const OracleDashboard = () => {
   const router = useRouter();
   const { userData, profile, loading } = useAuth();
   const paymentDone = profile?.payment;
-    const handleDisbandTeam = async () => {
-      // Multiple validations before disbanding
-      if (!profile?.elixir) {
-        showError("Authentication required");
-        return;
-      }
-      
-      if (teamInfo.leaderId !== profile.elixir) {
-        showError("Only team leader can disband the team.");
-        return;
-      }
-  
-      if (!teamInfo.teamId) {
-        showError("No team found to disband");
-        return;
-      }
-  
+  const handleDisbandTeam = async () => {
+    // Multiple validations before disbanding
+    if (!profile?.elixir) {
+      showError("Authentication required");
+      return;
+    }
 
-  
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/disband-team`, {
+    if (teamInfo.leaderId !== profile.elixir) {
+      showError("Only team leader can disband the team.");
+      return;
+    }
+
+    if (!teamInfo.teamId) {
+      showError("No team found to disband");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/oracle/disband-team`,
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -40,27 +40,27 @@ const OracleDashboard = () => {
           body: JSON.stringify({
             leaderelixir: profile.elixir,
           }),
-        });
-  
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message || "Failed to disband team");
         }
-  
-        showSuccess("Team disbanded successfully");
-        router.replace("/oracle"); // Redirect to Oracle page after disbanding
-      } catch (error) {
-        console.error("Error disbanding team:", error);
-        showError(error.message || "Failed to disband team");
-      }
-    };
+      );
 
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to disband team");
+      }
+
+      showSuccess("Team disbanded successfully");
+      router.replace("/oracle"); // Redirect to Oracle page after disbanding
+    } catch (error) {
+      console.error("Error disbanding team:", error);
+      showError(error.message || "Failed to disband team");
+    }
+  };
 
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
     teamId: "",
     leaderId: "",
-    members: []
+    members: [],
   });
   const [isAddingMember, setIsAddingMember] = useState(false);
   const [newMemberName, setNewMemberName] = useState("");
@@ -70,8 +70,10 @@ const OracleDashboard = () => {
 
   const fetchTeamInfo = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/team-info/${profile.elixir}`);
-      
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/oracle/team-info/${profile.elixir}`
+      );
+
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
@@ -93,27 +95,34 @@ const OracleDashboard = () => {
     setIsAddingMember(true);
     try {
       // Check if member is in the team already
-      if (teamInfo.members.some(member => member.elixir === newMemberEid.trim())) {
+      if (
+        teamInfo.members.some((member) => member.elixir === newMemberEid.trim())
+      ) {
         throw new Error("This member is already in your team");
       }
 
       // Check if member is already registered in another event
       if (userData.isEventRegistered && userData.eventName !== "oracle") {
-        throw new Error(`This user is already registered for ${userData.eventName}. Cannot add to Oracle.`);
+        throw new Error(
+          `This user is already registered for ${userData.eventName}. Cannot add to Oracle.`
+        );
       }
 
       // If validation passes, proceed with adding the member
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/add-member`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          leaderelixir: profile.elixir,
-          name: newMemberName.trim(),
-          elixir: newMemberEid.trim(),
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/oracle/add-member`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            leaderelixir: profile.elixir,
+            name: newMemberName.trim(),
+            elixir: newMemberEid.trim(),
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -128,7 +137,9 @@ const OracleDashboard = () => {
       await fetchTeamInfo(); // Refresh team info
     } catch (error) {
       console.error("Error adding member:", error);
-      showError(error.message || "Failed to add team member. Please try again.");
+      showError(
+        error.message || "Failed to add team member. Please try again."
+      );
     } finally {
       setIsAddingMember(false);
     }
@@ -139,16 +150,19 @@ const OracleDashboard = () => {
       showSuccess("Please confirm to remove " + memberName, null, true);
       await new Promise((resolve) => setTimeout(resolve, 100)); // Small delay for toast to show
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/oracle/remove-member`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          leaderelixir: profile.elixir,
-          memberelixir: memberElixir,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/oracle/remove-member`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            leaderelixir: profile.elixir,
+            memberelixir: memberElixir,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -160,7 +174,9 @@ const OracleDashboard = () => {
       await fetchTeamInfo(); // Refresh team info
     } catch (error) {
       console.error("Error removing member:", error);
-      showError(error.message || "Failed to remove team member. Please try again.");
+      showError(
+        error.message || "Failed to remove team member. Please try again."
+      );
     }
   };
 
@@ -201,16 +217,16 @@ const OracleDashboard = () => {
         onClick={() => router.push("/oracle")}
         className="absolute top-4 left-4 z-30 flex items-center gap-2 text-white/80 hover:text-white transition-colors"
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-5 w-5" 
-          viewBox="0 0 20 20" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          viewBox="0 0 20 20"
           fill="currentColor"
         >
-          <path 
-            fillRule="evenodd" 
-            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" 
-            clipRule="evenodd" 
+          <path
+            fillRule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clipRule="evenodd"
           />
         </svg>
         <span className="font-mono text-sm">Back</span>
@@ -236,7 +252,6 @@ const OracleDashboard = () => {
                 teamInfo={teamInfo}
                 onDisband={() => handleDisbandTeam()}
               />
-
 
               {/* Team Members */}
               <div className="space-y-8">
@@ -265,14 +280,17 @@ const OracleDashboard = () => {
                               Team Leader
                             </span>
                           )}
-                          {profile?.elixir === teamInfo.leaderId && member.elixir !== teamInfo.leaderId && (
-                            <button
-                              onClick={() => handleRemoveMember(member.elixir, member.name)}
-                              className="bg-red-600/80 hover:bg-red-500 border border-red-400/60 px-3 py-1 rounded text-white text-xs font-mono"
-                            >
-                              Remove
-                            </button>
-                          )}
+                          {profile?.elixir === teamInfo.leaderId &&
+                            member.elixir !== teamInfo.leaderId && (
+                              <button
+                                onClick={() =>
+                                  handleRemoveMember(member.elixir, member.name)
+                                }
+                                className="bg-red-600/80 hover:bg-red-500 border border-red-400/60 px-3 py-1 rounded text-white text-xs font-mono"
+                              >
+                                Remove
+                              </button>
+                            )}
                         </div>
                       </div>
                     ))}
@@ -280,62 +298,79 @@ const OracleDashboard = () => {
                 </div>
 
                 {/* Add Member Form - Only visible to team leader */}
-                {profile?.elixir === teamInfo.leaderId && teamInfo.members.length < 5 && (
-                  <div className="bg-black/30 p-6 rounded-lg border border-green-400/30 space-y-4">
-                    <h3 className="text-lg font-mono font-bold text-white">
-                      Add Team Member
-                    </h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-white/90 text-sm font-mono mb-2">
-                          Member Name
-                        </label>
-                        <input
-                          type="text"
-                          value={newMemberName}
-                          onChange={(e) => setNewMemberName(e.target.value)}
-                          className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                          placeholder="Enter member's name"
+                {profile?.elixir === teamInfo.leaderId &&
+                  teamInfo.members.length < 5 && (
+                    <div className="bg-black/30 p-6 rounded-lg border border-green-400/30 space-y-4">
+                      <h3 className="text-lg font-mono font-bold text-white">
+                        Add Team Member
+                      </h3>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-white/90 text-sm font-mono mb-2">
+                            Member Name
+                          </label>
+                          <input
+                            type="text"
+                            value={newMemberName}
+                            onChange={(e) => setNewMemberName(e.target.value)}
+                            className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                            placeholder="Enter member's name"
+                            disabled={isAddingMember}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-white/90 text-sm font-mono mb-2">
+                            Member UID
+                          </label>
+                          <input
+                            type="text"
+                            value={newMemberEid}
+                            onChange={(e) => setNewMemberEid(e.target.value)}
+                            className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
+                            placeholder="Enter member's UID"
+                            disabled={isAddingMember}
+                          />
+                        </div>
+                        <button
+                          onClick={handleAddMember}
                           disabled={isAddingMember}
-                        />
+                          className={`w-full ${
+                            isAddingMember
+                              ? "bg-gray-600/90 cursor-not-allowed"
+                              : "bg-green-600/90 hover:bg-green-500"
+                          } border-2 border-green-400/60 py-2 rounded-md font-mono font-bold text-white text-sm transition-all flex items-center justify-center gap-2`}
+                        >
+                          {isAddingMember ? (
+                            <>
+                              <svg
+                                className="animate-spin h-4 w-4 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <circle
+                                  className="opacity-25"
+                                  cx="12"
+                                  cy="12"
+                                  r="10"
+                                  stroke="currentColor"
+                                  strokeWidth="4"
+                                ></circle>
+                                <path
+                                  className="opacity-75"
+                                  fill="currentColor"
+                                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                              </svg>
+                              Adding Member...
+                            </>
+                          ) : (
+                            "Add Member"
+                          )}
+                        </button>
                       </div>
-                      <div>
-                        <label className="block text-white/90 text-sm font-mono mb-2">
-                          Member UID
-                        </label>
-                        <input
-                          type="text"
-                          value={newMemberEid}
-                          onChange={(e) => setNewMemberEid(e.target.value)}
-                          className="w-full bg-green-100/90 border-2 border-green-600/50 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-400/30 font-mono text-sm"
-                          placeholder="Enter member's UID"
-                          disabled={isAddingMember}
-                        />
-                      </div>
-                      <button
-                        onClick={handleAddMember}
-                        disabled={isAddingMember}
-                        className={`w-full ${
-                          isAddingMember
-                            ? "bg-gray-600/90 cursor-not-allowed"
-                            : "bg-green-600/90 hover:bg-green-500"
-                        } border-2 border-green-400/60 py-2 rounded-md font-mono font-bold text-white text-sm transition-all flex items-center justify-center gap-2`}
-                      >
-                        {isAddingMember ? (
-                          <>
-                            <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Adding Member...
-                          </>
-                        ) : (
-                          "Add Member"
-                        )}
-                      </button>
                     </div>
-                  </div>
-                )}
+                  )}
               </div>
             </div>
           </div>
