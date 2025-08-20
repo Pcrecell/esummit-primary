@@ -163,7 +163,7 @@ export default function EsummitNavbar() {
                         className="text-neutral-200 dark:text-neutral-300 w-full flex items-start"
                       >
                         Dashboard
-                      </a>
+                      </button>
                       <button
                         onClick={handleLogout}
                         className="text-left text-neutral-200 w-full flex items-start"
