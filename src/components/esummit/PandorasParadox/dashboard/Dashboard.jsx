@@ -10,6 +10,9 @@ import Toast from "@/components/ui/Toast";
 import ConfirmDialog from "@/components/shared/Confirmation";
 import TeamHeader from "@/components/shared/disbandButton";
 import { useToast } from "@/hooks/useToast";
+import SidebarIcon from "../../whatsappSideBar/whatsappLinkBanner";
+
+
 const PandorasParadoxDashboard = () => {
   const router = useRouter();
   const { userData, profile, loading } = useAuth();
@@ -39,6 +42,17 @@ const PandorasParadoxDashboard = () => {
   const [isLoadingTeamInfo, setIsLoadingTeamInfo] = useState(true);
 
   const { toast, showSuccess, showError, hideToast } = useToast();
+
+
+  const handleFinalSubmit = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/hackathon/final-submit`)
+      //aage ka dekh lijiye bhaiya
+    } catch (error) {
+      
+    }
+    
+  }
 
   const handleDisbandTeam = async () => {
     // Multiple validations before disbanding
@@ -422,6 +436,8 @@ const PandorasParadoxDashboard = () => {
         </div>
       </div>
 
+      <div><SidebarIcon whatsappLink={"https://chat.whatsapp.com/LBc6bpG8YeT3mp1yvap54f?mode=ac_t"} /></div>
+
       {/* Track toggle (always visible) */}
       <div className="absolute top-20 md:top-24 sm:top-30 right-4 sm:right-8 md:right-12 z-20">
         <div className="flex items-center gap-1 sm:gap-2 rounded-full bg-black/40 border border-green-400/60 px-1 sm:px-2 md:px-1 py-1 shadow-lg backdrop-blur">
@@ -454,7 +470,7 @@ const PandorasParadoxDashboard = () => {
           isRegistered
             ? "mt-24 sm:mt-32 md:mt-40"
             : action === "idle"
-              ? "mt-32 sm:mt-40 md:mt-78"
+              ? "mt-32 sm:mt-45 md:mt-78"
               : "mt-24 sm:mt-32 md:mt-40 pt-8 sm:pt-12"
         }`}
       >
@@ -468,7 +484,7 @@ const PandorasParadoxDashboard = () => {
                   action === "join"
                     ? "ring-2 ring-green-400/60"
                     : "hover:bg-white/5"
-                } px-4 sm:px-6 md:px-8 py-2 rounded-full border-2 border-green-400/60 text-white font-mono font-bold text-xs sm:text-sm backdrop-blur flex-1 max-w-[120px] sm:max-w-none`}
+                } px-4 sm:px-6 md:px-8 py-2  rounded-full border-2 border-green-400/60 text-white font-mono font-bold text-xs sm:text-sm backdrop-blur flex-1 max-w-[120px] sm:max-w-none`}
               >
                 JOIN TEAM
               </button>
@@ -483,6 +499,14 @@ const PandorasParadoxDashboard = () => {
                 CREATE TEAM
               </button>
             </div>
+
+
+            
+            
+
+
+
+
 
             {/* Dynamic content under buttons with fade in/out */}
             <div
@@ -833,10 +857,12 @@ const PandorasParadoxDashboard = () => {
             <div className="grid justify-center pt-2 md:pt-20 gap-8">
               {/* Team Members */}
               <div className="bg-black/40 border-2 border-green-400/60 rounded-lg p-8 backdrop-blur-md">
+              <div className = "">
                 <TeamHeader
                   teamInfo={teamInfo}
                   onDisband={() => handleDisbandTeam()}
                 />
+                </div>
 
                 <div className="space-y-10">
                   {teamInfo.members.map((member, idx) => (
@@ -901,8 +927,15 @@ const PandorasParadoxDashboard = () => {
                       {isAddingMember ? "Adding..." : "Add Member"}
                     </button>
                   </div>
+                  
                 </div>
+                
               )}
+              {teamInfo.members && teamInfo.members.length >= 3 ? (
+              <div className = "flex justify-center"><button onClick={handleFinalSubmit} className = "bg-green-600 rounded-3xl border-green-900 border-2 text-white text-2xl px-4 md:px-10 py-2 cursor-pointer">Submit</button></div>)
+              : (
+              <div className = "flex justify-center"><button className = "bg-gray-700 opacity-[0.8] cursor-not-allowed rounded-3xl border-green-900 border-2 text-white text-2xl px-4 py-1">Submit</button></div>)
+              } 
             </div>
 
             {/* Back to Registration Option */}
