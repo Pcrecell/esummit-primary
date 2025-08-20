@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Toast from "@/components/ui/Toast";
 import { useToast } from "@/hooks/useToast";
 import TeamHeader from "@/components/shared/disbandButton";
-import SidebarIcon from "../../whatsappSideBar/whatsappLinkBanner";
 
 const OracleDashboard = () => {
   const router = useRouter();
@@ -232,8 +231,6 @@ const OracleDashboard = () => {
         </svg>
         <span className="font-mono text-sm">Back</span>
       </button>
-
-      <div><SidebarIcon whatsappLink=""/></div>
 
       {/* Greeting (top-left) */}
       <div className="absolute top-16 sm:top-20 left-4 sm:left-6 md:left-20 z-20 select-none">
