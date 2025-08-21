@@ -181,7 +181,7 @@ const ContactMap = () => {
               <Popup autoOpen={true} autoClose={false} closeOnClick={false}>
                 <span className="text-xs font-semibold text-green-400">
                   Pandora's Paradox<br />
-                  KIIT Campus 25
+                  KIIT Campus 6
                 </span>
               </Popup>
             </Marker>
