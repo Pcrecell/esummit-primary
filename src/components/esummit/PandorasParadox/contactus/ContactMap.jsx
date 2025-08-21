@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
-const position = [20.364544820535293, 85.81718000708452]; // campus 25 ka hai
+const position = [20.353432, 85.819527]; // campus 25 ka hai
 
 // Dynamically import map components to avoid SSR issues
 const MapContainer = dynamic(
