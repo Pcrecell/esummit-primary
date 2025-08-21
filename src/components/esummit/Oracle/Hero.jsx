@@ -41,10 +41,6 @@ export default function Hero() {
   const paymentDone = profile?.payment;
 
   const handleRegister = () => {
-    if(profile?.isEventRegistered && profile?.eventName != "Oracle"){
-      showError("You have already registered for another event.");
-      return;
-    }
     if (!paymentDone) {
       showError("Please complete your payment to register for the event.");
       setTimeout(() => router.replace("/dashboard"), 2000);

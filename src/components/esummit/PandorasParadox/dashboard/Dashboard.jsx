@@ -213,10 +213,10 @@ const PandorasParadoxDashboard = () => {
       showError("Please fill out all fields to create a team.");
       return;
     }
-    if (profile?.isEventRegistered && profile?.eventName != "Hackathon") {
-      showError("You have already registered for another event.");
-      return;
-    }
+    // if (profile?.isEventRegistered && profile?.eventName != "Hackathon") {
+    //   showError("You have already registered for another event.");
+    //   return;
+    // }
     try {
       // console.log("Submitting create team request with data:", formData);
       const res = await fetch(

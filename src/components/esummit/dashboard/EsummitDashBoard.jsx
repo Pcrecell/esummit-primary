@@ -479,11 +479,6 @@ const EsummitDashBoard = () => {
         {/* <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none"></div> */}
       </div>
 
-      {profile?.eventName ? (
-        <div>
-          <PaymentEnd eventId={profile?.eventName} />
-        </div>
-      ) : (
         <div>
           <PaymentStart 
             onEventSelect={handleEventSelect}
@@ -491,7 +486,6 @@ const EsummitDashBoard = () => {
             onPayNow={handlePayNowToast}
           />
         </div>
-      )}
 
       {/* <Form /> */}
       {/* Global toast */}
