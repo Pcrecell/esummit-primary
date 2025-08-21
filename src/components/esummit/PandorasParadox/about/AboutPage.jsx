@@ -184,7 +184,7 @@ const AboutPage = () => {
                   <div className="text-[#ffffad] leading-relaxed text-center space-y-6">
                     <BlurText
                       text="Pandora's Paradox is the premier hackathon event organised by KIIT E-Cell, an innovation marathon event that brings together creativity and execution. The event is designed to instill fearless boundaryless thinking; engaging the most brilliant minds in multiple disciplines to compete, collaborate, and create impactful solutions in 72 hours."
-                      delay={100}
+                      delay={50}
                       animateBy="words"
                       direction="top"
                       className="text-sm sm:text-base lg:text-3xl"
