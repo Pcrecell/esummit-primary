@@ -38,8 +38,8 @@ const EventsPage = () => {
     22: [
       {
         title: "PANDORA'S PARADOX",
-        time: "9:00AM - 4:30PM",
-        venue: "CAMPUS-25",
+        time: "9:00AM - 4:00PM",
+        venue: "CAMPUS-6",
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
@@ -99,7 +99,7 @@ const EventsPage = () => {
       {
         title: "PANDORA'S PARADOX",
         time: "9:00AM - 4:00PM",
-        venue: "CAMPUS-25",
+        venue: "CAMPUS-6",
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
@@ -122,8 +122,8 @@ const EventsPage = () => {
       },
       {
         title: "PANDORA'S PARADOX",
-        time: "9:00AM - 3:00PM",
-        venue: "CAMPUS-25",
+        time: "10:00AM - 3:00PM",
+        venue: "CAMPUS-6",
         coordinates: [20.36444610634588, 85.81695856641474],
         description:
           "Pandora's Paradox is a challenge where teams turn complex global problems into creative, ethical solutions.",
