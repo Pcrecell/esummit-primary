@@ -11,6 +11,7 @@ export default function CaseX() {
   const { userData, profile, loading } = useAuth();
   const { toast, showSuccess, showError, hideToast } = useToast();
   const paymentDone = profile?.payment;
+  const [inCaseX, setInCaseX] = useState(false)
 
   // Popup & tab UI state
   const [showPopup, setShowPopup] = useState(false);
@@ -52,10 +53,30 @@ export default function CaseX() {
     const roleLeader = (teamInfo?.role || "").toLowerCase() === "leader";
     const idLeader = Boolean(
       profile?.elixir &&
-        (teamInfo?.leaderId === profile.elixir ||
-          teamInfo?.leaderElixir === profile.elixir)
+      (teamInfo?.leaderId === profile?.elixir ||
+        teamInfo?.leaderElixir === profile?.elixir)
     );
     return roleLeader || idLeader;
+  };
+
+  const checkIfCaseX = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/case-x/user-info/${profile?.elixir}`
+      )
+      if (response.ok) {
+        setInCaseX(true)
+        return response.json()
+      }
+    } catch(err){
+      showError("Error In Registering.")
+      console.error(err)
+    }
+  }
+
+  // Helper: check if user is registered for this specific event
+  const isRegisteredForCaseX = () => {
+    return teamInfo?.teamId && teamInfo?.members?.some(member => member.elixir === profile?.elixir);
   };
 
   // Handle popup opening
@@ -65,7 +86,7 @@ export default function CaseX() {
   const fetchTeamInfo = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/case-x/team-info/${profile.elixir}`
+        `${process.env.NEXT_PUBLIC_API_URL}/case-x/team-info/${profile?.elixir}`
       );
       if (!response.ok) throw new Error(`Error ${response.status}`);
       const data = await response.json();
@@ -78,16 +99,15 @@ export default function CaseX() {
   useEffect(() => {
     if (profile?.elixir) fetchTeamInfo();
     if (profile) {
-    setFormData((prev) => ({
-      ...prev,
-      name: profile.firstname || "",
-      yourEid: profile.elixir || "",
-    }));
-  }
+      setFormData((prev) => ({
+        ...prev,
+        name: profile?.firstname || "",
+        yourEid: profile?.elixir || "",
+      }));
+    }
   }, [profile]);
 
   useEffect(() => {
-    
     if (!loading) {
       if (!userData) {
         router.replace("/login");
@@ -96,6 +116,7 @@ export default function CaseX() {
     }
     if (userData && paymentDone && profile?.elixir) {
       fetchTeamInfo();
+      checkIfCaseX();
     }
   }, [userData, paymentDone, loading, router]);
 
@@ -118,14 +139,10 @@ export default function CaseX() {
       return;
     }
     if (
-      !(formData.name === profile.name) &&
-      !(formData.yourEid === profile.elixir)
+      !(formData.name === profile?.name) &&
+      !(formData.yourEid === profile?.elixir)
     ) {
       showError("You can only create team for yourself");
-      return;
-    }
-    if (profile?.isEventRegistered && profile?.eventName != "case-x") {
-      showError("You have already registered for another event.");
       return;
     }
     try {
@@ -162,48 +179,47 @@ export default function CaseX() {
       showError(err.message || "Error creating team");
     }
   };
-      const handleDisbandTeam = async () => {
-      // Multiple validations before disbanding
-      if (!profile?.elixir) {
-        showError("Authentication required");
-        return;
-      }
-      
-      if (teamInfo.leaderId !== profile.elixir) {
-        showError("Only team leader can disband the team.");
-        return;
-      }
   
-      if (!teamInfo.teamId) {
-        showError("No team found to disband");
-        return;
-      }
-  
+  const handleDisbandTeam = async () => {
+    // Multiple validations before disbanding
+    if (!profile?.elixir) {
+      showError("Authentication required");
+      return;
+    }
 
-  
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/case-x/disband-team`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            leaderelixir: profile.elixir,
-          }),
-        });
-  
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.message || "Failed to disband team");
-        }
-  
-        showSuccess("Team disbanded successfully");
-        router.refresh();
-      } catch (error) {
-        console.error("Error disbanding team:", error);
-        showError(error.message || "Failed to disband team");
+    if (teamInfo.leaderId !== profile?.elixir) {
+      showError("Only team leader can disband the team.");
+      return;
+    }
+
+    if (!teamInfo.teamId) {
+      showError("No team found to disband");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/case-x/disband-team`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          leaderelixir: profile?.elixir,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to disband team");
       }
-    };
+
+      showSuccess("Team disbanded successfully");
+      router.refresh();
+    } catch (error) {
+      console.error("Error disbanding team:", error);
+      showError(error.message || "Failed to disband team");
+    }
+  };
 
   const handleSubmitJoin = async () => {
     if (!formData.name || !formData.yourEid || !formData.teamId) {
@@ -211,8 +227,8 @@ export default function CaseX() {
       return;
     }
     if (
-      !(formData.name === profile.name) &&
-      !(formData.yourEid === profile.elixir)
+      !(formData.name === profile?.name) &&
+      !(formData.yourEid === profile?.elixir)
     ) {
       showError("You can only join team for yourself");
       return;
@@ -272,7 +288,7 @@ export default function CaseX() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            leaderelixir: profile.elixir,
+            leaderelixir: profile?.elixir,
             name: newTeammateName.trim(),
             elixir: newTeammateId.trim(),
           }),
@@ -298,7 +314,7 @@ export default function CaseX() {
   };
 
   const handleRemoveMember = async (memberelixir) => {
-    if (memberelixir === profile.elixir) {
+    if (memberelixir === profile?.elixir) {
       showError("Leader cannot remove themselves.");
       return;
     }
@@ -308,7 +324,7 @@ export default function CaseX() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ leaderelixir: profile.elixir, memberelixir }),
+          body: JSON.stringify({ leaderelixir: profile?.elixir, memberelixir }),
         }
       );
       if (!res.ok) throw new Error("Error removing member");
@@ -402,11 +418,11 @@ export default function CaseX() {
             Got sharp ideas? Love cracking real-world problems?
           </p>
           <p className="text-white text-lg font-light font-leage-spartan text-center mb-4">
-            Case Battle is your chance to step out of the classroom and into the
+            Case Battle is your chance to step out of the classroom and into the
             boardroom. Tackle actual industry challenges, battle it out with the
             brightest teams, and pitch your solution live to real experts.
             <br />
-            Top 10 teams make it to the finale at E-Summit 2025, where strategy,
+            Top 10 teamsÂ make it to the finale at E-Summit 2025, where strategy,
             creativity, and confidence will decide who takes the crown.
             <br />
             Think you've got what it takes?
@@ -415,7 +431,7 @@ export default function CaseX() {
             This is not a case study. This is war.
           </p>
           {/* Register / Manage button positioned on bottom border (mobile) */}
-          {profile.isEventRegistered && profile?.eventName != "case-x" ? (
+          {isRegisteredForCaseX() ? (
             <button
               onClick={() => {
                 if (!paymentDone) {
@@ -458,7 +474,7 @@ export default function CaseX() {
           )}
         </div>
       </div>
-      {/* Desktop view unchanged */}
+      {/* Desktop view */}
       <div className="hidden md:block">
         <div
           className="w-full h-screen bg-cover bg-center relative flex items-center justify-start z-0"
@@ -488,12 +504,12 @@ export default function CaseX() {
                 <br />
               </span>
               <span className="text-white text-[2vw] lg:text-2xl font-light font-leage-spartan">
-                Case-X is your chance to step out of the classroom and into the
+                Case-X is your chance to step out of the classroom and into the
                 boardroom. Tackle actual industry challenges, battle it out with
                 the brightest teams, and pitch your solution live to real
                 experts.
                 <br />
-                Top 10 teams make it to the finale at E-Summit 2025, where
+                Top 10 teamsÂ make it to the finale at E-Summit 2025, where
                 strategy, creativity, and confidence will decide who takes the
                 crown.
                 <br />
@@ -506,8 +522,8 @@ export default function CaseX() {
               </span>
             </div>
             <div className="absolute left-[60vw] -translate-x-1/2 bottom-[-32px] z-20">
-              {/* Conditional register/manage buttons based on registration status */}
-              {profile.isEventRegistered && profile?.eventName != "case-x" ? (
+              {/* Conditional register/manage buttons based on Case-X registration status */}
+              {isRegisteredForCaseX() ? (
                 <button
                   onClick={() => {
                     if (!paymentDone) {
@@ -1014,7 +1030,7 @@ export default function CaseX() {
               ×
             </button>
 
-            {profile.isEventRegistered && profile?.eventName != "case-x" ? (
+            {isRegisteredForCaseX() ? (
               // Manage Team UI for registered users
               <>
                 <div className="w-full h-full flex flex-col items-center justify-start pt-6 md:pt-8 px-4 md:px-16">
@@ -1039,7 +1055,7 @@ export default function CaseX() {
                         </p>
 
                       </div> */}
-                  <TeamHeader teamInfo={teamInfo} onDisband={handleDisbandTeam} />
+                      <TeamHeader teamInfo={teamInfo} onDisband={handleDisbandTeam} />
                     </div>
                   </div>
 
@@ -1070,6 +1086,19 @@ export default function CaseX() {
                         >
                           +
                         </button>
+                      </div>
+                      <div className="relative mt-4 text-center">
+                        <p className="text-[#CFB43C] font-leage-spartan">
+                          Don't have teammates?{" "}
+                          <a
+                            href="https://chat.whatsapp.com/JtUN2ERKNFHJ0dVEm8aqwr?mode=ac_t"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="underline hover:opacity-80"
+                          >
+                            Join the Whatsapp Group!
+                          </a>
+                        </p>
                       </div>
                       {addMemberError && (
                         <p className="mt-2 text-red-400 text-sm md:text-base font-leage-spartan">
@@ -1129,34 +1158,26 @@ export default function CaseX() {
             ) : (
               // Registration UI for new users
               <>
-                <div className="flex flex-col sm:flex-row justify-center mt-6 md:mt-8 gap-4 sm:gap-12 px-4 md:px-16">
+                <div className="flex flex-row justify-center mt-6 md:mt-8 gap-4 sm:gap-12 px-4 md:px-16">
                   <button
                     onClick={() => {
                       setActiveTab("join");
                       setJoinError("");
                     }}
-                    className={`text-2xl md:text-3xl font-light font-leage-spartan text-[#CFB43C] cursor-pointer`}
+                    className={`text-2xl md:text-3xl font-light font-leage-spartan text-[#CFB43C] cursor-pointer pb-1 ${activeTab === "join" ? "border-b border-[#CFB43C]" : ""}`}
                   >
                     Join a Team
                   </button>
                   <button
                     onClick={() => {
                       setActiveTab("create");
+                      setActiveTab("create");
                       setJoinError("");
                     }}
-                    className={`text-2xl md:text-3xl font-light font-leage-spartan text-[#CFB43C] cursor-pointer`}
+                    className={`text-2xl md:text-3xl font-light font-leage-spartan text-[#CFB43C] cursor-pointer pb-1 ${activeTab === "create" ? "border-b border-[#CFB43C]" : ""}`}
                   >
                     Create a Team
                   </button>
-                </div>
-
-                <div className="hidden sm:flex justify-center mt-2">
-                  {activeTab === "join" && (
-                    <div className="w-32 h-0 border-b border-[#CFB43C] ml-[-220px]"></div>
-                  )}
-                  {activeTab === "create" && (
-                    <div className="w-32 h-0 border-b border-[#CFB43C] ml-[200px]"></div>
-                  )}
                 </div>
 
                 <div className="px-4 md:px-16 mt-6 md:mt-8">
@@ -1168,8 +1189,7 @@ export default function CaseX() {
                           placeholder="First Name"
                           value={formData.name}
                           readOnly
-                        //   onChange={(e) => handleChange("name", e.target.value)}
-                          className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                          className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                         />
                       </div>
                       <div className="relative">
@@ -1177,8 +1197,8 @@ export default function CaseX() {
                           type="text"
                           placeholder="UID"
                           value={formData.yourEid}
-                            readOnly
-                          className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                          readOnly
+                          className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                         />
                       </div>
                       <div className="relative md:col-span-2">
@@ -1189,23 +1209,36 @@ export default function CaseX() {
                           onChange={(e) =>
                             handleChange("teamName", e.target.value)
                           }
-                          className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                          className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                         />
+                      </div>
+                      <div className="relative md:col-span-2 text-center">
+                        <p className="text-[#CFB43C] font-leage-spartan">
+                          Don't have teammates?{" "}
+                          <a
+                            href="https://chat.whatsapp.com/JtUN2ERKNFHJ0dVEm8aqwr?mode=ac_t"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="underline hover:opacity-80"
+                          >
+                            Join the Whatsapp Group!
+                          </a>
+                        </p>
                       </div>
                     </div>
                   ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                      <div className="space-y-4 md:space-y-6">
-                        <div className="relative">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-items-center items-center text-center">
+                      <div className="flex flex-col items-center space-y-4 md:space-y-6 w-full">
+                        <div className="relative w-full">
                           <input
                             type="text"
                             placeholder="First Name"
                             value={formData.name}
                             readOnly
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                           />
                         </div>
-                        <div className="relative">
+                        <div className="relative w-full">
                           <input
                             type="text"
                             placeholder="Team Name"
@@ -1213,22 +1246,22 @@ export default function CaseX() {
                             onChange={(e) =>
                               handleChange("teamName", e.target.value)
                             }
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                           />
                         </div>
                       </div>
 
-                      <div className="space-y-4 md:space-y-6">
-                        <div className="relative">
+                      <div className="flex flex-col items-center space-y-4 md:space-y-6 w-full">
+                        <div className="relative w-full">
                           <input
                             type="text"
                             placeholder="UID"
                             value={formData.yourEid}
                             readOnly
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                           />
                         </div>
-                        <div className="relative">
+                        <div className="relative w-full">
                           <input
                             type="text"
                             placeholder="Team ID"
@@ -1236,9 +1269,22 @@ export default function CaseX() {
                             onChange={(e) =>
                               handleChange("teamId", e.target.value)
                             }
-                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-['Inria_Serif'] placeholder-[#1B0D00]/70"
+                            className="w-full h-12 md:h-14 bg-[#786C34] rounded-2xl px-4 py-2 md:py-0 md:px-6 text-[#1B0D00] text-lg md:text-2xl font-light font-leage-spartan placeholder-[#1B0D00]/70 text-center md:text-left"
                           />
                         </div>
+                      </div>
+                      <div className="relative md:col-span-2 text-center">
+                        <p className="text-[#CFB43C] font-leage-spartan">
+                          Don't have teammates?{" "}
+                          <a
+                            href="https://chat.whatsapp.com/JtUN2ERKNFHJ0dVEm8aqwr?mode=ac_t"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="underline hover:opacity-80"
+                          >
+                            Join the Whatsapp Group!
+                          </a>
+                        </p>
                       </div>
                     </div>
                   )}

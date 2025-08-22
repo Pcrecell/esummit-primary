@@ -49,15 +49,15 @@ const PaymentChoice = () => {
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black">
       <div
         ref={modalRef}
-        className="relative w-full max-w-md rounded-2xl shadow-2xl"
+        className="relative w-full max-w-md rounded-2xl shadow-2xl right-26"
       >
         <div
-          className="w-full h-[700px] bg-center bg-no-repeat bg-contain text-white flex items-center justify-center"
+          className="w-[150%] h-[1000px] bg-center bg-no-repeat bg-contain text-white flex items-center justify-center"
           style={{
             backgroundImage: `url('https://ik.imagekit.io/ilgcom35w/KIITESUMMIT-POPUP-PAY.webp?updatedAt=1755353166962')`,
           }}
         >
-          <div className="flex flex-col md:gap-y-2 items-center">
+          <div className="flex flex-col mt-6 md:gap-y-2 items-center">
             <p className="text-md text-center max-w-md font-bold font-poppins">
               Secure your spot at E-Summit <br />– but don’t miss out!
             </p>
@@ -71,7 +71,7 @@ const PaymentChoice = () => {
             </p>
           )}
             {/* Display Elixir ID with copy functionality */}
-            <div className="mb-4 flex items-center justify-center">
+            <div className="mb-4 mt-2 flex items-center justify-center">
               <div className="bg-black/40 px-4 py-2 rounded-lg">
                 <TeamIdDisplay 
                   teamId={profile?.elixir} 
@@ -128,7 +128,7 @@ const PaymentChoice = () => {
               </a>
             ) : (
               <div className="w-40 text-center text-red-500 font-bold">
-                Payment is disabled for first year
+                Payment Is Disabled For First Year's
               </div>
             )}
 

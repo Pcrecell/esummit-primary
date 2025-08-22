@@ -19,8 +19,44 @@ const HeroSection = () => {
   const { userData, profile } = useAuth();
   const { toast, showSuccess, showError, hideToast } = useToast();
   const [deviceType, setDeviceType] = useState("desktop");
+  const [teamInfo, setTeamInfo] = useState(null)
   const paymentDone = profile?.payment;
   // console.log("Payment status from profile:", paymentDone);
+
+
+  useEffect(() => {
+    const fetchTeamInfo = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/hackathon/team-info/${profile?.elixir}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.teamName) {
+          setTeamInfo({
+            teamName: data.teamName,
+            teamId: data.teamId || `${data.teamName}_${data.leaderId}`,
+            track: data.track,
+            leaderId: data.leaderId,
+            members: data.members || [],
+            role:
+              data.leaderId === (profile?.elixir || userData?.uid)
+                ? "leader"
+                : "member",
+          });
+        } 
+      } else {
+        return
+      }
+    } catch (error) {
+      console.error("Error fetching team info:", error);
+    } 
+  };
+  fetchTeamInfo()
+  }, []);
+  
+
   useEffect(() => {
     if (!userData) {
       router.replace("/login");
@@ -28,10 +64,6 @@ const HeroSection = () => {
   }, [userData, router]);
   
   const handleRegisterClick = () => {
-    if(profile?.isEventRegistered && profile?.eventName != "Hackathon"){
-      showError("You have already registered for another event.");
-      return;
-    }
     if (!paymentDone) {
       showError("Please complete your payment to register for the event.");
       setTimeout(() => router.replace("/dashboard"), 2000);
@@ -114,7 +146,7 @@ const HeroSection = () => {
                 
                 <div className="absolute inset-0 z-30 flex items-center justify-center">
                   <span className={`${poppins.className} text-white font-semibold text-xs sm:text-xs md:text-base lg:text-xl transition-all duration-500 group-hover:scale-102 group-hover:-translate-y-0.5 group-hover:bg-amber-300/25 px-4 py-2 rounded-full tracking-wide pointer-events-none select-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]`} style={{background: 'transparent'}}>
-                    Register
+                    {teamInfo?.teamId ? "Dashboard" : "Register"}
                   </span>
                 </div>
               </div>

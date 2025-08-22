@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useToast } from "@/hooks/useToast";
 import Toast from "@/components/ui/Toast";
+import SidebarIcon from "./whatsappLinkBanner";
 
 // Configure fonts
 const cinzelDecorative = Cinzel_Decorative({
@@ -55,10 +56,6 @@ export default function Aif() {
    }
 
   const openRegistration = () => {
-    if(profile?.isEventRegistered && profile?.eventName != "AIF"){
-      showError("You have already registered for another event.");
-      return;
-    }
     if (!paymentDone) {
       showError("User not found or not paid or you are already registered for event");
       setTimeout(() => router.replace("/dashboard"), 3000);
@@ -241,6 +238,8 @@ export default function Aif() {
         isVisible={toast.isVisible} 
         onClose={hideToast} 
       />
+
+      <SidebarIcon whatsappLink="https://chat.whatsapp.com/EHMdfluw5Qt4Vhfj1aZae5?mode=ac_t" bgColor="gold"/>
     </div>
   );
 }

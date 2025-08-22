@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 import RegisterPopup from "./registerPopup";
 import Toast from "@/components/ui/Toast";
 import { useToast } from "@/hooks/useToast";
+import SidebarIcon from "../whatsappSideBar/whatsappLinkBanner";
 import {
   MapPinIcon,
   CalendarIcon,
@@ -40,10 +41,6 @@ export default function Hero() {
   const paymentDone = profile?.payment;
 
   const handleRegister = () => {
-    if(profile?.isEventRegistered && profile?.eventName != "Oracle"){
-      showError("You have already registered for another event.");
-      return;
-    }
     if (!paymentDone) {
       showError("Please complete your payment to register for the event.");
       setTimeout(() => router.replace("/dashboard"), 2000);
@@ -193,6 +190,9 @@ export default function Hero() {
       {/* Render Popup */}
       {showPopup && <RegisterPopup onClose={() => setShowPopup(false)} />}
       <Toast message={toast.message} type={toast.type} isVisible={toast.isVisible} onClose={hideToast} />
+      {/* WhatsApp Banner */}
+<SidebarIcon whatsappLink="https://chat.whatsapp.com/KVdgQ09WWqjB1s95UCsA8U?mode=ac_t" bgColor="black" />
+
     </div>
   );
 }

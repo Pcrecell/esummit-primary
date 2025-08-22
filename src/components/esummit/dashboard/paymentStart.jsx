@@ -34,7 +34,7 @@ const events = [
     id:"Hackathon",
     title: "PANDORAS PARADOX",
     month: "AUG",
-    date: "23-25",
+    date: "22-24",
     desc: "Pandora's Paradox is a challenge where teams turn complex global problems into solutions",
     image: "https://ik.imagekit.io/ecellkiit/E-Cell%20Website/pandoras-paradox.png?updatedAt=1755628892886",
     href: "/pandoras-paradox",
